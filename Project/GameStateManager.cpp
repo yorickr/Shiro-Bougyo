@@ -1,12 +1,14 @@
 #include "GameStateManager.h"
 #include "GameState.h"
 #include "MenuState.h"
+#include "PlayingState.h"
 
 
 void GameStateManager::Init()
 {
 	Cleanup();
 	states.push_back(new MenuState());
+	states.push_back(new PlayingState());
 	//Add list of states here
 }
 

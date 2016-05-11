@@ -1,5 +1,16 @@
+#include <OpenGL/OpenGL.h>
 #include "GameStateManager.h"
-#include "GL/freeglut.h"
+#ifndef MAC_OSX
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#include <cstdlib>
+
+#else
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
 
 GameStateManager gameManager;
 int width, height;
@@ -45,6 +56,20 @@ void onIdle() {
 }
 
 void onKeyboard(unsigned char key, int, int) {
+	switch (key)
+	{
+		case 27:             // ESCAPE key
+			exit (0);
+		case '[':
+			gameManager.previousState();
+			break;
+		case ']':
+			gameManager.nextState();
+			break;
+		default:
+			//just to please CLion.
+			break;
+	}
 	keys[key] = true;
 }
 
@@ -73,6 +98,7 @@ int main(int argc, char* argv[]) {
 
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);

@@ -1,5 +1,14 @@
 #include "MenuState.h"
-#include "GL/freeglut.h"
+#ifndef MAC_OSX
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+
+#else
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#endif
 
 void MenuState::Init(GameStateManager * game)
 {
