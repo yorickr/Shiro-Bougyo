@@ -1,15 +1,5 @@
-﻿Build started 5/11/2016 2:59:18 PM.
-     1>Project "C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Project\Project.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Ifreeglut/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Debug\Project.exe" /INCREMENTAL /NOLOGO /LIBPATH:freeglut/lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Debug\Project.lib" /MACHINE:X86 Debug\GameStateManager.obj
-         Debug\Main.obj
-         Debug\MenuState.obj
-         Project.vcxproj -> C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Debug\Project.exe
-     1>Done Building Project "C:\Users\Wesley\Documents\GitHub\Shiro-Bougyo\Project\Project.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.60
+﻿  MenuState.cpp
+  GameStateManager.cpp
+d:\avans\jaar 2\periode 4\project\git\shiro-bougyo\project\gamestatemanager.cpp(21): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Project.vcxproj -> D:\avans\Jaar 2\Periode 4\Project\Git\Shiro-Bougyo\Debug\Project.exe
