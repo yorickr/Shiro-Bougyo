@@ -40,7 +40,7 @@ void PlayingState::Update() {
 }
 
 void PlayingState::Draw() {
-    glRotatef(rotation, 0, 1, 0);§
+    glRotatef(rotation, 0, 1, 0);
     models[currentModel].second->draw();
 }
 
