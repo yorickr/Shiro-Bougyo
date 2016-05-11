@@ -1,9 +1,12 @@
 #include "GameStateManager.h"
 #include "GameState.h"
+#include "MenuState.h"
+
 
 void GameStateManager::Init()
 {
 	Cleanup();
+	states.push_back(new MenuState());
 	//Add list of states here
 }
 
@@ -31,15 +34,18 @@ void GameStateManager::previousState()
 
 void GameStateManager::HandleEvents()
 {
-	states.at(currentState)->HandleEvents();
+	if(!states.empty())
+		states.at(currentState)->HandleEvents();
 }
 
 void GameStateManager::Update()
 {
-	states.at(currentState)->Update();
+	if (!states.empty())
+		states.at(currentState)->Update();
 }
 
 void GameStateManager::Draw()
 {
-	states.at(currentState)->Draw();
+	if (!states.empty())
+		states.at(currentState)->Draw();
 }
