@@ -6,6 +6,8 @@
 #ifndef MAC_OSX
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+#include <cstdlib>
+#include <iostream>
 
 #else
 #include <windows.h>
@@ -36,12 +38,20 @@ void PlayingState::HandleEvents() {
 }
 
 void PlayingState::Update() {
-    rotation+=0.25;
-}
+    for( auto &m : models){
+        m.second->xrot += 0.50;
+        m.second->xpos += 0.01;
+        if(m.second->xpos > 5){
+            m.second->xpos = -5;
+        }
 
+    }
+}
 void PlayingState::Draw() {
-    glRotatef(rotation, 0, 1, 0);
-    models[currentModel].second->draw();
+    for( auto &m : models){
+        m.second->draw();
+    }
+
 }
 
 

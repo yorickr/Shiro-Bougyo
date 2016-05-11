@@ -176,21 +176,25 @@ ObjModel::~ObjModel(void)
 
 
 
-void ObjModel::draw()
-{
-	for(auto &g : groups)
-	{
-		if (materials[g->materialIndex]->hasTexture)
-		{
+void ObjModel::draw() {
+	//This affects the entire model
+	glPushMatrix();
+	glRotatef(xrot, 1, 0, 0);
+	glRotatef(yrot, 0, 1, 0);
+	glRotatef(zrot, 0, 0, 1);
+
+	glTranslatef(xpos, ypos, zpos);
+
+
+	for (auto &g : groups) {
+		if (materials[g->materialIndex]->hasTexture) {
 			glEnable(GL_TEXTURE_2D);
 			materials[g->materialIndex]->texture->bind();
 		}
 
 		glBegin(GL_TRIANGLES);
-		for(auto &f : g->faces)
-		{
-			for(auto &v : f.vertices)
-			{
+		for (auto &f : g->faces) {
+			for (auto &v : f.vertices) {
 				glNormal3f(normals[v.normal]->x, normals[v.normal]->y, normals[v.normal]->z);
 				glTexCoord2f(texcoords[v.texcoord]->x, texcoords[v.texcoord]->y);
 				glVertex3f(vertices[v.position]->x, vertices[v.position]->y, vertices[v.position]->z);
@@ -198,6 +202,8 @@ void ObjModel::draw()
 		}
 		glEnd();
 	}
+
+	glPopMatrix();
 }
 
 void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )

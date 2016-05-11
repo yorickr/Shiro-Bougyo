@@ -101,8 +101,29 @@ private:
 	std::vector<ObjGroup*> groups;
 	std::vector<MaterialInfo*> materials;
 
+
+
 	void loadMaterialFile(std::string fileName, std::string dirName);
 public:
+
+	union
+	{
+		struct
+		{
+			float xrot,yrot,zrot; //Rotation of our model, in degrees
+		};
+		float rotation[3];
+	};
+
+	union
+	{
+		struct
+		{
+			float xpos,ypos,zpos; //Position of our model
+		};
+		float pos[3];
+	};
+
 	ObjModel(std::string filename);
 	~ObjModel(void);
 

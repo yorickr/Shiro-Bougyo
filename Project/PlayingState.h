@@ -21,9 +21,7 @@ class PlayingState : public GameState {
         virtual void Draw() override;
     private:
         GameStateManager *manager;
-        float rotation = 0;
-        int currentModel = 0;
-        vector<pair<int, ObjModel*> > models;
+        vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function
 };
 
 

@@ -51,8 +51,13 @@ void onDisplay() {
 }
 
 void onIdle() {
+	//do nothing
+}
+
+void onTimer(int id){
 	gameManager.Update();
 	glutPostRedisplay();
+	glutTimerFunc(1000/60,onTimer, 1);
 }
 
 void onKeyboard(unsigned char key, int, int) {
@@ -104,6 +109,7 @@ int main(int argc, char* argv[]) {
 	glutDisplayFunc(onDisplay);
 	glutReshapeFunc([](int w, int h) { width = w; height = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
+	glutTimerFunc(1000/60,onTimer, 1);
 	glutKeyboardUpFunc(onKeyboardUp);
 	glutPassiveMotionFunc(mousePassiveMotion);
 
