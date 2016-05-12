@@ -1,7 +1,7 @@
-#ifdef MAC_OSX
+#ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
-#include <OpenGL/OpenGL.h>
+#include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
 
 #else
@@ -33,7 +33,7 @@ void onDisplay() {
 	gluPerspective(60.0f, (float)width / height, 0.1, 30);
 
 	glMatrixMode(GL_MODELVIEW);
-	
+
 	glLoadIdentity();
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
@@ -84,6 +84,8 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
+
+
 	int dx = x - width / 2;
 	int dy = y - height / 2;
 	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
@@ -105,6 +107,7 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
+    CGSetLocalEventsSuppressionInterval(0.0);
 
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);

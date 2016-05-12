@@ -9,7 +9,7 @@
 #include "stb_image.h"
 #include "stb_perlin.h"
 
-#ifdef MAC_OSX
+#ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <list>
 
-#ifdef MAC_OSX
+#ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 

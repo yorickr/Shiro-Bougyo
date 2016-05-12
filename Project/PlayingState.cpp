@@ -3,7 +3,7 @@
 //
 
 #include "PlayingState.h"
-#ifdef MAC_OSX
+#ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 #include <cstdlib>
@@ -20,7 +20,11 @@
 
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
+    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
+    ObjModel *baksteen = new ObjModel("Project/models/cube/cube-textures.obj");
+    baksteen->xpos = 2;
+
+    models.push_back(pair<int, ObjModel *>(1, baksteen));
 }
 
 void PlayingState::Cleanup() {
@@ -41,7 +45,8 @@ void PlayingState::HandleEvents() {
 
 void PlayingState::Update() {
     for( auto &m : models){
-        m.second->xrot += 0.50;
+        m.second->xrot += 10;
+//        m.second->zrot +=1;
         m.second->xpos += 0.01;
         if(m.second->xpos > 5){
             m.second->xpos = -5;
