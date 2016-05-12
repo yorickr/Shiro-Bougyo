@@ -3,7 +3,7 @@
 //
 
 #include "PlayingState.h"
-#ifndef MAC_OSX
+#ifdef MAC_OSX
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 #include <cstdlib>
@@ -14,11 +14,13 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#include <cstdlib>
+#include <iostream>
 #endif
 
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
+    models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
 }
 
 void PlayingState::Cleanup() {

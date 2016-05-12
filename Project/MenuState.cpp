@@ -1,5 +1,5 @@
 #include "MenuState.h"
-#ifndef MAC_OSX
+#ifdef MAC_OSX
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 

@@ -49,7 +49,6 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
-*.obj
 *.pch
 *.pdb
 *.pgc
@@ -251,5 +250,4 @@ paket-files/
 .idea/
 *.sln.iml
 Project.sdf
-*.obj
 Project.sdf

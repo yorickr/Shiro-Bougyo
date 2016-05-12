@@ -1,8 +1,7 @@
-#include <OpenGL/OpenGL.h>
-#include "GameStateManager.h"
-#ifndef MAC_OSX
+#ifdef MAC_OSX
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+#include <OpenGL/OpenGL.h>
 #include <cstdlib>
 
 #else
@@ -11,6 +10,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #endif
+
+#include "GameStateManager.h"
 
 GameStateManager gameManager;
 int width, height;
