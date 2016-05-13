@@ -20,7 +20,7 @@ void GameStateManager::Cleanup()
 
 void GameStateManager::nextState()
 {
-	if (currentState < states.size()) {
+	if (currentState < states.size() -1) {
 		currentState++;
 		states.at(currentState)->Init(this);
 	}

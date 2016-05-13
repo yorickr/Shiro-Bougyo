@@ -120,12 +120,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>freeglut/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>freeglut/lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -161,69 +164,7 @@
     <ClInclude Include="PlayingState.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="models\baksteen\Lowpoly Old Notebook(obj).mtl" />
-    <None Include="models\bloemetje\PrimroseP.mtl" />
-    <None Include="models\car\honda_jazz.mtl" />
-    <None Include="models\cube\cube-textures.mtl" />
-    <None Include="models\normalstuff\normaltest.blend" />
-    <None Include="models\normalstuff\normaltest.mtl" />
-    <None Include="models\normalstuff\normaltest2.blend" />
-    <None Include="models\normalstuff\normaltest2.blend1" />
-    <None Include="models\normalstuff\normaltest2.mtl" />
-    <None Include="models\ship\shipA_OBJ.mtl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="models\baksteen\Lowpoly Old Notebook(obj).obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\bloemetje\PrimroseP.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\car\honda_jazz.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\cube\cube-textures.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\normalstuff\normaltest.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\normalstuff\normaltest2.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="models\ship\shipA_OBJ.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="models\baksteen\Map__2_Normal_Bump.tga" />
-    <Image Include="models\baksteen\Notebook Normal.jpg" />
-    <Image Include="models\baksteen\Notebook Specular.jpg" />
-    <Image Include="models\baksteen\Notebook_Color.jpg" />
-    <Image Include="models\bloemetje\PRIM1L2.png" />
-    <Image Include="models\bloemetje\PRIM1L3.png" />
-    <Image Include="models\bloemetje\PRIM1P.png" />
-    <Image Include="models\bloemetje\PRIM1ST.png" />
-    <Image Include="models\bloemetje\PRIMsoil.png" />
-    <Image Include="models\bloemetje\vase.png" />
-    <Image Include="models\car\tex\Jazz_diffuse.jpg" />
-    <Image Include="models\car\tex\Jazz_opacity.jpg" />
-    <Image Include="models\cube\tex1.bmp" />
-    <Image Include="models\cube\tex2.bmp" />
-    <Image Include="models\cube\tex3.bmp" />
-    <Image Include="models\cube\tex4.bmp" />
-    <Image Include="models\normalstuff\normaltest.png" />
-    <Image Include="models\normalstuff\normaltest2.png" />
-    <Image Include="models\normalstuff\texture.png" />
-    <Image Include="models\ship\s_1024_C.tga" />
-    <Image Include="models\ship\s_1024_N.tga" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

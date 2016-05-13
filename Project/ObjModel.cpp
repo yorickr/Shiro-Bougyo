@@ -61,6 +61,7 @@ inline std::string toLower(std::string data)
 
 ObjModel::ObjModel(std::string fileName)
 {
+	xpos = ypos = zpos = xrot = yrot = zrot = 0;
 	std::string dirName = fileName;
 	if(dirName.rfind("/") != std::string::npos)
 		dirName = dirName.substr(0, dirName.rfind("/"));
