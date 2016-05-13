@@ -40,17 +40,22 @@ void onDisplay() {
 	glTranslatef(camera.posX, 0, camera.posY);
 
 
-	
+	glPushMatrix();
 	glBegin(GL_QUADS);
 	glVertex3f(-15, -1, -15);
 	glVertex3f(15, -1, -15);
 	glVertex3f(15, -1, 15);
 	glVertex3f(-15, -1, 15);
 	glEnd();
+	glPopMatrix();
 	
-	glColor3f(0.5f, 1.0f, 0.0f);
+	////glColor3f(0.5f, 1.0f, 0.0f);
 	gameManager.Draw();
+
+
+	glFlush();
 	glutSwapBuffers();
+
 }
 
 void onIdle() {

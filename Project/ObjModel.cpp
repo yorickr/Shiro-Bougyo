@@ -185,6 +185,7 @@ void ObjModel::draw() {
 	glRotatef(zrot, 0, 0, 1);
 
 	glTranslatef(xpos, ypos, zpos);
+	
 
 
 	for (auto &g : groups) {
