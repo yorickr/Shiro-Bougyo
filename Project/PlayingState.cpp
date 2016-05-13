@@ -3,6 +3,8 @@
 //
 
 #include "PlayingState.h"
+
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -21,10 +23,11 @@
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
     models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-    ObjModel *baksteen = new ObjModel("Project/models/cube/cube-textures.obj");
+    ObjModel *baksteen = new ObjModel("Project/models/world/FirstWorld.obj");
     baksteen->xpos = 2;
+    baksteen->ypos=-20;
 
-    models.push_back(pair<int, ObjModel *>(1, baksteen));
+    models.push_back(pair<int, ObjModel *>(2, baksteen));
 }
 
 void PlayingState::Cleanup() {
@@ -39,27 +42,29 @@ void PlayingState::Resume() {
 
 }
 
-void PlayingState::HandleEvents() {
-
-}
-
 void PlayingState::Update() {
-    for( auto &m : models){
-        m.second->xrot += 10;
-//        m.second->zrot +=1;
-        m.second->xpos += 0.01;
-        if(m.second->xpos > 5){
-            m.second->xpos = -5;
-        }
 
-    }
 }
 void PlayingState::Draw() {
-    for( auto &m : models){
+    for( auto &m : models) {
         m.second->draw();
     }
 
 }
+
+void PlayingState::HandleEvents(unsigned int key) {
+    switch (key){
+
+    }
+    for( auto &m : models) {
+        m.second->xpos ++;
+    }
+}
+
+
+
+
+
 
 
 

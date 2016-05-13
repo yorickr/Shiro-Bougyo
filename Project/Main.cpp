@@ -12,17 +12,11 @@
 #endif
 
 #include "GameStateManager.h"
+#include "Camera.h"
 
 GameStateManager gameManager;
 int width, height;
 bool keys[255];
-struct Camera
-{
-	float posX = 0;
-	float posY = -4;
-	float rotX = 0;
-	float rotY = 0;
-} camera;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -30,7 +24,7 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, (float)width / height, 0.1, 30);
+	gluPerspective(90.0f, (float)width / height, 0.1, 50);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -52,10 +46,20 @@ void onDisplay() {
 }
 
 void onIdle() {
-	//do nothing
+
+
+
+
 }
 
 void onTimer(int id){
+
+	if(keys[27]) exit(0);
+	if(keys['w']) camera.posY++;
+	if(keys['s']) camera.posY--;
+	if(keys['d']) camera.posX--;
+	if(keys['a']) camera.posX++;
+
 	gameManager.Update();
 	glutPostRedisplay();
 	glutTimerFunc(1000/60,onTimer, 1);
@@ -76,6 +80,7 @@ void onKeyboard(unsigned char key, int, int) {
 			//just to please CLion.
 			break;
 	}
+	gameManager.HandleEvents(key);
 	keys[key] = true;
 }
 
@@ -84,7 +89,6 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
-
 
 	int dx = x - width / 2;
 	int dy = y - height / 2;
@@ -107,7 +111,10 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
+    //Needed for osx
+    #ifdef __APPLE__
     CGSetLocalEventsSuppressionInterval(0.0);
+    #endif
 
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
