@@ -20,10 +20,15 @@
 
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-    ObjModel *baksteen = new ObjModel("Project/models/cube/cube-textures.obj");
-    baksteen->xpos = 2;
 
+	//make bloem and push to models vector
+	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+	bloem->xpos = 0;
+    models.push_back(pair<int, ObjModel*>(1,bloem));
+
+	//make baksteen and push to models vector
+    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
+    baksteen->xpos = 2;
     models.push_back(pair<int, ObjModel *>(1, baksteen));
 }
 

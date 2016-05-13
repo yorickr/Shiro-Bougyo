@@ -30,11 +30,14 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="PlayingState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ObjModel.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingState.cpp">
+      <Filter>Source Files\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,89 +53,14 @@
     <ClInclude Include="MenuState.h">
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="PlayingState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="objmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayingState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="models\baksteen\Lowpoly Old Notebook(obj).mtl" />
-    <None Include="models\bloemetje\PrimroseP.mtl" />
-    <None Include="models\car\honda_jazz.mtl" />
-    <None Include="models\cube\cube-textures.mtl" />
-    <None Include="models\normalstuff\normaltest.blend" />
-    <None Include="models\normalstuff\normaltest.mtl" />
-    <None Include="models\normalstuff\normaltest2.blend" />
-    <None Include="models\normalstuff\normaltest2.blend1" />
-    <None Include="models\normalstuff\normaltest2.mtl" />
-    <None Include="models\ship\shipA_OBJ.mtl" />
-    <None Include="models\ship\shipA_OBJ.obj" />
-    <None Include="models\bloemetje\PrimroseP.obj" />
-    <None Include="models\normalstuff\normaltest2.obj" />
-    <None Include="models\normalstuff\normaltest.obj" />
-    <None Include="models\baksteen\Lowpoly Old Notebook(obj).obj" />
-    <None Include="models\car\honda_jazz.obj" />
-    <None Include="models\cube\cube-textures.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="models\baksteen\Map__2_Normal_Bump.tga" />
-    <Image Include="models\baksteen\Notebook Normal.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\baksteen\Notebook Specular.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\baksteen\Notebook_Color.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\PRIM1L2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\PRIM1L3.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\PRIM1P.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\PRIM1ST.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\PRIMsoil.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\bloemetje\vase.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\car\tex\Jazz_diffuse.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\car\tex\Jazz_opacity.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\cube\tex1.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\cube\tex2.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\cube\tex3.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\cube\tex4.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\normalstuff\normaltest.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\normalstuff\normaltest2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\normalstuff\texture.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\ship\s_1024_C.tga" />
-    <Image Include="models\ship\s_1024_N.tga" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

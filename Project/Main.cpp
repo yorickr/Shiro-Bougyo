@@ -40,13 +40,15 @@ void onDisplay() {
 	glTranslatef(camera.posX, 0, camera.posY);
 
 
-	glColor3f(0.5f, 1.0f, 1.0f);
+	
 	glBegin(GL_QUADS);
 	glVertex3f(-15, -1, -15);
 	glVertex3f(15, -1, -15);
 	glVertex3f(15, -1, 15);
 	glVertex3f(-15, -1, 15);
 	glEnd();
+	
+	glColor3f(0.5f, 1.0f, 0.0f);
 	gameManager.Draw();
 	glutSwapBuffers();
 }
@@ -97,6 +99,7 @@ void mousePassiveMotion(int x, int y) {
 }
 
 int main(int argc, char* argv[]) {
+	
 	gameManager.Init();
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
