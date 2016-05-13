@@ -179,6 +179,7 @@ ObjModel::~ObjModel(void)
 
 void ObjModel::draw() {
 	//This affects the entire model
+	//glColor
 	glPushMatrix();
 	glRotatef(xrot, 1, 0, 0);
 	glRotatef(yrot, 0, 1, 0);
