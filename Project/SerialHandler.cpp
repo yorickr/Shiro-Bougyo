@@ -2,6 +2,7 @@
 
 SerialHandler::SerialHandler(std::string commPort)
 {
+
 }
 
 void SerialHandler::sendCommand(std::string)

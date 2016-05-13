@@ -6,9 +6,9 @@
 
 #else
 #include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+#include "GL\freeglut.h"
 #endif
 
 #include "GameStateManager.h"
@@ -107,8 +107,9 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
+#if __APPLE__
     CGSetLocalEventsSuppressionInterval(0.0);
-
+#endif
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
 	glutReshapeFunc([](int w, int h) { width = w; height = h; glViewport(0, 0, w, h); });
