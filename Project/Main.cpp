@@ -3,6 +3,7 @@
 #include <GLUT/glut.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
+#include "wiiuse.h"
 
 #else
 #include <windows.h>
@@ -100,6 +101,36 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
+void test(){
+
+	wiimote** wiimotes;
+	int found, connected;
+
+	/*
+	 *	Initialize an array of wiimote objects.
+	 *
+	 *	The parameter is the number of wiimotes I want to create.
+	 */
+	wiimotes =  wiiuse_init(4);
+
+	/*
+	 *	Find wiimote devices
+	 *
+	 *	Now we need to find some wiimotes.
+	 *	Give the function the wiimote array we created, and tell it there
+	 *	are MAX_WIIMOTES wiimotes we are interested in.
+	 *
+	 *	Set the timeout to be 5 seconds.
+	 *
+	 *	This will return the number of actual wiimotes that are in discovery mode.
+	 */
+	found = wiiuse_find(wiimotes, 4, 5);
+	if (!found) {
+		printf("No wiimotes found.\n");
+		return;
+	}
+}
+
 int main(int argc, char* argv[]) {
 	gameManager.Init();
 
@@ -127,6 +158,8 @@ int main(int argc, char* argv[]) {
 	glutWarpPointer(width / 2, height / 2);
 
 	memset(keys, 0, sizeof(keys));
+
+	test();
 
 	glutMainLoop();
 }

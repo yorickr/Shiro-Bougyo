@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/cc  -O3 -DNDEBUG -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/wiiuseexample.dir/example.c.o  -o wiiuseexample  ../src/libwiiuse.dylib -framework IOBluetooth -framework CoreFoundation -framework Foundation 
+/Library/Developer/CommandLineTools/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/wiiuseexample.dir/example.c.o  -o wiiuseexample  ../src/libwiiuse.dylib -framework IOBluetooth -framework CoreFoundation -framework Foundation 

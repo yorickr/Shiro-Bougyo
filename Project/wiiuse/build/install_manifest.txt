@@ -1,8 +1,0 @@
-/usr/local/share/doc/wiiuse/CHANGELOG.mkd
-/usr/local/share/doc/wiiuse/LICENSE
-/usr/local/share/doc/wiiuse/README.mkd
-/usr/local/share/doc/wiiuse/example/example.c
-/usr/local/share/doc/wiiuse/example-sdl/sdl.c
-/usr/local/lib/libwiiuse.dylib
-/usr/local/include/wiiuse.h
-/usr/local/bin/wiiuseexample
