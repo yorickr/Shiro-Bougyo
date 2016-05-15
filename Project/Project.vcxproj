@@ -154,6 +154,8 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="rs232.c" />
+    <ClCompile Include="SerialHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
@@ -162,6 +164,10 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />
     <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="rs232.h" />
+    <ClInclude Include="SerialHandler.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_perlin.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
