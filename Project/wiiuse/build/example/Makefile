@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.5.2/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.5.2/bin/cmake -E remove -f
+RM = /usr/local/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse
+CMAKE_SOURCE_DIR = /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build
+CMAKE_BINARY_DIR = /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -69,7 +69,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/local/Cellar/cmake/3.5.2/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,19 +80,19 @@ edit_cache/fast: edit_cache
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/local/Cellar/cmake/3.5.2/bin/cmake -P cmake_install.cmake
+	/usr/local/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/local/Cellar/cmake/3.5.2/bin/cmake -P cmake_install.cmake
+	/usr/local/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/local/Cellar/cmake/3.5.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/usr/local/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
@@ -103,7 +103,7 @@ install/strip/fast: install/strip
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/local/Cellar/cmake/3.5.2/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
@@ -114,7 +114,7 @@ install/local/fast: install/local
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/local/Cellar/cmake/3.5.2/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -125,7 +125,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && /usr/local/Cellar/cmake/3.5.2/bin/cpack --config ./CPackSourceConfig.cmake /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/CPackSourceConfig.cmake
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && /usr/local/bin/cpack --config ./CPackSourceConfig.cmake /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -136,7 +136,7 @@ package_source/fast: package_source
 # Special rule for the target package
 package: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && /usr/local/Cellar/cmake/3.5.2/bin/cpack --config ./CPackConfig.cmake
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && /usr/local/bin/cpack --config ./CPackConfig.cmake
 .PHONY : package
 
 # Special rule for the target package
@@ -146,14 +146,14 @@ package/fast: package
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/progress.marks
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles 0
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/progress.marks
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/clean
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/clean
 .PHONY : clean
 
 # The main clean target
@@ -163,22 +163,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 example/CMakeFiles/wiiuseexample.dir/rule:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/wiiuseexample.dir/rule
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/wiiuseexample.dir/rule
 .PHONY : example/CMakeFiles/wiiuseexample.dir/rule
 
 # Convenience name for target.
@@ -188,7 +188,7 @@ wiiuseexample: example/CMakeFiles/wiiuseexample.dir/rule
 
 # fast build rule for target.
 wiiuseexample/fast:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/build
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/build
 .PHONY : wiiuseexample/fast
 
 example.o: example.c.o
@@ -197,7 +197,7 @@ example.o: example.c.o
 
 # target to build an object file
 example.c.o:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.o
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.o
 .PHONY : example.c.o
 
 example.i: example.c.i
@@ -206,7 +206,7 @@ example.i: example.c.i
 
 # target to preprocess a source file
 example.c.i:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.i
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.i
 .PHONY : example.c.i
 
 example.s: example.c.s
@@ -215,7 +215,7 @@ example.s: example.c.s
 
 # target to generate assembly for a file
 example.c.s:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.s
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(MAKE) -f example/CMakeFiles/wiiuseexample.dir/build.make example/CMakeFiles/wiiuseexample.dir/example.c.s
 .PHONY : example.c.s
 
 # Help Target
@@ -247,6 +247,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

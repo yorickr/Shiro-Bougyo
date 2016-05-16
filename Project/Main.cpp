@@ -3,7 +3,7 @@
 #include <GLUT/glut.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
-#include "wiiuse.h"
+#include "wiiuse/src/wiiuse.h"
 
 #else
 #include <windows.h>

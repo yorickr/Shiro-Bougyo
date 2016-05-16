@@ -1,4 +1,4 @@
-# Install script for directory: /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/example-sdl
+# Install script for directory: /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example-sdl
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

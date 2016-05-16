@@ -4,21 +4,21 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/classic.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/classic.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/dynamics.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/dynamics.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/events.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/events.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/guitar_hero_3.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/guitar_hero_3.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/io.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/io.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/ir.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/ir.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/motion_plus.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/motion_plus.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/nunchuk.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/nunchuk.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac.m" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac.m.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac_find.m" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac_find.m.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac_interface.m" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac_interface.m.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/util.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/util.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/wiiboard.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/wiiboard.c.o"
-  "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/src/wiiuse.c" "/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/wiiuse.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/classic.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/classic.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/dynamics.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/dynamics.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/events.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/events.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/guitar_hero_3.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/guitar_hero_3.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/io.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/io.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/ir.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/ir.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/motion_plus.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/motion_plus.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/nunchuk.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/nunchuk.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac.m" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac.m.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac_find.m" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac_find.m.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/os_mac/os_mac_interface.m" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/os_mac/os_mac_interface.m.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/util.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/util.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/wiiboard.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/wiiboard.c.o"
+  "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/src/wiiuse.c" "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir/wiiuse.c.o"
   )
 set(CMAKE_C_COMPILER_ID "Clang")
 

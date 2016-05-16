@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.5.2/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.5.2/bin/cmake -E remove -f
+RM = /usr/local/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse
+CMAKE_SOURCE_DIR = /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build
+CMAKE_BINARY_DIR = /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build
 
 # Include any dependencies generated for this target.
 include example/CMakeFiles/wiiuseexample.dir/depend.make
@@ -59,16 +59,16 @@ include example/CMakeFiles/wiiuseexample.dir/flags.make
 
 example/CMakeFiles/wiiuseexample.dir/example.c.o: example/CMakeFiles/wiiuseexample.dir/flags.make
 example/CMakeFiles/wiiuseexample.dir/example.c.o: ../example/example.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object example/CMakeFiles/wiiuseexample.dir/example.c.o"
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example && /Library/Developer/CommandLineTools/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/wiiuseexample.dir/example.c.o   -c /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/example/example.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object example/CMakeFiles/wiiuseexample.dir/example.c.o"
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/wiiuseexample.dir/example.c.o   -c /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example/example.c
 
 example/CMakeFiles/wiiuseexample.dir/example.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/wiiuseexample.dir/example.c.i"
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example && /Library/Developer/CommandLineTools/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/example/example.c > CMakeFiles/wiiuseexample.dir/example.c.i
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example/example.c > CMakeFiles/wiiuseexample.dir/example.c.i
 
 example/CMakeFiles/wiiuseexample.dir/example.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/wiiuseexample.dir/example.c.s"
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example && /Library/Developer/CommandLineTools/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/example/example.c -o CMakeFiles/wiiuseexample.dir/example.c.s
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example/example.c -o CMakeFiles/wiiuseexample.dir/example.c.s
 
 example/CMakeFiles/wiiuseexample.dir/example.c.o.requires:
 
@@ -92,8 +92,8 @@ example/wiiuseexample: example/CMakeFiles/wiiuseexample.dir/example.c.o
 example/wiiuseexample: example/CMakeFiles/wiiuseexample.dir/build.make
 example/wiiuseexample: src/libwiiuse.dylib
 example/wiiuseexample: example/CMakeFiles/wiiuseexample.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable wiiuseexample"
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/wiiuseexample.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable wiiuseexample"
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/wiiuseexample.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 example/CMakeFiles/wiiuseexample.dir/build: example/wiiuseexample
@@ -105,10 +105,10 @@ example/CMakeFiles/wiiuseexample.dir/requires: example/CMakeFiles/wiiuseexample.
 .PHONY : example/CMakeFiles/wiiuseexample.dir/requires
 
 example/CMakeFiles/wiiuseexample.dir/clean:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example && $(CMAKE_COMMAND) -P CMakeFiles/wiiuseexample.dir/cmake_clean.cmake
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example && $(CMAKE_COMMAND) -P CMakeFiles/wiiuseexample.dir/cmake_clean.cmake
 .PHONY : example/CMakeFiles/wiiuseexample.dir/clean
 
 example/CMakeFiles/wiiuseexample.dir/depend:
-	cd /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/example /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example /Users/imegumii/Projects/clion/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/wiiuseexample.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/wiiuseexample.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : example/CMakeFiles/wiiuseexample.dir/depend
 
