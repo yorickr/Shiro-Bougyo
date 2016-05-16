@@ -3,6 +3,7 @@
 #include <GLUT/glut.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
+#include <thread>
 #include "wiiuse/src/wiiuse.h"
 
 #else
@@ -14,6 +15,7 @@
 
 #include "GameStateManager.h"
 #include "Camera.h"
+#include "WiiHandler.h"
 
 GameStateManager gameManager;
 int width, height;
@@ -47,9 +49,6 @@ void onDisplay() {
 }
 
 void onIdle() {
-
-
-
 
 }
 
@@ -159,7 +158,8 @@ int main(int argc, char* argv[]) {
 
 	memset(keys, 0, sizeof(keys));
 
-	test();
+	WiiHandler hand;
+	hand.wiiMoteTest();
 
 	glutMainLoop();
 }
