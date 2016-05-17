@@ -19,6 +19,12 @@
     <Filter Include="Header Files\GameStates">
       <UniqueIdentifier>{a77e7ff6-935d-42d4-af66-123a73ba9a9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ObjectModels">
+      <UniqueIdentifier>{2dcb9071-e942-4556-a360-6b2799004dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectModels">
+      <UniqueIdentifier>{08273317-a40e-47fd-92b6-040088979576}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -30,14 +36,20 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="ObjModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayingState.cpp">
       <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="BowModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +65,17 @@
     <ClInclude Include="MenuState.h">
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="objmodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PlayingState.h">
       <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="BowModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="objmodel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

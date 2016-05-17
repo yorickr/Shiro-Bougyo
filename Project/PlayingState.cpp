@@ -3,6 +3,8 @@
 //
 
 #include "PlayingState.h"
+#include "BowModel.h"
+#include "WarriorModel.h"
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -21,16 +23,17 @@
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
 
+	BowModel *bow = new BowModel();
+	models.push_back(pair<int, ObjModel*>(1, bow));
+
+
 	//make bloem and push to models vector
 	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
 	bloem->xpos = 0;
     models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
-	ObjModel *warrior = new ObjModel("models/warrior/warrior.obj");
-	warrior->xpos = -1;
-	warrior->zpos = 2;
-	warrior->ypos -= 1;
+	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
 	//make baksteen and push to models vector
@@ -57,14 +60,10 @@ void PlayingState::HandleEvents() {
 
 void PlayingState::Update() {
     for( auto &m : models){
-       // m.second->yrot += 10;
-//        m.second->zrot +=1;
-        m.second->xpos += 0.01;
-        if(m.second->xpos > 5){
-            m.second->xpos = -5;
-        }
-
+		m.second->updatepos();
     }
+
+    
 }
 void PlayingState::Draw() {
     for( auto &m : models){

@@ -209,6 +209,14 @@ void ObjModel::draw() {
 	glPopMatrix();
 }
 
+void ObjModel::updatepos()
+{
+	xpos += 0.01;
+	if (xpos > 5) {
+		xpos = -5;
+	}
+}
+
 void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 {
 	std::ifstream pFile(fileName.c_str());

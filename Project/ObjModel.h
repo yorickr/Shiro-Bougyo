@@ -127,5 +127,6 @@ public:
 	ObjModel(std::string filename);
 	~ObjModel(void);
 
-	void draw();
+	virtual void draw();
+	virtual void updatepos();
 };
