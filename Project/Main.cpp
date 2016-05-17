@@ -3,25 +3,23 @@
 #include <GLUT/glut.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
-
 #include <iostream>
-#include <pthread.h>
-#include <iostream>
-#include "wiiuse/src/wiiuse.h"
-
 #else
 #include <windows.h>
 #include "GL\freeglut.h"
-#include "wiiuse/src/wiiuse.h"
 #endif
-#define HAVE_STRUCT_TIMESPEC
-#include <pthread.h>
 
+#include <thread>
+#include "SerialHandler.h"
+#include "wiiuse/src/wiiuse.h"
 #include "GameStateManager.h"
 #include "Camera.h"
 #include "WiiHandler.h"
 
+#define COMMPORT 4
+
 GameStateManager gameManager;
+SerialHandler serial = SerialHandler(COMMPORT);
 int width, height;
 bool keys[255];
 void* wiiFunc(void * argument);
@@ -144,8 +142,15 @@ void test(){
 	}
 }
 
+void initializeThreads() {
+	std::thread serialThread(&SerialHandler::receiveThread,serial); //Serialthread
+	serialThread.detach();
+	//Add wii thread here
+}
+
 int main(int argc, char* argv[]) {
 	gameManager.Init();
+	initializeThreads();
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
@@ -171,12 +176,6 @@ int main(int argc, char* argv[]) {
 	glutWarpPointer(width / 2, height / 2);
 
 	memset(keys, 0, sizeof(keys));
-
-
-	//pthread_t wiiThread;
-
-
-	//pthread_create(&wiiThread, NULL, wiiFunc, NULL);
 
 	glutMainLoop();
 }

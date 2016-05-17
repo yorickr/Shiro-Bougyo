@@ -60,6 +60,9 @@
     <ClCompile Include="WiiHandler.cpp">
       <Filter>Header Files\Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStateManager.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="WiiHandler.h">
       <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
