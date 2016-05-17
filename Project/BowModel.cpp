@@ -3,9 +3,9 @@
 
 
 BowModel::BowModel(): ObjModel("models/bow/Bow_recurve.obj") {
+	zpos = -3;
+	yrot = 183;
 	
-	yrot = -50;
-	zpos = 3.5;
 
 }
 
