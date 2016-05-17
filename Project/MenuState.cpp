@@ -23,13 +23,7 @@ void MenuState::Pause()
 {
 }
 
-void MenuState::Resume()
-{
-}
-
-void MenuState::HandleEvents()
-{
-
+void MenuState::Resume() {
 }
 
 void MenuState::Update()
@@ -80,3 +74,9 @@ void MenuState::Draw()
 	glEnd();
 	glPopMatrix();
 }
+
+void MenuState::HandleEvents(unsigned int key) {
+
+}
+
+

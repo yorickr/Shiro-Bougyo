@@ -24,6 +24,17 @@
     </Filter>
     <Filter Include="Header Files\ObjectModels">
       <UniqueIdentifier>{08273317-a40e-47fd-92b6-040088979576}</UniqueIdentifier>
+    <Filter Include="Header Files\Handlers">
+      <UniqueIdentifier>{6f1a4a0f-514a-4b9b-b28c-88a83e31ebc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Handlers">
+      <UniqueIdentifier>{5f3aac82-3184-4199-8f2d-1e2149a439c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Libs">
+      <UniqueIdentifier>{d13adbc7-65b8-491d-9807-d8870741a635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{2768cda0-28cd-4006-9572-d6c437d5c265}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +61,14 @@
     </ClCompile>
     <ClCompile Include="WarriorModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
+    <ClCompile Include="SerialHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="rs232.c">
+      <Filter>Source Files\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="WiiHandler.cpp">
+      <Filter>Header Files\Handlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +95,20 @@
     </ClInclude>
     <ClInclude Include="WarriorModel.h">
       <Filter>Header Files\ObjectModels</Filter>
+    <ClInclude Include="SerialHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="rs232.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_perlin.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="WiiHandler.h">
+      <Filter>Header Files\Handlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
