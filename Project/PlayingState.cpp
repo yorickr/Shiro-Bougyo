@@ -29,8 +29,8 @@ void PlayingState::Init(GameStateManager *game) {
 	//make bloem and push to models vector
 	ObjModel *warrior = new ObjModel("models/warrior/warrior.obj");
 	warrior->xpos = -1;
-	warrior->zpos = -2;
-	//warrior->ypos += 10;
+	warrior->zpos = 2;
+	warrior->ypos -= 1;
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
 	//make baksteen and push to models vector
