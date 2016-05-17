@@ -26,6 +26,13 @@ void PlayingState::Init(GameStateManager *game) {
 	bloem->xpos = 0;
     models.push_back(pair<int, ObjModel*>(1,bloem));
 
+	//make bloem and push to models vector
+	ObjModel *warrior = new ObjModel("models/warrior/warrior.obj");
+	warrior->xpos = -1;
+	warrior->zpos = -2;
+	//warrior->ypos += 10;
+	models.push_back(pair<int, ObjModel*>(1, warrior));
+
 	//make baksteen and push to models vector
     ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
     baksteen->xpos = 2;
@@ -50,7 +57,7 @@ void PlayingState::HandleEvents() {
 
 void PlayingState::Update() {
     for( auto &m : models){
-        m.second->xrot += 10;
+       // m.second->yrot += 10;
 //        m.second->zrot +=1;
         m.second->xpos += 0.01;
         if(m.second->xpos > 5){
