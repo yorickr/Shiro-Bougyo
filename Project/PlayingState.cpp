@@ -23,11 +23,11 @@
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
     models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-//    ObjModel *baksteen = new ObjModel("Project/models/world/FirstWorld.obj");
-//    baksteen->xpos = 2;
-//    baksteen->ypos=-20;
-//
-//    models.push_back(pair<int, ObjModel *>(2, baksteen));
+    ObjModel *baksteen = new ObjModel("Project/models/game-Map/FirstWorld.obj");
+    baksteen->xpos = 2;
+    baksteen->ypos=-20;
+
+    models.push_back(pair<int, ObjModel *>(2, baksteen));
 }
 
 void PlayingState::Cleanup() {
@@ -56,9 +56,9 @@ void PlayingState::HandleEvents(unsigned int key) {
     switch (key){
 
     }
-    for( auto &m : models) {
-        m.second->xpos ++;
-    }
+//    for( auto &m : models) {
+//        m.second->xpos ++;
+//    }
 }
 
 

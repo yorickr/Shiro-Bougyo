@@ -34,14 +34,14 @@ void onDisplay() {
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, 0, camera.posY);
 
-
-	glColor3f(0.5f, 1.0f, 1.0f);
-	glBegin(GL_QUADS);
-	glVertex3f(-15, -1, -15);
-	glVertex3f(15, -1, -15);
-	glVertex3f(15, -1, 15);
-	glVertex3f(-15, -1, 15);
-	glEnd();
+//
+//	glColor3f(0.5f, 1.0f, 1.0f);
+//	glBegin(GL_QUADS);
+//	glVertex3f(-15, -1, -15);
+//	glVertex3f(15, -1, -15);
+//	glVertex3f(15, -1, 15);
+//	glVertex3f(-15, -1, 15);
+//	glEnd();
 	gameManager.Draw();
 	glutSwapBuffers();
 }
