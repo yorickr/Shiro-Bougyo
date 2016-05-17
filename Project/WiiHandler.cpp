@@ -14,7 +14,6 @@
 
 #define MAX_WIIMOTES				4
 
-
 /**
  *	@brief Callback that handles an event.
  *

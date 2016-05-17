@@ -1,8 +1,8 @@
-# Install script for directory: /Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse
+# Install script for directory: C:/Users/Wesley/Documents/GitHub/wiiuse
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files/WiiUse")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -28,26 +28,26 @@ if(NOT CMAKE_INSTALL_COMPONENT)
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "docs")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/wiiuse" TYPE FILE FILES
-    "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/CHANGELOG.mkd"
-    "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/LICENSE"
-    "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/README.mkd"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE FILE FILES
+    "C:/Users/Wesley/Documents/GitHub/wiiuse/CHANGELOG.mkd"
+    "C:/Users/Wesley/Documents/GitHub/wiiuse/LICENSE"
+    "C:/Users/Wesley/Documents/GitHub/wiiuse/README.mkd"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "examples")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/wiiuse/example" TYPE FILE FILES "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example/example.c")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./example" TYPE FILE FILES "C:/Users/Wesley/Documents/GitHub/wiiuse/example/example.c")
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "examples")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/wiiuse/example-sdl" TYPE FILE FILES "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/example-sdl/sdl.c")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/./example-sdl" TYPE FILE FILES "C:/Users/Wesley/Documents/GitHub/wiiuse/example-sdl/sdl.c")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/src/cmake_install.cmake")
-  include("/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example/cmake_install.cmake")
-  include("/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/example-sdl/cmake_install.cmake")
+  include("C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/src/cmake_install.cmake")
+  include("C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example/cmake_install.cmake")
+  include("C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example-sdl/cmake_install.cmake")
 
 endif()
 
@@ -59,5 +59,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/Tim/Downloads/Shiro-Bougyo/Project/wiiuse/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -12,6 +12,7 @@
 #else
 #include <windows.h>
 #include "GL\freeglut.h"
+#include "wiiuse/src/wiiuse.h"
 #endif
 #define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
@@ -172,10 +173,10 @@ int main(int argc, char* argv[]) {
 	memset(keys, 0, sizeof(keys));
 
 
-	pthread_t wiiThread;
+	//pthread_t wiiThread;
 
 
-	pthread_create(&wiiThread, NULL, wiiFunc, NULL);
+	//pthread_create(&wiiThread, NULL, wiiFunc, NULL);
 
 	glutMainLoop();
 }

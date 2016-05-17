@@ -57,6 +57,9 @@
     <ClCompile Include="rs232.c">
       <Filter>Source Files\libs</Filter>
     </ClCompile>
+    <ClCompile Include="WiiHandler.cpp">
+      <Filter>Header Files\Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStateManager.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="stb_perlin.h">
       <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="WiiHandler.h">
+      <Filter>Header Files\Handlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
