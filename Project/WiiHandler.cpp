@@ -6,7 +6,12 @@
 
 #include <stdio.h>                      /* for printf */
 #include <thread>
+#include <GLUT/glut.h>
+#include <cstdlib>
 #include "wiiuse/src/wiiuse.h"                     /* for wiimote_t, classic_ctrl_t, etc */
+#include "Camera.h"
+
+
 
 //#ifndef WIIUSE_WIN32
 //#include <unistd.h>                     /* for usleep */
@@ -23,7 +28,10 @@
  *	This function is called automatically by the wiiuse library when an
  *	event occurs on the specified wiimote.
  */
-void WiiHandler::handle_event(struct wiimote_t* wm) {
+
+void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
+    Camera* mainCamera = camera;
+
     printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
 
     /* if a button is pressed, report it */
@@ -121,6 +129,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
      *	Also make sure that we see at least 1 dot.
      */
     if (WIIUSE_USING_IR(wm)) {
+        int width, height;
         int i = 0;
 
         /* go through each of the 4 possible IR sources */
@@ -133,6 +142,16 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
 
         printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
         printf("IR z distance: %f\n", wm->ir.z);
+
+        int dx = wm->ir.x - mainCamera->width / 2;
+        int dy = wm->ir.y - mainCamera->height / 2;
+        if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
+        {
+            mainCamera->rotY += dx / 10.0f;
+            mainCamera->rotX += dy / 10.0f;
+            glutWarpPointer(width / 2, height / 2);
+        }
+
     }
 
     /* show events specific to supported expansions */
@@ -329,7 +348,8 @@ short WiiHandler::any_wiimote_connected(wiimote** wm, int wiimotes) {
  *	Connect to up to two wiimotes and print any events
  *	that occur on either device.
  */
-void WiiHandler::wiiMoteTest() {
+void WiiHandler::wiiMoteTest(Camera* cam) {
+    Camera* mainCamera = cam;
     wiimote** wiimotes;
     int found, connected;
 
@@ -439,7 +459,7 @@ void WiiHandler::wiiMoteTest() {
                 switch (wiimotes[i]->event) {
                     case WIIUSE_EVENT:
                         /* a generic event occurred */
-                        handle_event(wiimotes[i]);
+                        handle_event(wiimotes[i],mainCamera);
                         break;
 
                     case WIIUSE_STATUS:
