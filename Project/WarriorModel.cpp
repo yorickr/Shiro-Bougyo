@@ -16,7 +16,7 @@ WarriorModel::~WarriorModel()
 
 void WarriorModel::updatepos()
 {
-	zpos+= 0.1;
-	if (zpos > 10)
-		zpos = -10;
+	xpos+= 0.1;
+	if (xpos > 4)
+		xpos = -4;
 }
