@@ -256,6 +256,7 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		{
 			currentMaterial->hasTexture = true;
 			currentMaterial->texture = new Texture(dirName + "/" + params[1]);
+			std::cout<<"Made material named " << params[1] << std::endl;
 		}
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;

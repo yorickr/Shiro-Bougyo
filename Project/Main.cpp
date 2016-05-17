@@ -52,14 +52,11 @@ void onDisplay() {
 	
 	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
-
-
-	glFlush();
 	glutSwapBuffers();
 }
 
 void onIdle() {
-	//do nothing
+
 }
 
 void onTimer(int id){
@@ -106,7 +103,6 @@ void onKeyboardUp(unsigned char key, int, int) {
 
 void mousePassiveMotion(int x, int y) {
 
-
 	int dx = x - width / 2;
 	int dy = y - height / 2;
 	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
@@ -114,6 +110,36 @@ void mousePassiveMotion(int x, int y) {
 		camera.rotY += dx / 10.0f;
 		camera.rotX += dy / 10.0f;
 		glutWarpPointer(width / 2, height / 2);
+	}
+}
+
+void test(){
+
+	wiimote** wiimotes;
+	int found, connected;
+
+	/*
+	 *	Initialize an array of wiimote objects.
+	 *
+	 *	The parameter is the number of wiimotes I want to create.
+	 */
+	wiimotes =  wiiuse_init(4);
+
+	/*
+	 *	Find wiimote devices
+	 *
+	 *	Now we need to find some wiimotes.
+	 *	Give the function the wiimote array we created, and tell it there
+	 *	are MAX_WIIMOTES wiimotes we are interested in.
+	 *
+	 *	Set the timeout to be 5 seconds.
+	 *
+	 *	This will return the number of actual wiimotes that are in discovery mode.
+	 */
+	found = wiiuse_find(wiimotes, 4, 5);
+	if (!found) {
+		printf("No wiimotes found.\n");
+		return;
 	}
 }
 
@@ -128,9 +154,11 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
-#if __APPLE__
+    //Needed for osx
+    #ifdef __APPLE__
     CGSetLocalEventsSuppressionInterval(0.0);
-#endif
+    #endif
+
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
 	glutReshapeFunc([](int w, int h) { width = w; height = h; glViewport(0, 0, w, h); });
