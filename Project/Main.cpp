@@ -3,7 +3,9 @@
 #include <GLUT/glut.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
-#include <thread>
+#include <iostream>
+#include <pthread.h>
+#include <iostream>
 #include "wiiuse/src/wiiuse.h"
 
 #else
@@ -20,6 +22,7 @@
 GameStateManager gameManager;
 int width, height;
 bool keys[255];
+void* wiiFunc(void * argument);
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -82,6 +85,12 @@ void onKeyboard(unsigned char key, int, int) {
 	}
 	gameManager.HandleEvents(key);
 	keys[key] = true;
+}
+
+void* wiiFunc(void * argument){
+	WiiHandler hand;
+	hand.wiiMoteTest();
+	return 0;
 }
 
 void onKeyboardUp(unsigned char key, int, int) {
@@ -158,8 +167,15 @@ int main(int argc, char* argv[]) {
 
 	memset(keys, 0, sizeof(keys));
 
-	WiiHandler hand;
-	hand.wiiMoteTest();
+
+
+
+	pthread_t wiiThread;
+
+
+	pthread_create(&wiiThread, NULL, wiiFunc, NULL);
+
+
 
 	glutMainLoop();
 }

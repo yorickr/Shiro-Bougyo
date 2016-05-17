@@ -8,11 +8,11 @@
 #include <thread>
 #include "wiiuse/src/wiiuse.h"                     /* for wiimote_t, classic_ctrl_t, etc */
 
-#ifndef WIIUSE_WIN32
-#include <unistd.h>                     /* for usleep */
-#endif
+//#ifndef WIIUSE_WIN32
+//#include <unistd.h>                     /* for usleep */
+//#endif
 
-#define MAX_WIIMOTES				2
+#define MAX_WIIMOTES				4
 
 
 /**
@@ -356,6 +356,7 @@ void WiiHandler::wiiMoteTest() {
         printf("No wiimotes found.\n");
         //return 0;
     }
+    printf("Wiimotes found");
 
     /*
      *	Connect to the wiimotes
@@ -373,6 +374,7 @@ void WiiHandler::wiiMoteTest() {
         printf("Failed to connect to any wiimote.\n");
         //return 0;
     }
+    printf("Wiimotes connected");
 
     /*
      *	Now set the LEDs and rumble for a second so it's easy
