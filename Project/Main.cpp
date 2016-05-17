@@ -11,10 +11,10 @@
 
 #else
 #include <windows.h>
-//#include <GL/gl.h>
-//#include <GL/glu.h>
 #include "GL\freeglut.h"
 #endif
+#define HAVE_STRUCT_TIMESPEC
+#include <pthread.h>
 
 #include "GameStateManager.h"
 #include "Camera.h"

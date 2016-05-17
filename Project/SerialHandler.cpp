@@ -30,7 +30,7 @@ bool SerialHandler::initializeCommPort()
 
 void SerialHandler::sendCommand(std::string strCommand)
 {
-	if(isConnected)
+	if(connected)
 		RS232_cputs(commPortNumber, strCommand.c_str());
 }
 
@@ -57,7 +57,7 @@ std::string SerialHandler::receiveCommand()
 
 void * SerialHandler::receiveThread(void * threadID)
 {
-	while (isConnected) {
+	while (connected) {
 		try {
 			std::string received = receiveCommand();
 			printf("Received following command: %s\n", received.c_str());

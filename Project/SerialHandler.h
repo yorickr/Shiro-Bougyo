@@ -7,6 +7,7 @@
 #include <unistd.h>
 #endif
 #include <string>
+#define HAVE_STRUCT_TIMESPEC
 #include <pthread.h>
 #include "rs232.h"
 
