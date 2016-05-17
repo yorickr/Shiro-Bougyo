@@ -7,6 +7,7 @@
 #include <unistd.h>
 #endif
 #include <string>
+#include <pthread.h>
 #include "rs232.h"
 
 
@@ -19,8 +20,9 @@ class SerialHandler {
 		SerialHandler(int commPortNumber);
 		~SerialHandler();
 		void sendCommand(std::string);
-		
 		std::string receiveCommand();
+		void* receiveThread(void* threadID);
+		void handleReceivedCommand(std::string command);
 		bool isConnected();
 };
 
