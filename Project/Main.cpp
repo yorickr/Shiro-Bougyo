@@ -22,9 +22,9 @@
 #include "WiiHandler.h"
 
 GameStateManager gameManager;
-int width, height;
 bool keys[255];
 void* wiiFunc(void * argument);
+Camera camera;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -32,7 +32,7 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0f, (float)width / height, 0.1, 50);
+	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1, 50);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -94,7 +94,7 @@ void onKeyboard(unsigned char key, int, int) {
 
 void* wiiFunc(void * argument){
 	WiiHandler hand;
-	hand.wiiMoteTest();
+	hand.wiiMoteTest(&camera);
 	return 0;
 }
 
@@ -104,43 +104,13 @@ void onKeyboardUp(unsigned char key, int, int) {
 
 void mousePassiveMotion(int x, int y) {
 
-	int dx = x - width / 2;
-	int dy = y - height / 2;
+	int dx = x - camera.width / 2;
+	int dy = y - camera.height / 2;
 	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
 	{
 		camera.rotY += dx / 10.0f;
 		camera.rotX += dy / 10.0f;
-		glutWarpPointer(width / 2, height / 2);
-	}
-}
-
-void test(){
-
-	wiimote** wiimotes;
-	int found, connected;
-
-	/*
-	 *	Initialize an array of wiimote objects.
-	 *
-	 *	The parameter is the number of wiimotes I want to create.
-	 */
-	wiimotes =  wiiuse_init(4);
-
-	/*
-	 *	Find wiimote devices
-	 *
-	 *	Now we need to find some wiimotes.
-	 *	Give the function the wiimote array we created, and tell it there
-	 *	are MAX_WIIMOTES wiimotes we are interested in.
-	 *
-	 *	Set the timeout to be 5 seconds.
-	 *
-	 *	This will return the number of actual wiimotes that are in discovery mode.
-	 */
-	found = wiiuse_find(wiimotes, 4, 5);
-	if (!found) {
-		printf("No wiimotes found.\n");
-		return;
+		glutWarpPointer(camera.width / 2, camera.height / 2);
 	}
 }
 
@@ -162,13 +132,13 @@ int main(int argc, char* argv[]) {
 
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
-	glutReshapeFunc([](int w, int h) { width = w; height = h; glViewport(0, 0, w, h); });
+	glutReshapeFunc([](int w, int h) { camera.width = w; camera.height = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
 	glutTimerFunc(1000/60,onTimer, 1);
 	glutKeyboardUpFunc(onKeyboardUp);
 	glutPassiveMotionFunc(mousePassiveMotion);
 
-	glutWarpPointer(width / 2, height / 2);
+	glutWarpPointer(camera.width / 2, camera.height / 2);
 
 	memset(keys, 0, sizeof(keys));
 
