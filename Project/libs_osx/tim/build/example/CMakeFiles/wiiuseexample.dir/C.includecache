@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Tim/Documents/Shiro-Bougyo/Project/wiiuse/example/../src/wiiuse.h
+windows.h
+-
+bluetooth/bluetooth.h
+-
+wiiuse_msvcstdint.h
+/Users/Tim/Documents/Shiro-Bougyo/Project/wiiuse/example/../src/wiiuse_msvcstdint.h
+stdint.h
+-
+stdio.h
+-
+
+/Users/Tim/Documents/Shiro-Bougyo/Project/wiiuse/example/../src/wiiuse_msvcstdint.h
+limits.h
+-
+wchar.h
+-
+
+/Users/Tim/Documents/Shiro-Bougyo/Project/wiiuse/example/example.c
+stdio.h
+-
+wiiuse.h
+/Users/Tim/Documents/Shiro-Bougyo/Project/wiiuse/example/wiiuse.h
+unistd.h
+-
+
