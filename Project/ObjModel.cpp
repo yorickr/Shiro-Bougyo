@@ -163,7 +163,7 @@ ObjModel::ObjModel(std::string fileName) {
 
 }
 
-void ObjModel::CalcMinVertex(){
+void ObjModel::CalcMinVertex() {
 
     float smallestx, smallesty, smallestz;
     smallestx = smallesty = smallestz = 0;
@@ -197,7 +197,7 @@ void ObjModel::CalcMinVertex(){
 
 }
 
-void ObjModel::CalcMaxVertex(){
+void ObjModel::CalcMaxVertex() {
     float maxx, maxy, maxz;
     maxx = maxy = maxz = 0;
 
@@ -225,7 +225,7 @@ void ObjModel::CalcMaxVertex(){
     }
 
     printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
-    vertices_min = new Vec3f(maxx,maxy,maxz);
+    vertices_max = new Vec3f(maxx, maxy, maxz);
 }
 
 
@@ -262,7 +262,36 @@ void ObjModel::draw() {
     }
 
     if (DRAW_BOUNDING_BOX) {
-        
+        glLineWidth(5);
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glEnd();
+
     }
     glPopMatrix();
 }
@@ -320,9 +349,9 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
 
 bool ObjModel::CollidesWith(ObjModel *obj2) const {
 
-    for (auto &vertice : vertices) {
-        printf("Vertice info: %f %f %f\n", vertice->v[0], vertice->v[1], vertice->v[2]);
-    }
+//    for (auto &vertice : vertices) {
+//        printf("Vertice info: %f %f %f\n", vertice->v[0], vertice->v[1], vertice->v[2]);
+//    }
     return false;
 }
 
