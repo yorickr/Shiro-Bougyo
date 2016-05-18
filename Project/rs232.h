@@ -55,7 +55,7 @@ extern "C" {
 
 #else
 
-#include <windows.h>
+//#include <windows.h>
 
 #endif
 
