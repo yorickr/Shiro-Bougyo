@@ -19,10 +19,14 @@
 #include <thread>
 
 #include "GameStateManager.h"
+#include "SerialHandler.h"
 #include "Camera.h"
 #include "WiiHandler.h"
 
+#define COMMPORT 4
+
 GameStateManager gameManager;
+SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 
 void* wiiFunc(void * argument);
@@ -66,6 +70,8 @@ void onIdle() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
+	std::thread serialThread(&SerialHandler::receiveThread, serial); //Serialthread
+	serialThread.detach();
 
 }
 

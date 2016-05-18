@@ -7,22 +7,23 @@
 #include <unistd.h>
 #endif
 #include <string>
-#define HAVE_STRUCT_TIMESPEC
-#include <pthread.h>
+#include <thread>
 #include "rs232.h"
+#include "Util.h"
 
 
 class SerialHandler {
 	private:
 		bool connected;
 		bool initializeCommPort();
+		void connectThread();
 		int commPortNumber;
 	public:
 		SerialHandler(int commPortNumber);
 		~SerialHandler();
 		void sendCommand(std::string);
 		std::string receiveCommand();
-		void* receiveThread(void* threadID);
+		void receiveThread();
 		void handleReceivedCommand(std::string command);
 		bool isConnected();
 };
