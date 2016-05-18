@@ -1,0 +1,17 @@
+newmtl tree:_1
+illum 4
+Kd 0.41 0.73 0.13
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.33 0.33 0.33
+Ns 0.06
+newmtl tree:bark
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd bark.jpg
+Ni 1.00
+Ks 0.33 0.33 0.33
+Ns 0.06
