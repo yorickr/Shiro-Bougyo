@@ -6,7 +6,11 @@
 
 #include <stdio.h>                      /* for printf */
 #include <thread>
+#ifdef __APPLE__
 #include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
 #include <cstdlib>
 #include "wiiuse/src/wiiuse.h"                     /* for wiimote_t, classic_ctrl_t, etc */
 #include "Camera.h"
