@@ -95,6 +95,10 @@ private:
 		list<Face> faces;
 	};
 
+	void CalcMinVertex();
+	void CalcMaxVertex();
+	Vec3f* vertices_min; //This is the vertex with the smallest x, y and z.
+	Vec3f* vertices_max; //See above, but the opposite.
 	std::vector<Vec3f*>	vertices;
 	std::vector<Vec3f*>	normals;
 	std::vector<Vec2f*>	texcoords;
@@ -123,6 +127,10 @@ public:
 		};
 		float pos[3];
 	};
+
+	//True if obj2 collides with this object
+	bool CollidesWith(ObjModel *obj2) const;
+
 
 	ObjModel(std::string filename);
 	~ObjModel(void);
