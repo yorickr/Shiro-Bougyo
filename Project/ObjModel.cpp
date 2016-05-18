@@ -209,7 +209,7 @@ void ObjModel::draw() {
 	glPopMatrix();
 }
 
-void ObjModel::updatepos()
+void ObjModel::update()
 {
 	xpos += 0.01;
 	if (xpos > 5) {

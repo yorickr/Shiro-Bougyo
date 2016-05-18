@@ -14,7 +14,7 @@ WarriorModel::~WarriorModel()
 {
 }
 
-void WarriorModel::updatepos()
+void WarriorModel::update()
 {
 	//xpos+= 0.1;
 	if (xpos > 4)
