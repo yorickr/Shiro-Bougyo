@@ -15,7 +15,9 @@ set(SOURCE_FILES
         Project/MenuState.h
         Project/ObjModel.cpp
         Project/ObjModel.h
-        Project/PlayingState.cpp Project/PlayingState.h Project/Camera.h Project/WiiHandler.cpp Project/WiiHandler.h)
+        Project/PlayingState.cpp Project/PlayingState.h Project/Camera.h Project/WiiHandler.cpp Project/WiiHandler.h
+        Project/rs232.c Project/rs232.h Project/SerialHandler.cpp Project/SerialHandler.h
+        Project/Util.cpp Project/Util.h)
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})
 

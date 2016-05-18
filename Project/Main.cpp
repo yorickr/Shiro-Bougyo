@@ -70,7 +70,7 @@ void onIdle() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
-	std::thread serialThread(&SerialHandler::receiveThread, serial); //Serialthread
+	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 
 }
