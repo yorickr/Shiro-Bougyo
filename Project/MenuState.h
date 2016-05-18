@@ -2,11 +2,12 @@
 #define MENUSTATE_H
 
 #include "GameState.h"
+#include "Camera.h"
 
 class MenuState : public GameState  {
 	// Inherited via GameState
 	public:
-		virtual void Init(GameStateManager * game) override;
+		virtual void Init(GameStateManager * game, Camera * camera) override;
 		virtual void Cleanup() override;
 		virtual void Pause() override;
 		virtual void Resume() override;
@@ -15,6 +16,7 @@ class MenuState : public GameState  {
 		virtual void Draw() override;
 	private:
 		GameStateManager *manager;
+		Camera * camera;
 
 
 };

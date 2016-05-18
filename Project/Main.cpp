@@ -107,7 +107,7 @@ void mousePassiveMotion(int x, int y) {
 
 int main(int argc, char* argv[]) {
 
-	gameManager.Init();
+	gameManager.Init(&camera);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);

@@ -2,10 +2,11 @@
 #define GAMESTATE_H
 
 #include "GameStateManager.h"
+#include "Camera.h"
 
 class GameState {
 	public:
-		virtual void Init(GameStateManager* game) = 0;
+		virtual void Init(GameStateManager* game, Camera * camera) = 0;
 		virtual void Cleanup() = 0;
 
 		virtual void Pause() = 0;

@@ -5,6 +5,7 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "Camera.h"
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -20,10 +21,11 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game) {
+void PlayingState::Init(GameStateManager *game, Camera * cam) {
     this->manager = game;
+	this->camera = cam;
 
-	BowModel *bow = new BowModel();
+	BowModel *bow = new BowModel(cam);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 
