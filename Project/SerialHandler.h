@@ -7,9 +7,9 @@
 #include <unistd.h>
 #endif
 #include <string>
-#include <thread>
+#define HAVE_STRUCT_TIMESPEC
+#include <pthread.h>
 #include "rs232.h"
-#include "Util.h"
 
 
 class SerialHandler {
@@ -22,7 +22,7 @@ class SerialHandler {
 		~SerialHandler();
 		void sendCommand(std::string);
 		std::string receiveCommand();
-		void receiveThread();
+		void* receiveThread(void* threadID);
 		void handleReceivedCommand(std::string command);
 		bool isConnected();
 };
