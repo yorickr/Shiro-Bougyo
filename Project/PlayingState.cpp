@@ -5,7 +5,6 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
-
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -41,7 +40,6 @@ void PlayingState::Init(GameStateManager *game) {
     ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
     baksteen->xpos = 2;
     models.push_back(pair<int, ObjModel *>(1, baksteen));
-
 }
 
 void PlayingState::Cleanup() {
@@ -56,31 +54,23 @@ void PlayingState::Resume() {
 
 }
 
+void PlayingState::HandleEvents() {
+
+}
+
 void PlayingState::Update() {
     for( auto &m : models){
 		m.second->updatepos();
     }
 
-
+    
 }
 void PlayingState::Draw() {
-    for( auto &m : models) {
+    for( auto &m : models){
         m.second->draw();
     }
 
 }
-
-void PlayingState::HandleEvents(unsigned int key) {
-    switch (key){
-
-    }
-   
-}
-
-
-
-
-
 
 
 

@@ -20,7 +20,7 @@ void GameStateManager::Cleanup()
 
 void GameStateManager::nextState()
 {
-	if (currentState < states.size()-1) {
+	if (currentState < states.size() -1) {
 		currentState++;
 		states.at(currentState)->Init(this);
 	}
@@ -34,6 +34,11 @@ void GameStateManager::previousState()
 	}
 }
 
+void GameStateManager::HandleEvents()
+{
+	if(!states.empty())
+		states.at(currentState)->HandleEvents();
+}
 
 void GameStateManager::Update()
 {
@@ -46,10 +51,3 @@ void GameStateManager::Draw()
 	if (!states.empty())
 		states.at(currentState)->Draw();
 }
-
-void GameStateManager::HandleEvents(unsigned int key) {
-	if(!states.empty())
-		states.at(currentState)->HandleEvents(key);
-}
-
-

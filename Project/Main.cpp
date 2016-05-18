@@ -4,27 +4,25 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <cstdlib>
 
-#include <iostream>
-#include <pthread.h>
-#include <iostream>
-#include "wiiuse/src/wiiuse.h"
-
 #else
 #include <windows.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
 #include "GL\freeglut.h"
-#include "wiiuse/src/wiiuse.h"
 #endif
-#define HAVE_STRUCT_TIMESPEC
-#include <pthread.h>
 
 #include "GameStateManager.h"
-#include "Camera.h"
-#include "WiiHandler.h"
 
 GameStateManager gameManager;
 int width, height;
 bool keys[255];
-void* wiiFunc(void * argument);
+struct Camera
+{
+	float posX = 0;
+	float posY = -4;
+	float rotX = 0;
+	float rotY = 0;
+} camera;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -32,7 +30,7 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0f, (float)width / height, 0.1, 50);
+	gluPerspective(60.0f, (float)width / height, 0.1, 30);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -53,21 +51,18 @@ void onDisplay() {
 	
 	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
+
+
+	glFlush();
 	glutSwapBuffers();
+
 }
 
 void onIdle() {
-
+	//do nothing
 }
 
 void onTimer(int id){
-
-	if(keys[27]) exit(0);
-	if(keys['w']) camera.posY++;
-	if(keys['s']) camera.posY--;
-	if(keys['d']) camera.posX--;
-	if(keys['a']) camera.posX++;
-
 	gameManager.Update();
 	glutPostRedisplay();
 	glutTimerFunc(1000/60,onTimer, 1);
@@ -88,14 +83,7 @@ void onKeyboard(unsigned char key, int, int) {
 			//just to please CLion.
 			break;
 	}
-	gameManager.HandleEvents(key);
 	keys[key] = true;
-}
-
-void* wiiFunc(void * argument){
-	WiiHandler hand;
-	hand.wiiMoteTest();
-	return 0;
 }
 
 void onKeyboardUp(unsigned char key, int, int) {
@@ -103,6 +91,7 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
+
 
 	int dx = x - width / 2;
 	int dy = y - height / 2;
@@ -114,37 +103,8 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
-void test(){
-
-	wiimote** wiimotes;
-	int found, connected;
-
-	/*
-	 *	Initialize an array of wiimote objects.
-	 *
-	 *	The parameter is the number of wiimotes I want to create.
-	 */
-	wiimotes =  wiiuse_init(4);
-
-	/*
-	 *	Find wiimote devices
-	 *
-	 *	Now we need to find some wiimotes.
-	 *	Give the function the wiimote array we created, and tell it there
-	 *	are MAX_WIIMOTES wiimotes we are interested in.
-	 *
-	 *	Set the timeout to be 5 seconds.
-	 *
-	 *	This will return the number of actual wiimotes that are in discovery mode.
-	 */
-	found = wiiuse_find(wiimotes, 4, 5);
-	if (!found) {
-		printf("No wiimotes found.\n");
-		return;
-	}
-}
-
 int main(int argc, char* argv[]) {
+	
 	gameManager.Init();
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -155,11 +115,9 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
-    //Needed for osx
-    #ifdef __APPLE__
+#if __APPLE__
     CGSetLocalEventsSuppressionInterval(0.0);
-    #endif
-
+#endif
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
 	glutReshapeFunc([](int w, int h) { width = w; height = h; glViewport(0, 0, w, h); });
@@ -171,12 +129,6 @@ int main(int argc, char* argv[]) {
 	glutWarpPointer(width / 2, height / 2);
 
 	memset(keys, 0, sizeof(keys));
-
-
-	//pthread_t wiiThread;
-
-
-	//pthread_create(&wiiThread, NULL, wiiFunc, NULL);
 
 	glutMainLoop();
 }

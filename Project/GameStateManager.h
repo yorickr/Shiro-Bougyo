@@ -16,7 +16,7 @@ class GameStateManager {
 		void nextState();
 		void previousState();
 
-		void HandleEvents(unsigned int key);
+		void HandleEvents();
 		void Update();
 		void Draw();
 

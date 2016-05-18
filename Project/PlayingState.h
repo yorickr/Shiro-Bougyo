@@ -16,10 +16,9 @@ class PlayingState : public GameState {
         virtual void Cleanup() override;
         virtual void Pause() override;
         virtual void Resume() override;
-        virtual void HandleEvents(unsigned int key) override;
+        virtual void HandleEvents() override;
         virtual void Update() override;
         virtual void Draw() override;
-
     private:
         GameStateManager *manager;
         vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function
