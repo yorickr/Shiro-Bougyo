@@ -6,16 +6,14 @@
 #define SHIRO_BOUGYO_CAMERA_H
 
 
-class Camera {
+struct Camera {
 
-public:
     float posX = 0;
     float posY = -4;
     float rotX = 0;
     float rotY = 0;
-    int width, height = 0;
 
-};
+} camera;
 
 
 #endif //SHIRO_BOUGYO_CAMERA_H
