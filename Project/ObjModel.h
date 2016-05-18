@@ -128,5 +128,5 @@ public:
 	~ObjModel(void);
 
 	virtual void draw();
-	virtual void updatepos();
+	virtual void update();
 };

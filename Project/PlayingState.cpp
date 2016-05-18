@@ -60,7 +60,7 @@ void PlayingState::HandleEvents() {
 
 void PlayingState::Update() {
     for( auto &m : models){
-		m.second->updatepos();
+		m.second->update();
     }
 
     

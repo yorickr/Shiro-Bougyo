@@ -7,7 +7,7 @@ public:
 	BowModel();
 	~BowModel();
 	void draw() override;
-	void updatepos() override;
+	void update() override;
 
 };
 

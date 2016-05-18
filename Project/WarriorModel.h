@@ -6,6 +6,6 @@ class WarriorModel :
 public:
 	WarriorModel();
 	~WarriorModel();
-	void updatepos() override;
+	void update() override;
 };
 

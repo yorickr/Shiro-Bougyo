@@ -19,7 +19,7 @@ void BowModel::draw()
 	ObjModel::draw();
 }
 
-void BowModel::updatepos()
+void BowModel::update()
 {
 	//TODO get CAMERA pos
 
