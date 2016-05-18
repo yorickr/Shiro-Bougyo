@@ -108,7 +108,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>freeglut\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>freeglut\lib\x64;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,6 +146,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>freeglut\lib\x64;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -156,9 +159,11 @@
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="WarriorModel.cpp" />
+    <ClCompile Include="WiiHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BowModel.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -166,6 +171,7 @@
     <ClInclude Include="objmodel.h" />
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="WarriorModel.h" />
+    <ClInclude Include="WiiHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
