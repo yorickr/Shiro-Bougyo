@@ -45,7 +45,7 @@ void onDisplay() {
 	glVertex3f(-15, -1, 15);
 	glEnd();
 	glPopMatrix();
-	
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
 
@@ -59,31 +59,31 @@ void onIdle() {
 	//do nothing
 }
 
-void onTimer(int id){
+void onTimer(int id) {
 	gameManager.Update();
 	glutPostRedisplay();
-	glutTimerFunc(1000/60,onTimer, 1);
+	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
 void onKeyboard(unsigned char key, int, int) {
 	switch (key)
 	{
-		case 27:             // ESCAPE key
-			exit (0);
-		case '[':
-			gameManager.previousState();
-			break;
-		case ']':
-			gameManager.nextState();
-			break;
-		default:
-			//just to please CLion.
-			break;
+	case 27:             // ESCAPE key
+		exit(0);
+	case '[':
+		gameManager.previousState();
+		break;
+	case ']':
+		gameManager.nextState();
+		break;
+	default:
+		//just to please CLion.
+		break;
 	}
 	keys[key] = true;
 }
 
-void* wiiFunc(void * argument){
+void* wiiFunc(void * argument) {
 	WiiHandler hand;
 	hand.wiiMoteTest(&camera);
 	return 0;
@@ -106,25 +106,25 @@ void mousePassiveMotion(int x, int y) {
 }
 
 int main(int argc, char* argv[]) {
-	
+
 	gameManager.Init();
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-	glutInitWindowSize(1920,1080);
+	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
-    CGSetLocalEventsSuppressionInterval(0.0);
+	CGSetLocalEventsSuppressionInterval(0.0);
 #endif
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
 	glutReshapeFunc([](int w, int h) { camera.width = w; camera.height = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
-	glutTimerFunc(1000/60,onTimer, 1);
+	glutTimerFunc(1000 / 60, onTimer, 1);
 	glutKeyboardUpFunc(onKeyboardUp);
 	glutPassiveMotionFunc(mousePassiveMotion);
 
