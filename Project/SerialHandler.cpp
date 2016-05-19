@@ -43,7 +43,7 @@ void SerialHandler::connectThread()
 
 void SerialHandler::sendCommand(std::string strCommand)
 {
-	if(isConnected())
+	if (isConnected())
 		RS232_cputs(commPortNumber, strCommand.c_str());
 }
 
