@@ -54,14 +54,15 @@ void onDisplay() {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
 
-}
 
+	glFlush();
+	glutSwapBuffers();
+}
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
-
 }
 
 void onIdle() {
@@ -117,7 +118,7 @@ void mousePassiveMotion(int x, int y) {
 int main(int argc, char* argv[]) {
 
 	gameManager.Init(&camera);
-
+	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
 	glutInitWindowSize(1920, 1080);
