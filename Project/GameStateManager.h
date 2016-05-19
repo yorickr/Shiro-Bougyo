@@ -3,12 +3,13 @@
 
 #include <vector>
 #include "Camera.h"
+#include "WiiHandler.h"
 
 class GameState;
 
 class GameStateManager {
 	public:
-		void Init(Camera * cam);
+		void Init(Camera * cam, WiiHandler * wiiHandler);
 		void Cleanup();
 
 		/*void ChangeState(GameState* state);
@@ -30,5 +31,6 @@ class GameStateManager {
 		short currentState;
 		bool m_running;
 		Camera * camera;
+		WiiHandler * wiiHandler;
 };
 #endif

@@ -4,9 +4,10 @@
 #include "PlayingState.h"
 
 
-void GameStateManager::Init(Camera * cam)
+void GameStateManager::Init(Camera * cam, WiiHandler * hand)
 {
 	this->camera = cam;
+	this->wiiHandler = hand;
 	Cleanup();
 	states.push_back(new MenuState());
 	states.push_back(new PlayingState());
@@ -23,7 +24,7 @@ void GameStateManager::nextState()
 {
 	if (currentState < states.size() -1) {
 		currentState++;
-		states.at(currentState)->Init(this, camera);
+		states.at(currentState)->Init(this, camera, wiiHandler);
 	}
 }
 
@@ -31,7 +32,7 @@ void GameStateManager::previousState()
 {
 	if (currentState > 0) {
 		currentState--;
-		states.at(currentState)->Init(this, camera);
+		states.at(currentState)->Init(this, camera, wiiHandler);
 	}
 }
 
