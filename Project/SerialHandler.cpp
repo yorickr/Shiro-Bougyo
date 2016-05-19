@@ -2,14 +2,87 @@
 
 SerialHandler::SerialHandler(std::string commPort)
 {
+	connected = false;
+	this->commPortNumber = commPortNumber;
+	if (initializeCommPort()) 
+		connected = true;
+	else {
+		std::thread connectThread(&SerialHandler::connectThread, this); //Serialthread
+		connectThread.detach();
+	}
+}
+
+SerialHandler::~SerialHandler()
+{
+	RS232_CloseComport(commPortNumber);
+}
+
 
 }
 
-void SerialHandler::sendCommand(std::string)
+void SerialHandler::connectThread()
 {
+	while (!isConnected()) {
+		if (initializeCommPort())
+			connected = true;
+		Util::USleep(1000);
+	}
+}
+
+void SerialHandler::sendCommand(std::string strCommand)
+{
+	if(isConnected())
+		RS232_cputs(commPortNumber, strCommand.c_str());
+
 }
 
 std::string SerialHandler::receiveCommand()
 {
-	return std::string();
+	unsigned char buf[128];
+	std::string command;
+	
+	int received = RS232_PollComport(commPortNumber, buf, 127);
+	if (received > 0) {
+		char actualReceivedCommand[128];
+		buf[received] = 0; //Null terminator
+		for (int x = 0; x < received; x++) {
+			if (buf[x] == '\n') {
+				actualReceivedCommand[x] = 0;
+				break;
+			}
+			actualReceivedCommand[x] = buf[x];
+		}
+		command = actualReceivedCommand;
+	}
+	return command;
+}
+
+void SerialHandler::receiveThread()
+{
+	while (true) {
+		if (isConnected()) {
+			try {
+				std::string received = receiveCommand();
+				printf("Received following command: %s\n", received.c_str());
+				handleReceivedCommand(received);
+			}
+			catch (int e) {
+				connected = false;
+				RS232_CloseComport(commPortNumber);
+				printf("Serial device disconnected");
+			}
+		}
+		else
+			printf("not conencted\n");
+		Util::USleep(1000);
+	}
+}
+
+void SerialHandler::handleReceivedCommand(std::string command)
+{
+}
+
+bool SerialHandler::isConnected()
+{
+	return connected;
 }

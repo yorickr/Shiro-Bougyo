@@ -11,12 +11,17 @@
 #include "GL\freeglut.h"
 #endif
 
+#include "GameStateManager.h"
+#include "SerialHandler.h"
 #include "Camera.h"
 
 #include "GameStateManager.h"
 #include "WiiHandler.h"
 
+#define COMMPORT 4
+
 GameStateManager gameManager;
+SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
@@ -49,9 +54,13 @@ void onDisplay() {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
 
+}
 
-	glFlush();
-	glutSwapBuffers();
+void initializeThreads(){
+	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	wiiThread.detach();
+	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
+	serialThread.detach();
 
 }
 

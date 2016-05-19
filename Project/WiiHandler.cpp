@@ -133,7 +133,6 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
      *	Also make sure that we see at least 1 dot.
      */
     if (WIIUSE_USING_IR(wm)) {
-        int width, height;
         int i = 0;
 
         /* go through each of the 4 possible IR sources */
@@ -141,20 +140,13 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
             /* check if the source is visible */
             if (wm->ir.dot[i].visible) {
                 printf("IR source %i: (%u, %u)\n", i, wm->ir.dot[i].x, wm->ir.dot[i].y);
+
             }
+            printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
+            printf("IR z distance: %f\n", wm->ir.z);
         }
 
-        printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
-        printf("IR z distance: %f\n", wm->ir.z);
 
-        int dx = wm->ir.x - mainCamera->width / 2;
-        int dy = wm->ir.y - mainCamera->height / 2;
-        if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-        {
-            mainCamera->rotY += dx / 10.0f;
-            mainCamera->rotX += dy / 10.0f;
-            glutWarpPointer(width / 2, height / 2);
-        }
 
     }
 
@@ -185,6 +177,14 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
                nc->js.min.y,
                nc->js.center.y,
                nc->js.max.y);
+
+        if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1)
+        mainCamera->rotX -= nc->js.y * 2;
+        mainCamera->rotY += nc->js.x * 2;
+        glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
+
+
+
     } else if (wm->exp.type == EXP_CLASSIC) {
         /* classic controller */
         struct classic_ctrl_t* cc = (classic_ctrl_t*)&wm->exp.classic;
