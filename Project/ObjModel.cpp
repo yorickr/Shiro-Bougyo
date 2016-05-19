@@ -171,6 +171,8 @@ ObjModel::ObjModel(std::string fileName)
 		}
 	}
 	groups.push_back(currentGroup);
+	CalcMinVertex();
+	CalcMaxVertex();
 }
 
 void ObjModel::CalcMinVertex() {
