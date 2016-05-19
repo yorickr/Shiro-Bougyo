@@ -35,7 +35,7 @@
 
 
 
-#if defined(__linux__) || defined(__FreeBSD__)   /* Linux & FreeBSD */
+#ifdef __APPLE__   /* Linux & FreeBSD */
 
 
 int Cport[38],
@@ -102,30 +102,30 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode)
                    break;
     case  230400 : baudr = B230400;
                    break;
-    case  460800 : baudr = B460800;
-                   break;
-    case  500000 : baudr = B500000;
-                   break;
-    case  576000 : baudr = B576000;
-                   break;
-    case  921600 : baudr = B921600;
-                   break;
-    case 1000000 : baudr = B1000000;
-                   break;
-    case 1152000 : baudr = B1152000;
-                   break;
-    case 1500000 : baudr = B1500000;
-                   break;
-    case 2000000 : baudr = B2000000;
-                   break;
-    case 2500000 : baudr = B2500000;
-                   break;
-    case 3000000 : baudr = B3000000;
-                   break;
-    case 3500000 : baudr = B3500000;
-                   break;
-    case 4000000 : baudr = B4000000;
-                   break;
+//    case  460800 : baudr = B460800;
+//                   break;
+//    case  500000 : baudr = B500000;
+//                   break;
+//    case  576000 : baudr = B576000;
+//                   break;
+//    case  921600 : baudr = B921600;
+//                   break;
+//    case 1000000 : baudr = B1000000;
+//                   break;
+//    case 1152000 : baudr = B1152000;
+//                   break;
+//    case 1500000 : baudr = B1500000;
+//                   break;
+//    case 2000000 : baudr = B2000000;
+//                   break;
+//    case 2500000 : baudr = B2500000;
+//                   break;
+//    case 3000000 : baudr = B3000000;
+//                   break;
+//    case 3500000 : baudr = B3500000;
+//                   break;
+//    case 4000000 : baudr = B4000000;
+//                   break;
     default      : printf("invalid baudrate\n");
                    return(1);
                    break;
@@ -444,7 +444,7 @@ void RS232_flushRXTX(int comport_number)
 }
 
 
-#else         /* windows */
+#else     /* windows */
 
 
 HANDLE Cport[16];

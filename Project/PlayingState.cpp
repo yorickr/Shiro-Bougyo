@@ -3,6 +3,8 @@
 //
 
 #include "PlayingState.h"
+#include "BowModel.h"
+#include "WarriorModel.h"
 
 
 #ifdef __APPLE__
@@ -20,14 +22,27 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game) {
+void PlayingState::Init(GameStateManager *game, Camera *cam) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-    ObjModel *baksteen = new ObjModel("Project/models/cube/cube-textures.obj");
-    baksteen->xpos = 2;
-//    baksteen->ypos=-20;
+	this->camera = cam;
 
-    models.push_back(pair<int, ObjModel *>(2, baksteen));
+	BowModel *bow = new BowModel(cam);
+	models.push_back(pair<int, ObjModel*>(1, bow));
+
+
+	//make bloem and push to models vector
+	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+	bloem->xpos = 0;
+    models.push_back(pair<int, ObjModel*>(1,bloem));
+
+	//make bloem and push to models vector
+	WarriorModel *warrior = new WarriorModel();
+	models.push_back(pair<int, ObjModel*>(1, warrior));
+
+	//make baksteen and push to models vector
+    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
+    baksteen->xpos = 2;
+    models.push_back(pair<int, ObjModel *>(1, baksteen));
 }
 
 void PlayingState::Cleanup() {
@@ -55,10 +70,7 @@ void PlayingState::Draw() {
 
 }
 
-void PlayingState::HandleEvents(unsigned int key) {
-    switch (key){
-
-    }
+void PlayingState::HandleEvents() {
    
 }
 

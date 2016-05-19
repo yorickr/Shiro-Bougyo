@@ -2,12 +2,13 @@
 #define GAMESTATEMANAGER_H
 
 #include <vector>
+#include "Camera.h"
 
 class GameState;
 
 class GameStateManager {
 	public:
-		void Init();
+		void Init(Camera * cam);
 		void Cleanup();
 
 		/*void ChangeState(GameState* state);
@@ -16,7 +17,7 @@ class GameStateManager {
 		void nextState();
 		void previousState();
 
-		void HandleEvents(unsigned int key);
+		void HandleEvents();
 		void Update();
 		void Draw();
 
@@ -28,5 +29,6 @@ class GameStateManager {
 		std::vector<GameState*> states;
 		short currentState;
 		bool m_running;
+		Camera * camera;
 };
 #endif

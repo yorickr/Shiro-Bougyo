@@ -4,8 +4,9 @@
 #include "PlayingState.h"
 
 
-void GameStateManager::Init()
+void GameStateManager::Init(Camera * cam)
 {
+	this->camera = cam;
 	Cleanup();
 	states.push_back(new MenuState());
 	states.push_back(new PlayingState());
@@ -20,9 +21,9 @@ void GameStateManager::Cleanup()
 
 void GameStateManager::nextState()
 {
-	if (currentState < states.size()-1) {
+	if (currentState < states.size() -1) {
 		currentState++;
-		states.at(currentState)->Init(this);
+		states.at(currentState)->Init(this, camera);
 	}
 }
 
@@ -30,10 +31,15 @@ void GameStateManager::previousState()
 {
 	if (currentState > 0) {
 		currentState--;
-		states.at(currentState)->Init(this);
+		states.at(currentState)->Init(this, camera);
 	}
 }
 
+void GameStateManager::HandleEvents()
+{
+	if(!states.empty())
+		states.at(currentState)->HandleEvents();
+}
 
 void GameStateManager::Update()
 {
@@ -46,10 +52,3 @@ void GameStateManager::Draw()
 	if (!states.empty())
 		states.at(currentState)->Draw();
 }
-
-void GameStateManager::HandleEvents(unsigned int key) {
-	if(!states.empty())
-		states.at(currentState)->HandleEvents(key);
-}
-
-
