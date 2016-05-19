@@ -1,4 +1,5 @@
 #include "MenuState.h"
+#include "Camera.h"
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -10,7 +11,7 @@
 #include <GL/glut.h>
 #endif
 
-void MenuState::Init(GameStateManager * game)
+void MenuState::Init(GameStateManager * game, Camera * cam)
 {
 	this->manager = game;
 }

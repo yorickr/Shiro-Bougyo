@@ -181,13 +181,13 @@ void ObjModel::draw() {
 	//This affects the entire model
 	//glColor
 	glPushMatrix();
-	glRotatef(xrot, 1, 0, 0);
-	glRotatef(yrot, 0, 1, 0);
-	glRotatef(zrot, 0, 0, 1);
+
 
 	glTranslatef(xpos, ypos, zpos);
 	
-
+	glRotatef(xrot, 1, 0, 0);
+	glRotatef(yrot, 0, 1, 0);
+	glRotatef(zrot, 0, 0, 1);
 
 	for (auto &g : groups) {
 		if (materials[g->materialIndex]->hasTexture) {
