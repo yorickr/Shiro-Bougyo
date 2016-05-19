@@ -22,11 +22,11 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game, Camera *cam) {
+void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) {
     this->manager = game;
 	this->camera = cam;
-
-	BowModel *bow = new BowModel(cam);
+    this->wiiHandler = hand;
+	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 

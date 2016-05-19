@@ -25,6 +25,7 @@ SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
+WiiHandler wiiHandler;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -96,8 +97,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	WiiHandler hand;
-	hand.wiiMoteTest(&camera);
+	wiiHandler.wiiMoteTest(&camera);
 	return 0;
 }
 
@@ -119,7 +119,7 @@ void mousePassiveMotion(int x, int y) {
 
 int main(int argc, char* argv[]) {
 
-	gameManager.Init(&camera);
+	gameManager.Init(&camera,&wiiHandler);
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
