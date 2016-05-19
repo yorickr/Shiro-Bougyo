@@ -8,8 +8,10 @@
 
 BowModel::BowModel(Camera * cam): ObjModel("models/bow/Bow_recurve.obj") {
 	camera = cam;
-	
+	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0,0,0,0);
+	setCrosshairPositions(0, 0,0,0);
+	
 
 }
 
@@ -45,16 +47,58 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	
 	//set bow on the right site
 
-	xpos += 0.5 * (cos(toRadian(roty)));
-	zpos += 0.5 * (sin(toRadian(roty)));
+	xpos += 0.8 * (cos(toRadian(roty)));
+	zpos += 0.8 * (sin(toRadian(roty)));
+
+	//set crosshair positions
+	setCrosshairPositions(x, y, rotx, roty);
 
 
 
 }
 
+void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
+{
+	//set crosshair on camera position
+	float tempxpos = x;
+	float tempypos = y + 4;
+	float tempzpos = 4;
+	float tempxrot = 0;
+	float tempyrot = 0;
+	float tempzrot = 0;
+
+	//set rotation croshair equals to rotation camera
+	//	xrot = -rotx;
+	if (roty > -90 && roty < 90)
+		tempxrot = -rotx;
+	else
+		tempxrot = rotx;
+	tempyrot = -roty + 180;
+	tempzrot = 0;
+
+	//translate bow to correct position
+
+	//if rotate on x as:
+	tempypos -= (sin(toRadian(rotx)));
+	tempzpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
+
+
+	//if rotate on y as: 
+	tempxpos += (sin(toRadian(roty)));
+
+
+	crosshair->xpos = tempxpos;
+	crosshair->ypos = tempypos;
+	crosshair->zpos = tempzpos;
+	crosshair->xrot = tempxrot;
+	crosshair->yrot = tempyrot;
+	crosshair->zrot = tempzrot;
+
+}
+
 void BowModel::draw()
 {
-
+	crosshair->draw();
 	//TODO draw croshair
 	ObjModel::draw();
 

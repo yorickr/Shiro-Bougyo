@@ -39,10 +39,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam) {
 	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
-	//make baksteen and push to models vector
-    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
-    baksteen->xpos = 2;
-    models.push_back(pair<int, ObjModel *>(1, baksteen));
+
 }
 
 void PlayingState::Cleanup() {
