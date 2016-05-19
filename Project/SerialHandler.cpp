@@ -1,10 +1,10 @@
 #include "SerialHandler.h"
 
-SerialHandler::SerialHandler(std::string commPort)
+SerialHandler::SerialHandler(int commPortNumber)
 {
 	connected = false;
 	this->commPortNumber = commPortNumber;
-	if (initializeCommPort()) 
+	if (initializeCommPort())
 		connected = true;
 	else {
 		std::thread connectThread(&SerialHandler::connectThread, this); //Serialthread
@@ -17,7 +17,19 @@ SerialHandler::~SerialHandler()
 	RS232_CloseComport(commPortNumber);
 }
 
+bool SerialHandler::initializeCommPort()
+{
+	int cPortNr = commPortNumber;
+	int baudrate = 9600;
 
+	if (RS232_OpenComport(cPortNr, baudrate, "8N1")) {
+		printf("Failed to connect to COMM%i\n" + commPortNumber);
+		return 0;
+	}
+	else {
+		printf("Succesfully connected to COMM%i\n" + commPortNumber);
+		return 1;
+	}
 }
 
 void SerialHandler::connectThread()
@@ -31,16 +43,15 @@ void SerialHandler::connectThread()
 
 void SerialHandler::sendCommand(std::string strCommand)
 {
-	if(isConnected())
+	if (isConnected())
 		RS232_cputs(commPortNumber, strCommand.c_str());
-
 }
 
 std::string SerialHandler::receiveCommand()
 {
 	unsigned char buf[128];
 	std::string command;
-	
+
 	int received = RS232_PollComport(commPortNumber, buf, 127);
 	if (received > 0) {
 		char actualReceivedCommand[128];
