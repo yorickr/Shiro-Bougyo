@@ -10,7 +10,7 @@ BowModel::BowModel(Camera * cam): ObjModel("models/bow/Bow_recurve.obj") {
 	camera = cam;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0,0,0,0);
-	setCrosshairPositions(0, 0,0,0);
+	setCrosshairPositions(0, -10,0,0);
 	
 
 }
@@ -23,11 +23,10 @@ BowModel::~BowModel()
 void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	//set bow on camera position
 	xpos = x ;
-	ypos = y + 4;
-	zpos = 4;
+	ypos = y ;
+	zpos = 0;
 	
 	//set rotation bow equals to rotation camera
-//	xrot = -rotx;
 	if (roty > -90 && roty < 90)
 		xrot = -rotx;
 	else
@@ -35,12 +34,11 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	yrot = -roty + 180;
 	zrot = 0;
 
-	//translate bow to correct position
+	////translate bow to correct position
 
 	//if rotate on x as:
 	ypos -= (sin(toRadian(rotx)));
 	zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
-	
 	
 	//if rotate on y as: 
 	xpos += (sin(toRadian(roty)));
@@ -60,39 +58,28 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 {
 	//set crosshair on camera position
-	float tempxpos = x;
-	float tempypos = y + 4;
-	float tempzpos = 4;
-	float tempxrot = 0;
-	float tempyrot = 0;
-	float tempzrot = 0;
+	crosshair->xpos = x;
+	crosshair->ypos = y;
+	crosshair->zpos = crosshair->xrot = crosshair->yrot = crosshair->zrot =   0;
 
 	//set rotation croshair equals to rotation camera
 	//	xrot = -rotx;
 	if (roty > -90 && roty < 90)
-		tempxrot = -rotx;
+		crosshair->xrot = -rotx;
 	else
-		tempxrot = rotx;
-	tempyrot = -roty + 180;
-	tempzrot = 0;
+		crosshair->xrot = rotx;
+	crosshair->yrot = -roty + 180;
+	crosshair->zrot = 0;
 
 	//translate bow to correct position
 
 	//if rotate on x as:
-	tempypos -= (sin(toRadian(rotx)));
-	tempzpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
+	crosshair->ypos -= (sin(toRadian(rotx)));
+	crosshair->zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
 
 
 	//if rotate on y as: 
-	tempxpos += (sin(toRadian(roty)));
-
-
-	crosshair->xpos = tempxpos;
-	crosshair->ypos = tempypos;
-	crosshair->zpos = tempzpos;
-	crosshair->xrot = tempxrot;
-	crosshair->yrot = tempyrot;
-	crosshair->zrot = tempzrot;
+	crosshair->xpos += (sin(toRadian(roty)));
 
 }
 
