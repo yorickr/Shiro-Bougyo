@@ -29,9 +29,9 @@ void PlayingState::Init(GameStateManager *game) {
 
     models.push_back(pair<int, ObjModel *>(2, baksteen));*/
 
-	ObjModel *baksteen2 = new ObjModel("models/tower/tower.obj");
+	ObjModel *baksteen2 = new ObjModel("models/tree/tree.obj");
 	baksteen2->xpos = 2;
-	baksteen2->ypos = -40;
+	baksteen2->ypos = 0;
 
 	models.push_back(pair<int, ObjModel *>(2, baksteen2));
 }
