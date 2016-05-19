@@ -22,12 +22,18 @@
 
 void PlayingState::Init(GameStateManager *game) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-//    ObjModel *baksteen = new ObjModel("Project/models/world/FirstWorld.obj");
-//    baksteen->xpos = 2;
-//    baksteen->ypos=-20;
-//
-//    models.push_back(pair<int, ObjModel *>(2, baksteen));
+    models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
+   /* ObjModel *baksteen = new ObjModel("models/world/try.obj");
+    baksteen->xpos = 2;
+    baksteen->ypos=-20;
+
+    models.push_back(pair<int, ObjModel *>(2, baksteen));*/
+
+	ObjModel *baksteen2 = new ObjModel("models/tower/tower.obj");
+	baksteen2->xpos = 2;
+	baksteen2->ypos = -40;
+
+	models.push_back(pair<int, ObjModel *>(2, baksteen2));
 }
 
 void PlayingState::Cleanup() {
