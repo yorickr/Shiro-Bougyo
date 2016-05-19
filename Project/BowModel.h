@@ -13,5 +13,6 @@ public:
 	void update() override;
 private:
 	Camera * camera;
+
 };
 

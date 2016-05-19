@@ -7,8 +7,6 @@
 
 
 BowModel::BowModel(Camera * cam): ObjModel("models/bow/Bow_recurve.obj") {
-	cout << "Boog aangemaakt";
-	cout << "x: " << cam->rotX << " y: " << cam->rotY;
 	camera = cam;
 	
 	SetPositions(0,0,0,0);
@@ -44,7 +42,11 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	
 	//if rotate on y as: 
 	xpos += (sin(toRadian(roty)));
-	//zpos += (cos(toRadian(roty)));
+	
+	//set bow on the right site
+
+	xpos += 0.5 * (cos(toRadian(roty)));
+	zpos += 0.5 * (sin(toRadian(roty)));
 
 
 
@@ -53,7 +55,10 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 void BowModel::draw()
 {
 
+	//TODO draw croshair
 	ObjModel::draw();
+
+
 }
 
 float BowModel::toRadian(float degree) {
@@ -68,15 +73,6 @@ void BowModel::update()
 	float camroty = camera->rotY;
 	SetPositions(camx, camy, camrotx, camroty);
 
-	/*xrot = camrotx * -1;
-	yrot = -camroty + 180;
-
-	cout << "yrot: " << camroty <<endl;
-
-	ypos = (-1 * sin(toRadian(camrotx)));
-	xpos = (sin(toRadian(camroty))) + 0.6;
-
-	zpos += (cos(toRadian(camroty)));*/
 
 	
 }
