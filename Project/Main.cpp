@@ -32,14 +32,15 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1, 500);
+	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1,100);
 
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
+	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, 0, camera.posY);
+	
 
 
 	glPushMatrix();

@@ -24,7 +24,7 @@
 
 void PlayingState::Init(GameStateManager *game, Camera *cam) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
+    //models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
    /* ObjModel *baksteen = new ObjModel("models/world/try.obj");
     baksteen->xpos = 2;
     baksteen->ypos=-20;
@@ -43,10 +43,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam) {
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 
-	//make bloem and push to models vector
-	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	bloem->xpos = 0;
-    models.push_back(pair<int, ObjModel*>(1,bloem));
+	////make bloem and push to models vector
+	//ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+	//bloem->xpos = 0;
+ //   models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
@@ -56,6 +56,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam) {
     ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
     baksteen->xpos = 2;
     models.push_back(pair<int, ObjModel *>(1, baksteen));
+
 
 }
 
@@ -72,14 +73,12 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-//    ObjModel* obj1 = models[0].second;
-//    ObjModel* obj2 = models[0].second;
     for( auto &m : models) {
         m.second->update();
     }
-//    printf("Does obj1 collide with obj2? %s", obj1->CollidesWith(obj2) ? "yes" : "no");
-//    exit(0);
 }
+
+
 void PlayingState::Draw() {
     for( auto &m : models) {
         m.second->draw();

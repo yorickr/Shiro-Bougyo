@@ -378,10 +378,8 @@ bool ObjModel::CollidesWith(ObjModel *obj2) const {
 }
 
 void ObjModel::update() {
-	xpos += 0.01;
-	if (xpos > 5) {
-		xpos = -5;
-	}
+
+	//implement this method in child class
 }
 
 
