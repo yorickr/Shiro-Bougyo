@@ -12,12 +12,8 @@ BowModel::BowModel(Camera * cam): ObjModel("models/bow/Bow_recurve.obj") {
 	camera = cam;
 	
 	SetPositions(0,0,0,0);
-	
 
 }
-
-
-
 
 BowModel::~BowModel()
 {

@@ -58,8 +58,11 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-    ObjModel* obj1 = models[0].second;
-    ObjModel* obj2 = models[0].second;
+//    ObjModel* obj1 = models[0].second;
+//    ObjModel* obj2 = models[0].second;
+    for( auto &m : models) {
+        m.second->update();
+    }
 //    printf("Does obj1 collide with obj2? %s", obj1->CollidesWith(obj2) ? "yes" : "no");
 //    exit(0);
 }
