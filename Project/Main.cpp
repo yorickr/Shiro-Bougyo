@@ -39,7 +39,7 @@ void onDisplay() {
 	glLoadIdentity();
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, 0, camera.posY);
+	glTranslatef(camera.posX, camera.posY, 0);
 
 
 	glPushMatrix();
@@ -67,12 +67,12 @@ void initializeThreads(){
 }
 
 void onIdle() {
-	//do nothing
+
+	glutPostRedisplay();
 }
 
 void onTimer(int id) {
 	gameManager.Update();
-	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 

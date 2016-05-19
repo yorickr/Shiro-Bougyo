@@ -5,6 +5,7 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "StationaryObjModel.h"
 
 
 #ifdef __APPLE__
@@ -32,17 +33,21 @@ void PlayingState::Init(GameStateManager *game, Camera *cam) {
 
 	//make bloem and push to models vector
 	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	bloem->xpos = 0;
+	bloem->xpos = 4;
     models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
-	//make baksteen and push to models vector
+//	make baksteen and push to models vector
     ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
     baksteen->xpos = 2;
     models.push_back(pair<int, ObjModel *>(1, baksteen));
+
+    ObjModel *bak = new StationaryObjModel("models/cube/cube-textures.obj");
+    bak->xpos = 0;
+    models.push_back(pair<int, ObjModel *>(1, bak));
 }
 
 void PlayingState::Cleanup() {
@@ -58,12 +63,18 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-//    ObjModel* obj1 = models[0].second;
-//    ObjModel* obj2 = models[0].second;
-    for( auto &m : models) {
-        m.second->update();
+    bool collides = false;
+    for( auto &obj1 : models) {
+        for (auto &obj2 : models) {
+            if (obj1 != obj2 && obj1.second->CollidesWith(obj2.second)) {
+                collides = true;
+            }
+        }
+        if(!collides) {
+            obj1.second->update();
+        }
+        collides = false;
     }
-//    printf("Does obj1 collide with obj2? %s", obj1->CollidesWith(obj2) ? "yes" : "no");
 //    exit(0);
 }
 void PlayingState::Draw() {
