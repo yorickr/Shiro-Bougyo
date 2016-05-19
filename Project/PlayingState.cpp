@@ -3,6 +3,8 @@
 //
 
 #include "PlayingState.h"
+#include "BowModel.h"
+#include "WarriorModel.h"
 
 
 #ifdef __APPLE__
@@ -20,14 +22,27 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game) {
+void PlayingState::Init(GameStateManager *game, Camera *cam) {
     this->manager = game;
-    models.push_back(pair<int, ObjModel*>(1, new ObjModel("Project/models/bloemetje/PrimroseP.obj")));
-//    ObjModel *baksteen = new ObjModel("Project/models/world/FirstWorld.obj");
-//    baksteen->xpos = 2;
-//    baksteen->ypos=-20;
-//
-//    models.push_back(pair<int, ObjModel *>(2, baksteen));
+	this->camera = cam;
+
+	BowModel *bow = new BowModel(cam);
+	models.push_back(pair<int, ObjModel*>(1, bow));
+
+
+	//make bloem and push to models vector
+	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+	bloem->xpos = 0;
+    models.push_back(pair<int, ObjModel*>(1,bloem));
+
+	//make bloem and push to models vector
+	WarriorModel *warrior = new WarriorModel();
+	models.push_back(pair<int, ObjModel*>(1, warrior));
+
+	//make baksteen and push to models vector
+    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
+    baksteen->xpos = 2;
+    models.push_back(pair<int, ObjModel *>(1, baksteen));
 }
 
 void PlayingState::Cleanup() {
@@ -43,7 +58,13 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-
+//    ObjModel* obj1 = models[0].second;
+//    ObjModel* obj2 = models[0].second;
+    for( auto &m : models) {
+        m.second->update();
+    }
+//    printf("Does obj1 collide with obj2? %s", obj1->CollidesWith(obj2) ? "yes" : "no");
+//    exit(0);
 }
 void PlayingState::Draw() {
     for( auto &m : models) {
@@ -52,10 +73,7 @@ void PlayingState::Draw() {
 
 }
 
-void PlayingState::HandleEvents(unsigned int key) {
-    switch (key){
-
-    }
+void PlayingState::HandleEvents() {
    
 }
 

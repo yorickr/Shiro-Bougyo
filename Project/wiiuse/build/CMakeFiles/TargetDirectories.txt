@@ -1,0 +1,12 @@
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles/PACKAGE.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles/INSTALL.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/wiiuse.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/PACKAGE.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/src/CMakeFiles/INSTALL.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/wiiuseexample.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/PACKAGE.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example/CMakeFiles/INSTALL.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example-sdl/CMakeFiles/PACKAGE.dir
+C:/Users/Wesley/Documents/GitHub/Shiro-Bougyo/Project/wiiuse/build/example-sdl/CMakeFiles/INSTALL.dir
