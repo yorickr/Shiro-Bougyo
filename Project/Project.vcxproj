@@ -88,13 +88,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>wiiuse/src;freeglut/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>freeglut/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>wiiuse/build/src/Debug;freeglut/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wiiuse.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>freeglut/lib/x64; wiiuse\lib; %(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,28 +140,35 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>freeglut\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>freeglut\lib\x64;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>freeglut\lib;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BowModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+
     <ClCompile Include="rs232.c" />
     <ClCompile Include="SerialHandler.cpp" />
+    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="WarriorModel.cpp" />
     <ClCompile Include="WiiHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BowModel.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -171,8 +177,8 @@
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="rs232.h" />
     <ClInclude Include="SerialHandler.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="stb_perlin.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="WarriorModel.h" />
     <ClInclude Include="WiiHandler.h" />
   </ItemGroup>
   <ItemGroup>
