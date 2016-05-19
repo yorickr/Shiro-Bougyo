@@ -54,6 +54,12 @@
     <ClCompile Include="WiiHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SerialHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rs232.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,9 +83,6 @@
     <ClInclude Include="BowModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
-    <ClInclude Include="objmodel.h">
-      <Filter>Header Files\ObjectModels</Filter>
-    </ClInclude>
     <ClInclude Include="WarriorModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
@@ -88,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="WiiHandler.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rs232.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objmodel.h">
+      <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>

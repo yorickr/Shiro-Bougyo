@@ -11,7 +11,6 @@
 #include "GL\freeglut.h"
 #endif
 
-
 #include "GameStateManager.h"
 #include "SerialHandler.h"
 #include "Camera.h"
