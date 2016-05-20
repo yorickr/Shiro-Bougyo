@@ -103,6 +103,17 @@ void BowModel::update()
 	float camrotx = camera->rotX;
 	float camroty = camera->rotY;
 	SetPositions(camx, camy, camrotx, camroty);
+//	int wiiCursorX = 560 - (wiiHandler->wiiMoteP1->ir.x/(camera->width/560));
+//	int wiiCursorY = 420 - (wiiHandler->wiiMoteP1->ir.y/(camera->height/420));
+//
+//	ypos -= (sin(toRadian(wiiCursorX)));
+//	zpos -= (cos(toRadian(wiiCursorX)) * cos(toRadian(wiiCursorY)));
+//
+//
+//	//if rotate on y as:
+//	xpos += (sin(toRadian(wiiCursorY)));
+
+
 
 
 	
