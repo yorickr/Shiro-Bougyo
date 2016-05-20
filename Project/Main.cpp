@@ -36,7 +36,12 @@ void onDisplay() {
 
 	glMatrixMode(GL_MODELVIEW);
 
+
 	glLoadIdentity();
+	
+	//load bow
+	gameManager.preDraw();
+
 	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);

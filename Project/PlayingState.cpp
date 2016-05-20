@@ -27,8 +27,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     this->manager = game;
 	this->camera = cam;
     this->wiiHandler = hand;
-	BowModel *bow = new BowModel(cam, wiiHandler);
-	models.push_back(pair<int, ObjModel*>(1, bow));
+	
+	this->bow = new BowModel(wiiHandler);
+	
 
 
 	//make bloem and push to models vector
@@ -37,8 +38,12 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 //    models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
-	WarriorModel *warrior = new WarriorModel();
-	models.push_back(pair<int, ObjModel*>(1, warrior));
+	for (int i = 0; i < 5; i++ )
+	{
+		WarriorModel *warrior = new WarriorModel(i *2, -i);
+		models.push_back(pair<int, ObjModel*>(1, warrior));
+	}
+	
 
 //	make baksteen and push to models vector
 //    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
@@ -84,6 +89,12 @@ void PlayingState::Draw() {
         m.second->draw();
     }
 
+}
+
+void PlayingState::preDraw()
+{
+	//TODO draw bow:
+	bow->draw();
 }
 
 void PlayingState::HandleEvents() {

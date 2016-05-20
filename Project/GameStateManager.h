@@ -25,7 +25,8 @@ class GameStateManager {
 		bool Running() { return m_running; }
 		void Quit() { m_running = false; }
 
-	private:
+	void preDraw();
+private:
 		// the stack of states
 		std::vector<GameState*> states;
 		short currentState;
