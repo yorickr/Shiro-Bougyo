@@ -15,6 +15,9 @@ MenuModel::MenuModel(Camera * cam, WiiHandler * wiihandler): ObjModel("models/Me
 
 void MenuModel::draw()
 {
+	playButton->draw();
+	settingsButton->draw();
+	exitButton->draw();
 	ObjModel::draw();
 }
 
