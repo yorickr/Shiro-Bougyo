@@ -5,7 +5,9 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "AnimatedModel.h"
 #include "StationaryObjModel.h"
+#include "AnimatedBowModel.h"
 
 
 #ifdef __APPLE__
@@ -28,7 +30,13 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	this->camera = cam;
     this->wiiHandler = hand;
 	
-	this->bow = new BowModel(wiiHandler);
+	vector<ObjModel*> temp;
+	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj"));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj"));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj"));
+
+	bow = new AnimatedBowModel(temp, hand);
+	/*bow = new AnimatedBowModel(models); */
 	
 
 
@@ -73,7 +81,8 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-
+	if(wiiHandler->is_A)
+		bow->nextModel();
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
@@ -98,7 +107,7 @@ void PlayingState::Draw() {
 
 void PlayingState::preDraw()
 {
-	bow->draw();
+	bow->getModel()->draw();
 }
 
 void PlayingState::HandleEvents() {

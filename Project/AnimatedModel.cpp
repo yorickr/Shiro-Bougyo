@@ -2,47 +2,43 @@
 
 
 
-AnimatedModel::AnimatedModel(vector<ObjModel> models){
-	for (int i = 0; i < models.size(); i++)
+AnimatedModel::AnimatedModel(vector<ObjModel*> models){
+	objects = models;
+}
+
+ObjModel* AnimatedModel::getModel()
+{
+	return objects[index];
+}
+
+
+void AnimatedModel::setIndex(int i)
+{
+	if(i > 0 && i < objects.size())
 	{
-		objects.push_back(&models[i]);
+		index = i;
 	}
 }
 
-ObjModel AnimatedModel::getModel()
-{
-	return *objects[index];
-}
-
-
-ObjModel AnimatedModel::firstModel()
-{
-	if(objects.size() > 0)
-	{
-		index = 0;
-		return *objects[0];
-	}
-}
-
-ObjModel AnimatedModel::previousModel()
+ObjModel* AnimatedModel::previousModel()
 {
 	if(index > 0)
 	{
 		index--;
-		return *objects[index];
+		return objects[index];
 	}
 }
 
-ObjModel AnimatedModel::nextModel()
+ObjModel* AnimatedModel::nextModel()
 {
-	if(index < objects.size())
+	if(index < objects.size() -1)
 	{
 		index++;
-		return *objects[index];
+		return objects[index];
 	}else
 	{
 		index = 0;
-		return *objects[index];
+		return objects[index];
 	}
 	
 }

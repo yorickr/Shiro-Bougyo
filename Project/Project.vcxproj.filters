@@ -66,6 +66,9 @@
     <ClCompile Include="AnimatedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedBowModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStateManager.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="AnimatedModel.h">
       <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedBowModel.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

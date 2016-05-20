@@ -3,11 +3,11 @@
 class AnimatedModel 
 {
 public:
-	AnimatedModel(vector<ObjModel>);
-	ObjModel getModel();
-	ObjModel firstModel();
-	ObjModel previousModel();
-	ObjModel nextModel();
+	AnimatedModel(vector<ObjModel*>);
+	ObjModel* getModel();
+	ObjModel* previousModel();
+	ObjModel* nextModel();
+	void setIndex(int index);
 	~AnimatedModel();
 
 private : 
