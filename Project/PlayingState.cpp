@@ -5,6 +5,7 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "MenuModel.h"
 
 
 #ifdef __APPLE__
@@ -31,22 +32,17 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
     models.push_back(pair<int, ObjModel *>(2, baksteen));*/
 
-	ObjModel *baksteen2 = new ObjModel("models/tree/tree.obj");
+	/*ObjModel *baksteen2 = new ObjModel("models/tree/tree.obj");
 	baksteen2->xpos = 2;
 	baksteen2->ypos = 0;
 
-	models.push_back(pair<int, ObjModel *>(2, baksteen2));
+	models.push_back(pair<int, ObjModel *>(2, baksteen2));*/
 
 	this->camera = cam;
     this->wiiHandler = hand;
 	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
-
-	////make bloem and push to models vector
-	//ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	//bloem->xpos = 0;
- //   models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
@@ -57,6 +53,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     baksteen->xpos = 2;
     models.push_back(pair<int, ObjModel *>(1, baksteen));
 
+	//Make StartMenu and push to models vector
+	MenuModel *menu = new MenuModel(cam,wiiHandler);
+	models.push_back(pair<int, ObjModel*>(1, menu));
 
 }
 

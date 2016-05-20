@@ -38,22 +38,14 @@ void onDisplay() {
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
-	glTranslatef(camera.posX, -camera.posY, 0);
+	/*glTranslatef(camera.posX, -camera.posY, 0);
+	glRotatef(camera.rotX, 1, 0, 0);
+	glRotatef(camera.rotY, 0, 1, 0);*/
+	
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	
+	glTranslatef(camera.posX, 0, camera.posY);
 
-
-	glPushMatrix();
-	glBegin(GL_QUADS);
-	glVertex3f(-15, -1, -15);
-	glVertex3f(15, -1, -15);
-	glVertex3f(15, -1, 15);
-	glVertex3f(-15, -1, 15);
-	glEnd();
-	glPopMatrix();
-
-	glColor3f(1.0f, 1.0f, 1.0f);
 	gameManager.Draw();
 
 
@@ -73,6 +65,11 @@ void onIdle() {
 }
 
 void onTimer(int id) {
+	if (keys[27]) exit(0);
+	if (keys['w']) camera.posY++;
+	if (keys['s']) camera.posY--;
+	if (keys['d']) camera.posX--;
+	if (keys['a']) camera.posX++;
 	gameManager.Update();
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, onTimer, 1);

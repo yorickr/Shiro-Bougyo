@@ -156,10 +156,10 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuModel.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
-
     <ClCompile Include="rs232.c" />
     <ClCompile Include="SerialHandler.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -172,6 +172,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />
     <ClInclude Include="PlayingState.h" />

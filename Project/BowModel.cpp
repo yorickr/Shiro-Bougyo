@@ -22,7 +22,8 @@ BowModel::~BowModel()
 
 void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	//set bow on camera position
-	xpos = x ;
+	xpos = x ;	
+	xpos = x;
 	ypos = y ;
 	zpos = 0;
 
