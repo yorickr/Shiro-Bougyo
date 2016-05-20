@@ -19,7 +19,7 @@ set(SOURCE_FILES
         Project/rs232.c Project/rs232.h Project/SerialHandler.cpp Project/SerialHandler.h
 
         Project/Util.cpp Project/Util.h Project/WarriorModel.cpp Project/WarriorModel.h
-        Project/BowModel.cpp Project/BowModel.h )
+        Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h)
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})
