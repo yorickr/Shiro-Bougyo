@@ -15,7 +15,6 @@
 #include "SerialHandler.h"
 #include "Camera.h"
 
-#include "GameStateManager.h"
 #include "WiiHandler.h"
 
 #define COMMPORT 4
@@ -25,6 +24,7 @@ SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
+WiiHandler wiiHandler;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -37,9 +37,9 @@ void onDisplay() {
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
+	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, camera.posY, 0);
 
 
 	glPushMatrix();
@@ -95,8 +95,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	WiiHandler hand;
-	hand.wiiMoteTest(&camera);
+	wiiHandler.wiiMoteTest(&camera);
 	return 0;
 }
 
@@ -110,15 +109,20 @@ void mousePassiveMotion(int x, int y) {
 	int dy = y - camera.height / 2;
 	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
 	{
-		camera.rotY += dx / 10.0f;
 		camera.rotX += dy / 10.0f;
+		if(camera.rotX > 30){
+			camera.rotX = 30;
+		}else if(camera.rotX < -30){
+			camera.rotX = -30;
+		}
+		camera.rotY += dx / 10.0f;
 		glutWarpPointer(camera.width / 2, camera.height / 2);
 	}
 }
 
 int main(int argc, char* argv[]) {
 
-	gameManager.Init(&camera);
+	gameManager.Init(&camera,&wiiHandler);
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);

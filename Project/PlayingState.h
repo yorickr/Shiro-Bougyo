@@ -13,7 +13,7 @@
 class PlayingState : public GameState {
     // Inherited via GameState
     public:
-        virtual void Init(GameStateManager * game, Camera * camera) override;
+        virtual void Init(GameStateManager * game, Camera * camera, WiiHandler * hand) override;
         virtual void Cleanup() override;
         virtual void Pause() override;
         virtual void Resume() override;
@@ -24,6 +24,7 @@ class PlayingState : public GameState {
         GameStateManager *manager;
         vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function
 		Camera * camera;
+		WiiHandler * wiiHandler;
 };
 
 

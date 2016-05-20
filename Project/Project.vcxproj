@@ -159,7 +159,6 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
-
     <ClCompile Include="rs232.c" />
     <ClCompile Include="SerialHandler.cpp" />
     <ClCompile Include="Util.cpp" />

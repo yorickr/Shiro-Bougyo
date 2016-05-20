@@ -23,11 +23,11 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game, Camera *cam) {
+void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) {
     this->manager = game;
 	this->camera = cam;
-
-	BowModel *bow = new BowModel(cam);
+    this->wiiHandler = hand;
+	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 
@@ -63,6 +63,7 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
+
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
@@ -75,8 +76,9 @@ void PlayingState::Update() {
         }
         collides = false;
     }
-//    exit(0);
 }
+
+
 void PlayingState::Draw() {
     for( auto &m : models) {
         m.second->draw();
