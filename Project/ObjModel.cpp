@@ -367,11 +367,11 @@ bool ObjModel::CollidesWith(ObjModel *obj2) {
     bool retval = (this->minx <= obj2->maxx && this->maxx >= obj2->minx) &&
                   (this->miny <= obj2->maxy && this->maxy >= obj2->miny) &&
                   (this->minz <= obj2->maxz && this->maxz >= obj2->minz);
-    printf("THIS\n");
-    this->PrintValues();
-    printf("OBJ2\n");
-    obj2->PrintValues();
-    printf("------------\n");
+//    printf("THIS\n");
+//    this->PrintValues();
+//    printf("OBJ2\n");
+//    obj2->PrintValues();
+//    printf("------------\n");
     return retval;
 }
 
