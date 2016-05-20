@@ -53,3 +53,8 @@ void GameStateManager::Draw()
 	if (!states.empty())
 		states.at(currentState)->Draw();
 }
+
+void GameStateManager::preDraw()
+{
+	states.at(currentState)->preDraw();
+}

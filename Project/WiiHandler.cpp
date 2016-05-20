@@ -43,7 +43,12 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
     /* if a button is pressed, report it */
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
         printf("A pressed\n");
+		is_A = true;
+    }else
+    {
+		is_A = false;
     }
+
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
         printf("B pressed\n");
     }
@@ -141,6 +146,9 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
         for (; i < 4; ++i) {
             /* check if the source is visible */
             if (wm->ir.dot[i].visible) {
+                if(i == 0){
+                    this->wiiMoteP1 = wm;
+                }
                 printf("IR source %i: (%u, %u)\n", i, wm->ir.dot[i].x, wm->ir.dot[i].y);
                 printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
                 printf("IR z distance: %f\n", wm->ir.z);

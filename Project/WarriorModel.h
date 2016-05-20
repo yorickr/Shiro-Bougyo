@@ -4,7 +4,7 @@ class WarriorModel :
 	public ObjModel
 {
 public:
-	WarriorModel();
+	WarriorModel(int x, int z);
 	~WarriorModel();
 	void update() override;
 };

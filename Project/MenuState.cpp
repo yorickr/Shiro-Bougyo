@@ -98,11 +98,18 @@ void MenuState::Draw()
 	glVertex3f(1, 1, 1);
 	glVertex3f(-1, 1, 1);
 	glEnd();
+<<<<<<< HEAD
 	glPopMatrix();*/
 
 //	DrawCrosshair(camera->width/2,camera->height/2);
 //Make StartMenu and push to models vector
 	MenuModel->draw();
+	glPopMatrix();
 
+	//DrawCrosshair(camera->width/2,camera->height/2);
+}
+
+void MenuState::preDraw()
+{
 
 }

@@ -6,10 +6,12 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_PERLIN_IMPLEMENTATION
+
 #include "stb_image.h"
 #include "stb_perlin.h"
 
 #ifdef __APPLE__
+
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 
@@ -56,123 +58,114 @@ inline std::string toLower(std::string data) {
 }
 
 
-
-
-ObjModel::ObjModel(std::string fileName)
-{
-	xpos = ypos = zpos = xrot = yrot = zrot = 0;
+ObjModel::ObjModel(std::string fileName) {
+    xpos = ypos = zpos = xrot = yrot = zrot = 0;
 //Fix for the OSX project, because our paht starts from shiro-bougyo instead of Project
 #ifdef __APPLE__
-	fileName = "Project/" + fileName;
+    fileName = "Project/" + fileName;
 #endif
 
-	std::string dirName = fileName;
-	if(dirName.rfind("/") != std::string::npos)
-		dirName = dirName.substr(0, dirName.rfind("/"));
-	if(dirName.rfind("\\") != std::string::npos)
-		dirName = dirName.substr(0, dirName.rfind("\\"));
-	if(fileName == dirName)
-		dirName = "";
+    std::string dirName = fileName;
+    if (dirName.rfind("/") != std::string::npos)
+        dirName = dirName.substr(0, dirName.rfind("/"));
+    if (dirName.rfind("\\") != std::string::npos)
+        dirName = dirName.substr(0, dirName.rfind("\\"));
+    if (fileName == dirName)
+        dirName = "";
 
 
-	std::ifstream pFile(fileName.c_str());
+    std::ifstream pFile(fileName.c_str());
 
-	if (!pFile.is_open())
-	{
-		std::cout << "Could not open file " << fileName << std::endl;
-		return;
-	}
-
-
-	ObjGroup* currentGroup = new ObjGroup();
-	currentGroup->materialIndex = -1;
+    if (!pFile.is_open()) {
+        std::cout << "Could not open file " << fileName << std::endl;
+        return;
+    }
 
 
-	while(!pFile.eof())
-	{
-		std::string line;
-		std::getline(pFile, line);
-		
-		line = replace(line, "\t", " ");
-		while(line.find("  ") != std::string::npos)
-			line = replace(line, "  ", " ");
-		if(line == "")
-			continue;
-		if(line[0] == ' ')
-			line = line.substr(1);
-		if(line == "")
-			continue;
-		if(line[line.length()-1] == ' ')
-			line = line.substr(0, line.length()-1);
-		if(line == "")
-			continue;
-		if(line[0] == '#')
-			continue;
+    ObjGroup *currentGroup = new ObjGroup();
+    currentGroup->materialIndex = -1;
 
-		std::vector<std::string> params = split(line, " ");
-		params[0] = toLower(params[0]);
 
-		if(params[0] == "v")
-			vertices.push_back(new Vec3f((float)atof(params[1].c_str()), (float)atof(params[2].c_str()), (float)atof(params[3].c_str())));
-		else if(params[0] == "vn")
-			normals.push_back(new Vec3f((float)atof(params[1].c_str()), (float)atof(params[2].c_str()), (float)atof(params[3].c_str())));
-		else if(params[0] == "vt")
-			texcoords.push_back(new Vec2f((float)atof(params[1].c_str()), (float)atof(params[2].c_str())));
-		else if(params[0] == "f")
-		{
-			for(size_t ii = 4; ii <= params.size(); ii++)
-			{
-				Face face;
+    while (!pFile.eof()) {
+        std::string line;
+        std::getline(pFile, line);
 
-				for(size_t i = ii-3; i < ii; i++)	//magische forlus om van quads triangles te maken ;)
-				{
-					Vertex vertex;
-					std::vector<std::string> indices = split(params[i == (ii-3) ? 1 : i], "/");
-					if (indices.size() >= 1)	//er is een positie
-						vertex.position = atoi(indices[0].c_str()) - 1;
-					if(indices.size() == 2)		//alleen texture
-						vertex.texcoord = atoi(indices[1].c_str())-1;
-					if(indices.size() == 3)		//v/t/n of v//n
-					{
-						if( indices[1] != "")
-							vertex.texcoord = atoi(indices[1].c_str())-1;
-						vertex.normal = atoi(indices[2].c_str())-1;
-					}
-					face.vertices.push_back(vertex);
-				}
-				currentGroup->faces.push_back(face);
-			}
-		}
-		else if(params[0] == "s")
-		{//smoothing
-		}
-        else if(params[0] == "mtllib")
-        {
+        line = replace(line, "\t", " ");
+        while (line.find("  ") != std::string::npos)
+            line = replace(line, "  ", " ");
+        if (line == "")
+            continue;
+        if (line[0] == ' ')
+            line = line.substr(1);
+        if (line == "")
+            continue;
+        if (line[line.length() - 1] == ' ')
+            line = line.substr(0, line.length() - 1);
+        if (line == "")
+            continue;
+        if (line[0] == '#')
+            continue;
+
+        std::vector<std::string> params = split(line, " ");
+        params[0] = toLower(params[0]);
+
+        if (params[0] == "v")
+            vertices.push_back(new Vec3f((float) atof(params[1].c_str()), (float) atof(params[2].c_str()),
+                                         (float) atof(params[3].c_str())));
+        else if (params[0] == "vn")
+            normals.push_back(new Vec3f((float) atof(params[1].c_str()), (float) atof(params[2].c_str()),
+                                        (float) atof(params[3].c_str())));
+        else if (params[0] == "vt")
+            texcoords.push_back(new Vec2f((float) atof(params[1].c_str()), (float) atof(params[2].c_str())));
+        else if (params[0] == "f") {
+            for (size_t ii = 4; ii <= params.size(); ii++) {
+                Face face;
+
+                for (size_t i = ii - 3; i < ii; i++)    //magische forlus om van quads triangles te maken ;)
+                {
+                    Vertex vertex;
+                    std::vector<std::string> indices = split(params[i == (ii - 3) ? 1 : i], "/");
+                    if (indices.size() >= 1)    //er is een positie
+                        vertex.position = atoi(indices[0].c_str()) - 1;
+                    if (indices.size() == 2)        //alleen texture
+                        vertex.texcoord = atoi(indices[1].c_str()) - 1;
+                    if (indices.size() == 3)        //v/t/n of v//n
+                    {
+                        if (indices[1] != "")
+                            vertex.texcoord = atoi(indices[1].c_str()) - 1;
+                        vertex.normal = atoi(indices[2].c_str()) - 1;
+                    }
+                    face.vertices.push_back(vertex);
+                }
+                currentGroup->faces.push_back(face);
+            }
+        }
+        else if (params[0] == "s") {//smoothing
+        }
+        else if (params[0] == "mtllib") {
             loadMaterialFile(dirName + "/" + params[1], dirName);
         }
-		else if(params[0] == "usemtl")
-		{
-			if(currentGroup->faces.size() != 0)
-				groups.push_back(currentGroup);
-			currentGroup = new ObjGroup();
-			currentGroup->materialIndex = -1;
+        else if (params[0] == "usemtl") {
+            if (currentGroup->faces.size() != 0)
+                groups.push_back(currentGroup);
+            currentGroup = new ObjGroup();
+            currentGroup->materialIndex = -1;
 
-			for(size_t i = 0; i < materials.size(); i++)
-			{
-				MaterialInfo* info = materials[i];
-				if(info->name == params[1])
-				{
-					currentGroup->materialIndex = i;
-					break;
-				}
-			}
-			if(currentGroup->materialIndex == -1)
-				std::cout<<"Could not find material name "<<params[1]<<std::endl;
-		}
-	}
-	groups.push_back(currentGroup);
-	CalcMinVertex();
-	CalcMaxVertex();
+            for (size_t i = 0; i < materials.size(); i++) {
+                MaterialInfo *info = materials[i];
+                if (info->name == params[1]) {
+                    currentGroup->materialIndex = i;
+                    break;
+                }
+            }
+            if (currentGroup->materialIndex == -1)
+                std::cout << "Could not find material name " << params[1] << std::endl;
+        }
+    }
+    groups.push_back(currentGroup);
+    CalcMinVertex();
+    CalcMaxVertex();
+    CalcBounds();
 }
 
 void ObjModel::CalcMinVertex() {
@@ -239,228 +232,243 @@ void ObjModel::CalcMaxVertex() {
     vertices_max = new Vec3f(maxx, maxy, maxz);
 }
 
-ObjModel::~ObjModel(void)
-{
+ObjModel::~ObjModel(void) {
 }
-
-
 
 
 void ObjModel::draw() {
-	//This affects the entire model
-	//glColor
-	glPushMatrix();
+    //This affects the entire model
+    //glColor
+    glPushMatrix();
 
-	glTranslatef(xpos, ypos, zpos);
+    glTranslatef(xpos, ypos, zpos);
 
-	glRotatef(xrot, 1, 0, 0);
-	glRotatef(yrot, 0, 1, 0);
-	glRotatef(zrot, 0, 0, 1);
+    glRotatef(xrot, 1, 0, 0);
+    glRotatef(yrot, 0, 1, 0);
+    glRotatef(zrot, 0, 0, 1);
 
 //	glTranslatef(xpos, ypos, zpos);
-	
 
 
-	for (auto &g : groups) {
-		if (materials[g->materialIndex]->hasTexture) {
-			glEnable(GL_TEXTURE_2D);
-			materials[g->materialIndex]->texture->bind();
-		}
 
-		glBegin(GL_TRIANGLES);
-		for (auto &f : g->faces) {
-			for (auto &v : f.vertices) {
-				glNormal3f(normals[v.normal]->x, normals[v.normal]->y, normals[v.normal]->z);
-				glTexCoord2f(texcoords[v.texcoord]->x, texcoords[v.texcoord]->y);
-				glVertex3f(vertices[v.position]->x, vertices[v.position]->y, vertices[v.position]->z);
-			}
-		}
-		glEnd();
-	}
+    for (auto &g : groups) {
+        if (materials[g->materialIndex]->hasTexture) {
+            glEnable(GL_TEXTURE_2D);
+            materials[g->materialIndex]->texture->bind();
+        }
 
-if (DRAW_BOUNDING_BOX) {
+        glBegin(GL_TRIANGLES);
+        for (auto &f : g->faces) {
+            for (auto &v : f.vertices) {
+                glNormal3f(normals[v.normal]->x, normals[v.normal]->y, normals[v.normal]->z);
+                glTexCoord2f(texcoords[v.texcoord]->x, texcoords[v.texcoord]->y);
+                glVertex3f(vertices[v.position]->x, vertices[v.position]->y, vertices[v.position]->z);
+            }
+        }
+        glEnd();
+    }
+
+    if (DRAW_BOUNDING_BOX) {
         glLineWidth(5);
 
         glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
-        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
-        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
-        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
+        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
+        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
         glEnd();
 
         glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
-        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
+        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
         glEnd();
 
         glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
-        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
         glEnd();
 
         glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
-        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
-        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
+        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
+        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
         glEnd();
 
     }
-	glPopMatrix();
+    glPopMatrix();
 }
 
-void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
-{
-	std::ifstream pFile(fileName.c_str());
-	if (!pFile.is_open())
-	{
-		std::cout << "Could not open file " << fileName << std::endl;
-		return;
-	}
+void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
+    std::ifstream pFile(fileName.c_str());
+    if (!pFile.is_open()) {
+        std::cout << "Could not open file " << fileName << std::endl;
+        return;
+    }
 
-	MaterialInfo* currentMaterial = NULL;
+    MaterialInfo *currentMaterial = NULL;
 
-	while(!pFile.eof())
-	{
-		std::string line;
-		std::getline(pFile, line);
-		
-		line = replace(line, "\t", " ");
-		while(line.find("  ") != std::string::npos)
-			line = replace(line, "  ", " ");
-		if(line == "")
-			continue;
-		if(line[0] == ' ')
-			line = line.substr(1);
-		if(line == "")
-			continue;
-		if(line[line.length()-1] == ' ')
-			line = line.substr(0, line.length()-1);
-		if(line == "")
-			continue;
-		if(line[0] == '#')
-			continue;
+    while (!pFile.eof()) {
+        std::string line;
+        std::getline(pFile, line);
 
-		std::vector<std::string> params = split(line, " ");
-		params[0] = toLower(params[0]);
-		if(params[0] == "newmtl")
-		{
-			if(currentMaterial != NULL)
-			{
-				materials.push_back(currentMaterial);
-			}
-			currentMaterial = new MaterialInfo();
-			currentMaterial->name = params[1];
-		}
-		else if(params[0] == "map_kd")
-		{
-			currentMaterial->hasTexture = true;
-			currentMaterial->texture = new Texture(dirName + "/" + params[1]);
-			std::cout<<"Made material named " << params[1] << std::endl;
-		}
-		else
-			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
-	}
-	if(currentMaterial != NULL)
-		materials.push_back(currentMaterial);
+        line = replace(line, "\t", " ");
+        while (line.find("  ") != std::string::npos)
+            line = replace(line, "  ", " ");
+        if (line == "")
+            continue;
+        if (line[0] == ' ')
+            line = line.substr(1);
+        if (line == "")
+            continue;
+        if (line[line.length() - 1] == ' ')
+            line = line.substr(0, line.length() - 1);
+        if (line == "")
+            continue;
+        if (line[0] == '#')
+            continue;
+
+        std::vector<std::string> params = split(line, " ");
+        params[0] = toLower(params[0]);
+        if (params[0] == "newmtl") {
+            if (currentMaterial != NULL) {
+                materials.push_back(currentMaterial);
+            }
+            currentMaterial = new MaterialInfo();
+            currentMaterial->name = params[1];
+        }
+        else if (params[0] == "map_kd") {
+            currentMaterial->hasTexture = true;
+            currentMaterial->texture = new Texture(dirName + "/" + params[1]);
+            std::cout << "Made material named " << params[1] << std::endl;
+        }
+        else
+            std::cout << "Didn't parse " << params[0] << " in material file" << std::endl;
+    }
+    if (currentMaterial != NULL)
+        materials.push_back(currentMaterial);
 
 }
-bool ObjModel::CollidesWith(ObjModel *obj2) const {
 
-//    for (auto &vertice : vertices) {
-//        printf("Vertice info: %f %f %f\n", vertice->v[0], vertice->v[1], vertice->v[2]);
-//    }
-    return false;
+void ObjModel::PrintValues() {
+    printf("Xmin, Xmax : %f , %f\n", minx, maxx);
+    printf("Ymin, Zmax : %f , %f\n", miny, maxy);
+    printf("Zmin, Zmax : %f , %f\n", minz, maxz);
+
+}
+
+bool ObjModel::CollidesWith(ObjModel *obj2) {
+    this->CalcBounds();
+    obj2->CalcBounds();
+    bool retval = (this->minx <= obj2->maxx && this->maxx >= obj2->minx) &&
+                  (this->miny <= obj2->maxy && this->maxy >= obj2->miny) &&
+                  (this->minz <= obj2->maxz && this->maxz >= obj2->minz);
+//    printf("THIS\n");
+//    this->PrintValues();
+//    printf("OBJ2\n");
+//    obj2->PrintValues();
+//    printf("------------\n");
+    return retval;
 }
 
 void ObjModel::update() {
+    yrot += 0.5;
+    if (xpos > 5) {
+        xpos = -5;
+    }
+}
 
-	//implement this method in child class
+void ObjModel::CalcBounds() {
+    minx = vertices_min->x + xpos;
+    miny = vertices_min->y+ ypos;
+    minz =  vertices_min->z+ zpos;
+
+    maxx = vertices_max->x + xpos;
+    maxy = vertices_max->y+ ypos;
+    maxz = vertices_max->z+ zpos;
+
+//    printf("Calculated bounds are:\n");
+//    printf("x: %f %f %f\n", minx, maxx,xpos);
+//    printf("y: %f %f %f\n", miny, maxy,ypos);
+//    printf("z: %f %f %f\n", minz, maxz,zpos);
+//    exit(0);
 }
 
 
-ObjModel::MaterialInfo::MaterialInfo()
-{
-	Texture *texture;
-	hasTexture = false;
+ObjModel::MaterialInfo::MaterialInfo() {
+    Texture *texture;
+    hasTexture = false;
 }
 
 
-Vec3f::Vec3f(float x, float y, float z)
-{
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
-Vec3f::Vec3f()
-{
-	this->x = 0;
-	this->y = 0;
-	this->z = 0;
-}
-Vec3f::Vec3f(Vec3f &other)
-{
-	this->x = other.x;
-	this->y = other.y;
-	this->z = other.z;
+Vec3f::Vec3f(float x, float y, float z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
 }
 
-float& Vec3f::operator [](int index)
-{
-	return v[index];
+Vec3f::Vec3f() {
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+}
+
+Vec3f::Vec3f(Vec3f &other) {
+    this->x = other.x;
+    this->y = other.y;
+    this->z = other.z;
+}
+
+float &Vec3f::operator[](int index) {
+    return v[index];
 }
 
 
-
-Vec2f::Vec2f(float x, float y)
-{
-	this->x = x;
-	this->y = y;
-}
-Vec2f::Vec2f()
-{
-	this->x = 0;
-	this->y = 0;
-}
-Vec2f::Vec2f(Vec2f &other)
-{
-	this->x = other.x;
-	this->y = other.y;
+Vec2f::Vec2f(float x, float y) {
+    this->x = x;
+    this->y = y;
 }
 
-float& Vec2f::operator [](int index)
-{
-	return v[index];
+Vec2f::Vec2f() {
+    this->x = 0;
+    this->y = 0;
 }
 
-ObjModel::Texture::Texture(const std::string & fileName)
-{
-	int width, height, bpp;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* imgData = stbi_load(fileName.c_str(), &width, &height, &bpp, 4);
-
-	glGenTextures(1, &index);
-	glBindTexture(GL_TEXTURE_2D, index);
-
-	glTexImage2D(GL_TEXTURE_2D,
-		0,		//level
-		GL_RGBA,		//internal format
-		width,		//width
-		height,		//height
-		0,		//border
-		GL_RGBA,		//data format
-		GL_UNSIGNED_BYTE,	//data type
-		imgData);		//data
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	stbi_image_free(imgData);
+Vec2f::Vec2f(Vec2f &other) {
+    this->x = other.x;
+    this->y = other.y;
 }
 
-void ObjModel::Texture::bind()
-{
-	glBindTexture(GL_TEXTURE_2D, index);
+float &Vec2f::operator[](int index) {
+    return v[index];
+}
+
+ObjModel::Texture::Texture(const std::string &fileName) {
+    int width, height, bpp;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char *imgData = stbi_load(fileName.c_str(), &width, &height, &bpp, 4);
+
+    glGenTextures(1, &index);
+    glBindTexture(GL_TEXTURE_2D, index);
+
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,        //level
+                 GL_RGBA,        //internal format
+                 width,        //width
+                 height,        //height
+                 0,        //border
+                 GL_RGBA,        //data format
+                 GL_UNSIGNED_BYTE,    //data type
+                 imgData);        //data
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    stbi_image_free(imgData);
+}
+
+void ObjModel::Texture::bind() {
+    glBindTexture(GL_TEXTURE_2D, index);
 }

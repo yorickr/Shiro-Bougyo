@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedBowModel.cpp" />
+    <ClCompile Include="AnimatedModel.cpp" />
     <ClCompile Include="BowModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -167,6 +169,8 @@
     <ClCompile Include="WiiHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedBowModel.h" />
+    <ClInclude Include="AnimatedModel.h" />
     <ClInclude Include="BowModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />

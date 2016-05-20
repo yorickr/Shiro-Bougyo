@@ -97,6 +97,12 @@ private:
 
 	void CalcMinVertex();
 	void CalcMaxVertex();
+
+    void CalcBounds();
+
+	float maxx, maxy, maxz;
+    float minx, miny, minz;
+
 	Vec3f* vertices_min; //This is the vertex with the smallest x, y and z.
 	Vec3f* vertices_max; //See above, but the opposite.
 	std::vector<Vec3f*>	vertices;
@@ -129,7 +135,7 @@ public:
 	};
 
 	//True if obj2 collides with this object
-	bool CollidesWith(ObjModel *obj2) const;
+	bool CollidesWith(ObjModel *obj2);
 
 
 	ObjModel(std::string filename);
@@ -137,4 +143,6 @@ public:
 
 	virtual void draw();
 	virtual void update();
+
+    void PrintValues();
 };
