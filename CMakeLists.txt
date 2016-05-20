@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(Shiro_Bougyo)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wdeprecated-declarations")
 
 set(SOURCE_FILES
     Project/Entity.h
@@ -19,7 +19,10 @@ set(SOURCE_FILES
         Project/rs232.c Project/rs232.h Project/SerialHandler.cpp Project/SerialHandler.h
 
         Project/Util.cpp Project/Util.h Project/WarriorModel.cpp Project/WarriorModel.h
-        Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h)
+        Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h
+
+        Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
+        )
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})

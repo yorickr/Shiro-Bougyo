@@ -60,10 +60,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 //    models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
-	for (int i = 0; i < 5; i++ )
+	for (int i = 1; i < 5; i++ )
 	{
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
-		models.push_back(pair<int, ObjModel*>(1, warrior));
+		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
 	ObjModel *arrow = new ObjModel("models/Arrow/Arrow.obj");
@@ -101,8 +101,9 @@ void PlayingState::Update() {
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
             if (obj1 != obj2 && obj1.second->CollidesWith(obj2.second)) {
-                collides = true;
-            }
+				printf("%d colliding with %d\n", obj1.first, obj2.first);
+				collides = true;
+			}
         }
         if(!collides) {
             obj1.second->update();
