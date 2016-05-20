@@ -32,22 +32,22 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 
 	//make bloem and push to models vector
-	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	bloem->xpos = 4;
-    models.push_back(pair<int, ObjModel*>(1,bloem));
+//	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+//	bloem->xpos = 4;
+//    models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
 //	make baksteen and push to models vector
-    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
-    baksteen->xpos = 2;
-    models.push_back(pair<int, ObjModel *>(1, baksteen));
-
-    ObjModel *bak = new StationaryObjModel("models/cube/cube-textures.obj");
-    bak->xpos = 0;
-    models.push_back(pair<int, ObjModel *>(1, bak));
+//    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
+//    baksteen->xpos = 2;
+//    models.push_back(pair<int, ObjModel *>(1, baksteen));
+//
+//    ObjModel *bak = new StationaryObjModel("models/cube/cube-textures.obj");
+//    bak->xpos = 0;
+//    models.push_back(pair<int, ObjModel *>(1, bak));
 }
 
 void PlayingState::Cleanup() {
