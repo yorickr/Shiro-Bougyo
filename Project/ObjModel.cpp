@@ -165,7 +165,6 @@ ObjModel::ObjModel(std::string fileName) {
     groups.push_back(currentGroup);
     CalcMinVertex();
     CalcMaxVertex();
-    CalcBounds();
     InitBoundingSpheres();
     CalcBoundingSpheres();
 }
@@ -301,13 +300,14 @@ void ObjModel::draw() {
 //        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
 //        glEnd();
 
-        for(auto &e : boundingSpheres){
-            glPushMatrix();
-            glColor3ub(0,255,255);
-            glTranslatef(e->x, e->y, e->z);
-            glutWireSphere(e->radius,20,20); //Radius, polycount, polycount
-            glPopMatrix();
-
+        for(auto &e : boundingSpheres) {
+            if (e->collides) {
+                glPushMatrix();
+                glColor3ub(0, 255, 255);
+                glTranslatef(e->x, e->y, e->z);
+                glutWireSphere(e->radius, 20, 20); //Radius, polycount, polycount
+                glPopMatrix();
+            }
         }
         glColor3f(1,1,1);
 
@@ -366,13 +366,6 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
 
 }
 
-void ObjModel::PrintValues() {
-    printf("Xmin, Xmax : %f , %f\n", minx, maxx);
-    printf("Ymin, Zmax : %f , %f\n", miny, maxy);
-    printf("Zmin, Zmax : %f , %f\n", minz, maxz);
-
-}
-
 bool ObjModel::CollidesWith(ObjModel *obj2) {
     this->CalcBoundingSpheres();
     obj2->CalcBoundingSpheres();
@@ -396,22 +389,6 @@ void ObjModel::update() {
     if (xpos > 5) {
         xpos = -5;
     }
-}
-
-void ObjModel::CalcBounds() {
-    minx = vertices_min->x + xpos;
-    miny = vertices_min->y+ ypos;
-    minz =  vertices_min->z+ zpos;
-
-    maxx = vertices_max->x + xpos;
-    maxy = vertices_max->y+ ypos;
-    maxz = vertices_max->z+ zpos;
-
-//    printf("Calculated bounds are:\n");
-//    printf("x: %f %f %f\n", minx, maxx,xpos);
-//    printf("y: %f %f %f\n", miny, maxy,ypos);
-//    printf("z: %f %f %f\n", minz, maxz,zpos);
-//    exit(0);
 }
 
 void ObjModel::InitBoundingSpheres() {
@@ -455,8 +432,9 @@ void ObjModel::InitBoundingSpheres() {
         boundingSpheres.push_back(new Sphere(x, y, z, depth/2));
     }
 
+    printf("Called base\n");
 
-//    boundingSpheres.push_back(new Sphere())
+
 }
 
 void ObjModel::CalcBoundingSpheres() {
@@ -543,22 +521,38 @@ void ObjModel::Texture::bind() {
 }
 
 bool ObjModel::Sphere::intersect(ObjModel::Sphere *other) {
-    float distance = sqrtf((this->xpos - other->xpos) * (this->xpos - other->xpos) +
-                             (this->ypos - other->ypos) * (this->ypos - other->ypos) +
-                             (this->zpos - other->zpos) * (this->zpos - other->zpos));
-    return distance < (other->radius + other->radius);
+
+    if(collides){
+        float distance = sqrtf((this->xpos - other->xpos) * (this->xpos - other->xpos) +
+                               (this->ypos - other->ypos) * (this->ypos - other->ypos) +
+                               (this->zpos - other->zpos) * (this->zpos - other->zpos));
+        return distance < (other->radius + other->radius);
+    }
+
+    return false;
+
 }
 
 bool ObjModel::Sphere::intersect(float x, float y, float z) {
-    float distance = sqrtf((x - this->xpos) * (x - this->xpos) +
-                         (y - this->ypos) * (y - this->ypos) +
-                         (z - this->zpos) * (z - this->zpos));
-    return distance < this->radius;
+    if(collides){
+        float distance = sqrtf((x - this->xpos) * (x - this->xpos) +
+                               (y - this->ypos) * (y - this->ypos) +
+                               (z - this->zpos) * (z - this->zpos));
+        return distance < this->radius;
+    }
+    return false;
 }
 
 ObjModel::Sphere::Sphere(float x, float y, float z, float radius):x(x), y(y), z(z), radius(radius) {
     //Initialize a sphere
 }
+
+ObjModel::Sphere* ObjModel::Sphere::setCollision(bool value) {
+    collides = value;
+    return this;
+}
+
+
 
 
 

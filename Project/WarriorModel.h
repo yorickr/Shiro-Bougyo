@@ -7,5 +7,6 @@ public:
 	WarriorModel(int x, int z);
 	~WarriorModel();
 	void update() override;
+	void InitBoundingSpheres() override;
 };
 

@@ -94,36 +94,9 @@ private:
         list<Face> faces;
     };
 
-    class Sphere {
-    public:
-        Sphere(float x, float y, float z, float radius);
-        float radius = 0;
-        float x = 0, y = 0, z = 0; //x pos inside of the vertices
-
-        float xpos = 0, ypos = 0, zpos = 0;
-
-        bool intersect(Sphere *other);
-
-        bool intersect(float x, float y, float z);
-    };
-
     void CalcMinVertex();
 
     void CalcMaxVertex();
-
-    void CalcBounds();
-
-    void InitBoundingSpheres();
-
-    void CalcBoundingSpheres();
-
-    float maxx, maxy, maxz;
-    float minx, miny, minz;
-
-    Vec3f *vertices_min; //This is the vertex with the smallest x, y and z.
-    Vec3f *vertices_max; //See above, but the opposite.
-
-    std::vector<Sphere*> boundingSpheres;
 
     std::vector<Vec3f *> vertices;
     std::vector<Vec3f *> normals;
@@ -150,9 +123,34 @@ public:
         float pos[3];
     };
 
+    class Sphere {
+    public:
+        Sphere(float x, float y, float z, float radius);
+        float radius = 0;
+        float x = 0, y = 0, z = 0; //x pos inside of the vertices
+
+        float xpos = 0, ypos = 0, zpos = 0;
+
+        bool intersect(Sphere *other);
+
+        bool intersect(float x, float y, float z);
+
+        bool collides = true;
+
+        Sphere * setCollision(bool value);
+    };
+
     //True if obj2 collides with this object
     bool CollidesWith(ObjModel *obj2);
 
+    std::vector<Sphere*> boundingSpheres;
+
+    Vec3f *vertices_min; //This is the vertex with the smallest x, y and z.
+    Vec3f *vertices_max; //See above, but the opposite.
+
+    virtual void CalcBoundingSpheres();
+
+    virtual void InitBoundingSpheres();
 
     ObjModel(std::string filename);
 
@@ -161,6 +159,4 @@ public:
     virtual void draw();
 
     virtual void update();
-
-    void PrintValues();
 };

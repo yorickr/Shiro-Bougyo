@@ -24,6 +24,9 @@ BowModel::BowModel(WiiHandler * hand, string filename): ObjModel(filename) {
 
 	SetPositions(0,0,0,0);
 	setCrosshairPositions(0, 0,0,0);
+
+	boundingSpheres.clear();
+	BowModel::InitBoundingSpheres();
 }
 
 BowModel::~BowModel()
@@ -129,4 +132,12 @@ void BowModel::update()
 
 
 	
+}
+
+void BowModel::InitBoundingSpheres() {
+	//Do nothing
+}
+
+void BowModel::CalcBoundingSpheres() {
+	//Do nothing
 }
