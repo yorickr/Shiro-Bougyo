@@ -33,6 +33,8 @@
  *	event occurs on the specified wiimote.
  */
 
+
+
 void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
     Camera* mainCamera = camera;
 
@@ -140,10 +142,10 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
             /* check if the source is visible */
             if (wm->ir.dot[i].visible) {
                 printf("IR source %i: (%u, %u)\n", i, wm->ir.dot[i].x, wm->ir.dot[i].y);
-
+                printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
+                printf("IR z distance: %f\n", wm->ir.z);
             }
-            printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
-            printf("IR z distance: %f\n", wm->ir.z);
+
         }
 
 
@@ -162,26 +164,33 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
             printf("Nunchuk: Z pressed\n");
         }
 
-        printf("nunchuk roll  = %f\n", nc->orient.roll);
-        printf("nunchuk pitch = %f\n", nc->orient.pitch);
-        printf("nunchuk yaw   = %f\n", nc->orient.yaw);
+//        printf("nunchuk roll  = %f\n", nc->orient.roll);
+//        printf("nunchuk pitch = %f\n", nc->orient.pitch);
+//        printf("nunchuk yaw   = %f\n", nc->orient.yaw);
+//
+//        printf("nunchuk joystick angle:     %f\n", nc->js.ang);
+//        printf("nunchuk joystick magnitude: %f\n", nc->js.mag);
+//
+//        printf("nunchuk joystick vals:      %f, %f\n", nc->js.x, nc->js.y);
+//        printf("nunchuk joystick calibration (min, center, max): x: %i, %i, %i  y: %i, %i, %i\n",
+//               nc->js.min.x,
+//               nc->js.center.x,
+//               nc->js.max.x,
+//               nc->js.min.y,
+//               nc->js.center.y,
+//               nc->js.max.y);
 
-        printf("nunchuk joystick angle:     %f\n", nc->js.ang);
-        printf("nunchuk joystick magnitude: %f\n", nc->js.mag);
+        if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
+            mainCamera->rotX -= nc->js.y * 2;
+            if(mainCamera->rotX > 30){
+                mainCamera->rotX = 30;
+            }else if(mainCamera->rotX < -30){
+                mainCamera->rotX = -30;
+            }
+            mainCamera->rotY += nc->js.x * 2;
+            glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
+        }
 
-        printf("nunchuk joystick vals:      %f, %f\n", nc->js.x, nc->js.y);
-        printf("nunchuk joystick calibration (min, center, max): x: %i, %i, %i  y: %i, %i, %i\n",
-               nc->js.min.x,
-               nc->js.center.x,
-               nc->js.max.x,
-               nc->js.min.y,
-               nc->js.center.y,
-               nc->js.max.y);
-
-        if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1)
-        mainCamera->rotX -= nc->js.y * 2;
-        mainCamera->rotY += nc->js.x * 2;
-        glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
 
 
 
@@ -464,6 +473,11 @@ void WiiHandler::wiiMoteTest(Camera* cam) {
                     case WIIUSE_EVENT:
                         /* a generic event occurred */
                         handle_event(wiimotes[i],mainCamera);
+                        if(i == 0){
+                            wiiMoteP1 = wiimotes[i];
+                        }else if(i == 1){
+                            wiiMoteP2 = wiimotes[i];
+                        }
                         break;
 
                     case WIIUSE_STATUS:

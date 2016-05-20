@@ -5,7 +5,8 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
-#include "Camera.h"
+
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -21,27 +22,24 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game, Camera * cam) {
+void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) {
     this->manager = game;
 	this->camera = cam;
-
-	BowModel *bow = new BowModel(cam);
+    this->wiiHandler = hand;
+	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 
-	//make bloem and push to models vector
-	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	bloem->xpos = 0;
-    models.push_back(pair<int, ObjModel*>(1,bloem));
+	////make bloem and push to models vector
+	//ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
+	//bloem->xpos = 0;
+ //   models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
 
-	//make baksteen and push to models vector
-    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
-    baksteen->xpos = 2;
-    models.push_back(pair<int, ObjModel *>(1, baksteen));
+
 }
 
 void PlayingState::Cleanup() {
@@ -56,23 +54,28 @@ void PlayingState::Resume() {
 
 }
 
-void PlayingState::HandleEvents() {
-
-}
-
 void PlayingState::Update() {
-    for( auto &m : models){
-		m.second->update();
+    for( auto &m : models) {
+        m.second->update();
     }
-
-    
 }
+
+
 void PlayingState::Draw() {
-    for( auto &m : models){
+    for( auto &m : models) {
         m.second->draw();
     }
 
 }
+
+void PlayingState::HandleEvents() {
+   
+}
+
+
+
+
+
 
 
 

@@ -159,6 +159,10 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/dev
     <ClCompile Include="rs232.c" />
     <ClCompile Include="SerialHandler.cpp" />
     <ClCompile Include="Util.cpp" />

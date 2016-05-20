@@ -20,40 +20,39 @@
 #include <GL/glut.h>
 #endif
 
-std::string replace(std::string str, std::string toReplace, std::string replacement)
-{
-	size_t index = 0;
-	while (true) 
-	{
-		 index = str.find(toReplace, index);
-		 if (index == std::string::npos) 
-			 break;
-		 str.replace(index, toReplace.length(), replacement);
-		 ++index;
-	}
-	return str;
+//TODO: Remove me before the final release
+#define DRAW_BOUNDING_BOX true
+
+
+std::string replace(std::string str, std::string toReplace, std::string replacement) {
+    size_t index = 0;
+    while (true) {
+        index = str.find(toReplace, index);
+        if (index == std::string::npos)
+            break;
+        str.replace(index, toReplace.length(), replacement);
+        ++index;
+    }
+    return str;
 }
 
-std::vector<std::string> split(std::string str, std::string sep)
-{
-	std::vector<std::string> ret;
-	size_t index;
-	while(true)
-	{
-		index = str.find(sep);
-		if(index == std::string::npos)
-			break;
-		ret.push_back(str.substr(0, index));
-		str = str.substr(index+1);
-	}
-	ret.push_back(str);
-	return ret;
+std::vector<std::string> split(std::string str, std::string sep) {
+    std::vector<std::string> ret;
+    size_t index;
+    while (true) {
+        index = str.find(sep);
+        if (index == std::string::npos)
+            break;
+        ret.push_back(str.substr(0, index));
+        str = str.substr(index + 1);
+    }
+    ret.push_back(str);
+    return ret;
 }
 
-inline std::string toLower(std::string data)
-{
-	std::transform(data.begin(), data.end(), data.begin(), ::tolower);
-	return data;
+inline std::string toLower(std::string data) {
+    std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+    return data;
 }
 
 
@@ -62,6 +61,11 @@ inline std::string toLower(std::string data)
 ObjModel::ObjModel(std::string fileName)
 {
 	xpos = ypos = zpos = xrot = yrot = zrot = 0;
+//Fix for the OSX project, because our paht starts from shiro-bougyo instead of Project
+#ifdef __APPLE__
+	fileName = "Project/" + fileName;
+#endif
+
 	std::string dirName = fileName;
 	if(dirName.rfind("/") != std::string::npos)
 		dirName = dirName.substr(0, dirName.rfind("/"));
@@ -167,8 +171,73 @@ ObjModel::ObjModel(std::string fileName)
 		}
 	}
 	groups.push_back(currentGroup);
+	CalcMinVertex();
+	CalcMaxVertex();
 }
 
+void ObjModel::CalcMinVertex() {
+    float smallestx, smallesty, smallestz;
+    smallestx = smallesty = smallestz = 0;
+
+    //find smallest x
+    smallestx = 100000; //using 100 as a base value, this has to be a big number.
+    for (auto &vertice : vertices) {
+        if (vertice->x < smallestx) {
+            smallestx = vertice->x;
+        }
+    }
+
+    //find smallest y
+    smallesty = 100000;
+    for (auto &vertice : vertices) {
+        if (vertice->y < smallesty) {
+            smallesty = vertice->y;
+        }
+    }
+
+    smallestz = 100000;
+    for (auto &vertice : vertices) {
+        if (vertice->z < smallestz) {
+            smallestz = vertice->z;
+        }
+    }
+    printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
+
+    //Transform it into a vertex.
+    vertices_min = new Vec3f(smallestx, smallesty, smallestz);
+
+}
+
+void ObjModel::CalcMaxVertex() {
+    float maxx, maxy, maxz;
+    maxx = maxy = maxz = 0;
+
+    //find smallest x
+    maxx = -100000; //using -100 as a base value, this has to be a big number.
+    for (auto &vertice : vertices) {
+        if (vertice->x > maxx) {
+            maxx = vertice->x;
+        }
+    }
+
+    //find smallest y
+    maxy = -100000;
+    for (auto &vertice : vertices) {
+        if (vertice->y > maxy) {
+            maxy = vertice->y;
+        }
+    }
+
+    maxz = -1000000;
+    for (auto &vertice : vertices) {
+        if (vertice->z > maxz) {
+            maxz = vertice->z;
+        }
+    }
+
+    printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
+    vertices_max = new Vec3f(maxx, maxy, maxz);
+}
 
 ObjModel::~ObjModel(void)
 {
@@ -182,12 +251,15 @@ void ObjModel::draw() {
 	//glColor
 	glPushMatrix();
 
-
 	glTranslatef(xpos, ypos, zpos);
-	
+
 	glRotatef(xrot, 1, 0, 0);
 	glRotatef(yrot, 0, 1, 0);
 	glRotatef(zrot, 0, 0, 1);
+
+//	glTranslatef(xpos, ypos, zpos);
+	
+
 
 	for (auto &g : groups) {
 		if (materials[g->materialIndex]->hasTexture) {
@@ -206,15 +278,39 @@ void ObjModel::draw() {
 		glEnd();
 	}
 
-	glPopMatrix();
-}
+if (DRAW_BOUNDING_BOX) {
+        glLineWidth(5);
 
-void ObjModel::update()
-{
-	xpos += 0.01;
-	if (xpos > 5) {
-		xpos = -5;
-	}
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_max->y,vertices_min->z);
+        glEnd();
+
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_max->z);
+        glVertex3f(vertices_min->x,vertices_min->y,vertices_min->z);
+        glVertex3f(vertices_max->x,vertices_min->y,vertices_min->z);
+        glEnd();
+
+    }
+	glPopMatrix();
 }
 
 void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
@@ -264,6 +360,7 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		{
 			currentMaterial->hasTexture = true;
 			currentMaterial->texture = new Texture(dirName + "/" + params[1]);
+			std::cout<<"Made material named " << params[1] << std::endl;
 		}
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
@@ -272,6 +369,19 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		materials.push_back(currentMaterial);
 
 }
+bool ObjModel::CollidesWith(ObjModel *obj2) const {
+
+//    for (auto &vertice : vertices) {
+//        printf("Vertice info: %f %f %f\n", vertice->v[0], vertice->v[1], vertice->v[2]);
+//    }
+    return false;
+}
+
+void ObjModel::update() {
+
+	//implement this method in child class
+}
+
 
 ObjModel::MaterialInfo::MaterialInfo()
 {
