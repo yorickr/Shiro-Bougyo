@@ -5,7 +5,10 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "AnimatedModel.h"
 #include "StationaryObjModel.h"
+#include "AnimatedBowModel.h"
+#include "../ArrowModel.h"
 
 
 #ifdef __APPLE__
@@ -28,7 +31,13 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	this->camera = cam;
     this->wiiHandler = hand;
 	
-	this->bow = new BowModel(wiiHandler);
+	vector<ObjModel*> temp;
+	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj"));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj"));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj"));
+
+	bow = new AnimatedBowModel(temp, hand);
+	/*bow = new AnimatedBowModel(models); */
 	
 
 
@@ -38,11 +47,19 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 //    models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
-	for (int i = 0; i < 5; i++ )
+	for (int i = 1; i < 5; i++ )
 	{
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
-		models.push_back(pair<int, ObjModel*>(1, warrior));
+		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
+
+	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
+	arrow->xpos = -10;
+	arrow->zpos = 10;
+	models.push_back(pair<int, ObjModel*>(1337, arrow));
+
+	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
+	models.push_back(pair<int, ObjModel*>(231231, warrior));
 	
 
 //	make baksteen and push to models vector
@@ -68,13 +85,15 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update() {
-
+	if(wiiHandler->is_A)
+		bow->nextModel();
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
             if (obj1 != obj2 && obj1.second->CollidesWith(obj2.second)) {
-                collides = true;
-            }
+				printf("%d colliding with %d\n", obj1.first, obj2.first);
+				collides = true;
+			}
         }
         if(!collides) {
             obj1.second->update();
@@ -93,8 +112,7 @@ void PlayingState::Draw() {
 
 void PlayingState::preDraw()
 {
-	//TODO draw bow:
-	bow->draw();
+	bow->getModel()->draw();
 }
 
 void PlayingState::HandleEvents() {

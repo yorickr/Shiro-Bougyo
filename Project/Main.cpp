@@ -125,6 +125,15 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
+void mouseFunc(int button, int state, int x, int y) {
+    printf("Received %d %d \n", button, state);
+    if (button == 0 && state == 1) {
+        //Tell gamestatemanager to shoot arrow
+
+    }
+}
+
+
 int main(int argc, char* argv[]) {
 
 	gameManager.Init(&camera,&wiiHandler);
@@ -147,6 +156,7 @@ int main(int argc, char* argv[]) {
 	glutTimerFunc(1000 / 60, onTimer, 1);
 	glutKeyboardUpFunc(onKeyboardUp);
 	glutPassiveMotionFunc(mousePassiveMotion);
+    glutMouseFunc(mouseFunc);
 
 	glutWarpPointer(camera.width / 2, camera.height / 2);
 
