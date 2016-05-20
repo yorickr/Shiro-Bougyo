@@ -376,7 +376,7 @@ bool ObjModel::CollidesWith(ObjModel *obj2) {
 }
 
 void ObjModel::update() {
-    xpos += 0.01;
+    yrot += 0.5;
     if (xpos > 5) {
         xpos = -5;
     }
