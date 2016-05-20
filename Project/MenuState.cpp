@@ -100,7 +100,9 @@ void MenuState::Draw()
 	glPopMatrix();
 
 	//DrawCrosshair(camera->width/2,camera->height/2);
+}
 
-
+void MenuState::preDraw()
+{
 
 }

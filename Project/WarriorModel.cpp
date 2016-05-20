@@ -2,10 +2,10 @@
 
 
 
-WarriorModel::WarriorModel():ObjModel("models/warrior/warrior.obj")
+WarriorModel::WarriorModel(int x, int z):ObjModel("models/warrior/warrior.obj")
 {
-	xpos = -2;
-	zpos = 0;
+	xpos = x;
+	zpos = z;
 	ypos = -1;
 }
 

@@ -15,8 +15,8 @@ class GameState {
 		virtual void HandleEvents() = 0;
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
-
-		//void ChangeState(GameStateManager* game, GameState* state) { game->ChangeState(state); }
+		virtual void preDraw() =0;
+	//void ChangeState(GameStateManager* game, GameState* state) { game->ChangeState(state); }
 
 	protected: 
 		GameState() { }
