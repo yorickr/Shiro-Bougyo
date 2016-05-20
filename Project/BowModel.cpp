@@ -35,6 +35,7 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	zrot = 0;
 
 	////translate bow to correct position
+	cout << "rotx: " << rotx << endl;
 
 	//if rotate on x as:
 	ypos -= (sin(toRadian(rotx)));
@@ -43,10 +44,10 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	//if rotate on y as: 
 	xpos += (sin(toRadian(roty)));
 	
-	//set bow on the right site
+	//set bow correct position
 
-	xpos += 0.8 * (cos(toRadian(roty)));
-	zpos += 0.8 * (sin(toRadian(roty)));
+	xpos += bowPostion	 * (cos(toRadian(roty)));
+	zpos += bowPostion * (sin(toRadian(roty)));
 
 	//set crosshair positions
 	setCrosshairPositions(x, y, rotx, roty);

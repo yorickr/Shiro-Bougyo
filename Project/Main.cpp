@@ -15,7 +15,6 @@
 #include "SerialHandler.h"
 #include "Camera.h"
 
-#include "GameStateManager.h"
 #include "WiiHandler.h"
 
 #define COMMPORT 4

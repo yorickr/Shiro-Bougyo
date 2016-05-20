@@ -29,15 +29,14 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
-
-	////make bloem and push to models vector
-	//ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-	//bloem->xpos = 0;
- //   models.push_back(pair<int, ObjModel*>(1,bloem));
-
 	//make bloem and push to models vector
 	WarriorModel *warrior = new WarriorModel();
 	models.push_back(pair<int, ObjModel*>(1, warrior));
+
+	//ObjModel *world = new ObjModel("models/");
+	//models.push_back(pair<int,ObjModel*>(1,warrior));
+
+
 
 
 }
