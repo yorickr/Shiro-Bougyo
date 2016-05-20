@@ -6,7 +6,7 @@
 
 class GameState {
 	public:
-		virtual void Init(GameStateManager* game, Camera * camera) = 0;
+		virtual void Init(GameStateManager* game, Camera * camera, WiiHandler* wiiHandler) = 0;
 		virtual void Cleanup() = 0;
 
 		virtual void Pause() = 0;

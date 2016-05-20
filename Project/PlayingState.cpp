@@ -22,7 +22,7 @@
 #include <iostream>
 #endif
 
-void PlayingState::Init(GameStateManager *game, Camera *cam) {
+void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) {
     this->manager = game;
     //models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
    /* ObjModel *baksteen = new ObjModel("models/world/try.obj");
@@ -38,8 +38,8 @@ void PlayingState::Init(GameStateManager *game, Camera *cam) {
 	models.push_back(pair<int, ObjModel *>(2, baksteen2));
 
 	this->camera = cam;
-
-	BowModel *bow = new BowModel(cam);
+    this->wiiHandler = hand;
+	BowModel *bow = new BowModel(cam, wiiHandler);
 	models.push_back(pair<int, ObjModel*>(1, bow));
 
 
