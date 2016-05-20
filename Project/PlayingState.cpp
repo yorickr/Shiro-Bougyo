@@ -46,7 +46,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 //    models.push_back(pair<int, ObjModel*>(1,bloem));
 
 	//make bloem and push to models vector
-	for (int i = 0; i < 5; i++ )
+	for (int i = 1; i < 5; i++ )
 	{
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
 		models.push_back(pair<int, ObjModel*>(1, warrior));
@@ -54,7 +54,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 	ObjModel *arrow = new ObjModel("models/Arrow/Arrow.obj");
 	arrow->xpos = 2;
-	arrow->ypos = 2;
+	arrow->xrot = 180;
+	arrow->ypos = 0;
+	arrow->zpos = 1;
 	models.push_back(pair<int, ObjModel*>(1, arrow));
 	
 
