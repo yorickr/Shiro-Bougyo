@@ -7,12 +7,11 @@
 # define M_PI           3.14159265358979323846  /* pi */
 
 
-BowModel::BowModel(Camera * cam, WiiHandler * hand): ObjModel("models/bow/Bow_recurve.obj") {
-	this->camera = cam;
+BowModel::BowModel(WiiHandler * hand): ObjModel("models/bow/Bow_01.obj") {
 	this->wiiHandler = hand;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0,0,0,0);
-	setCrosshairPositions(0, -10,0,0);
+	setCrosshairPositions(0, 0,0,0);
 }
 
 BowModel::~BowModel()
@@ -24,7 +23,7 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	//set bow on camera position
 	xpos = x ;
 	ypos = y ;
-	zpos = 0;
+	zpos = -0;
 
 	//set rotation bow equals to rotation camera
 	if (roty > -90 && roty < 90)

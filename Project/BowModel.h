@@ -7,7 +7,7 @@ class BowModel :
 	public ObjModel
 {
 public:
-	BowModel(Camera * camera, WiiHandler * wiiHandler);
+	BowModel( WiiHandler * wiiHandler);
 	~BowModel();
 	void draw() override;
 	float toRadian(float degree);
