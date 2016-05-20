@@ -2,7 +2,7 @@
 
 
 
-WarriorModel::WarriorModel(int x, int z):ObjModel("models/warrior/warrior.obj")
+WarriorModel::WarriorModel(float x, float z):ObjModel("models/warrior/warrior.obj")
 {
 	xpos = x;
 	zpos = z;
