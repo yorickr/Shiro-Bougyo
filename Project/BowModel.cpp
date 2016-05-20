@@ -2,14 +2,25 @@
 #include <iostream>
 #include "Camera.h"
 #include "WiiHandler.h"
+#include "AnimatedModel.h"
 #include <math.h>
 
 # define M_PI           3.14159265358979323846  /* pi */
 
 
-BowModel::BowModel(WiiHandler * hand): ObjModel("models/bow/Bow_01.obj") {
+BowModel::BowModel(WiiHandler * hand): ObjModel("models/bow/Bow_recurve.obj") {
 	this->wiiHandler = hand;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
+	
+	//load all models
+	//vector<ObjModel> models;
+	//models.push_back(ObjModel("models/bow/Bow_recurve.obj"));
+	//models.push_back(ObjModel("models/bow/Bow_01.obj"));
+	//models.push_back(ObjModel("models/bow/Bow_02.obj"));
+	//animatedModel = new AnimatedModel(models);
+	
+
+
 	SetPositions(0,0,0,0);
 	setCrosshairPositions(0, 0,0,0);
 }
@@ -85,9 +96,9 @@ void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 
 void BowModel::draw()
 {
-	crosshair->draw();
-	//TODO draw croshair
 	ObjModel::draw();
+	crosshair->draw();
+	//animatedModel->getModel().draw();
 
 
 }
@@ -103,6 +114,12 @@ void BowModel::update()
 	float camrotx = camera->rotX;
 	float camroty = camera->rotY;
 	SetPositions(camx, camy, camrotx, camroty);
+
+	//
+
+	//if (wiiHandler->is_A)
+	//	animatedModel->nextModel();
+
 
 
 	

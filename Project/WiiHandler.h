@@ -23,6 +23,9 @@ public:
     void setWM(struct wiimote_t* wm);
     wiimote_t * wiiMoteP1;
     wiimote_t * wiiMoteP2;
+	bool is_A = false;
+
+	
 
 };
 

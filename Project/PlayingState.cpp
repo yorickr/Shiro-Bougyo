@@ -43,6 +43,11 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
 		models.push_back(pair<int, ObjModel*>(1, warrior));
 	}
+
+	ObjModel *arrow = new ObjModel("models/Arrow/Arrow.obj");
+	arrow->xpos = 2;
+	arrow->ypos = 2;
+	models.push_back(pair<int, ObjModel*>(1, arrow));
 	
 
 //	make baksteen and push to models vector
@@ -93,7 +98,6 @@ void PlayingState::Draw() {
 
 void PlayingState::preDraw()
 {
-	//TODO draw bow:
 	bow->draw();
 }
 

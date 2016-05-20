@@ -2,6 +2,7 @@
 #include "ObjModel.h"
 #include "Camera.h"
 #include "WiiHandler.h"
+#include "AnimatedModel.h"
 
 class BowModel :
 	public ObjModel

@@ -43,7 +43,12 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
     /* if a button is pressed, report it */
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
         printf("A pressed\n");
+		is_A = true;
+    }else
+    {
+		is_A = false;
     }
+
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
         printf("B pressed\n");
     }
