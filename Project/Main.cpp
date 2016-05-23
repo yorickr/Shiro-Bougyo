@@ -34,19 +34,25 @@ void onDisplay() {
 	glLoadIdentity();
 	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1, 50);
 
+	
 	glMatrixMode(GL_MODELVIEW);
 
 
 	glLoadIdentity();
 	
+
 	//load bow
 	gameManager.preDraw();
+
+	glDisable(GL_TEXTURE_2D);
+	//glLoadIdentity();
 
 	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 
 
+	glColor3f(0, 0.5, 0);
 	glPushMatrix();
 	glBegin(GL_QUADS);
 	glVertex3f(-15, -1, -15);

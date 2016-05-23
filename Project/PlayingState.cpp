@@ -60,6 +60,13 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
 	models.push_back(pair<int, ObjModel*>(231231, warrior));
+
+	//ObjModel *arrow = new ObjModel("models/Arrow/Arrow.obj");
+	//arrow->xpos = 2;
+	//arrow->xrot = 180;
+	//arrow->ypos = 0;
+	//arrow->zpos = 1;
+	//models.push_back(pair<int, ObjModel*>(1, arrow));
 	
 
 //	make baksteen and push to models vector
