@@ -165,7 +165,8 @@ ObjModel::ObjModel(std::string fileName) {
     groups.push_back(currentGroup);
     CalcMinVertex();
     CalcMaxVertex();
-    CalcBounds();
+    InitBoundingSpheres();
+    CalcBoundingSpheres();
 }
 
 void ObjModel::CalcMinVertex() {
@@ -269,35 +270,46 @@ void ObjModel::draw() {
     }
 
     if (DRAW_BOUNDING_BOX) {
-        glLineWidth(5);
+//        glLineWidth(5);
+//
+//        glBegin(GL_LINE_LOOP);
+//        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
+//        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
+//        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
+//        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
+//        glEnd();
+//
+//        glBegin(GL_LINE_LOOP);
+//        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
+//        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
+//        glEnd();
+//
+//        glBegin(GL_LINE_LOOP);
+//        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
+//        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
+//        glEnd();
+//
+//        glBegin(GL_LINE_LOOP);
+//        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
+//        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
+//        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
+//        glEnd();
 
-        glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
-        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
-        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
-        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
-        glEnd();
-
-        glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
-        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
-        glEnd();
-
-        glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x, vertices_max->y, vertices_min->z);
-        glVertex3f(vertices_max->x, vertices_max->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_max->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_max->y, vertices_min->z);
-        glEnd();
-
-        glBegin(GL_LINE_LOOP);
-        glVertex3f(vertices_max->x, vertices_min->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_min->y, vertices_max->z);
-        glVertex3f(vertices_min->x, vertices_min->y, vertices_min->z);
-        glVertex3f(vertices_max->x, vertices_min->y, vertices_min->z);
-        glEnd();
+        for(auto &e : boundingSpheres) {
+            if (e->collides) {
+                glPushMatrix();
+                glColor3ub(0, 255, 255);
+                glTranslatef(e->x, e->y, e->z);
+                glutWireSphere(e->radius, 20, 20); //Radius, polycount, polycount
+                glPopMatrix();
+            }
+        }
+        glColor3f(1,1,1);
 
     }
     glPopMatrix();
@@ -354,24 +366,21 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
 
 }
 
-void ObjModel::PrintValues() {
-    printf("Xmin, Xmax : %f , %f\n", minx, maxx);
-    printf("Ymin, Zmax : %f , %f\n", miny, maxy);
-    printf("Zmin, Zmax : %f , %f\n", minz, maxz);
-
-}
-
 bool ObjModel::CollidesWith(ObjModel *obj2) {
-    this->CalcBounds();
-    obj2->CalcBounds();
-    bool retval = (this->minx <= obj2->maxx && this->maxx >= obj2->minx) &&
-                  (this->miny <= obj2->maxy && this->maxy >= obj2->miny) &&
-                  (this->minz <= obj2->maxz && this->maxz >= obj2->minz);
-//    printf("THIS\n");
-//    this->PrintValues();
-//    printf("OBJ2\n");
-//    obj2->PrintValues();
-//    printf("------------\n");
+    this->CalcBoundingSpheres();
+    obj2->CalcBoundingSpheres();
+
+    bool retval = false;
+
+    for (auto &sphere1 : this->boundingSpheres) {
+        for (auto &sphere2 : obj2->boundingSpheres) {
+            if (sphere1 != sphere2 && sphere1->intersect(sphere2)){
+                retval = true;
+                return retval;
+            }
+        }
+    }
+
     return retval;
 }
 
@@ -382,20 +391,58 @@ void ObjModel::update() {
     }
 }
 
-void ObjModel::CalcBounds() {
-    minx = vertices_min->x + xpos;
-    miny = vertices_min->y+ ypos;
-    minz =  vertices_min->z+ zpos;
+void ObjModel::InitBoundingSpheres() {
+    //Calculate bounding spheres here, to be overriden by specific classes.
+    //Here we make just 1 bounding sphere.
+    //Hence, the sphere has to be in the middle of the model, using either width, height or depth for the radius, whichever is the biggest.
 
-    maxx = vertices_max->x + xpos;
-    maxy = vertices_max->y+ ypos;
-    maxz = vertices_max->z+ zpos;
+    //Calculate width
+    float width = vertices_max->x - vertices_min->x;
+    float height = vertices_max->y - vertices_min->y;
+    float depth = vertices_max->z - vertices_min->z;
 
-//    printf("Calculated bounds are:\n");
-//    printf("x: %f %f %f\n", minx, maxx,xpos);
-//    printf("y: %f %f %f\n", miny, maxy,ypos);
-//    printf("z: %f %f %f\n", minz, maxz,zpos);
-//    exit(0);
+    //X, Y and Z of sphere is the middle of the model
+
+    float x, y, z ;
+    x = y = z = 0;
+
+    x = width / 2 + vertices_min->x;
+    y = height / 2+vertices_min->y;
+    z = depth / 2+vertices_min->z;
+
+    printf("Width = %f\n",width);
+    printf("Height = %f\n",height);
+    printf("Depth = %f\n",depth);
+
+    if( width>=height && width>=depth ){
+        //Use width
+        printf("Using width\n");
+        boundingSpheres.push_back(new Sphere(x, y, z, width/2));
+    }
+
+    if( height>=width && height>=depth ) {
+        //Use height
+        printf("Using height\n");
+        boundingSpheres.push_back(new Sphere(x, y, z, height/2));
+    }
+
+    if( depth>=width && depth>=height ) {
+        //Use depth
+        printf("Using depth\n");
+        boundingSpheres.push_back(new Sphere(x, y, z, depth/2));
+    }
+
+    printf("Called base\n");
+
+
+}
+
+void ObjModel::CalcBoundingSpheres() {
+    for (auto &sphere : boundingSpheres) {
+        sphere->xpos = sphere->x + this->xpos;
+        sphere->ypos = sphere->y + this->ypos;
+        sphere->zpos = sphere->z + this->zpos;
+    }
 }
 
 
@@ -472,3 +519,42 @@ ObjModel::Texture::Texture(const std::string &fileName) {
 void ObjModel::Texture::bind() {
     glBindTexture(GL_TEXTURE_2D, index);
 }
+
+bool ObjModel::Sphere::intersect(ObjModel::Sphere *other) {
+
+    if(collides){
+        float distance = sqrtf((this->xpos - other->xpos) * (this->xpos - other->xpos) +
+                               (this->ypos - other->ypos) * (this->ypos - other->ypos) +
+                               (this->zpos - other->zpos) * (this->zpos - other->zpos));
+        return distance < (other->radius + other->radius);
+    }
+
+    return false;
+
+}
+
+bool ObjModel::Sphere::intersect(float x, float y, float z) {
+    if(collides){
+        float distance = sqrtf((x - this->xpos) * (x - this->xpos) +
+                               (y - this->ypos) * (y - this->ypos) +
+                               (z - this->zpos) * (z - this->zpos));
+        return distance < this->radius;
+    }
+    return false;
+}
+
+ObjModel::Sphere::Sphere(float x, float y, float z, float radius):x(x), y(y), z(z), radius(radius) {
+    //Initialize a sphere
+}
+
+ObjModel::Sphere* ObjModel::Sphere::setCollision(bool value) {
+    collides = value;
+    return this;
+}
+
+
+
+
+
+
+

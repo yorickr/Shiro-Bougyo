@@ -19,5 +19,9 @@ private:
 	void setCrosshairPositions(float x, float y, float rotx, float roty);
 	WiiHandler * wiiHandler;
 	float bowPostion = 0.8;
+
+	void CalcBoundingSpheres() override;
+
+	void InitBoundingSpheres() override;
 };
 
