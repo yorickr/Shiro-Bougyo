@@ -29,57 +29,38 @@
 
 void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) {
     this->manager = game;
-    //models.push_back(pair<int, ObjModel*>(1, new ObjModel("models/bloemetje/PrimroseP.obj")));
-   /* ObjModel *baksteen = new ObjModel("models/world/try.obj");
-    baksteen->xpos = 2;
-    baksteen->ypos=-20;
-
-    models.push_back(pair<int, ObjModel *>(2, baksteen));*/
-
-	/*ObjModel *baksteen2 = new ObjModel("models/tree/tree.obj");
-	baksteen2->xpos = 2;
-	baksteen2->ypos = 0;
-
-	models.push_back(pair<int, ObjModel *>(2, baksteen2));*/
-
 	this->camera = cam;
     this->wiiHandler = hand;
 	
+
+	//bow
 	vector<ObjModel*> temp;
 	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj"));
 	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj"));
 	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj"));
 
 	bow = new AnimatedBowModel(temp, hand);
-	/*bow = new AnimatedBowModel(models); */
-	
+	//bow = new AnimatedBowModel(models); #1#
 
-	//make bloem and push to models vector
-//	ObjModel *bloem = new ObjModel("models/bloemetje/PrimroseP.obj");
-//	bloem->xpos = 4;
-//    models.push_back(pair<int, ObjModel*>(1,bloem));
-
-	//make bloem and push to models vector
+	//Warrior
 	for (int i = 1; i < 5; i++ )
 	{
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
+	//arrow
 	ObjModel *arrow = new ObjModel("models/Arrow/Arrow.obj");
 	arrow->xpos = 2;
 	arrow->ypos = 2;
 	models.push_back(pair<int, ObjModel*>(1, arrow));
-	
 
-//	make baksteen and push to models vector
-//    ObjModel *baksteen = new ObjModel("models/cube/cube-textures.obj");
-//    baksteen->xpos = 2;
-//    models.push_back(pair<int, ObjModel *>(1, baksteen));
-//
-//    ObjModel *bak = new StationaryObjModel("models/cube/cube-textures.obj");
-//    bak->xpos = 0;
-//    models.push_back(pair<int, ObjModel *>(1, bak));
+
+	//world 
+	ObjModel *world = new ObjModel("models/world/FirstWorld.obj");
+	world->xpos = 2;
+	world->ypos = 2;
+	models.push_back(pair<int, ObjModel*>(1, world));
 }
 
 void PlayingState::Cleanup() {

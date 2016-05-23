@@ -41,8 +41,8 @@ void onDisplay() {
 
 	//load bow
 	gameManager.preDraw();
-
-	glTranslatef(camera.posX, -camera.posY, 0);
+	glTranslatef(camera.posX,0, camera.posY);
+	//glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 
@@ -71,6 +71,12 @@ void onTimer(int id) {
 	if (keys['s']) camera.posY--;
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
+	printf("w: %f\n", camera.posX);
+	printf("s: %f\n", camera.posY);
+	printf("rotx: %f\n", camera.rotX);
+	printf("roty: %f\n", camera.rotY);
+	printf("width: %d\n", camera.width);
+	printf("height: %d\n", camera.height);
 	gameManager.Update();
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
@@ -119,9 +125,9 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
-int main(int argc, char* argv[]) {
 
-	gameManager.Init(&camera,&wiiHandler);
+
+int main(int argc, char* argv[]) {
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
@@ -143,8 +149,8 @@ int main(int argc, char* argv[]) {
 	glutPassiveMotionFunc(mousePassiveMotion);
 
 	glutWarpPointer(camera.width / 2, camera.height / 2);
-
 	memset(keys, 0, sizeof(keys));
+	gameManager.Init(&camera, &wiiHandler);
 
 	glutMainLoop();
 }
