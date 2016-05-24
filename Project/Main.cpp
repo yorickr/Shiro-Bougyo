@@ -18,8 +18,6 @@
 #include "WiiHandler.h"
 
 #define COMMPORT 4
-#define True 1
-#define False 0
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
