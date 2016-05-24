@@ -22,7 +22,7 @@ set(SOURCE_FILES
         Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h
 
         Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
-        )
+        ArrowModel.cpp ArrowModel.h)
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})

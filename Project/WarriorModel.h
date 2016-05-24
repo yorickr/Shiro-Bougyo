@@ -4,7 +4,7 @@ class WarriorModel :
 	public ObjModel
 {
 public:
-	WarriorModel(int x, int z);
+	WarriorModel(float x, float z);
 	~WarriorModel();
 	void update() override;
 	void InitBoundingSpheres() override;

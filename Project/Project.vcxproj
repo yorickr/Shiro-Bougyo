@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="AnimatedBowModel.cpp" />
     <ClCompile Include="AnimatedModel.cpp" />
+    <ClCompile Include="ArrowModel.cpp" />
     <ClCompile Include="BowModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -171,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="AnimatedBowModel.h" />
     <ClInclude Include="AnimatedModel.h" />
+    <ClInclude Include="ArrowModel.h" />
     <ClInclude Include="BowModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
@@ -180,6 +182,7 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />
     <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="rs232.h" />
     <ClInclude Include="SerialHandler.h" />
     <ClInclude Include="Util.h" />
@@ -188,6 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

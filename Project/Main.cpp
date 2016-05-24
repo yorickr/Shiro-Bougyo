@@ -43,8 +43,7 @@ void onDisplay() {
 
 	//load bow
 	gameManager.preDraw();
-	glTranslatef(camera.posX,0, camera.posY);
-	//glTranslatef(camera.posX, -camera.posY, 0);
+	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 	gameManager.Draw();
@@ -67,11 +66,6 @@ void onIdle() {
 }
 
 void onTimer(int id) {
-	if (keys[27]) exit(0);
-	if (keys['w']) camera.posY++;
-	if (keys['s']) camera.posY--;
-	if (keys['d']) camera.posX--;
-	if (keys['a']) camera.posX++;
 	gameManager.Update();
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
@@ -120,6 +114,7 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
+
 void mouseFunction(int button,int state, int mouse_x, int mouse_y)
 {
 	buttonPressed = state == GLUT_LEFT_BUTTON;
@@ -129,6 +124,14 @@ void mouseFunction(int button,int state, int mouse_x, int mouse_y)
 		printf("pressed x: %i/n", mouse_x);
 		printf("pressed y: %i/n", mouse_y);
 	}
+}
+
+void mouseFunc(int button, int state, int x, int y) {
+    printf("Received %d %d \n", button, state);
+    if (button == 0 && state == 1) {
+        //Tell gamestatemanager to shoot arrow
+
+    }
 }
 
 
@@ -141,7 +144,7 @@ int main(int argc, char* argv[]) {
 
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
-	//glutSetCursor(GLUT_CURSOR_NONE);
+	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
 #endif
@@ -154,6 +157,7 @@ int main(int argc, char* argv[]) {
 	//glutMotionFunc(mouseFunction);
 	glutMouseFunc(mouseFunction);
 	glutPassiveMotionFunc(mousePassiveMotion);
+    glutMouseFunc(mouseFunc);
 	glutWarpPointer(camera.width / 2, camera.height / 2);
 	memset(keys, 0, sizeof(keys));
 	gameManager.Init(&camera, &wiiHandler);
