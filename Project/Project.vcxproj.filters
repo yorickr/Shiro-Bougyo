@@ -1,47 +1,143 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="AnimatedBowModel.cpp" />
-    <ClCompile Include="AnimatedModel.cpp" />
-    <ClCompile Include="BowModel.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MenuModel.cpp" />
-    <ClCompile Include="MenuState.cpp" />
-    <ClCompile Include="ObjModel.cpp" />
-    <ClCompile Include="PlayingState.cpp" />
-    <ClCompile Include="rs232.c" />
-    <ClCompile Include="SerialHandler.cpp" />
-    <ClCompile Include="Util.cpp" />
-    <ClCompile Include="WarriorModel.cpp" />
-    <ClCompile Include="WiiHandler.cpp" />
-    <ClCompile Include="ArrowModel.cpp" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{767b9e0a-39f0-4404-947c-216ffe2a1bb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStates">
+      <UniqueIdentifier>{a77e7ff6-935d-42d4-af66-123a73ba9a9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectModels">
+      <UniqueIdentifier>{2dcb9071-e942-4556-a360-6b2799004dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ObjectModels">
+      <UniqueIdentifier>{08273317-a40e-47fd-92b6-040088979576}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimatedBowModel.h" />
-    <ClInclude Include="AnimatedModel.h" />
-    <ClInclude Include="BowModel.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="MenuModel.h" />
-    <ClInclude Include="MenuState.h" />
-    <ClInclude Include="objmodel.h" />
-    <ClInclude Include="PlayingState.h" />
-    <ClInclude Include="rs232.h" />
-    <ClInclude Include="SerialHandler.h" />
-    <ClInclude Include="Util.h" />
-    <ClInclude Include="WarriorModel.h" />
-    <ClInclude Include="WiiHandler.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="ArrowModel.h" />
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="BowModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="WarriorModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="WiiHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SerialHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rs232.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrowModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedBowModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameStateManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayingState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="BowModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WarriorModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WiiHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rs232.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="objmodel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedBowModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrowModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Project.rc" />
+    <ResourceCompile Include="Project.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

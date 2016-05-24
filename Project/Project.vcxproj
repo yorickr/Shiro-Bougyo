@@ -150,7 +150,7 @@
       <AdditionalLibraryDirectories>freeglut\lib;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-  </ItemDefinitionGroup>
+	</ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedBowModel.cpp" />
     <ClCompile Include="AnimatedModel.cpp" />
