@@ -18,13 +18,17 @@
 #include "WiiHandler.h"
 
 #define COMMPORT 4
-
+#define True 1
+#define False 0
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
 WiiHandler wiiHandler;
+int buttonPressed = 0;
+GLint WindowWidth = 1920;
+GLint WindowHight = 1080;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -45,9 +49,8 @@ void onDisplay() {
 	//glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-
 	gameManager.Draw();
-
+	// Process all OpenGL routine s as quickly as possible
 
 	glFlush();
 	glutSwapBuffers();
@@ -71,12 +74,6 @@ void onTimer(int id) {
 	if (keys['s']) camera.posY--;
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
-	printf("w: %f\n", camera.posX);
-	printf("s: %f\n", camera.posY);
-	printf("rotx: %f\n", camera.rotX);
-	printf("roty: %f\n", camera.rotY);
-	printf("width: %d\n", camera.width);
-	printf("height: %d\n", camera.height);
 	gameManager.Update();
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
@@ -125,18 +122,28 @@ void mousePassiveMotion(int x, int y) {
 	}
 }
 
+void mouseFunction(int button,int state, int mouse_x, int mouse_y)
+{
+	buttonPressed = state == GLUT_LEFT_BUTTON;
+	if(buttonPressed)
+	{
+		//gameManager.nextState();
+		printf("pressed x: %i/n", mouse_x);
+		printf("pressed y: %i/n", mouse_y);
+	}
+}
 
 
 int main(int argc, char* argv[]) {
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-	glutInitWindowSize(1920, 1080);
+	glutInitWindowSize(WindowWidth,	WindowHight);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
 	glutFullScreen();
-	glutSetCursor(GLUT_CURSOR_NONE);
+	//glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
 #endif
@@ -146,8 +153,9 @@ int main(int argc, char* argv[]) {
 	glutKeyboardFunc(onKeyboard);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 	glutKeyboardUpFunc(onKeyboardUp);
+	//glutMotionFunc(mouseFunction);
+	glutMouseFunc(mouseFunction);
 	glutPassiveMotionFunc(mousePassiveMotion);
-
 	glutWarpPointer(camera.width / 2, camera.height / 2);
 	memset(keys, 0, sizeof(keys));
 	gameManager.Init(&camera, &wiiHandler);

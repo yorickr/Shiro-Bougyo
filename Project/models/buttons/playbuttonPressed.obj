@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib playbutton.mtl
+mtllib playbuttonPressed.mtl
 g default
 v -0.734039 0.491540 -0.283284
 v 0.721961 0.491540 -0.283284
