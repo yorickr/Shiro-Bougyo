@@ -23,10 +23,11 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 	cam->posX = 0;
 	cam->posY = 0;
 	MenuModel * menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
-	cam->posX = 8;
-	cam->posY = -8;
-	cam->rotX = 21;
-	cam->rotY = -26;
+	cam->posX = 3.7;
+	cam->posY = -12;
+	cam->posZ = -3;
+	cam->rotX = 0;
+	cam->rotY = -34;
 
 	models.push_back(pair<int, ObjModel*>(1, menu));
 }

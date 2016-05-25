@@ -67,7 +67,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	
 	//world 
 	ObjModel *world = new ObjModel("models/world/FirstWorld.obj");
-	world->xpos = 2;
+	world->xpos = -2;
 	world->ypos = 2;
 	models.push_back(pair<int, ObjModel*>(1, world));
 }

@@ -25,8 +25,8 @@ void* wiiFunc(void * argument);
 Camera camera;
 WiiHandler wiiHandler;
 int buttonPressed = 0;
-GLint WindowWidth = 1920;
-GLint WindowHight = 1080;
+int WindowWidth = 1920;
+int WindowHight = 1080;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -34,7 +34,7 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1,100);
+	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,30);
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -43,9 +43,9 @@ void onDisplay() {
 
 	//load bow
 	gameManager.preDraw();
-	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
+	glTranslatef(camera.posX, camera.posZ,camera.posY);
 	gameManager.Draw();
 	// Process all OpenGL routine s as quickly as possible
 
@@ -98,20 +98,20 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
-
-	int dx = x - camera.width / 2;
-	int dy = y - camera.height / 2;
-	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-	{
-		camera.rotX += dy / 10.0f;
-		if(camera.rotX > 30){
-			camera.rotX = 30;
-		}else if(camera.rotX < -30){
-			camera.rotX = -30;
+		int dx = x - WindowWidth / 2;
+		int dy = y - WindowHight / 2;
+		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
+		{
+			camera.rotX += dy / 10.0f;
+			if (camera.rotX > 30) {
+				camera.rotX = 30;
+			}
+			else if (camera.rotX < -30) {
+				camera.rotX = -30;
+			}
+			camera.rotY += dx / 10.0f;
+			glutWarpPointer(WindowWidth / 2, WindowHight / 2);
 		}
-		camera.rotY += dx / 10.0f;
-		glutWarpPointer(camera.width / 2, camera.height / 2);
-	}
 }
 
 
@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
 #endif
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
-	glutReshapeFunc([](int w, int h) { camera.width = w; camera.height = h; glViewport(0, 0, w, h); });
+	glutReshapeFunc([](int w, int h) { WindowWidth = w; WindowHight = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 	
@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
 	glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
 	
-	glutWarpPointer(camera.width / 2, camera.height / 2);
+	glutWarpPointer(WindowWidth / 2, WindowHight / 2);
 	memset(keys, 0, sizeof(keys));
 	
 	gameManager.Init(&camera, &wiiHandler);
