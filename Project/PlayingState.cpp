@@ -52,10 +52,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 
 	//arrow
-	ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
-	hoi->xpos = 2;
-	hoi->ypos = 2;
-	models.push_back(pair<int, ObjModel*>(1, hoi));
+//	ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
+//	hoi->xpos = 2;
+//	hoi->ypos = 2;
+//	models.push_back(pair<int, ObjModel*>(1, hoi));
 
 	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
 	arrow->xpos = -10;

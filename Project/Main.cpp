@@ -72,6 +72,7 @@ void onIdle() {
 void onTimer(int id) {
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
+	oldTimeSinceStart = timeSinceStart;
 	gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
