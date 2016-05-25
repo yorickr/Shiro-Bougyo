@@ -1,12 +1,14 @@
 #pragma once
-#include "objmodel.h"
+
+#include "CollisionModel.h"
+
 class WarriorModel :
-	public ObjModel
+	public CollisionModel
 {
 public:
 	WarriorModel(float x, float z);
 	~WarriorModel();
-	void update() override;
+	void update(float deltatime) override;
 	void InitBoundingSpheres() override;
 };
 

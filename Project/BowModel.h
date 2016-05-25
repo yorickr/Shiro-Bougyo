@@ -16,7 +16,7 @@ public:
 	~BowModel();
 	void draw() override;
 	float toRadian(float degree);
-	void update() override;
+	void update(float deltatime) override;
 private:
 	ObjModel * crosshair;
 	GameState * state;
@@ -29,7 +29,6 @@ private:
 	void setArrowPosition();
 	
 	float bowPostion = 0.8;
-
 
 	void CalcBoundingSpheres() override;
 

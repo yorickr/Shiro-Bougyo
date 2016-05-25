@@ -3,11 +3,11 @@
 //
 
 #include <cmath>
+#include <iostream>
 #include "ArrowModel.h"
 #include "BowModel.h"
-#include <iostream>
 
-ArrowModel::ArrowModel( float x, float y, float z) : ObjModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float x, float y, float z) : CollisionModel("models/Arrow/Arrow.obj") {
 
     //Arrow heading to x, y, z
 
@@ -39,7 +39,7 @@ void ArrowModel::InitBoundingSpheres() {
     y = height / 2+vertices_min->y;
     z = depth / 2+vertices_min->z;
 
-//    printf("DO NOT FEAR ARROW IS HERE\n");
+    printf("DO NOT FEAR ARROW IS HERE\n");
 
     //depth
 
@@ -55,15 +55,9 @@ void ArrowModel::CalcBoundingSpheres() {
         sphere->ypos = sphere->y + this->ypos;
         sphere->zpos = sphere->z + this->zpos;
     }
-
 }
 
-void ArrowModel::draw()
-{
-	ObjModel::draw();
-}
-
-void ArrowModel::update() {
+void ArrowModel::update(float deltatime) {
 	if (!isFired)
 		return;
 
@@ -79,27 +73,13 @@ void ArrowModel::update() {
     ypos += dy;
     zpos += dz;
 
-	////	xrot = -rotx;
-	//if (roty > -90 && roty < 90)
-	//	crosshair->xrot = -rotx;
-	//else
-	//	crosshair->xrot = rotx;
-	//crosshair->yrot = -roty + 180;
-	//crosshair->zrot = 0;
-
-	////translate bow to correct position
-
-
-	////if rotate on x as:
-	//crosshair->ypos -= (sin(toRadian(rotx)));
-	//crosshair->zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
 
 
 }
 
 void ArrowModel::fire(float xpos, float ypos, float zpos, float targetx, float targety, float targetz)
 {
-	cout << xpos << " ypos: " << ypos << " zpos: " << zpos;
+    std::cout << xpos << " ypos: " << ypos << " zpos: " << zpos;
 	//set fired ture:
 	isFired = true;
 
@@ -116,6 +96,12 @@ void ArrowModel::fire(float xpos, float ypos, float zpos, float targetx, float t
 	pointy = targety;
 	pointz = targetz;
 }
+
+void ArrowModel::draw() {
+    CollisionModel::draw();
+}
+
+
 
 
 

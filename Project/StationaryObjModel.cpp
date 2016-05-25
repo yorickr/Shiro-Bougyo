@@ -4,7 +4,7 @@
 
 #include "StationaryObjModel.h"
 
-void StationaryObjModel::update() {
+void StationaryObjModel::update(float deltatime) {
     //Going to do nothing here, because this is a Stationary ObjModel after all.
 }
 

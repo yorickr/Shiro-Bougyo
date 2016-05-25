@@ -19,9 +19,6 @@ BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera
 	setCrosshairPositions(0, 0,0,0);
 	setArrowPosition();
 
-
-	boundingSpheres.clear();
-	BowModel::InitBoundingSpheres();
 }
 
 BowModel::~BowModel()
@@ -119,10 +116,9 @@ void BowModel::draw()
 
 float BowModel::toRadian(float degree) {
 	return (degree / 180) * M_PI;
-	
 }
 
-void BowModel::update()
+void BowModel::update(float deltatime)
 {
 	//counter++;
 	//if(wiiHandler->is_A && counter >= 60)
@@ -163,13 +159,3 @@ void BowModel::update()
 
 
 
-	
-
-
-void BowModel::InitBoundingSpheres() {
-	//Do nothing
-}
-
-void BowModel::CalcBoundingSpheres() {
-	//Do nothing
-}

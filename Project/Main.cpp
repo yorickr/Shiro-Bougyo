@@ -38,7 +38,7 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,30);
+	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
 
 	
 	glMatrixMode(GL_MODELVIEW);

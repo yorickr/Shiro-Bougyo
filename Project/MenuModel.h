@@ -10,7 +10,7 @@ public:
 	MenuModel(Camera * camera, WiiHandler * wiiHandler,string filename);
 	~MenuModel();
     void draw() override;
-	void update() override;
+	void update(float deltatime) override;
 private: 
 	Camera * camera;
 	void SetPositionMenu(float x, float y, float rotx, float roty);
