@@ -87,20 +87,37 @@ private:
         bool hasTexture;
     };
 
+	class Vec{
+		public: 
+			float x;
+			float y;
+			float z;
+			float normalx;
+			float normaly;
+			float normalz;
+			float texcoordx;
+			float texcoordy;
+			Vec(float, float, float, float, float, float, float, float);
+			~Vec();
+	};
+
+	
     class ObjGroup {
     public:
         std::string name;
         int materialIndex;
         list<Face> faces;
+		
+		std::vector<Vec> vecs;
     };
 
-    void CalcMinVertex();
-
+	void CalcMinVertex();
     void CalcMaxVertex();
 
     std::vector<Vec3f *> vertices;
     std::vector<Vec3f *> normals;
     std::vector<Vec2f *> texcoords;
+
     std::vector<ObjGroup *> groups;
     std::vector<MaterialInfo *> materials;
 
