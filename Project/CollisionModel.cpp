@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include "CollisionModel.h"
+#include <tuple>
 
 //TODO: Remove me before the final release
 #define DRAW_BOUNDING_BOX true

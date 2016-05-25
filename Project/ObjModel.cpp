@@ -54,7 +54,6 @@ inline std::string toLower(std::string data) {
     return data;
 }
 
-
 ObjModel::ObjModel(std::string fileName) {
     xpos = ypos = zpos = xrot = yrot = zrot = 0;
 //Fix for the OSX project, because our paht starts from shiro-bougyo instead of Project
@@ -162,7 +161,16 @@ ObjModel::ObjModel(std::string fileName) {
     groups.push_back(currentGroup);
     CalcMinVertex();
     CalcMaxVertex();
-   
+  
+
+	//Turning to vec:
+	for each(ObjGroup *group in groups) {
+		for (Face &face : group->faces) {
+			for each(auto &vertex in face.vertices) {
+				group->vecs.push_back(Vec(vertices[vertex.position]->x, vertices[vertex.position]->y, vertices[vertex.position]->z, normals[vertex.normal]->x, normals[vertex.normal]->y, normals[vertex.normal]->z, texcoords[vertex.texcoord]->x, texcoords[vertex.texcoord]->y));
+			}
+		}
+	}
 }
 
 void ObjModel::CalcMinVertex() {
@@ -237,32 +245,32 @@ void ObjModel::draw() {
     //This affects the entire model
     //glColor
     glPushMatrix();
-
     glTranslatef(xpos, ypos, zpos);
-
     glRotatef(xrot, 1, 0, 0);
     glRotatef(yrot, 0, 1, 0);
     glRotatef(zrot, 0, 0, 1);
 
 //	glTranslatef(xpos, ypos, zpos);
+    for each(auto group in groups) {
+		ObjGroup gr = *group;
 
-
-
-    for (auto &g : groups) {
-        if (materials[g->materialIndex]->hasTexture) {
+        if (materials[gr.materialIndex]->hasTexture) {
             glEnable(GL_TEXTURE_2D);
-            materials[g->materialIndex]->texture->bind();
+            materials[gr.materialIndex]->texture->bind();
         }
 
-        glBegin(GL_TRIANGLES);
-        for (auto &f : g->faces) {
-            for (auto &v : f.vertices) {
-                glNormal3f(normals[v.normal]->x, normals[v.normal]->y, normals[v.normal]->z);
-                glTexCoord2f(texcoords[v.texcoord]->x, texcoords[v.texcoord]->y);
-                glVertex3f(vertices[v.position]->x, vertices[v.position]->y, vertices[v.position]->z);
-            }
-        }
-        glEnd();
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data()) );
+		glNormalPointer(GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+3 );
+		glTexCoordPointer(2, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+6 );
+		glDrawArrays(GL_TRIANGLES, 0, gr.vecs.size());
+			
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
 
 
@@ -404,9 +412,18 @@ void ObjModel::Texture::bind() {
 }
 
 
+ObjModel::Vec::Vec(float x, float y, float z, float nx, float ny, float nz, float tx, float ty)
+{
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->normalx = nx;
+	this->normaly = ny;
+	this->normalz = nz;
+	this->texcoordx = tx;
+	this->texcoordy = ty;
+}
 
-
-
-
-
-
+ObjModel::Vec::~Vec()
+{
+}
