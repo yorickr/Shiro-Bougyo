@@ -153,13 +153,17 @@ int main(int argc, char* argv[]) {
 	glutReshapeFunc([](int w, int h) { camera.width = w; camera.height = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
 	glutTimerFunc(1000 / 60, onTimer, 1);
+	
 	glutKeyboardUpFunc(onKeyboardUp);
+	
 	//glutMotionFunc(mouseFunction);
 	glutMouseFunc(mouseFunction);
 	glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
+	
 	glutWarpPointer(camera.width / 2, camera.height / 2);
 	memset(keys, 0, sizeof(keys));
+	
 	gameManager.Init(&camera, &wiiHandler);
 
 	glutMainLoop();

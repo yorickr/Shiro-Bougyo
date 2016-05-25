@@ -50,13 +50,13 @@ void MenuState::HandleEvents()
 
 void MenuState::Update()
 {
-	DrawCrosshair(camera->width/2,camera->height/2);
+	//DrawCrosshair(camera->width/2,camera->height/2);
 	for (auto &m : models) {
 		m.second->draw();
 	}
 }
 
-void MenuState::DrawCrosshair(int x, int y){
+/*void MenuState::DrawCrosshair(int x, int y){
 
 	glPushMatrix();
 	glTranslatef((float)3, 0.0f, (float)3);
@@ -66,13 +66,13 @@ void MenuState::DrawCrosshair(int x, int y){
 	glVertex2f(crosshairX, crosshairY);
 	glEnd();
 	glPopMatrix();
-}
+}*/
 
 void MenuState::Draw()
 {
 	glPushMatrix();
 
-	DrawCrosshair(camera->width/2,camera->height/2);
+	//DrawCrosshair(camera->width/2,camera->height/2);
 	
 	//Make StartMenu and push to models vector
 	for (auto &m : models) {
