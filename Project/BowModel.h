@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "WiiHandler.h"
 #include "AnimatedModel.h"
+#include "ArrowModel.h"
 
 class BowModel :
 	public ObjModel
@@ -19,6 +20,8 @@ private:
 	void setCrosshairPositions(float x, float y, float rotx, float roty);
 	WiiHandler * wiiHandler;
 	float bowPostion = 0.8;
+
+	ArrowModel * arrow;
 
 	void CalcBoundingSpheres() override;
 

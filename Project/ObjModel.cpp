@@ -23,7 +23,7 @@
 #endif
 
 //TODO: Remove me before the final release
-#define DRAW_BOUNDING_BOX true
+#define DRAW_BOUNDING_BOX false
 
 
 std::string replace(std::string str, std::string toReplace, std::string replacement) {

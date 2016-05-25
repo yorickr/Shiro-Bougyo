@@ -7,7 +7,6 @@
 
 
 #include "ObjModel.h"
-#include "BowModel.h"
 
 class ArrowModel : public ObjModel {
 public:
