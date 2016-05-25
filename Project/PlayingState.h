@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "BowModel.h"
 #include "AnimatedModel.h"
+#include "AnimatedBowModel.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -28,7 +29,7 @@ class PlayingState : public GameState {
 		int counter = 0;
         GameStateManager *manager;
         vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function
-		AnimatedModel * bow;
+		AnimatedBowModel * bow;
 		Camera * camera;
 		WiiHandler * wiiHandler;
 };

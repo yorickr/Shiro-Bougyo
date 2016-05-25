@@ -93,7 +93,7 @@ void PlayingState::Update(float deltatime) {
 				bow->nextModel();
 				if(counter >= 59)
 				{
-					bow->getModel()->update(deltatime);
+					bow->getModel()->update(-1);
 					bow->setIndex(0);
 					counter = 0;
 				}

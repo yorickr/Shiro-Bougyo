@@ -150,12 +150,13 @@
       <AdditionalLibraryDirectories>freeglut\lib;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-	</ItemDefinitionGroup>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedBowModel.cpp" />
     <ClCompile Include="AnimatedModel.cpp" />
     <ClCompile Include="ArrowModel.cpp" />
     <ClCompile Include="BowModel.cpp" />
+    <ClCompile Include="CollisionModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="rs232.c" />
     <ClCompile Include="SerialHandler.cpp" />
+    <ClCompile Include="StationaryObjModel.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WarriorModel.cpp" />
     <ClCompile Include="WiiHandler.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="ArrowModel.h" />
     <ClInclude Include="BowModel.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CollisionModel.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -185,6 +188,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="rs232.h" />
     <ClInclude Include="SerialHandler.h" />
+    <ClInclude Include="StationaryObjModel.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WarriorModel.h" />
     <ClInclude Include="WiiHandler.h" />

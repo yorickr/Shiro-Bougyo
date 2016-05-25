@@ -16,6 +16,7 @@ public:
 	~BowModel();
 	void draw() override;
 	float toRadian(float degree);
+	void fireArrow();
 	void update(float deltatime) override;
 private:
 	ObjModel * crosshair;
