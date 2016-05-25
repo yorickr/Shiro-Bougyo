@@ -24,9 +24,6 @@ BowModel::BowModel(WiiHandler * hand, string filename): ObjModel(filename) {
 
 	SetPositions(0,0,0,0);
 	setCrosshairPositions(0, 0,0,0);
-
-	boundingSpheres.clear();
-	BowModel::InitBoundingSpheres();
 }
 
 BowModel::~BowModel()
@@ -112,7 +109,7 @@ float BowModel::toRadian(float degree) {
 	return (degree / 180) * M_PI;
 }
 
-void BowModel::update()
+void BowModel::update(float deltatime)
 {
 	//float camx = camera->posX;
 	//float camy = camera->posY;
@@ -133,12 +130,4 @@ void BowModel::update()
 
 
 	
-}
-
-void BowModel::InitBoundingSpheres() {
-	//Do nothing
-}
-
-void BowModel::CalcBoundingSpheres() {
-	//Do nothing
 }

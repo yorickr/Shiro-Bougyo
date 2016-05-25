@@ -4,9 +4,8 @@
 
 #include <cmath>
 #include "ArrowModel.h"
-#include "BowModel.h"
 
-ArrowModel::ArrowModel( float x, float y, float z) : ObjModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float x, float y, float z) : CollisionModel("models/Arrow/Arrow.obj") {
 
     //Arrow heading to x, y, z
 
@@ -34,7 +33,7 @@ void ArrowModel::InitBoundingSpheres() {
     y = height / 2+vertices_min->y;
     z = depth / 2+vertices_min->z;
 
-//    printf("DO NOT FEAR ARROW IS HERE\n");
+    printf("DO NOT FEAR ARROW IS HERE\n");
 
     //depth
 
@@ -52,11 +51,11 @@ void ArrowModel::CalcBoundingSpheres() {
     }
 }
 
-void ArrowModel::update() {
+void ArrowModel::update(float deltatime) {
     //TODO: fix
 //    yrot ++;
 
-    float speed = 0.01f;
+    float speed = 10 * deltatime;
 
 
     float dx = (pointx - xpos)*speed;

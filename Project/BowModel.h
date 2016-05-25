@@ -13,7 +13,7 @@ public:
 	~BowModel();
 	void draw() override;
 	float toRadian(float degree);
-	void update() override;
+	void update(float deltatime) override;
 private:
 	ObjModel * crosshair;
 	void SetPositions(float x, float y, float rotx, float roty);
@@ -23,8 +23,5 @@ private:
 
 	ArrowModel * arrow;
 
-	void CalcBoundingSpheres() override;
-
-	void InitBoundingSpheres() override;
 };
 

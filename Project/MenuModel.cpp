@@ -35,7 +35,7 @@ void MenuModel::draw()
 	exitButton->draw();
 }
 
-void MenuModel::update()
+void MenuModel::update(float deltatime)
 {
 }
 

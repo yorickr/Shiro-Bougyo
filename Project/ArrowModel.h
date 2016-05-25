@@ -6,16 +6,16 @@
 #define SHIRO_BOUGYO_ARROWMODEL_H
 
 
-#include "ObjModel.h"
+#include "CollisionModel.h"
 
-class ArrowModel : public ObjModel {
+class ArrowModel : public CollisionModel {
 public:
     ArrowModel( float x, float y, float z);
 
     void InitBoundingSpheres() override;
     void CalcBoundingSpheres() override;
 
-    void update() override;
+    void update(float deltatime) override;
 
     float pointx, pointy, pointz;
 
