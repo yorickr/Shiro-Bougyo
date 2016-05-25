@@ -2,7 +2,7 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z):ObjModel("models/warrior/warrior.obj")
+WarriorModel::WarriorModel(float x, float z):CollisionModel("models/warrior/warrior.obj")
 {
 	xpos = x;
 	zpos = z;
@@ -17,7 +17,7 @@ WarriorModel::~WarriorModel()
 {
 }
 
-void WarriorModel::update()
+void WarriorModel::update(float deltatime)
 {
 	//xpos+= 0.1;
 	yrot += 0.5;

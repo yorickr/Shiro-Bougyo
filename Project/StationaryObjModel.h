@@ -13,7 +13,7 @@ class StationaryObjModel : public ObjModel{
 public:
     StationaryObjModel(const string &filename) : ObjModel(filename) { }
 
-    virtual void update() override;
+    virtual void update(float deltatime) override;
 };
 
 
