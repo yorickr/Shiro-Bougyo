@@ -13,6 +13,7 @@
 #include "ArrowModel.h"
 
 
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -20,6 +21,7 @@
 #include <iostream>
 
 #else
+#include <tuple>
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -52,10 +54,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 
 	//arrow
-	ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
-	hoi->xpos = 2;
-	hoi->ypos = 2;
-	models.push_back(pair<int, ObjModel*>(1, hoi));
+//	ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
+//	hoi->xpos = 2;
+//	hoi->ypos = 2;
+//	models.push_back(pair<int, ObjModel*>(1, hoi));
 
 	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
 	arrow->xpos = -10;
@@ -122,6 +124,7 @@ void PlayingState::Update(float deltatime) {
     for(auto &m : models) {
         m.second->update(deltatime);
     }
+	bow->getModel()->update(deltatime);
 }
 
 
