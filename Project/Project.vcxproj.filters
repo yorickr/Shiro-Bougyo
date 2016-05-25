@@ -21,7 +21,6 @@
     <ClCompile Include="StationaryObjModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< 1b28cf89bb75b280bf052e06ec22da75c3aff62a
     <ClInclude Include="AnimatedBowModel.h" />
     <ClInclude Include="AnimatedModel.h" />
     <ClInclude Include="ArrowModel.h" />
@@ -45,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />
-=======
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -156,7 +154,6 @@
     <ClInclude Include="StationaryObjModel.h">
       <Filter>Source Files</Filter>
     </ClInclude>
->>>>>>> Merge dev to weslet
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
