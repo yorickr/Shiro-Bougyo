@@ -8,7 +8,8 @@
 #include "AnimatedModel.h"
 #include "StationaryObjModel.h"
 #include "AnimatedBowModel.h"
-#include "../ArrowModel.h"
+#include "ArrowModel.h"
+#include "ArrowModel.h"
 
 
 #ifdef __APPLE__
