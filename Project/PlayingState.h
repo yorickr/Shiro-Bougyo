@@ -23,7 +23,9 @@ class PlayingState : public GameState {
         virtual void Update(float deltatime) override;
         virtual void Draw() override;
 		virtual void preDraw() override;
+		virtual void AddModel(ObjModel * model) override;
     private:
+		int counter = 0;
         GameStateManager *manager;
         vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function
 		AnimatedModel * bow;

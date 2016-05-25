@@ -72,6 +72,8 @@
     <ClCompile Include="AnimatedBowModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ArrowModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
     <ClCompile Include="AnimatedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,6 +125,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ArrowModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MenuModel.h">

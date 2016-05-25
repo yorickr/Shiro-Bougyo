@@ -86,3 +86,8 @@ void MenuState::preDraw()
 {
 
 }
+
+void MenuState::AddModel(ObjModel* model)
+{
+
+}

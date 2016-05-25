@@ -12,14 +12,19 @@ class ArrowModel : public CollisionModel {
 public:
     ArrowModel( float x, float y, float z);
 
-    void InitBoundingSpheres() override;
+
+	~ArrowModel(void);
+
+	void InitBoundingSpheres() override;
     void CalcBoundingSpheres() override;
 
+	void draw() override;
     void update(float deltatime) override;
+	void fire(float, float, float, float targetx, float targety, float targetz);
 
     float pointx, pointy, pointz;
-
-
+private:
+	bool isFired = false;
 };
 
 

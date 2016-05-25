@@ -162,6 +162,7 @@ ObjModel::ObjModel(std::string fileName) {
     groups.push_back(currentGroup);
     CalcMinVertex();
     CalcMaxVertex();
+   
 }
 
 void ObjModel::CalcMinVertex() {
@@ -263,6 +264,8 @@ void ObjModel::draw() {
         }
         glEnd();
     }
+
+
     glPopMatrix();
 }
 
@@ -317,14 +320,13 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
 
 }
 
-
-
 void ObjModel::update(float deltatime) {
     yrot += 0.5;
     if (xpos > 5) {
         xpos = -5;
     }
 }
+
 
 
 ObjModel::MaterialInfo::MaterialInfo() {
@@ -400,6 +402,8 @@ ObjModel::Texture::Texture(const std::string &fileName) {
 void ObjModel::Texture::bind() {
     glBindTexture(GL_TEXTURE_2D, index);
 }
+
+
 
 
 

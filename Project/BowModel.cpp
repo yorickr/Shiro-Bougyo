@@ -4,26 +4,21 @@
 #include "WiiHandler.h"
 #include "AnimatedModel.h"
 #include <math.h>
+#include "GameState.h"
 
 # define M_PI           3.14159265358979323846  /* pi */
 
 
-BowModel::BowModel(WiiHandler * hand, string filename): ObjModel(filename) {
+BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera * cam): ObjModel(filename) {
 	this->wiiHandler = hand;
+	this->camera_ = cam;
+	this->state = state;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
-
-
-	//load all models
-	//vector<ObjModel> models;
-	//models.push_back(ObjModel("models/bow/Bow_recurve.obj"));
-	//models.push_back(ObjModel("models/bow/Bow_01.obj"));
-	//models.push_back(ObjModel("models/bow/Bow_02.obj"));
-	//animatedModel = new AnimatedModel(models);
-	
-
-
-	SetPositions(0,0,0,0);
+	SetPositions(0, 0, 0, 0);
+	arrow  = new ArrowModel(xpos, ypos, zpos);
 	setCrosshairPositions(0, 0,0,0);
+	setArrowPosition();
+
 }
 
 BowModel::~BowModel()
@@ -93,14 +88,28 @@ void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 
 
 	//if rotate on y as: 
-	crosshair->xpos += (sin(toRadian(roty)));
+	//crosshair->xpos += (sin(toRadian(roty)));
 
+}
+
+void BowModel::setArrowPosition()
+{
+	arrow->xpos = xpos + 0.21;
+	arrow->ypos = ypos;
+	arrow->zpos = zpos - 0.7;
+	arrow->xrot = xrot;
+	arrow->yrot = yrot;
+	arrow->zrot = zrot;
 }
 
 void BowModel::draw()
 {
 	ObjModel::draw();
+	arrow->draw();
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(0.8, 0.8, 0.8);
 	crosshair->draw();
+	glEnable(GL_TEXTURE_2D);
 
 
 }
@@ -111,23 +120,42 @@ float BowModel::toRadian(float degree) {
 
 void BowModel::update(float deltatime)
 {
-	//float camx = camera->posX;
-	//float camy = camera->posY;
-	//float camrotx = camera->rotX;
-	//float camroty = camera->rotY;
-	//SetPositions(camx, camy, camrotx, camroty);
-//	int wiiCursorX = 560 - (wiiHandler->wiiMoteP1->ir.x/(camera->width/560));
-//	int wiiCursorY = 420 - (wiiHandler->wiiMoteP1->ir.y/(camera->height/420));
-//
-//	ypos -= (sin(toRadian(wiiCursorX)));
-//	zpos -= (cos(toRadian(wiiCursorX)) * cos(toRadian(wiiCursorY)));
-//
-//
-//	//if rotate on y as:
-//	xpos += (sin(toRadian(wiiCursorY)));
+	//counter++;
+	//if(wiiHandler->is_A && counter >= 60)
+	//{
+		counter = 0;
+		//TODO make delay and animate
+
+		//set rotation bow equals to rotation camera
+		float pointx = 0, pointy = 0, pointz = 0;
+		float xrotcam = 0, yrotcam = 0, zrotcam = 0;
+
+		if (camera_->rotY > -90 && camera_->rotY < 90)
+			xrotcam = - camera_->rotX;
+		else
+			xrotcam = camera_->rotX;
+		yrotcam = -camera_->rotY;
+		zrotcam = 0;
+
+		////translate bow to correct position
+		//cout << "rotx: " << rotx << endl;
+
+		//if rotate on x as:
+		pointy -= (sin(toRadian(camera_->rotX)));
+		pointz -= (cos(toRadian(camera_->rotX)) * cos(toRadian(camera_->rotY)));
+		
+		//if rotate on y as: 
+		pointx += (sin(toRadian(camera_->rotY)));
+
+
+		arrow->fire(pointx, pointy, pointz, xrotcam, yrotcam, zrotcam);
+		state->AddModel(arrow);
+		setArrowPosition();
+	//}
+	//if(!wiiHandler->is_A)
+	//{
+	//	counter = 0;
+	}
 
 
 
-
-	
-}
