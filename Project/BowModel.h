@@ -32,9 +32,5 @@ private:
 	float bowPostion = 0.8;
 	int wiiXPos = 0;
 	int wiiYPos = 0;
-
-	void CalcBoundingSpheres() override;
-
-	void InitBoundingSpheres() override;
 };
 

@@ -1,4 +1,4 @@
-9#include "BowModel.h"
+#include "BowModel.h"
 #include <iostream>
 #include "Camera.h"
 #include "WiiHandler.h"
