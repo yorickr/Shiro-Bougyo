@@ -141,7 +141,7 @@ public:
     };
 
     //True if obj2 collides with this object
-    bool CollidesWith(ObjModel *obj2);
+    std::tuple<bool,vector<Sphere*>> CollidesWith(ObjModel *obj2);
 
     std::vector<Sphere*> boundingSpheres;
 

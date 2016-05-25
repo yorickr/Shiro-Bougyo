@@ -10,7 +10,8 @@
 
 class ArrowModel : public ObjModel {
 public:
-	ArrowModel(float x, float y, float z);
+    ArrowModel( float x, float y, float z);
+
 
 	~ArrowModel(void);
 

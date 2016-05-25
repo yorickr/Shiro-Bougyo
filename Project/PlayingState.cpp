@@ -73,9 +73,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	//models.push_back(pair<int, ObjModel*>(1, arrow));
 	
 	//world 
-	ObjModel *world = new ObjModel("models/world/FirstWorld.obj");
+	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
 	world->xpos = -2;
-	world->ypos = 2;
+	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(1, world));
 }
 
@@ -91,7 +91,7 @@ void PlayingState::Resume() {
 
 }
 
-void PlayingState::Update() {
+void PlayingState::Update(float deltatime) {
 	if(wiiHandler->is_A)
 	{
 		counter++;
@@ -113,11 +113,13 @@ void PlayingState::Update() {
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
-            if (obj1 != obj2 && obj1.second->CollidesWith(obj2.second)) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+			{
 				printf("%d colliding with %d\n", obj1.first, obj2.first);
 				collides = true;
+                break;
 			}
-        }
+		}
         if(!collides) {
             obj1.second->update();
         }

@@ -55,6 +55,7 @@ void ArrowModel::CalcBoundingSpheres() {
         sphere->ypos = sphere->y + this->ypos;
         sphere->zpos = sphere->z + this->zpos;
     }
+
 }
 
 void ArrowModel::draw()
@@ -87,6 +88,7 @@ void ArrowModel::update() {
 	//crosshair->zrot = 0;
 
 	////translate bow to correct position
+
 
 	////if rotate on x as:
 	//crosshair->ypos -= (sin(toRadian(rotx)));

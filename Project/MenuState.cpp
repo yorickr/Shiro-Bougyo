@@ -49,7 +49,7 @@ void MenuState::HandleEvents()
 
 }
 
-void MenuState::Update()
+void MenuState::Update(float deltatime)
 {
 	//DrawCrosshair(camera->width/2,camera->height/2);
 	for (auto &m : models) {

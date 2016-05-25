@@ -19,7 +19,7 @@ class GameStateManager {
 		void previousState();
 
 		void HandleEvents();
-		void Update();
+		void Update(float deltatime);
 		void Draw();
 
 		bool Running() { return m_running; }
@@ -33,5 +33,6 @@ private:
 		bool m_running;
 		Camera * camera;
 		WiiHandler * wiiHandler;
+
 };
 #endif

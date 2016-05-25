@@ -2,7 +2,8 @@
 #include "Camera.h"
 #include "WiiHandler.h"
 #include "MenuModel.h"
-MOUSEMOVEPOINT mousePointer;
+
+
 MenuModel::MenuModel(Camera * cam, WiiHandler * wiihandler,string filename): ObjModel(filename)
 {
 	this->camera = cam;

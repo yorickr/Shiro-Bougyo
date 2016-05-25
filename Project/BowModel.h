@@ -5,6 +5,7 @@
 #include "AnimatedModel.h"
 #include "ArrowModel.h"
 
+
 class GameState;
 
 class BowModel :
@@ -29,7 +30,11 @@ private:
 	
 	float bowPostion = 0.8;
 
+<<<<<<< HEAD
+	ArrowModel * arrow;
+=======
 	
+>>>>>>> origin/rene
 
 	void CalcBoundingSpheres() override;
 

@@ -366,22 +366,22 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
 
 }
 
-bool ObjModel::CollidesWith(ObjModel *obj2) {
+//Returns a tuple, because we're returning:
+//Whether it collides or not (the bool)
+//With which spheres it collides
+std::tuple<bool, vector<ObjModel::Sphere*>> ObjModel::CollidesWith(ObjModel *obj2) {
     this->CalcBoundingSpheres();
     obj2->CalcBoundingSpheres();
-
-    bool retval = false;
 
     for (auto &sphere1 : this->boundingSpheres) {
         for (auto &sphere2 : obj2->boundingSpheres) {
             if (sphere1 != sphere2 && sphere1->intersect(sphere2)){
-                retval = true;
-                return retval;
+                return std::make_tuple(true, vector<ObjModel::Sphere *>{sphere1, sphere2}); //Return the 2 spheres
             }
         }
     }
 
-    return retval;
+    return std::make_tuple(false,vector<ObjModel::Sphere *>{} ); //Return empty vector if nothing found
 }
 
 void ObjModel::update() {
