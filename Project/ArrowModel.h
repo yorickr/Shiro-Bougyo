@@ -6,8 +6,8 @@
 #define SHIRO_BOUGYO_ARROWMODEL_H
 
 
-#include "Project/ObjModel.h"
-#include "Project/BowModel.h"
+#include "ObjModel.h"
+#include "BowModel.h"
 
 class ArrowModel : public ObjModel {
 public:

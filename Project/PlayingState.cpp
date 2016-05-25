@@ -8,7 +8,7 @@
 #include "AnimatedModel.h"
 #include "StationaryObjModel.h"
 #include "AnimatedBowModel.h"
-#include "../ArrowModel.h"
+#include "ArrowModel.h"
 
 
 #ifdef __APPLE__
@@ -90,11 +90,13 @@ void PlayingState::Update() {
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
-            if (obj1 != obj2 && obj1.second->CollidesWith(obj2.second)) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+			{
 				printf("%d colliding with %d\n", obj1.first, obj2.first);
 				collides = true;
+                break;
 			}
-        }
+		}
         if(!collides) {
             obj1.second->update();
         }

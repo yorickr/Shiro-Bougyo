@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "ArrowModel.h"
-#include "Project/BowModel.h"
+#include "BowModel.h"
 
 ArrowModel::ArrowModel( float x, float y, float z) : ObjModel("models/Arrow/Arrow.obj") {
 
