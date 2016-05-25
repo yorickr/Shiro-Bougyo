@@ -62,6 +62,7 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	////set bow correct position
 
 	//xpos += bowPostion	 * (cos(toRadian(roty)));
+
 	//zpos += bowPostion * (sin(toRadian(roty)));
 
 	//set crosshair positions
@@ -89,13 +90,17 @@ void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 
 	////translate bow to correct position
 
+
+
+
+
+
+
 	////if rotate on x as:
 	//crosshair->ypos -= (sin(toRadian(rotx)));
 	//crosshair->zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
-
-
 	//if rotate on y as: 
-	crosshair->xpos += (sin(toRadian(roty)));
+	//crosshair->xpos += (sin(toRadian(roty)));
 
 }
 
@@ -129,6 +134,33 @@ void BowModel::update()
 //	xpos += (sin(toRadian(wiiCursorY)));
 
 
+	wiiXPos = this->wiiHandler->player1X;
+	wiiYPos = this->wiiHandler->player1Y;
+
+	if(-sin(toRadian(wiiYPos)) < 0.6 && -sin(toRadian(wiiYPos)) > -0.6){
+		crosshair->ypos = -sin(toRadian(wiiYPos));
+	}else if(-sin(toRadian(wiiYPos)) >= 0.6){
+		crosshair->ypos = 0.6;
+	}else if(-sin(toRadian(wiiYPos)) <= -0.6){
+		crosshair->ypos = -0.6;
+	}
+
+	if(-(sin(toRadian(wiiXPos))) < 0.7 && -(sin(toRadian(wiiXPos))) > -0.7){
+		crosshair->xpos = -(sin(toRadian(wiiXPos)));
+	}else if(-(sin(toRadian(wiiXPos))) >= 0.7){
+		crosshair->xpos = 0.7;
+	}else if(-(sin(toRadian(wiiXPos))) <= -0.7){
+		crosshair->xpos = -0.7;
+	}
+	crosshair->zpos = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
+
+
+	
+
+
+	printf("This x: %f \n", crosshair->xpos);
+	printf("This y: %f \n", crosshair->ypos);
+	printf("This z: %f \n", crosshair->zpos);
 
 
 	

@@ -100,6 +100,7 @@ void PlayingState::Update() {
         }
         collides = false;
     }
+	bow->getModel()->update();
 }
 
 
