@@ -1,4 +1,4 @@
-#include "BowModel.h"
+9#include "BowModel.h"
 #include <iostream>
 #include "Camera.h"
 #include "WiiHandler.h"
@@ -55,6 +55,7 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	////set bow correct position
 
 	//xpos += bowPostion	 * (cos(toRadian(roty)));
+
 	//zpos += bowPostion * (sin(toRadian(roty)));
 
 	//set crosshair positions
@@ -82,16 +83,19 @@ void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 
 	////translate bow to correct position
 
+
+
+
+
+
+
 	////if rotate on x as:
 	//crosshair->ypos -= (sin(toRadian(rotx)));
 	//crosshair->zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
-
-
 	//if rotate on y as: 
 	//crosshair->xpos += (sin(toRadian(roty)));
 
 }
-
 void BowModel::setArrowPosition()
 {
 	arrow->xpos = xpos + 0.15;
@@ -163,6 +167,53 @@ void BowModel::update(float deltatime)
 		counter = 0;
 		//TODO make delay and animate
 
+		//set rotation bow equals to rotation camera
+		float pointx = 0, pointy = 0, pointz = 0;
+		float xrotcam = 0, yrotcam = 0, zrotcam = 0;
+
+	wiiXPos = this->wiiHandler->player1X/2;
+	wiiYPos = this->wiiHandler->player1Y/2;
+
+	if(-sin(toRadian(wiiYPos)) < 0.5 && -sin(toRadian(wiiYPos)) > -0.5){
+		crosshair->ypos = -sin(toRadian(wiiYPos));
+	}else if(-sin(toRadian(wiiYPos)) >= 0.5){
+		crosshair->ypos = 0.5;
+	}else if(-sin(toRadian(wiiYPos)) <= -0.5){
+		crosshair->ypos = -0.5;
+	}
+
+	if(-(sin(toRadian(wiiXPos))) < 0.5 && -(sin(toRadian(wiiXPos))) > -0.8){
+		crosshair->xpos = -(sin(toRadian(wiiXPos)));
+		crosshair->zpos = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
+	}else if(-(sin(toRadian(wiiXPos))) >= 0.5){
+		crosshair->xpos = 0.5;
+	}else if(-(sin(toRadian(wiiXPos))) <= -0.8){
+		crosshair->xpos = -0.8;
+	}
+
+
+
+	xrot = -sin(toRadian(wiiYPos))*3;
+	yrot = 180 + (sin(toRadian(wiiXPos)))*3;
+	//zrot = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
+
+	printf("This x: %f \n", crosshair->xpos);
+	printf("This y: %f \n", crosshair->ypos);
+	printf("This z: %f \n", crosshair->zpos);
+
+	if (camera_->rotY > -90 && camera_->rotY < 90)
+		xrotcam = - camera_->rotX;
+	else
+		xrotcam = camera_->rotX;
+	yrotcam = -camera_->rotY;
+	zrotcam = 0;
+
+		////translate bow to correct position
+		//cout << "rotx: " << rotx << endl;
+
+		//if rotate on x as:
+		pointy -= (sin(toRadian(camera_->rotX)));
+		pointz -= (cos(toRadian(camera_->rotX)) * cos(toRadian(camera_->rotY)));
 		
 	}
 

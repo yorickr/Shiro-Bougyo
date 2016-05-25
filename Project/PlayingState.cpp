@@ -13,6 +13,7 @@
 #include "ArrowModel.h"
 
 
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -20,6 +21,7 @@
 #include <iostream>
 
 #else
+#include <tuple>
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -122,6 +124,7 @@ void PlayingState::Update(float deltatime) {
     for(auto &m : models) {
         m.second->update(deltatime);
     }
+	bow->getModel()->update(deltatime);
 }
 
 
