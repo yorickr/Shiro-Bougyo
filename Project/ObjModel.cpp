@@ -164,9 +164,9 @@ ObjModel::ObjModel(std::string fileName) {
   
 
 	//Turning to vec:
-	for each(ObjGroup *group in groups) {
+	for (ObjGroup *group : groups) {
 		for (Face &face : group->faces) {
-			for each(auto &vertex in face.vertices) {
+			for (auto &vertex : face.vertices) {
 				group->vecs.push_back(Vec(vertices[vertex.position]->x, vertices[vertex.position]->y, vertices[vertex.position]->z, normals[vertex.normal]->x, normals[vertex.normal]->y, normals[vertex.normal]->z, texcoords[vertex.texcoord]->x, texcoords[vertex.texcoord]->y));
 			}
 		}
@@ -251,7 +251,7 @@ void ObjModel::draw() {
     glRotatef(zrot, 0, 0, 1);
 
 //	glTranslatef(xpos, ypos, zpos);
-    for each(auto group in groups) {
+    for (auto &group : groups) {
 		ObjGroup gr = *group;
 
         if (materials[gr.materialIndex]->hasTexture) {
