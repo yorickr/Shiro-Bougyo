@@ -38,11 +38,11 @@
 void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
     Camera* mainCamera = camera;
 
-    printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
+    //printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
 
     /* if a button is pressed, report it */
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
-        printf("A pressed\n");
+        //printf("A pressed\n");
 		is_A = true;
     }else
     {
@@ -128,9 +128,9 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
 
     /* if the accelerometer is turned on then print angles */
     if (WIIUSE_USING_ACC(wm)) {
-        printf("wiimote roll  = %f [%f]\n", wm->orient.roll, wm->orient.a_roll);
-        printf("wiimote pitch = %f [%f]\n", wm->orient.pitch, wm->orient.a_pitch);
-        printf("wiimote yaw   = %f\n", wm->orient.yaw);
+        //printf("wiimote roll  = %f [%f]\n", wm->orient.roll, wm->orient.a_roll);
+        //printf("wiimote pitch = %f [%f]\n", wm->orient.pitch, wm->orient.a_pitch);
+        //printf("wiimote yaw   = %f\n", wm->orient.yaw);
     }
 
     /*
@@ -145,9 +145,19 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
         /* go through each of the 4 possible IR sources */
         for (; i < 4; ++i) {
             /* check if the source is visible */
+<<<<<<< HEAD
             if(i == 0){
                 player1X = wm->ir.dot[i].x;
                 player1Y = wm->ir.dot[i].y;
+=======
+            if (wm->ir.dot[i].visible) {
+                if(i == 0){
+                    this->wiiMoteP1 = wm;
+                }
+                //printf("IR source %i: (%u, %u)\n", i, wm->ir.dot[i].x, wm->ir.dot[i].y);
+                //printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
+                //printf("IR z distance: %f\n", wm->ir.z);
+>>>>>>> dev
             }
 //            printf("IR source %i: (%u, %u)\n", i, wm->ir.dot[i].x, wm->ir.dot[i].y);
 //            printf("IR cursor: (%u, %u)\n", wm->ir.x, wm->ir.y);
@@ -261,10 +271,10 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
 
     if (wm->exp.type == EXP_MOTION_PLUS ||
         wm->exp.type == EXP_MOTION_PLUS_NUNCHUK) {
-        printf("Motion+ angular rates (deg/sec): pitch:%03.2f roll:%03.2f yaw:%03.2f\n",
-               wm->exp.mp.angle_rate_gyro.pitch,
-               wm->exp.mp.angle_rate_gyro.roll,
-               wm->exp.mp.angle_rate_gyro.yaw);
+       // printf("Motion+ angular rates (deg/sec): pitch:%03.2f roll:%03.2f yaw:%03.2f\n",
+       //        wm->exp.mp.angle_rate_gyro.pitch,
+       //        wm->exp.mp.angle_rate_gyro.roll,
+       //        wm->exp.mp.angle_rate_gyro.yaw);
     }
 }
 
@@ -289,7 +299,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
 void WiiHandler::handle_read(struct wiimote_t* wm, byte* data, unsigned short len) {
     int i = 0;
 
-    printf("\n\n--- DATA READ [wiimote id %i] ---\n", wm->unid);
+   /* printf("\n\n--- DATA READ [wiimote id %i] ---\n", wm->unid);
     printf("finished read of size %i\n", len);
     for (; i < len; ++i) {
         if (!(i % 16)) {
@@ -297,7 +307,7 @@ void WiiHandler::handle_read(struct wiimote_t* wm, byte* data, unsigned short le
         }
         printf("%x ", data[i]);
     }
-    printf("\n\n");
+    printf("\n\n");*/
 }
 
 
@@ -319,13 +329,13 @@ void WiiHandler::handle_read(struct wiimote_t* wm, byte* data, unsigned short le
  *	inserted or removed from the expansion port.
  */
 void WiiHandler::handle_ctrl_status(struct wiimote_t* wm) {
-    printf("\n\n--- CONTROLLER STATUS [wiimote id %i] ---\n", wm->unid);
+    //printf("\n\n--- CONTROLLER STATUS [wiimote id %i] ---\n", wm->unid);
 
-    printf("attachment:      %i\n", wm->exp.type);
-    printf("speaker:         %i\n", WIIUSE_USING_SPEAKER(wm));
-    printf("ir:              %i\n", WIIUSE_USING_IR(wm));
-    printf("leds:            %i %i %i %i\n", WIIUSE_IS_LED_SET(wm, 1), WIIUSE_IS_LED_SET(wm, 2), WIIUSE_IS_LED_SET(wm, 3), WIIUSE_IS_LED_SET(wm, 4));
-    printf("battery:         %f %%\n", wm->battery_level);
+    //printf("attachment:      %i\n", wm->exp.type);
+    //printf("speaker:         %i\n", WIIUSE_USING_SPEAKER(wm));
+    //printf("ir:              %i\n", WIIUSE_USING_IR(wm));
+    //printf("leds:            %i %i %i %i\n", WIIUSE_IS_LED_SET(wm, 1), WIIUSE_IS_LED_SET(wm, 2), WIIUSE_IS_LED_SET(wm, 3), WIIUSE_IS_LED_SET(wm, 4));
+    //printf("battery:         %f %%\n", wm->battery_level);
 }
 
 
@@ -338,12 +348,12 @@ void WiiHandler::handle_ctrl_status(struct wiimote_t* wm) {
  *	if the connection is interrupted.
  */
 void WiiHandler::handle_disconnect(wiimote* wm) {
-    printf("\n\n--- DISCONNECTED [wiimote id %i] ---\n", wm->unid);
+    //printf("\n\n--- DISCONNECTED [wiimote id %i] ---\n", wm->unid);
 }
 
 
 void WiiHandler::test(struct wiimote_t* wm, byte* data, unsigned short len) {
-    printf("test: %i [%x %x %x %x]\n", len, data[0], data[1], data[2], data[3]);
+   // printf("test: %i [%x %x %x %x]\n", len, data[0], data[1], data[2], data[3]);
 }
 
 short WiiHandler::any_wiimote_connected(wiimote** wm, int wiimotes) {
@@ -437,12 +447,12 @@ void WiiHandler::wiiMoteTest(Camera* cam) {
     //wiiuse_rumble(wiimotes[0], 0);
     //wiiuse_rumble(wiimotes[1], 0);
 
-    printf("\nControls:\n");
-    printf("\tB toggles rumble.\n");
-    printf("\t+ to start Wiimote accelerometer reporting, - to stop\n");
-    printf("\tUP to start IR camera (sensor bar mode), DOWN to stop.\n");
-    printf("\t1 to start Motion+ reporting, 2 to stop.\n");
-    printf("\n\n");
+    //printf("\nControls:\n");
+    //printf("\tB toggles rumble.\n");
+    //printf("\t+ to start Wiimote accelerometer reporting, - to stop\n");
+    //printf("\tUP to start IR camera (sensor bar mode), DOWN to stop.\n");
+    //printf("\t1 to start Motion+ reporting, 2 to stop.\n");
+    //printf("\n\n");
 
     /*
      *	Maybe I'm interested in the battery power of the 0th

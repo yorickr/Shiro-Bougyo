@@ -11,6 +11,7 @@ void GameStateManager::Init(Camera * cam, WiiHandler * hand)
 	Cleanup();
 	states.push_back(new MenuState());
 	states.push_back(new PlayingState());
+	states.at(currentState)->Init(this, camera, wiiHandler);
 	//Add list of states here
 }
 
@@ -42,10 +43,10 @@ void GameStateManager::HandleEvents()
 		states.at(currentState)->HandleEvents();
 }
 
-void GameStateManager::Update()
+void GameStateManager::Update(float deltatime)
 {
 	if (!states.empty())
-		states.at(currentState)->Update();
+		states.at(currentState)->Update(deltatime);
 }
 
 void GameStateManager::Draw()
