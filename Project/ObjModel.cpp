@@ -195,7 +195,7 @@ void ObjModel::CalcMinVertex() {
             smallestz = vertice->z;
         }
     }
-    printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
+   // printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
 
     //Transform it into a vertex.
     vertices_min = new Vec3f(smallestx, smallesty, smallestz);
@@ -410,29 +410,29 @@ void ObjModel::InitBoundingSpheres() {
     y = height / 2+vertices_min->y;
     z = depth / 2+vertices_min->z;
 
-    printf("Width = %f\n",width);
-    printf("Height = %f\n",height);
-    printf("Depth = %f\n",depth);
+    //printf("Width = %f\n",width);
+    //printf("Height = %f\n",height);
+    //printf("Depth = %f\n",depth);
 
     if( width>=height && width>=depth ){
         //Use width
-        printf("Using width\n");
+        //printf("Using width\n");
         boundingSpheres.push_back(new Sphere(x, y, z, width/2));
     }
 
     if( height>=width && height>=depth ) {
         //Use height
-        printf("Using height\n");
+        //printf("Using height\n");
         boundingSpheres.push_back(new Sphere(x, y, z, height/2));
     }
 
     if( depth>=width && depth>=height ) {
         //Use depth
-        printf("Using depth\n");
+        //printf("Using depth\n");
         boundingSpheres.push_back(new Sphere(x, y, z, depth/2));
     }
 
-    printf("Called base\n");
+    //printf("Called base\n");
 
 
 }

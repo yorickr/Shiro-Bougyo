@@ -40,6 +40,7 @@ void onDisplay() {
 	glLoadIdentity();
 	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,30);
 
+	
 	glMatrixMode(GL_MODELVIEW);
 
 
@@ -132,7 +133,7 @@ void mouseFunction(int button,int state, int mouse_x, int mouse_y)
 }
 
 void mouseFunc(int button, int state, int x, int y) {
-    printf("Received %d %d \n", button, state);
+    //printf("Received %d %d \n", button, state);
     if (button == 0 && state == 1) {
         //Tell gamestatemanager to shoot arrow
 
