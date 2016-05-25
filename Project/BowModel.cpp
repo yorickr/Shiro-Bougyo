@@ -134,29 +134,31 @@ void BowModel::update()
 //	xpos += (sin(toRadian(wiiCursorY)));
 
 
-	wiiXPos = this->wiiHandler->player1X;
-	wiiYPos = this->wiiHandler->player1Y;
+	wiiXPos = this->wiiHandler->player1X/2;
+	wiiYPos = this->wiiHandler->player1Y/2;
 
-	if(-sin(toRadian(wiiYPos)) < 0.6 && -sin(toRadian(wiiYPos)) > -0.6){
+	if(-sin(toRadian(wiiYPos)) < 0.5 && -sin(toRadian(wiiYPos)) > -0.5){
 		crosshair->ypos = -sin(toRadian(wiiYPos));
-	}else if(-sin(toRadian(wiiYPos)) >= 0.6){
-		crosshair->ypos = 0.6;
-	}else if(-sin(toRadian(wiiYPos)) <= -0.6){
-		crosshair->ypos = -0.6;
+	}else if(-sin(toRadian(wiiYPos)) >= 0.5){
+		crosshair->ypos = 0.5;
+	}else if(-sin(toRadian(wiiYPos)) <= -0.5){
+		crosshair->ypos = -0.5;
 	}
 
-	if(-(sin(toRadian(wiiXPos))) < 0.7 && -(sin(toRadian(wiiXPos))) > -0.7){
+	if(-(sin(toRadian(wiiXPos))) < 0.5 && -(sin(toRadian(wiiXPos))) > -0.8){
 		crosshair->xpos = -(sin(toRadian(wiiXPos)));
-	}else if(-(sin(toRadian(wiiXPos))) >= 0.7){
-		crosshair->xpos = 0.7;
-	}else if(-(sin(toRadian(wiiXPos))) <= -0.7){
-		crosshair->xpos = -0.7;
+		crosshair->zpos = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
+	}else if(-(sin(toRadian(wiiXPos))) >= 0.5){
+		crosshair->xpos = 0.5;
+	}else if(-(sin(toRadian(wiiXPos))) <= -0.8){
+		crosshair->xpos = -0.8;
 	}
-	crosshair->zpos = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
 
 
-	
 
+	xrot = -sin(toRadian(wiiYPos))*3;
+	yrot = 180 + (sin(toRadian(wiiXPos)))*3;
+	//zrot = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
 
 	printf("This x: %f \n", crosshair->xpos);
 	printf("This y: %f \n", crosshair->ypos);
