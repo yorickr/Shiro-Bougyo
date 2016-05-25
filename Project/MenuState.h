@@ -16,6 +16,7 @@ class MenuState : public GameState  {
 		virtual void Update() override;
 		virtual void Draw() override;
 		virtual void preDraw() override;
+		virtual void AddModel(ObjModel * model) override;
 		//void DrawCrosshair(int x, int y);
 	private:
 		GameStateManager *manager;

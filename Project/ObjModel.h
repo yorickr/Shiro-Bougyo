@@ -154,7 +154,7 @@ public:
 
     ObjModel(std::string filename);
 
-    ~ObjModel(void);
+	virtual ~ObjModel(void);
 
     virtual void draw();
 

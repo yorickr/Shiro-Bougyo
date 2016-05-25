@@ -5,6 +5,7 @@
 #include <cmath>
 #include "ArrowModel.h"
 #include "BowModel.h"
+#include <iostream>
 
 ArrowModel::ArrowModel( float x, float y, float z) : ObjModel("models/Arrow/Arrow.obj") {
 
@@ -17,6 +18,10 @@ ArrowModel::ArrowModel( float x, float y, float z) : ObjModel("models/Arrow/Arro
     boundingSpheres.clear(); //Clear base boundingspheres
     ArrowModel::InitBoundingSpheres();
 
+}
+
+ArrowModel::~ArrowModel()
+{
 }
 
 void ArrowModel::InitBoundingSpheres() {
@@ -52,9 +57,15 @@ void ArrowModel::CalcBoundingSpheres() {
     }
 }
 
+void ArrowModel::draw()
+{
+	ObjModel::draw();
+}
+
 void ArrowModel::update() {
-    //TODO: fix
-//    yrot ++;
+	if (!isFired)
+		return;
+
 
     float speed = 0.01f;
 
@@ -67,10 +78,42 @@ void ArrowModel::update() {
     ypos += dy;
     zpos += dz;
 
+	////	xrot = -rotx;
+	//if (roty > -90 && roty < 90)
+	//	crosshair->xrot = -rotx;
+	//else
+	//	crosshair->xrot = rotx;
+	//crosshair->yrot = -roty + 180;
+	//crosshair->zrot = 0;
+
+	////translate bow to correct position
+
+	////if rotate on x as:
+	//crosshair->ypos -= (sin(toRadian(rotx)));
+	//crosshair->zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
 
 
 }
 
+void ArrowModel::fire(float xpos, float ypos, float zpos, float targetx, float targety, float targetz)
+{
+	cout << xpos << " ypos: " << ypos << " zpos: " << zpos;
+	//set fired ture:
+	isFired = true;
+
+	//set correct arrow positions
+	this->xpos = targetx;
+	this->ypos = targety;
+	this->zpos = targetz;
+
+	//set rotations 0
+	xrot = yrot = zrot = 0;
+
+	//set arrow target
+	pointx = targetx;
+	pointy = targety;
+	pointz = targetz;
+}
 
 
 

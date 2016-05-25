@@ -1,5 +1,5 @@
 //
-// Created by Yorick Rommers on 20/05/16.
+//
 //
 
 #ifndef SHIRO_BOUGYO_ARROWMODEL_H
@@ -7,20 +7,23 @@
 
 
 #include "ObjModel.h"
-#include "BowModel.h"
 
 class ArrowModel : public ObjModel {
 public:
-    ArrowModel( float x, float y, float z);
+	ArrowModel(float x, float y, float z);
 
-    void InitBoundingSpheres() override;
+	~ArrowModel(void);
+
+	void InitBoundingSpheres() override;
     void CalcBoundingSpheres() override;
 
+	void draw() override;
     void update() override;
+	void fire(float, float, float, float targetx, float targety, float targetz);
 
     float pointx, pointy, pointz;
-
-
+private:
+	bool isFired = false;
 };
 
 

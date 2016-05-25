@@ -33,9 +33,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     this->wiiHandler = hand;
 	
 	vector<ObjModel*> temp;
-	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj"));
-	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj"));
-	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj"));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj", this, cam));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj", this, cam));
+	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj", this, cam));
 
 	bow = new AnimatedBowModel(temp, hand);
 	/*bow = new AnimatedBowModel(models); */
@@ -94,7 +94,23 @@ void PlayingState::Resume() {
 
 void PlayingState::Update() {
 	if(wiiHandler->is_A)
-		bow->nextModel();
+	{
+		counter++;
+			if (counter % 20 == 0)
+			{
+				bow->nextModel();
+				if(counter >= 59)
+				{
+					bow->getModel()->update();
+					bow->setIndex(0);
+					counter = 0;
+				}
+			}
+	}else
+	{
+		counter = 0;
+	}
+		
     bool collides = false;
     for( auto &obj1 : models) {
         for (auto &obj2 : models) {
@@ -108,6 +124,7 @@ void PlayingState::Update() {
         }
         collides = false;
     }
+	
 }
 
 
@@ -121,6 +138,11 @@ void PlayingState::Draw() {
 void PlayingState::preDraw()
 {
 	bow->getModel()->draw();
+}
+
+void PlayingState::AddModel(ObjModel * model)
+{
+	models.push_back(pair<int, ObjModel*>(models.size(), model));
 }
 
 void PlayingState::HandleEvents() {
