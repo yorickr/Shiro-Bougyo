@@ -42,10 +42,10 @@ void GameStateManager::HandleEvents()
 		states.at(currentState)->HandleEvents();
 }
 
-void GameStateManager::Update()
+void GameStateManager::Update(float deltatime)
 {
 	if (!states.empty())
-		states.at(currentState)->Update();
+		states.at(currentState)->Update(deltatime);
 }
 
 void GameStateManager::Draw()

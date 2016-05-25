@@ -13,7 +13,7 @@ class MenuState : public GameState  {
 		virtual void Pause() override;
 		virtual void Resume() override;
 		virtual void HandleEvents() override;
-		virtual void Update() override;
+		virtual void Update(float deltatime) override;
 		virtual void Draw() override;
 		virtual void preDraw() override;
 		//void DrawCrosshair(int x, int y);

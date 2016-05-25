@@ -19,12 +19,16 @@
 
 #define COMMPORT 4
 
+#define DELTATIME_MODIFIER 1000;
+
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
 WiiHandler wiiHandler;
+
+int oldTimeSinceStart;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -72,12 +76,13 @@ void initializeThreads(){
 }
 
 void onIdle() {
-
 	glutPostRedisplay();
 }
 
 void onTimer(int id) {
-	gameManager.Update();
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
+	gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 

@@ -84,7 +84,7 @@ void PlayingState::Resume() {
 
 }
 
-void PlayingState::Update() {
+void PlayingState::Update(float deltatime) {
 	if(wiiHandler->is_A)
 		bow->nextModel();
     bool collides = false;

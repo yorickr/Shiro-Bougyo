@@ -13,7 +13,7 @@ class GameState {
 		virtual void Resume() = 0;
 
 		virtual void HandleEvents() = 0;
-		virtual void Update() = 0;
+		virtual void Update(float deltatime) = 0;
 		virtual void Draw() = 0;
 		virtual void preDraw() =0;
 	//void ChangeState(GameStateManager* game, GameState* state) { game->ChangeState(state); }
