@@ -53,16 +53,11 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	}
 
 
-	//arrow
-	ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
-	hoi->xpos = 2;
-	hoi->ypos = 2;
-	models.push_back(pair<int, ObjModel*>(1, hoi));
-
-	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
-	arrow->xpos = -10;
-	arrow->zpos = 10;
-	models.push_back(pair<int, ObjModel*>(1337, arrow));
+	//tower
+	//ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
+	//hoi->xpos = 2;
+	//hoi->ypos = 2;
+	//models.push_back(pair<int, ObjModel*>(1, hoi));
 
 	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
 	models.push_back(pair<int, ObjModel*>(231231, warrior));
@@ -124,7 +119,34 @@ void PlayingState::Update(float deltatime) {
     for(auto &m : models) {
         m.second->update(deltatime);
     }
-	bow->getModel()->update(deltatime);
+	//bow->getModel()->update(deltatime);
+}
+
+void PlayingState::Update(float deltatime, bool * keys) {
+	if (wiiHandler->is_A || *keys == true)
+	{
+		counter++;
+		if (counter % 20 == 0)
+		{
+			bow->nextModel();
+			if (counter >= 59)
+			{
+				bow->getModel()->update(-1);
+				bow->setIndex(0);
+				counter = 0;
+			}
+		}
+	}
+	else
+	{
+		counter = 0;
+		bow->setIndex(0);
+	}
+
+	for (auto &m : models) {
+		m.second->update(deltatime);
+	}
+	//bow->getModel()->update(deltatime);
 }
 
 

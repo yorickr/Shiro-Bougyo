@@ -7,13 +7,13 @@
 #include "ArrowModel.h"
 #include "BowModel.h"
 
-ArrowModel::ArrowModel( float x, float y, float z) : CollisionModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float startx, float starty, float startz) : CollisionModel("models/Arrow/Arrow.obj") {
 
-    //Arrow heading to x, y, z
+    //startpoint arrow:
+	xpos = startx;
+	ypos = starty;
+	zpos = startz;
 
-    pointx = x;
-    pointy = y;
-    pointz = z;
 
     boundingSpheres.clear(); //Clear base boundingspheres
     ArrowModel::InitBoundingSpheres();
@@ -58,43 +58,12 @@ void ArrowModel::CalcBoundingSpheres() {
 }
 
 void ArrowModel::update(float deltatime) {
-	if (!isFired)
-		return;
+	
 
 
-    float speed = 0.01f;
+	xrot += 01;
 
 
-    float dx = (pointx - xpos)*speed;
-    float dy = (pointy - ypos)*speed;
-    float dz = (pointz - zpos)*speed;
-
-    xpos += dx;
-    ypos += dy;
-    zpos += dz;
-
-
-
-}
-
-void ArrowModel::fire(float xpos, float ypos, float zpos, float targetx, float targety, float targetz)
-{
-    std::cout << xpos << " ypos: " << ypos << " zpos: " << zpos;
-	//set fired ture:
-	isFired = true;
-
-	//set correct arrow positions
-	this->xpos = targetx;
-	this->ypos = targety;
-	this->zpos = targetz;
-
-	//set rotations 0
-	xrot = yrot = zrot = 0;
-
-	//set arrow target
-	pointx = targetx;
-	pointy = targety;
-	pointz = targetz;
 }
 
 void ArrowModel::draw() {
