@@ -29,6 +29,8 @@ private:
 	void setArrowPosition();
 	
 	float bowPostion = 0.8;
+	int wiiXPos = 0;
+	int wiiYPos = 0;
 
 };
 

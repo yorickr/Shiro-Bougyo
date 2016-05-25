@@ -122,6 +122,7 @@ void PlayingState::Update(float deltatime) {
     for(auto &m : models) {
         m.second->update(deltatime);
     }
+	bow->getModel()->update(deltatime);
 }
 
 
