@@ -9,6 +9,7 @@
 
 #include "stb_image.h"
 #include "stb_perlin.h"
+#include <tuple>
 
 #ifdef __APPLE__
 
