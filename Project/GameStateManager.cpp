@@ -11,6 +11,7 @@ void GameStateManager::Init(Camera * cam, WiiHandler * hand)
 	Cleanup();
 	states.push_back(new MenuState());
 	states.push_back(new PlayingState());
+	states.at(currentState)->Init(this, camera, wiiHandler);
 	//Add list of states here
 }
 

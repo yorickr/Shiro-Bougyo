@@ -1,5 +1,6 @@
 #include "MenuState.h"
 #include "Camera.h"
+#include "MenuModel.h"
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -12,7 +13,6 @@
 #endif
 
 //int crosshairX, crosshairY;
-
 void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 {
 	this->manager = game;
@@ -20,6 +20,16 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 	this->wiiHandler = hand;
 	//crosshairX = camera->width/2;
 	//crosshairY = camera->height/2;
+	cam->posX = 0;
+	cam->posY = 0;
+	MenuModel * menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
+	cam->posX = 3.7;
+	cam->posY = -12;
+	cam->posZ = -3;
+	cam->rotX = 0;
+	cam->rotY = -34;
+
+	models.push_back(pair<int, ObjModel*>(1, menu));
 }
 
 void MenuState::Cleanup()
@@ -42,64 +52,34 @@ void MenuState::HandleEvents()
 void MenuState::Update()
 {
 	//DrawCrosshair(camera->width/2,camera->height/2);
+	for (auto &m : models) {
+		m.second->draw();
+	}
 }
 
-//void MenuState::DrawCrosshair(int x, int y){
-//
-//	glPushMatrix();
-//	glTranslatef((float)3, 0.0f, (float)3);
-//	glPointSize(10);
-//	glColor3f(1.0f, 0.0f, 0.0f);
-//	glBegin(GL_POINTS);
-//	glVertex2f(crosshairX, crosshairY);
-//	glEnd();
-//	glPopMatrix();
-//}
+/*void MenuState::DrawCrosshair(int x, int y){
+
+	glPushMatrix();
+	glTranslatef((float)3, 0.0f, (float)3);
+	glPointSize(10);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_POINTS);
+	glVertex2f(crosshairX, crosshairY);
+	glEnd();
+	glPopMatrix();
+}*/
 
 void MenuState::Draw()
 {
 	glPushMatrix();
-	glTranslatef((float)3, 0.0f, (float)3);
-	glBegin(GL_QUADS);
-	glColor3f(1, 0, 0);
-	glVertex3f(-1, -1, -1);
-	glVertex3f(1, -1, -1);
-	glVertex3f(1, 1, -1);
-	glVertex3f(-1, 1, -1);
-
-	glColor3f(1, 1, 0);
-	glVertex3f(-1, -1, 1);
-	glVertex3f(1, -1, 1);
-	glVertex3f(1, 1, 1);
-	glVertex3f(-1, 1, 1);
-
-	glColor3f(0, 0, 1);
-	glVertex3f(-1, -1, -1);
-	glVertex3f(-1, 1, -1);
-	glVertex3f(-1, 1, 1);
-	glVertex3f(-1, -1, 1);
-
-	glColor3f(1, -1, 1);
-	glVertex3f(1, -1, -1);
-	glVertex3f(1, 1, -1);
-	glVertex3f(1, 1, 1);
-	glVertex3f(1, -1, 1);
-
-	glColor3f(0, 1, 0);
-	glVertex3f(-1, -1, -1);
-	glVertex3f(1, -1, -1);
-	glVertex3f(1, -1, 1);
-	glVertex3f(-1, -1, 1);
-
-	glColor3f(1, 1, 0);
-	glVertex3f(-1, 1, -1);
-	glVertex3f(1, 1, -1);
-	glVertex3f(1, 1, 1);
-	glVertex3f(-1, 1, 1);
-	glEnd();
-	glPopMatrix();
 
 	//DrawCrosshair(camera->width/2,camera->height/2);
+	
+	//Make StartMenu and push to models vector
+	for (auto &m : models) {
+		m.second->draw();
+	}
+	glPopMatrix();
 }
 
 void MenuState::preDraw()

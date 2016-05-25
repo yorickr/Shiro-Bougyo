@@ -18,13 +18,15 @@
 #include "WiiHandler.h"
 
 #define COMMPORT 4
-
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
 WiiHandler wiiHandler;
+int buttonPressed = 0;
+int WindowWidth = 1920;
+int WindowHight = 1080;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -32,39 +34,21 @@ void onDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0f, (float)camera.width / camera.height, 0.1, 50);
+	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,30);
 
 	
 	glMatrixMode(GL_MODELVIEW);
 
 
 	glLoadIdentity();
-	
 
 	//load bow
 	gameManager.preDraw();
-
-	glDisable(GL_TEXTURE_2D);
-	//glLoadIdentity();
-
-	glTranslatef(camera.posX, -camera.posY, 0);
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-
-
-	glColor3f(0, 0.5, 0);
-	glPushMatrix();
-	glBegin(GL_QUADS);
-	glVertex3f(-15, -1, -15);
-	glVertex3f(15, -1, -15);
-	glVertex3f(15, -1, 15);
-	glVertex3f(-15, -1, 15);
-	glEnd();
-	glPopMatrix();
-
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glTranslatef(camera.posX, camera.posZ,camera.posY);
 	gameManager.Draw();
-
+	// Process all OpenGL routine s as quickly as possible
 
 	glFlush();
 	glutSwapBuffers();
@@ -115,19 +99,31 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
-
-	int dx = x - camera.width / 2;
-	int dy = y - camera.height / 2;
-	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-	{
-		camera.rotX += dy / 10.0f;
-		if(camera.rotX > 30){
-			camera.rotX = 30;
-		}else if(camera.rotX < -30){
-			camera.rotX = -30;
+		int dx = x - WindowWidth / 2;
+		int dy = y - WindowHight / 2;
+		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
+		{
+			camera.rotX += dy / 10.0f;
+			if (camera.rotX > 30) {
+				camera.rotX = 30;
+			}
+			else if (camera.rotX < -30) {
+				camera.rotX = -30;
+			}
+			camera.rotY += dx / 10.0f;
+			glutWarpPointer(WindowWidth / 2, WindowHight / 2);
 		}
-		camera.rotY += dx / 10.0f;
-		glutWarpPointer(camera.width / 2, camera.height / 2);
+}
+
+
+void mouseFunction(int button,int state, int mouse_x, int mouse_y)
+{
+	buttonPressed = state == GLUT_LEFT_BUTTON;
+	if(buttonPressed)
+	{
+		//gameManager.nextState();
+		printf("pressed x: %i/n", mouse_x);
+		printf("pressed y: %i/n", mouse_y);
 	}
 }
 
@@ -141,12 +137,10 @@ void mouseFunc(int button, int state, int x, int y) {
 
 
 int main(int argc, char* argv[]) {
-
-	gameManager.Init(&camera,&wiiHandler);
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-	glutInitWindowSize(1920, 1080);
+	glutInitWindowSize(WindowWidth,	WindowHight);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
@@ -157,16 +151,21 @@ int main(int argc, char* argv[]) {
 #endif
 	glutIdleFunc(onIdle);
 	glutDisplayFunc(onDisplay);
-	glutReshapeFunc([](int w, int h) { camera.width = w; camera.height = h; glViewport(0, 0, w, h); });
+	glutReshapeFunc([](int w, int h) { WindowWidth = w; WindowHight = h; glViewport(0, 0, w, h); });
 	glutKeyboardFunc(onKeyboard);
 	glutTimerFunc(1000 / 60, onTimer, 1);
+	
 	glutKeyboardUpFunc(onKeyboardUp);
+	
+	//glutMotionFunc(mouseFunction);
+	glutMouseFunc(mouseFunction);
 	glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
-
-	glutWarpPointer(camera.width / 2, camera.height / 2);
-
+	
+	glutWarpPointer(WindowWidth / 2, WindowHight / 2);
 	memset(keys, 0, sizeof(keys));
+	
+	gameManager.Init(&camera, &wiiHandler);
 
 	glutMainLoop();
 }

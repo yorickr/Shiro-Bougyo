@@ -3,11 +3,12 @@
 
 #include "GameState.h"
 #include "Camera.h"
+#include "MenuModel.h"
 
 class MenuState : public GameState  {
 	// Inherited via GameState
 	public:
-		//int crosshairX, crosshairY;
+		int crosshairX, crosshairY;
 		virtual void Init(GameStateManager * game, Camera * camera, WiiHandler * wiiHandler) override;
 		virtual void Cleanup() override;
 		virtual void Pause() override;
@@ -22,7 +23,7 @@ class MenuState : public GameState  {
 		GameStateManager *manager;
 		Camera * camera;
 		WiiHandler * wiiHandler;
-
+		vector<pair<int, ObjModel*> > models;
 };
 
 #endif
