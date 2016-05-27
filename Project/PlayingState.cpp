@@ -11,7 +11,7 @@
 #include "StationaryObjModel.h"
 #include "AnimatedBowModel.h"
 #include "ArrowModel.h"
-
+#include "PointXY.h"
 
 
 #ifdef __APPLE__
@@ -46,28 +46,55 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
 
-	//Warrior
-	for (int i = 1; i < 5; i++ )
+	//4 Warriors
+	for (int i = 1; i < 10; i++ )
 	{
-		WarriorModel *warrior = new WarriorModel(i *2, -i);
+		PointXY point = SpawnEnemies();
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
-	//arrow
+	//Arrow
 	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
 	arrow->xpos = -10;
 	arrow->zpos = 10;
 	models.push_back(pair<int, ObjModel*>(1337, arrow));
 
-
-	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
-	models.push_back(pair<int, ObjModel*>(231231, warrior));
-	
-	//world 
+	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
 	world->xpos = -2;
 	world->ypos = -5;
-	models.push_back(pair<int, ObjModel*>(1, world));
+	models.push_back(pair<int, ObjModel*>(13, world));
+}
+
+struct PointXY PlayingState::SpawnEnemies(){
+	int portalNo = rand() % 4;
+	float portalx;
+	float portaly;
+
+	switch(portalNo){
+		case 0:
+			portalx = 10.7;
+			portaly = -16.0;
+			break;
+		case 1:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+		case 2:
+			portalx = -10.3;
+			portaly = -16.0;
+			break;
+		default:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+	}
+
+	struct PointXY point;
+	point.X = portalx;
+	point.Y = portaly;
+	return point;
 }
 
 void PlayingState::Cleanup() {

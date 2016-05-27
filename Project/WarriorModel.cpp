@@ -6,7 +6,7 @@ WarriorModel::WarriorModel(float x, float z):CollisionModel("models/warrior/warr
 {
 	xpos = x;
 	zpos = z;
-	ypos = -1;
+	ypos = -3;
     //Because the base class InitBoundingSpheres has been called, we need to clear boundingSpheres.
     boundingSpheres.clear(); //Clear base boundingspheres
     WarriorModel::InitBoundingSpheres();

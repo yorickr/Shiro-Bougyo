@@ -75,9 +75,14 @@ void onTimer(int id) {
 	if (keys['s']) camera.posY--;
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
+	if (keys['x']) camera.posZ--;
+	if (keys['c']) camera.posZ++;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
 
+	printf("This x pos: %f \n", camera.posX);
+	printf("This y pos: %f \n", camera.posY);
+	printf("This z pos: %f \n", camera.posZ);
 	//for testing remove keys for final release:
 	gameManager.Update(deltatime, &keys['t']);
 	oldTimeSinceStart = timeSinceStart;
