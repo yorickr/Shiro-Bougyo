@@ -22,6 +22,7 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 	//crosshairY = camera->height/2;
 	cam->posX = 0;
 	cam->posY = 0;
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	MenuModel * menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
 	cam->posX = 3.7;
 	cam->posY = -12;

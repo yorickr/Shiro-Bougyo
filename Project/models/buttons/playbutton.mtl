@@ -1,14 +1,14 @@
-newmtl ExitButton1:Exitbutton3
+newmtl lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd PlayButton.png
+Ni 1.00
+newmtl lambert5SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 1.00 1.00 1.00
 Tf 1.00 1.00 1.00
 map_Kd blackwood.png
-Ni 1.00
-newmtl PlayButton3
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd PlayButton.png
 Ni 1.00

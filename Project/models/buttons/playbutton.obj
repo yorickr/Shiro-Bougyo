@@ -79,16 +79,16 @@ vn -1.000000 0.000000 0.000000
 vn -1.000000 0.000000 0.000000
 vn -1.000000 0.000000 0.000000
 s off
-g ExitButton1:pCube2
-usemtl ExitButton1:Exitbutton3
+g ExitButton3:pCube2
+usemtl lambert5SG
 f 1/1/1 2/2/2 4/3/3 3/4/4
 f 5/5/5 6/6/6 8/7/7 7/8/8
 f 6/6/9 5/5/10 9/9/11 10/10/12
 f 7/8/13 8/7/14 12/11/15 11/12/16
 f 10/10/17 9/9/18 11/12/19 12/11/20
-usemtl PlayButton3
+usemtl lambert4SG
 f 5/13/21 7/14/22 11/15/23 9/16/24
-usemtl ExitButton1:Exitbutton3
+usemtl lambert5SG
 f 10/10/25 12/17/26 2/2/27 1/1/28
 f 3/4/29 4/3/30 8/18/31 6/19/32
 f 8/7/33 4/20/34 2/21/35 12/11/36

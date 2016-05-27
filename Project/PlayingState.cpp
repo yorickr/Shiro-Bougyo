@@ -34,7 +34,8 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     this->manager = game;
 	this->camera = cam;
     this->wiiHandler = hand;
-	
+
+	//light
 
 	//bow
 	vector<ObjModel*> temp;
@@ -52,11 +53,12 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
-	//tower
-	//ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
-	//hoi->xpos = 2;
-	//hoi->ypos = 2;
-	//models.push_back(pair<int, ObjModel*>(1, hoi));
+	//arrow
+	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
+	arrow->xpos = -10;
+	arrow->zpos = 10;
+	models.push_back(pair<int, ObjModel*>(1337, arrow));
+
 
 	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
 	models.push_back(pair<int, ObjModel*>(231231, warrior));
@@ -65,7 +67,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
 	world->xpos = -2;
 	world->ypos = -5;
-	models.push_back(pair<int, ObjModel*>(1234, world));
+	models.push_back(pair<int, ObjModel*>(1, world));
 }
 
 void PlayingState::Cleanup() {

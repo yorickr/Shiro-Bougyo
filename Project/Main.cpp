@@ -70,6 +70,11 @@ void onIdle() {
 }
 
 void onTimer(int id) {
+	if (keys[27]) exit(0);
+	if (keys['w']) camera.posY++;
+	if (keys['s']) camera.posY--;
+	if (keys['d']) camera.posX--;
+	if (keys['a']) camera.posX++;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
 
@@ -131,8 +136,8 @@ void mouseFunction(int button,int state, int mouse_x, int mouse_y)
 	if(buttonPressed)
 	{
 		//gameManager.nextState();
-		printf("pressed x: %i/n", mouse_x);
-		printf("pressed y: %i/n", mouse_y);
+		//printf("pressed x: %i/n", mouse_x);
+		//printf("pressed y: %i/n", mouse_y);
 	}
 }
 
