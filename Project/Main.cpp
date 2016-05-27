@@ -75,6 +75,8 @@ void onTimer(int id) {
 
 	//for testing remove keys for final release:
 	gameManager.Update(deltatime, &keys['t']);
+	oldTimeSinceStart = timeSinceStart;
+	//gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 

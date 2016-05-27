@@ -52,7 +52,6 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
-
 	//tower
 	//ObjModel *hoi = new StationaryObjModel("models/tower/tower.obj");
 	//hoi->xpos = 2;
