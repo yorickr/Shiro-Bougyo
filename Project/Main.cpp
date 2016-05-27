@@ -50,7 +50,7 @@ void onDisplay() {
 	gameManager.preDraw();
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, camera.posZ,camera.posY);
+	glTranslatef(camera.posX, camera.posY, camera.posZ);
 	gameManager.Draw();
 	// Process all OpenGL routine s as quickly as possible
 

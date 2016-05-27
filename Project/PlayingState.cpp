@@ -54,10 +54,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	}
 
 	//arrow
-	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
-	arrow->xpos = -10;
-	arrow->zpos = 10;
-	models.push_back(pair<int, ObjModel*>(1337, arrow));
+	//ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f,0,0);
+	//arrow->xpos = -10;
+	//arrow->zpos = 10;
+	//models.push_back(pair<int, ObjModel*>(1337, arrow));
 
 
 	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
@@ -86,10 +86,10 @@ void PlayingState::Update(float deltatime) {
 	if(wiiHandler->is_A)
 	{
 		counter++;
-			if (counter % 20 == 0)
+			if (counter % 1 == 0)
 			{
 				bow->nextModel();
-				if(counter >= 59)
+				if(counter >= 3)
 				{
 					bow->getModel()->update(-1);
 					bow->setIndex(0);
