@@ -9,3 +9,4 @@ AnimatedBowModel::AnimatedBowModel(vector<ObjModel *> models, WiiHandler *wiihan
 AnimatedBowModel::~AnimatedBowModel()
 {
 }
+

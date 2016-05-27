@@ -16,6 +16,7 @@ class GameState {
 
 		virtual void HandleEvents() = 0;
 		virtual void Update(float deltatime) = 0;
+		virtual void Update(float deltatime, bool * keys) = 0;
 		virtual void Draw() = 0;
 		virtual void preDraw() =0;
 		virtual void AddModel(ObjModel * model) = 0;

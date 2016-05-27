@@ -58,6 +58,14 @@ void MenuState::Update(float deltatime)
 	}
 }
 
+void MenuState::Update(float deltatime, bool * keys)
+{
+	//DrawCrosshair(camera->width/2,camera->height/2);
+	for (auto &m : models) {
+		m.second->draw();
+	}
+}
+
 /*void MenuState::DrawCrosshair(int x, int y){
 
 	glPushMatrix();
