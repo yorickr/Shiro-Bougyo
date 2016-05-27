@@ -3,6 +3,7 @@
 
 #include "GameStateManager.h"
 #include "Camera.h"
+#include "CollisionModel.h"
 
 class ObjModel;
 
@@ -19,7 +20,7 @@ class GameState {
 		virtual void Update(float deltatime, bool * keys) = 0;
 		virtual void Draw() = 0;
 		virtual void preDraw() =0;
-		virtual void AddModel(ObjModel * model) = 0;
+		virtual void AddModel(CollisionModel * model) = 0;
 	//void ChangeState(GameStateManager* game, GameState* state) { game->ChangeState(state); }
 
 	protected: 

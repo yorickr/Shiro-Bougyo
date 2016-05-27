@@ -11,7 +11,7 @@
 #include "StationaryObjModel.h"
 #include "AnimatedBowModel.h"
 #include "ArrowModel.h"
-
+#include "PointXY.h"
 
 
 #ifdef __APPLE__
@@ -46,28 +46,49 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
 
-	//Warrior
-	for (int i = 1; i < 5; i++ )
+	//4 Warriors
+	for (int i = 1; i < 10; i++ )
 	{
-		WarriorModel *warrior = new WarriorModel(i *2, -i);
+		PointXY point = SpawnEnemies();
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
-	//arrow
-	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
-	arrow->xpos = -10;
-	arrow->zpos = 10;
-	models.push_back(pair<int, ObjModel*>(1337, arrow));
-
-
-	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
-	models.push_back(pair<int, ObjModel*>(231231, warrior));
-	
-	//world 
+	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
-	models.push_back(pair<int, ObjModel*>(1, world));
+	models.push_back(pair<int, ObjModel*>(13, world));
+}
+
+struct PointXY PlayingState::SpawnEnemies(){
+	int portalNo = rand() % 4;
+	float portalx;
+	float portaly;
+
+	switch(portalNo){
+		case 0:
+			portalx = 10.7;
+			portaly = -16.0;
+			break;
+		case 1:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+		case 2:
+			portalx = -10.3;
+			portaly = -16.0;
+			break;
+		default:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+	}
+
+	struct PointXY point;
+	point.X = portalx;
+	point.Y = portaly;
+	return point;
 }
 
 void PlayingState::Cleanup() {
@@ -86,10 +107,10 @@ void PlayingState::Update(float deltatime) {
 	if(wiiHandler->is_A)
 	{
 		counter++;
-			if (counter % 20 == 0)
+			if (counter % 1 == 0)
 			{
 				bow->nextModel();
-				if(counter >= 59)
+				if(counter >= 3)
 				{
 					bow->getModel()->update(-1);
 					bow->setIndex(0);
@@ -101,23 +122,26 @@ void PlayingState::Update(float deltatime) {
 		counter = 0;
 	}
 		
-//    bool collides = false;
-//    for( auto &obj1 : models) {
-//        for (auto &obj2 : models) {
-//            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
-//			{
-//				printf("%d colliding with %d\n", obj1.first, obj2.first);
-//				collides = true;
-//                break;
-//			}
-//		}
-//        if(!collides) {
-//            obj1.second->update();
-//        }
-//        collides = false;
-//    }
+    bool collides = false;
+    for( auto &obj1 : collisionModels) {
+        for (auto &obj2 : collisionModels) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+			{
+				printf("%d colliding with %d\n", obj1.first, obj2.first);
+				collides = true;
+                break;
+			}
+		}
+        if(!collides) {
+            obj1.second->update(deltatime);
+        }
+        collides = false;
+    }
 
     for(auto &m : models) {
+        m.second->update(deltatime);
+    }
+    for (auto &m : collisionModels) {
         m.second->update(deltatime);
     }
 	//bow->getModel()->update(deltatime);
@@ -144,9 +168,28 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		bow->setIndex(0);
 	}
 
+    bool collides = false;
+    for( auto &obj1 : collisionModels) {
+        for (auto &obj2 : collisionModels) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+            {
+                printf("%d colliding with %d\n", obj1.first, obj2.first);
+                collides = true;
+                break;
+            }
+        }
+        if(!collides) {
+            obj1.second->update(deltatime);
+        }
+        collides = false;
+    }
+
 	for (auto &m : models) {
 		m.second->update(deltatime);
 	}
+    for (auto &m : collisionModels) {
+        m.second->update(deltatime);
+    }
 	//bow->getModel()->update(deltatime);
 }
 
@@ -154,6 +197,9 @@ void PlayingState::Update(float deltatime, bool * keys) {
 void PlayingState::Draw() {
     for( auto &m : models) {
         m.second->draw();
+    }
+    for( auto &n : collisionModels) {
+        n.second->draw();
     }
 
 }
@@ -163,14 +209,15 @@ void PlayingState::preDraw()
 	bow->getModel()->draw();
 }
 
-void PlayingState::AddModel(ObjModel * model)
-{
-	models.push_back(pair<int, ObjModel*>(models.size(), model));
-}
-
 void PlayingState::HandleEvents() {
    
 }
+
+void PlayingState::AddModel(CollisionModel *model) {
+    collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
+}
+
+
 
 
 
