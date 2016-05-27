@@ -17,8 +17,10 @@ WarriorModel::~WarriorModel()
 {
 }
 
+//Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    yrot += 0.5 * deltatime;
+    yrot += 0.8 * deltatime;
+    ypos += 0.01 * deltatime;
 }
 
 void WarriorModel::InitBoundingSpheres() {
