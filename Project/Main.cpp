@@ -18,7 +18,7 @@
 #include "WiiHandler.h"
 
 #define COMMPORT 4
-#define DELTATIME_MODIFIER 1000;
+#define DELTATIME_MODIFIER 10;
 
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
@@ -30,7 +30,7 @@ int buttonPressed = 0;
 int WindowWidth = 1920;
 int WindowHight = 1080;
 
-int oldTimeSinceStart;
+int oldTimeSinceStart = 0;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -50,7 +50,7 @@ void onDisplay() {
 	gameManager.preDraw();
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, camera.posZ,camera.posY);
+	glTranslatef(camera.posX, camera.posY, camera.posZ);
 	gameManager.Draw();
 	// Process all OpenGL routine s as quickly as possible
 
@@ -78,12 +78,15 @@ void onTimer(int id) {
 	if (keys['x']) camera.posZ--;
 	if (keys['c']) camera.posZ++;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
 
-	printf("This x pos: %f \n", camera.posX);
-	printf("This y pos: %f \n", camera.posY);
-	printf("This z pos: %f \n", camera.posZ);
+	//	printf("This x pos: %f \n", camera.posX);
+	//	printf("This y pos: %f \n", camera.posY);
+	//	printf("This z pos: %f \n", camera.posZ);
 	//for testing remove keys for final release:
+	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	oldTimeSinceStart = timeSinceStart;
+	//TODO: for testing remove keys for final release:
+
 	gameManager.Update(deltatime, &keys['t']);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);

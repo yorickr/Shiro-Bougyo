@@ -15,7 +15,7 @@ BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera
 	this->state = state;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0, 0, 0, 0);
-	arrow  = new ArrowModel(xpos, ypos, zpos);
+	arrow  = new ArrowModel(xpos, ypos, zpos, 0,0);
 	setCrosshairPositions(0, 0,0,0);
 
 	setArrowPosition();
@@ -126,7 +126,11 @@ float BowModel::toRadian(float degree) {
 void BowModel::fireArrow()
 {
 	camera_->posY;
-	ArrowModel *newArrow = new ArrowModel(0,1,10);
+	float camrotx = 0;
+
+	ArrowModel *newArrow = new ArrowModel(camera_->posX * -1 , camera_->posY * -1 ,camera_->posZ * -1, camera_->rotX * -1.3, (camera_->rotY * -1) - 180);
+
+
 	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
 
 	state->AddModel(newArrow);
