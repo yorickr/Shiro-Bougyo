@@ -69,10 +69,10 @@ float ArrowModel::toRadian(float degree) {
 void ArrowModel::update(float deltatime) {
 	
 	//if rotate on x as:
-	ypos += (sin(toRadian(xrot))) * 0.2;
-	zpos += cos(toRadian(yrot))* 0.2;
+	ypos += (sin(toRadian(xrot))) * 0.1 * deltatime;
+	zpos += cos(toRadian(yrot))* 0.1 * deltatime;
 	//if rotate on y as: 
-	xpos += (sin(toRadian(yrot))) * 0.2;
+	xpos += (sin(toRadian(yrot))) * 0.1 * deltatime;
 
 
 	//xrot += 01;
