@@ -23,7 +23,7 @@ set(SOURCE_FILES
         Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
         Project/ArrowModel.cpp Project/ArrowModel.h
         Project/MenuModel.cpp Project/MenuModel.h
-        Project/CollisionModel.cpp Project/CollisionModel.h)
+        Project/CollisionModel.cpp Project/CollisionModel.h Project/PointXY.h)
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})
@@ -33,7 +33,7 @@ find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} )
 
-target_link_libraries(Shiro_Bougyo ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${CMAKE_SOURCE_DIR}/Project/libs_osx/yorick/libwiiuse.dylib )
+target_link_libraries(Shiro_Bougyo ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${CMAKE_SOURCE_DIR}/Project/libs_osx/tim/libwiiuse.dylib )
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
