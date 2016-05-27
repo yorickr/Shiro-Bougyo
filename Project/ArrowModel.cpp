@@ -58,12 +58,8 @@ void ArrowModel::CalcBoundingSpheres() {
 }
 
 void ArrowModel::update(float deltatime) {
-	
-
-
-	xrot += 01;
-
-
+    xrot +=  deltatime;
+    printf("Deltatime is %f\n", deltatime);
 }
 
 void ArrowModel::draw() {

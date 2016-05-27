@@ -17,10 +17,8 @@ WarriorModel::~WarriorModel()
 {
 }
 
-void WarriorModel::update(float deltatime)
-{
-	//xpos+= 0.1;
-	yrot += 0.5;
+void WarriorModel::update(float deltatime) {
+    yrot += 0.5 * deltatime;
 }
 
 void WarriorModel::InitBoundingSpheres() {

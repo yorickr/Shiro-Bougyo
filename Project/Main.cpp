@@ -18,7 +18,7 @@
 #include "WiiHandler.h"
 
 #define COMMPORT 4
-#define DELTATIME_MODIFIER 1000;
+#define DELTATIME_MODIFIER 10;
 
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT);
@@ -30,7 +30,7 @@ int buttonPressed = 0;
 int WindowWidth = 1920;
 int WindowHight = 1080;
 
-int oldTimeSinceStart;
+int oldTimeSinceStart = 0;
 
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
@@ -76,9 +76,9 @@ void onTimer(int id) {
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-	float deltatime = oldTimeSinceStart - timeSinceStart *  DELTATIME_MODIFIER;
-
-	//for testing remove keys for final release:
+	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	oldTimeSinceStart = timeSinceStart;
+	//TODO: for testing remove keys for final release:
 	gameManager.Update(deltatime, &keys['t']);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);

@@ -96,7 +96,6 @@ void MenuState::preDraw()
 
 }
 
-void MenuState::AddModel(ObjModel* model)
-{
+void MenuState::AddModel(CollisionModel *model) {
 
 }

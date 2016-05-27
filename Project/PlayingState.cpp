@@ -50,18 +50,18 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	for (int i = 1; i < 5; i++ )
 	{
 		WarriorModel *warrior = new WarriorModel(i *2, -i);
-		models.push_back(pair<int, ObjModel*>(i, warrior));
+		collisionModels.push_back(pair<int, CollisionModel*>(i, warrior));
 	}
 
 	//arrow
-	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f);
+	ArrowModel *arrow = new ArrowModel(1.5f,0, 1.5f);
 	arrow->xpos = -10;
 	arrow->zpos = 10;
-	models.push_back(pair<int, ObjModel*>(1337, arrow));
+	collisionModels.push_back(pair<int, CollisionModel*>(1337, arrow));
 
 
 	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
-	models.push_back(pair<int, ObjModel*>(231231, warrior));
+	collisionModels.push_back(pair<int, CollisionModel*>(231231, warrior));
 	
 	//world 
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
@@ -101,23 +101,26 @@ void PlayingState::Update(float deltatime) {
 		counter = 0;
 	}
 		
-//    bool collides = false;
-//    for( auto &obj1 : models) {
-//        for (auto &obj2 : models) {
-//            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
-//			{
-//				printf("%d colliding with %d\n", obj1.first, obj2.first);
-//				collides = true;
-//                break;
-//			}
-//		}
-//        if(!collides) {
-//            obj1.second->update();
-//        }
-//        collides = false;
-//    }
+    bool collides = false;
+    for( auto &obj1 : collisionModels) {
+        for (auto &obj2 : collisionModels) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+			{
+				printf("%d colliding with %d\n", obj1.first, obj2.first);
+				collides = true;
+                break;
+			}
+		}
+        if(!collides) {
+            obj1.second->update(deltatime);
+        }
+        collides = false;
+    }
 
     for(auto &m : models) {
+        m.second->update(deltatime);
+    }
+    for (auto &m : collisionModels) {
         m.second->update(deltatime);
     }
 	//bow->getModel()->update(deltatime);
@@ -144,9 +147,28 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		bow->setIndex(0);
 	}
 
+    bool collides = false;
+    for( auto &obj1 : collisionModels) {
+        for (auto &obj2 : collisionModels) {
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
+            {
+                printf("%d colliding with %d\n", obj1.first, obj2.first);
+                collides = true;
+                break;
+            }
+        }
+        if(!collides) {
+            obj1.second->update(deltatime);
+        }
+        collides = false;
+    }
+
 	for (auto &m : models) {
 		m.second->update(deltatime);
 	}
+    for (auto &m : collisionModels) {
+        m.second->update(deltatime);
+    }
 	//bow->getModel()->update(deltatime);
 }
 
@@ -154,6 +176,9 @@ void PlayingState::Update(float deltatime, bool * keys) {
 void PlayingState::Draw() {
     for( auto &m : models) {
         m.second->draw();
+    }
+    for( auto &n : collisionModels) {
+        n.second->draw();
     }
 
 }
@@ -163,14 +188,15 @@ void PlayingState::preDraw()
 	bow->getModel()->draw();
 }
 
-void PlayingState::AddModel(ObjModel * model)
-{
-	models.push_back(pair<int, ObjModel*>(models.size(), model));
-}
-
 void PlayingState::HandleEvents() {
    
 }
+
+void PlayingState::AddModel(CollisionModel *model) {
+    collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
+}
+
+
 
 
 
