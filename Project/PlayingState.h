@@ -26,6 +26,8 @@ class PlayingState : public GameState {
         virtual void Draw() override;
 		virtual void preDraw() override;
 		virtual void AddModel(CollisionModel * model) override;
+		struct PointXY SpawnEnemies();
+
     private:
 		int counter = 0;
         GameStateManager *manager;
