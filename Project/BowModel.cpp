@@ -17,6 +17,7 @@ BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera
 	SetPositions(0, 0, 0, 0);
 	arrow  = new ArrowModel(xpos, ypos, zpos);
 	setCrosshairPositions(0, 0,0,0);
+
 	setArrowPosition();
 
 }
@@ -31,7 +32,7 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 
 	xpos = bowPostion;
 	ypos = y ;
-	zpos = -1;
+	zpos = -1.5;
 	yrot = 180;
 
 	////set rotation bow equals to rotation camera
@@ -98,8 +99,8 @@ void BowModel::setCrosshairPositions(float x, float y, float rotx, float roty)
 }
 void BowModel::setArrowPosition()
 {
-	arrow->xpos = xpos + 0.21;
-	arrow->ypos = ypos;
+	arrow->xpos = xpos + 0.15;
+	arrow->ypos = ypos + 0.05;
 	arrow->zpos = zpos - 0.7;
 	arrow->xrot = xrot;
 	arrow->yrot = yrot;
@@ -122,8 +123,25 @@ float BowModel::toRadian(float degree) {
 	return (degree / 180) * M_PI;
 }
 
+void BowModel::fireArrow()
+{
+	camera_->posY;
+	ArrowModel *newArrow = new ArrowModel(0,1,10);
+	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
+
+	state->AddModel(newArrow);
+
+}
+
 void BowModel::update(float deltatime)
 {
+	if (deltatime == -1)
+	{
+		fireArrow();
+		return;
+	}
+		
+
 	//counter++;
 	//if(wiiHandler->is_A && counter >= 60)
 	//{
@@ -148,6 +166,9 @@ void BowModel::update(float deltatime)
 	if(-(sin(toRadian(wiiXPos))) < 0.5 && -(sin(toRadian(wiiXPos))) > -0.8){
 		crosshair->xpos = -(sin(toRadian(wiiXPos)));
 		crosshair->zpos = (cos(toRadian(wiiXPos)) * cos(toRadian(wiiYPos)));
+		if (crosshair->zpos > -2) {
+			crosshair->zpos = -2;
+		}
 	}else if(-(sin(toRadian(wiiXPos))) >= 0.5){
 		crosshair->xpos = 0.5;
 	}else if(-(sin(toRadian(wiiXPos))) <= -0.8){
@@ -178,17 +199,6 @@ void BowModel::update(float deltatime)
 		pointy -= (sin(toRadian(camera_->rotX)));
 		pointz -= (cos(toRadian(camera_->rotX)) * cos(toRadian(camera_->rotY)));
 		
-		//if rotate on y as: 
-		pointx += (sin(toRadian(camera_->rotY)));
-
-
-		arrow->fire(pointx, pointy, pointz, xrotcam, yrotcam, zrotcam);
-		state->AddModel(arrow);
-		setArrowPosition();
-	//}
-	//if(!wiiHandler->is_A)
-	//{
-	//	counter = 0;
 	}
 
 

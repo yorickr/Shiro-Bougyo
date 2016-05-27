@@ -11,6 +11,7 @@ public:
 	~MenuModel();
     void draw() override;
 	void update(float deltatime) override;
+	//void update(float deltatime, bool keys) override;
 private: 
 	Camera * camera;
 	void SetPositionMenu(float x, float y, float rotx, float roty);
