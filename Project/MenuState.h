@@ -15,6 +15,7 @@ class MenuState : public GameState  {
 		virtual void Resume() override;
 		virtual void HandleEvents() override;
 		virtual void Update(float deltatime) override;
+		virtual void Update(float deltatime, bool * keys) override;
 		virtual void Draw() override;
 		virtual void preDraw() override;
 		virtual void AddModel(ObjModel * model) override;

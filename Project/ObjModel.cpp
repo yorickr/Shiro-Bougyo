@@ -9,6 +9,7 @@
 
 #include "stb_image.h"
 #include "stb_perlin.h"
+#include <tuple>
 
 #ifdef __APPLE__
 
@@ -389,9 +390,18 @@ ObjModel::Texture::Texture(const std::string &fileName) {
     int width, height, bpp;
     stbi_set_flip_vertically_on_load(true);
     unsigned char *imgData = stbi_load(fileName.c_str(), &width, &height, &bpp, 4);
-
     glGenTextures(1, &index);
     glBindTexture(GL_TEXTURE_2D, index);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.5);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	GLfloat LightAmbient[] = { 2.5f, 2.5f, 2.5f, 3.0f };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
+	GLfloat specular[] = { 0.0, 1.0, 0.0, 1.0 };
+	glMaterialfv(GL_LIGHT0, GL_SPECULAR,specular);
 
     glTexImage2D(GL_TEXTURE_2D,
                  0,        //level

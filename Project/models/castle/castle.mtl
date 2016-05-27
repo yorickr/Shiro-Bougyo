@@ -87,7 +87,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd ____.jpg
+map_Kd Roofing_Tile_Spanish.jpg
 Ni 1.00
 Ks 0.33 0.33 0.33
 Ns 0.06

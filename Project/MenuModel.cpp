@@ -8,6 +8,11 @@ MenuModel::MenuModel(Camera * cam, WiiHandler * wiihandler,string filename): Obj
 {
 	this->camera = cam;
 	this->wiiHandler = wiihandler;
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.5);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	playButton = new ObjModel("models/buttons/playbutton.obj");
 	settingsButton = new ObjModel("models/buttons/settingsButton.obj");
 	exitButton = new ObjModel("models/buttons/ExitButton.obj");

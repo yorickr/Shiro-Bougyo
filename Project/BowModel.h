@@ -16,6 +16,7 @@ public:
 	~BowModel();
 	void draw() override;
 	float toRadian(float degree);
+	void fireArrow();
 	void update(float deltatime) override;
 private:
 	ObjModel * crosshair;
@@ -31,6 +32,5 @@ private:
 	float bowPostion = 0.8;
 	int wiiXPos = 0;
 	int wiiYPos = 0;
-
 };
 
