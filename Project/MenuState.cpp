@@ -25,10 +25,10 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	MenuModel * menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
 	cam->posX = 3.7;
-	cam->posY = -12;
-	cam->posZ = -3;
+	cam->posY = -5;
+	cam->posZ = -12;
 	cam->rotX = 0;
-	cam->rotY = -34;
+	cam->rotY = 34;
 
 	models.push_back(pair<int, ObjModel*>(1, menu));
 }

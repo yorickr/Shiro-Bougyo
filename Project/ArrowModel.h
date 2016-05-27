@@ -10,14 +10,15 @@
 
 class ArrowModel : public CollisionModel {
 public:
-    ArrowModel( float x, float y, float z);
+    //ArrowModel( float x, float y, float z);
 
 
+	ArrowModel(float startx, float starty, float startz, float xdirection, float ydirection);
 	~ArrowModel(void);
 
 	void InitBoundingSpheres() override;
     void CalcBoundingSpheres() override;
-
+	float toRadian(float degree);
 	void draw() override;
     void update(float deltatime) override;
 
