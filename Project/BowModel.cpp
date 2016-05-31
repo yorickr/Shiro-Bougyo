@@ -31,9 +31,10 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	//set bow on camera position
 
 	xpos = bowPostion;
-	ypos = y ;
-	zpos = -1.5;
-	yrot = 180;
+	ypos = y;
+	zpos = -0.11;
+	yrot = -45;
+
 
 	////set rotation bow equals to rotation camera
 	//if (roty > -90 && roty < 90)

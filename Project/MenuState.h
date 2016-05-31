@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include "Camera.h"
 #include "MenuModel.h"
+#include "AnimatedBowModel.h"
 
 class MenuState : public GameState  {
 	// Inherited via GameState
@@ -19,12 +20,16 @@ class MenuState : public GameState  {
 		virtual void Draw() override;
 		virtual void preDraw() override;
 		virtual void AddModel(CollisionModel * model) override;
-		//void DrawCrosshair(int x, int y);
 	private:
+		int counter = 0;
 		GameStateManager *manager;
 		Camera * camera;
 		WiiHandler * wiiHandler;
+		MenuModel * menu;
 		vector<pair<int, ObjModel*> > models;
+		AnimatedBowModel * playbuttons;
+		AnimatedBowModel * settingsbuttons;
+		AnimatedBowModel * Exitbuttons;
 };
 
 #endif

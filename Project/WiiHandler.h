@@ -24,6 +24,8 @@ public:
     wiimote_t * wiiMoteP1;
     wiimote_t * wiiMoteP2;
 	bool is_A = false;
+	bool Up_pressed = false;
+	bool Down_pressed = false;
 	int player1X = 0;
 	int player1Y = 0;
 

@@ -11,18 +11,16 @@ public:
 	~MenuModel();
     void draw() override;
 	void update(float deltatime) override;
-	//void update(float deltatime, bool keys) override;
-private: 
-	Camera * camera;
-	void SetPositionMenu(float x, float y, float rotx, float roty);
-	void SetButtonPosition(float xpos, float ypos,float zpos, float xrot,float yrot, ObjModel *model);
-	void SetPositionMouse(int x, int y,ObjModel *model);
+	//void update(float deltatime, bool *keys) override;
 	ObjModel * playButton;
 	ObjModel * playButtonPressed;
 	ObjModel * settingsButton;
 	ObjModel * settingsButtonPressed;
 	ObjModel * exitButton;
 	ObjModel * exitButtonPressed;
-	ObjModel * mouseCursor;
+private: 
+	Camera * camera;
+	int counter = 0;
+	void SetPositionMenu(float x, float y, float rotx, float roty);
 	WiiHandler * wiiHandler;
 };

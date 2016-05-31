@@ -156,6 +156,7 @@
     <ClCompile Include="AnimatedModel.cpp" />
     <ClCompile Include="ArrowModel.cpp" />
     <ClCompile Include="BowModel.cpp" />
+    <ClCompile Include="ButtonModel.cpp" />
     <ClCompile Include="CollisionModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="AnimatedModel.h" />
     <ClInclude Include="ArrowModel.h" />
     <ClInclude Include="BowModel.h" />
+    <ClInclude Include="ButtonModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionModel.h" />
     <ClInclude Include="Entity.h" />

@@ -400,8 +400,8 @@ ObjModel::Texture::Texture(const std::string &fileName) {
 	glEnable(GL_LIGHT1);
 	GLfloat LightAmbient[] = { 2.5f, 2.5f, 2.5f, 3.0f };
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
-	GLfloat specular[] = { 0.0, 1.0, 0.0, 1.0 };
-	glMaterialfv(GL_LIGHT0, GL_SPECULAR,specular);
+	/*GLfloat specular[] = { 0.0, 1.0, 0.0, 1.0 };
+	glMaterialfv(GL_LIGHT0, GL_SPECULAR,specular);*/
 
     glTexImage2D(GL_TEXTURE_2D,
                  0,        //level

@@ -123,6 +123,9 @@
     <ClInclude Include="MenuModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="GameStateManager.cpp">
       <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
