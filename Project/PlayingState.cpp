@@ -70,15 +70,15 @@ struct PointXY PlayingState::SpawnEnemies(){
 	float portaly;
 
 	switch(portalNo){
-		case 0:
+		case 1:
 			portalx = 10.7;
 			portaly = -16.0;
 			break;
-		case 1:
+		case 2:
 			portalx = 18.7;
 			portaly = -9.0;
 			break;
-		case 2:
+		case 3:
 			portalx = -10.3;
 			portaly = -16.0;
 			break;
@@ -92,6 +92,16 @@ struct PointXY PlayingState::SpawnEnemies(){
 	point.X = portalx;
 	point.Y = portaly;
 	return point;
+}
+
+void PlayingState::AddWarrior(){
+	int random = rand() % 60;
+	if(enemyCount < 20 && random < 5){
+		PointXY point = SpawnEnemies();
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
+		AddModel(warrior);
+		enemyCount++;
+	}
 }
 
 void PlayingState::Cleanup() {
@@ -193,6 +203,8 @@ void PlayingState::Update(float deltatime, bool * keys) {
     for (auto &m : collisionModels) {
         m.second->update(deltatime);
     }
+
+	AddWarrior();
 	//bow->getModel()->update(deltatime);
 }
 
