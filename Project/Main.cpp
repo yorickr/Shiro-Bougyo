@@ -71,12 +71,12 @@ void onIdle() {
 
 void onTimer(int id) {
 	if (keys[27]) exit(0);
-	if (keys['w']) camera.posY++;
-	if (keys['s']) camera.posY--;
+	if (keys['w']) camera.posZ++;
+	if (keys['s']) camera.posZ--;
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
-	if (keys['x']) camera.posZ--;
-	if (keys['c']) camera.posZ++;
+	if (keys['x']) camera.posY--;
+	if (keys['c']) camera.posY++;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
 	//	printf("This x pos: %f \n", camera.posX);
