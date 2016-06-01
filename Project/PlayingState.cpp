@@ -192,7 +192,6 @@ void PlayingState::Update(float deltatime, bool * keys) {
 				bow->setIndex(0);
 				counter = 0;
 		}
-		ScalePowerUp();
 	}
 	else
 	{

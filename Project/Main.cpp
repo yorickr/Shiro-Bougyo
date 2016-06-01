@@ -15,13 +15,15 @@
 #include "SerialHandler.h"
 #include "Camera.h"
 
+#include "PlayingState.h"
+
 #include "WiiHandler.h"
 
 #define COMMPORT 4
 #define DELTATIME_MODIFIER 10;
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT);
+SerialHandler serial = SerialHandler(COMMPORT,gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
@@ -77,6 +79,19 @@ void onTimer(int id) {
 	if (keys['a']) camera.posX++;
 	if (keys['x']) camera.posY--;
 	if (keys['c']) camera.posY++;
+	if (keys['m']) { //Scale powerup.
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+	if (keys['n']) { //
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
 	//	printf("This x pos: %f \n", camera.posX);
