@@ -17,6 +17,8 @@ class GameStateManager {
 		void PopState();*/
 		void nextState();
 		void previousState();
+		GameState* getCurrentState();
+
 
 		void HandleEvents();
 		void Update(float deltatime);

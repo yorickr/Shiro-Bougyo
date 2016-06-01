@@ -4,7 +4,6 @@
 #include "GameState.h"
 #include "Camera.h"
 #include "MenuModel.h"
-
 class MenuState : public GameState  {
 	// Inherited via GameState
 	public:
@@ -19,6 +18,7 @@ class MenuState : public GameState  {
 		virtual void Draw() override;
 		virtual void preDraw() override;
 		virtual void AddModel(CollisionModel * model) override;
+	    void DeleteModel(CollisionModel *model) override;
 		//void DrawCrosshair(int x, int y);
 	private:
 		GameStateManager *manager;
