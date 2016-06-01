@@ -122,7 +122,7 @@ void* wiiFunc(void * argument) {
 }
 
 void* musicFunc(void * argument) {
-	audiotest();
+	playTheme();
 	return 0;
 }
 

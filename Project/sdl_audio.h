@@ -4,7 +4,12 @@
 
 #ifndef SHIRO_BOUGYO_OPENAL_EXAMPLE_H
 #define SHIRO_BOUGYO_OPENAL_EXAMPLE_H
-
-int audiotest();
+#include <iostream>
+int playTheme();
+int playSwordSlash();
+int playArrowHit();
+int playBowPull();
+int playBowShot();
+int playSound(std::string fileName);
 
 #endif //SHIRO_BOUGYO_OPENAL_EXAMPLE_H
