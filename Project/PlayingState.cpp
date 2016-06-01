@@ -52,6 +52,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
 
+
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
@@ -96,6 +97,11 @@ void PlayingState::AddWarrior(){
 		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
 		AddModel(warrior);
 		enemyCount++;
+	}else if(enemyCount >= 20){
+		for( auto &m : collisionModels){
+			DeleteModel(m.second);
+		}
+        enemyCount = 0;
 	}
 }
 
@@ -158,7 +164,7 @@ void PlayingState::Update(float deltatime) {
         for (auto &obj2 : collisionModels) {
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
 			{
-				//printf("%d colliding with %d\n", obj1.first, obj2.first);
+				printf("%d colliding with %d\n", obj1.first, obj2.first);
 				collides = true;
 				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
 				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
@@ -179,13 +185,12 @@ void PlayingState::Update(float deltatime) {
         collides = false;
     }
 
-    for(auto &m : models) {
-        m.second->update(deltatime);
-    }
-    for (auto &m : collisionModels) {
-        m.second->update(deltatime);
-    }
-
+//    for(auto &m : models) {
+//        m.second->update(deltatime);
+//    }
+//    for (auto &m : collisionModels) {
+//        m.second->update(deltatime);
+//    }
 	//bow->getModel()->update(deltatime);
 }
 
@@ -198,9 +203,13 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		else bow->setIndex(2);
 		if (counter >= 100)
 		{
+			bow->nextModel();
+			if (counter >= 59)
+			{
 				bow->getModel()->update(-1);
 				bow->setIndex(0);
 				counter = 0;
+			}
 		}
 	}
 	else
@@ -214,7 +223,7 @@ void PlayingState::Update(float deltatime, bool * keys) {
         for (auto &obj2 : collisionModels) {
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
             {
-                //printf("%d colliding with %d\n", obj1.first, obj2.first);
+                printf("%d colliding with %d\n", obj1.first, obj2.first);
                 collides = true;
 				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
 				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
@@ -264,7 +273,6 @@ void PlayingState::preDraw()
 void PlayingState::HandleEvents() {
    
 }
-
 
 void PlayingState::AddModel(CollisionModel *model) {
     collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
