@@ -37,6 +37,11 @@ void GameStateManager::previousState()
 	}
 }
 
+GameState* GameStateManager::getCurrentState()
+{
+	return states.at(currentState);
+}
+
 void GameStateManager::HandleEvents()
 {
 	if(!states.empty())

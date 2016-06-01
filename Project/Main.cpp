@@ -15,6 +15,8 @@
 #include "SerialHandler.h"
 #include "Camera.h"
 
+#include "PlayingState.h"
+
 #include "WiiHandler.h"
 
 #define COMMPORT 4
@@ -23,7 +25,7 @@
 #include "sdl_audio.h"
 
 GameStateManager gameManager;
-//SerialHandler serial = SerialHandler(COMMPORT);
+SerialHandler serial = SerialHandler(COMMPORT, gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 void* musicFunc(void * argument);
@@ -76,12 +78,25 @@ void onIdle() {
 
 void onTimer(int id) {
 	if (keys[27]) exit(0);
-	if (keys['w']) camera.posY++;
-	if (keys['s']) camera.posY--;
+	if (keys['w']) camera.posZ++;
+	if (keys['s']) camera.posZ--;
 	if (keys['d']) camera.posX--;
 	if (keys['a']) camera.posX++;
-	if (keys['x']) camera.posZ--;
-	if (keys['c']) camera.posZ++;
+	if (keys['x']) camera.posY--;
+	if (keys['c']) camera.posY++;
+	if (keys['m']) { //Scale powerup.
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+	if (keys['n']) { //
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
 	//	printf("This x pos: %f \n", camera.posX);
