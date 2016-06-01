@@ -54,14 +54,8 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 		models.push_back(pair<int, ObjModel*>(i, warrior));
 	}
 
-	//Arrow
-	ObjModel *arrow = new ArrowModel(1.5f,0, 1.5f,0,0);
-	arrow->xpos = -10;
-	arrow->zpos = 10;
-	models.push_back(pair<int, ObjModel*>(1337, arrow));
-
 	//World
-	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
+	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
