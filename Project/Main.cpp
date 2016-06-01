@@ -38,7 +38,7 @@ int WindowHight = 1080;
 int oldTimeSinceStart = 0;
 
 void onDisplay() {
-	//	glClearColor(0.6f, 0.6f, 1, 1);
+		//	glClearColor(0.6f, 0.6f, 1, 1);
 //	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 //
 //	glMatrixMode(GL_PROJECTION);
@@ -152,10 +152,6 @@ void onTimer(int id) {
 	}
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-
-	//	printf("This x pos: %f \n", camera.posX);
-	//	printf("This y pos: %f \n", camera.posY);
-	//	printf("This z pos: %f \n", camera.posZ);
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	oldTimeSinceStart = timeSinceStart;
@@ -191,7 +187,7 @@ void* wiiFunc(void * argument) {
 }
 
 void* musicFunc(void * argument) {
-	audiotest();
+	playTheme();
 	return 0;
 }
 

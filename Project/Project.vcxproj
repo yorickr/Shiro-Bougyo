@@ -210,6 +210,10 @@
     <ResourceCompile Include="Project.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="arrow_hit.wav" />
+    <Media Include="bow_pull.wav" />
+    <Media Include="bow_shot.wav" />
+    <Media Include="sword_slash.wav" />
     <Media Include="test.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
