@@ -14,7 +14,7 @@ ObjModel* AnimatedModel::getModel()
 
 void AnimatedModel::setIndex(int i)
 {
-	if(i > 0 && i < objects.size())
+	if(i >= 0 && i < objects.size())
 	{
 		index = i;
 	}

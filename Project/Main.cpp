@@ -23,7 +23,7 @@
 #define DELTATIME_MODIFIER 10;
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT);
+SerialHandler serial = SerialHandler(COMMPORT,gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
@@ -55,7 +55,6 @@ void onDisplay() {
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
 	gameManager.Draw();
 	// Process all OpenGL routine s as quickly as possible
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -79,7 +78,13 @@ void onTimer(int id) {
 	if (keys['a']) camera.posX++;
 	if (keys['x']) camera.posY--;
 	if (keys['c']) camera.posY++;
-	if (keys['m']) {
+	if (keys['m']) { //Scale powerup.
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+	if (keys['n']) { //
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
 		if (playState)
@@ -87,10 +92,6 @@ void onTimer(int id) {
 	}
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-
-	//	printf("This x pos: %f \n", camera.posX);
-	//	printf("This y pos: %f \n", camera.posY);
-	//	printf("This z pos: %f \n", camera.posZ);
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	oldTimeSinceStart = timeSinceStart;

@@ -153,9 +153,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedBowModel.cpp" />
+    <ClCompile Include="AnimatedExitButtonModel.cpp" />
     <ClCompile Include="AnimatedModel.cpp" />
+    <ClCompile Include="AnimatedPlayButtonModel.cpp" />
+    <ClCompile Include="AnimatedSettingsButtonModel.cpp" />
     <ClCompile Include="ArrowModel.cpp" />
     <ClCompile Include="BowModel.cpp" />
+    <ClCompile Include="ButtonModel.cpp" />
     <ClCompile Include="CollisionModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -173,9 +177,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedBowModel.h" />
+    <ClInclude Include="AnimatedExitButtonModel.h" />
     <ClInclude Include="AnimatedModel.h" />
+    <ClInclude Include="AnimatedPlayButtonModel.h" />
+    <ClInclude Include="AnimatedSettingsButtonModel.h" />
     <ClInclude Include="ArrowModel.h" />
     <ClInclude Include="BowModel.h" />
+    <ClInclude Include="ButtonModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionModel.h" />
     <ClInclude Include="Entity.h" />

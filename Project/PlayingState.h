@@ -28,7 +28,7 @@ class PlayingState : public GameState {
 		virtual void AddModel(CollisionModel * model) override;
 		static struct PointXY SpawnEnemies();
 		virtual void AddWarrior();
-		void DeleteModel(CollisionModel *model);
+		virtual void DeleteModel(CollisionModel *model) override;
 		virtual void ScalePowerUp();
 
 		

@@ -1,6 +1,7 @@
 #include "MenuState.h"
 #include "Camera.h"
 #include "MenuModel.h"
+#include "ButtonModel.h"
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -12,24 +13,58 @@
 #include <GL/glut.h>
 #endif
 
-//int crosshairX, crosshairY;
 void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 {
 	this->manager = game;
 	this->camera = cam;
 	this->wiiHandler = hand;
-	//crosshairX = camera->width/2;
-	//crosshairY = camera->height/2;
 	cam->posX = 0;
 	cam->posY = 0;
-	MenuModel * menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
+
+	// Menu
+	menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
 	cam->posX = 3.7;
-	cam->posY = -5;
+	cam->posY = -4;
 	cam->posZ = -12;
 	cam->rotX = 0;
-	cam->rotY = 34;
-
+	cam->rotY = -40;
 	models.push_back(pair<int, ObjModel*>(1, menu));
+
+
+
+	
+	// playButton 
+	vector<ObjModel*> playbutton;
+	buttonPlaymodel = new ButtonModel(cam, hand, this, "models/buttons/playbuttonPressed.obj");
+	playbutton.push_back(buttonPlaymodel);
+	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
+	buttonPlaymodel = new ButtonModel(cam, hand, this, "models/buttons/playbutton.obj");
+	playbutton.push_back(buttonPlaymodel);
+	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
+	playbuttons = new AnimatedPlayButtonModel(playbutton, hand);
+
+
+	//SettingsButton
+	vector<ObjModel*> settingbutton;
+	buttonSettingsmodel = new ButtonModel(cam, hand, this, "models/buttons/settingsButton.obj");
+	settingbutton.push_back(buttonSettingsmodel);
+	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
+	buttonSettingsmodel = new ButtonModel(cam, hand, this, "models/buttons/settingsButtonPressed.obj");
+	settingbutton.push_back(buttonSettingsmodel);
+	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
+	settingsbuttons = new AnimatedSettingsButtonModel(settingbutton, hand);
+
+	//ExitButton
+	vector<ObjModel*> exitbutton;
+	buttonExitmodel = new ButtonModel(cam, hand, this, "models/buttons/ExitButton.obj");
+	exitbutton.push_back(buttonExitmodel);
+	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
+	buttonExitmodel = new ButtonModel(cam, hand, this, "models/buttons/ExitButtonPressed.obj");
+	exitbutton.push_back(buttonExitmodel);
+	Exitbuttons = new AnimatedExitButtonModel(exitbutton, hand);
+	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
+
+
 }
 
 void MenuState::Cleanup()
@@ -51,7 +86,6 @@ void MenuState::HandleEvents()
 
 void MenuState::Update(float deltatime)
 {
-	//DrawCrosshair(camera->width/2,camera->height/2);
 	for (auto &m : models) {
 		m.second->draw();
 	}
@@ -59,35 +93,101 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool * keys)
 {
-	//DrawCrosshair(camera->width/2,camera->height/2);
+	/*if (wiiHandler->Down_pressed || wiiHandler->is_A)
+	{
+ 		counter++;
+		if(counter  == 10)
+		{
+			if(wiiHandler->is_A)
+			{
+				manager->nextState();
+			}
+		}
+		if (counter == 20)
+		{
+			playbuttons->nextModel();
+			settingsbuttons->nextModel();
+		}
+		if (counter >= 30)
+		{
+			settingsbuttons->previousModel();
+			Exitbuttons->nextModel();
+			if(wiiHandler->is_A)
+			{
+				exit(0);
+			}
+			counter = 40;
+		}
+	}
+	if(wiiHandler->Up_pressed || *keys == true)
+	{
+		counter--;
+		if(counter < 30)
+		{
+			settingsbuttons->nextModel();
+			Exitbuttons->previousModel();
+		}
+		if(counter < 20)
+		{
+			playbuttons->nextModel();
+			settingsbuttons->previousModel();
+		}
+		if(counter < 10)
+		{
+			playbuttons->previousModel();
+			counter = 0;
+		}
+	}*/
+
+	if(wiiHandler->Down_pressed || wiiHandler->is_A)
+	{
+		counter++;
+		if(wiiHandler->Down_pressed == true || counter == 10)
+		{
+			if (wiiHandler->is_A)
+			{
+				manager->nextState();
+			}
+		}else if(counter == 15)
+		{
+			wiiHandler->Down_pressed = false;
+			playbuttons->nextModel();
+		}
+
+		if (wiiHandler->Down_pressed == true || counter == 20)
+		{
+			settingsbuttons->nextModel();
+		}
+		else if (counter == 25)
+		{
+			wiiHandler->Down_pressed = false;
+			settingsbuttons->previousModel();
+		}
+
+		if (wiiHandler->Down_pressed == true || counter == 30)
+		{
+			Exitbuttons->nextModel();
+		}
+		else if (counter == 35)
+		{
+			wiiHandler->Down_pressed = false;
+			Exitbuttons->previousModel();
+		}
+	}
 	for (auto &m : models) {
-		m.second->draw();
+		m.second->update(deltatime);
 	}
 }
 
-/*void MenuState::DrawCrosshair(int x, int y){
-
-	glPushMatrix();
-	glTranslatef((float)3, 0.0f, (float)3);
-	glPointSize(10);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glBegin(GL_POINTS);
-	glVertex2f(crosshairX, crosshairY);
-	glEnd();
-	glPopMatrix();
-}*/
-
 void MenuState::Draw()
 {
-	glPushMatrix();
-
-	//DrawCrosshair(camera->width/2,camera->height/2);
-	
 	//Make StartMenu and push to models vector
 	for (auto &m : models) {
 		m.second->draw();
 	}
-	glPopMatrix();
+	Exitbuttons->getModel()->draw();
+	settingsbuttons->getModel()->draw();
+	playbuttons->getModel()->draw();
 }
 
 void MenuState::preDraw()
@@ -96,5 +196,10 @@ void MenuState::preDraw()
 }
 
 void MenuState::AddModel(CollisionModel *model) {
+
+}
+
+void MenuState::DeleteModel(CollisionModel* model)
+{
 
 }
