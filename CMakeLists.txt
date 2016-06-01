@@ -23,9 +23,9 @@ set(SOURCE_FILES
         Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
         Project/ArrowModel.cpp Project/ArrowModel.h
         Project/MenuModel.cpp Project/MenuModel.h
-        Project/CollisionModel.cpp Project/CollisionModel.h
-
-        Project/sdl_audio.cpp Project/sdl_audio.h)
+        Project/CollisionModel.cpp Project/CollisionModel.h Project/PointXY.h
+Project/sdl_audio.cpp Project/sdl_audio.h
+)
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})

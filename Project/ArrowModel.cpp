@@ -7,12 +7,16 @@
 #include "ArrowModel.h"
 #include "BowModel.h"
 
-ArrowModel::ArrowModel( float startx, float starty, float startz) : CollisionModel("models/Arrow/Arrow.obj") {
+# define M_PI           3.14159265358979323846  /* pi */
+
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection) : CollisionModel("models/Arrow/Arrow.obj") {
 
     //startpoint arrow:
 	xpos = startx;
 	ypos = starty;
 	zpos = startz;
+	yrot = ydirection;
+	xrot = xdirection;
 
 
     boundingSpheres.clear(); //Clear base boundingspheres
@@ -57,9 +61,23 @@ void ArrowModel::CalcBoundingSpheres() {
     }
 }
 
+float ArrowModel::toRadian(float degree) {
+	return (degree / 180) * M_PI;
+}
+
+
 void ArrowModel::update(float deltatime) {
-    xrot +=  deltatime;
-    printf("Deltatime is %f\n", deltatime);
+	
+	//if rotate on x as:
+	ypos += (sin(toRadian(xrot))) * 0.2;
+	zpos += cos(toRadian(yrot))* 0.2;
+	//if rotate on y as: 
+	xpos += (sin(toRadian(yrot))) * 0.2;
+
+
+	//xrot += 01;
+
+
 }
 
 void ArrowModel::draw() {

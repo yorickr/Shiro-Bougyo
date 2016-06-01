@@ -6,7 +6,7 @@ WarriorModel::WarriorModel(float x, float z):CollisionModel("models/warrior/warr
 {
 	xpos = x;
 	zpos = z;
-	ypos = -1;
+	ypos = -3;
     //Because the base class InitBoundingSpheres has been called, we need to clear boundingSpheres.
     boundingSpheres.clear(); //Clear base boundingspheres
     WarriorModel::InitBoundingSpheres();
@@ -17,8 +17,10 @@ WarriorModel::~WarriorModel()
 {
 }
 
+//Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    yrot += 0.5 * deltatime;
+    yrot += 0.8 * deltatime;
+    ypos += 0.01 * deltatime;
 }
 
 void WarriorModel::InitBoundingSpheres() {
