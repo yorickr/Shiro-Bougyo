@@ -21,6 +21,7 @@ class GameState {
 		virtual void Draw() = 0;
 		virtual void preDraw() =0;
 		virtual void AddModel(CollisionModel * model) = 0;
+		virtual void DeleteModel(CollisionModel *model) = 0;
 	//void ChangeState(GameStateManager* game, GameState* state) { game->ChangeState(state); }
 
 	protected: 

@@ -6,11 +6,12 @@
 #include <iostream>
 #include "ArrowModel.h"
 #include "BowModel.h"
+#include "GameState.h"
 
 # define M_PI           3.14159265358979323846  /* pi */
 
-ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection) : CollisionModel("models/Arrow/Arrow.obj") {
-
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state) : CollisionModel("models/Arrow/Arrow.obj") {
+	this->state = state;
     //startpoint arrow:
 	xpos = startx;
 	ypos = starty;
@@ -20,7 +21,6 @@ ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirecti
 		xrot = -xdirection;
 	else
 		xrot = xdirection;
-
 	
     boundingSpheres.clear(); //Clear base boundingspheres
     ArrowModel::InitBoundingSpheres();
@@ -38,18 +38,17 @@ float ArrowModel::toRadian(float degree) {
 
 
 void ArrowModel::update(float deltatime) {
-	
-	//if rotate on x as:
 
 	ypos -= (sin(toRadian(xrot))) * 0.1 * deltatime;
 	zpos += cos(toRadian(yrot))* 0.1 * deltatime;
 	//if rotate on y as: 
 	xpos += (sin(toRadian(yrot))) * 0.1 * deltatime;
+	xrot++;
 
-
-	//xrot += 01;
-
-
+	if(ypos < -15 )
+	{
+		state->DeleteModel(this);
+	}
 }
 
 void ArrowModel::draw() {

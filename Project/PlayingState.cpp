@@ -36,6 +36,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     this->manager = game;
 	this->camera = cam;
     this->wiiHandler = hand;
+	camera->rotY = 180;
+	camera->posY = 1;
+	camera->posX = 2.5;
+	camera->posZ = 6;
 
 	//light
 
@@ -188,16 +192,15 @@ void PlayingState::Update(float deltatime) {
 void PlayingState::Update(float deltatime, bool * keys) {
 	if (wiiHandler->is_A || *keys == true)
 	{
-		counter++;
-		if (counter % 20 == 0)
+		counter += deltatime;
+		if (counter < 33) bow->setIndex(0);
+		else if (counter < 66) bow->setIndex(1);
+		else bow->setIndex(2);
+		if (counter >= 100)
 		{
-			bow->nextModel();
-			if (counter >= 59)
-			{
 				bow->getModel()->update(-1);
 				bow->setIndex(0);
 				counter = 0;
-			}
 		}
 	}
 	else
