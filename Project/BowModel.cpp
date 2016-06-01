@@ -15,7 +15,7 @@ BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera
 	this->state = state;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0, 0, 0, 0);
-	arrow  = new ArrowModel(xpos, ypos, zpos, 0,0);
+	arrow  = new ArrowModel(xpos, ypos, zpos, 0,0, state);
 	setCrosshairPositions(0, 0,0,0);
 
 	setArrowPosition();
@@ -34,35 +34,6 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 	ypos = y;
 	zpos = -0.11;
 	yrot = -45;
-
-
-	////set rotation bow equals to rotation camera
-	//if (roty > -90 && roty < 90)
-	//	xrot = -rotx;
-	//else
-	//	xrot = rotx;
-	//yrot = -roty + 180;
-	//zrot = 0;
-
-	//////translate bow to correct position
-	//cout << "rotx: " << rotx << endl;
-
-	////if rotate on x as:
-	//ypos -= (sin(toRadian(rotx)));
-	//zpos -= (cos(toRadian(rotx)) * cos(toRadian(roty)));
-	//
-	////if rotate on y as: 
-	//xpos += (sin(toRadian(roty)));
-	//
-	////set bow correct position
-
-	//xpos += bowPostion	 * (cos(toRadian(roty)));
-
-	//zpos += bowPostion * (sin(toRadian(roty)));
-
-	//set crosshair positions
-	//setCrosshairPositions(x, y, rotx, roty);
-
 
 
 }
@@ -128,9 +99,8 @@ void BowModel::fireArrow()
 {
 	camera_->posY;
 	float camrotx = 0;
-
-	ArrowModel *newArrow = new ArrowModel(camera_->posX * -1 , camera_->posY * -1 ,camera_->posZ * -1, camera_->rotX * -1.3, (camera_->rotY * -1) - 180);
-
+	ArrowModel *newArrow;
+	newArrow = new ArrowModel(camera_->posX * -1, camera_->posY * -1, camera_->posZ * -1, camera_->rotX * -1.3, (camera_->rotY * -1) - 180, state);
 
 	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
 

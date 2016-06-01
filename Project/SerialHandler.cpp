@@ -1,9 +1,10 @@
 #include "SerialHandler.h"
 
-SerialHandler::SerialHandler(int commPortNumber)
+SerialHandler::SerialHandler(int commPortNumber, GameStateManager gameManager)
 {
 	connected = false;
 	this->commPortNumber = commPortNumber;
+	this->gameManager = gameManager;
 	if (initializeCommPort())
 		connected = true;
 	else {
@@ -91,6 +92,17 @@ void SerialHandler::receiveThread()
 
 void SerialHandler::handleReceivedCommand(std::string command)
 {
+	if (command == "PP1" || command == "PP2") { //Check if the action needs to be executed from playingstate.
+		PlayingState *playState = dynamic_cast<PlayingState*>(gameManager.getCurrentState());
+		if (playState) {
+			if (command == "PP1")
+				playState->ScalePowerUp();
+			else if (command == "PP2")
+				printf("smthing");
+		}
+			
+	}
+
 }
 
 bool SerialHandler::isConnected()

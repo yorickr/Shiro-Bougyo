@@ -140,6 +140,13 @@ public:
         float pos[3];
     };
 
+	union {
+		struct {
+			float xscale, yscale, zscale; //Position of our model
+		};
+		float scale[3];
+	};
+
     Vec3f *vertices_min; //This is the vertex with the smallest x, y and z.
     Vec3f *vertices_max; //See above, but the opposite.
 

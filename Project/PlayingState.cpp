@@ -2,6 +2,7 @@
 // Created by Yorick Rommers on 11/05/16.
 //
 
+#include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
@@ -12,6 +13,7 @@
 #include "AnimatedBowModel.h"
 #include "ArrowModel.h"
 #include "PointXY.h"
+#include "Util.h"
 
 
 #ifdef __APPLE__
@@ -34,6 +36,10 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
     this->manager = game;
 	this->camera = cam;
     this->wiiHandler = hand;
+	camera->rotY = 180;
+	camera->posY = 1;
+	camera->posX = 2.5;
+	camera->posZ = 6;
 
 	cam->posZ = 3.2;
 	cam->posY = 1.8;
@@ -48,6 +54,7 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
+
 
 	//4 Warriors
 	for (int i = 1; i < 10; i++ ) 
@@ -104,6 +111,29 @@ void PlayingState::AddWarrior(){
 	}
 }
 
+void PlayingState::ScalePowerUp() {
+	for (auto &m : collisionModels) {
+		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
+		if (warrior != 0) {
+			warrior->setSize(3);
+		}
+	}
+	std::thread serialThread(&PlayingState::PowerUpThread,this); //Serialthread
+	serialThread.detach();
+}
+
+void PlayingState::PowerUpThread()
+{
+	Util::USleep(30000);
+	//Restore warrior scale:
+	for (auto &m : collisionModels) {
+		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
+		if (warrior != 0) {
+			warrior->setSize(1);
+		}
+	}
+}
+
 void PlayingState::Cleanup() {
 
 }
@@ -140,9 +170,19 @@ void PlayingState::Update(float deltatime) {
         for (auto &obj2 : collisionModels) {
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
 			{
-				printf("%d colliding with %d\n", obj1.first, obj2.first);
+				//printf("%d colliding with %d\n", obj1.first, obj2.first);
 				collides = true;
-                break;
+				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
+				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
+				ArrowModel *arrow1 = dynamic_cast<ArrowModel*>(obj1.second);
+				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
+
+				if(warrior1 != 0 || warrior2 != 0 && arrow1 != 0 || arrow2 != 0){
+					DeleteModel(obj1.second);
+					DeleteModel(obj2.second);
+				}
+
+				break;
 			}
 		}
         if(!collides) {
@@ -151,28 +191,28 @@ void PlayingState::Update(float deltatime) {
         collides = false;
     }
 
-    for(auto &m : models) {
+    for(auto &m : models) { 
         m.second->update(deltatime);
     }
     for (auto &m : collisionModels) {
         m.second->update(deltatime);
     }
+
 	//bow->getModel()->update(deltatime);
 }
 
 void PlayingState::Update(float deltatime, bool * keys) {
 	if (wiiHandler->is_A || *keys == true)
 	{
-		counter++;
-		if (counter % 20 == 0)
+		counter += deltatime;
+		if (counter < 33) bow->setIndex(0);
+		else if (counter < 66) bow->setIndex(1);
+		else bow->setIndex(2);
+		if (counter >= 100)
 		{
-			bow->nextModel();
-			if (counter >= 59)
-			{
 				bow->getModel()->update(-1);
 				bow->setIndex(0);
 				counter = 0;
-			}
 		}
 	}
 	else
@@ -186,8 +226,17 @@ void PlayingState::Update(float deltatime, bool * keys) {
         for (auto &obj2 : collisionModels) {
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
             {
-                printf("%d colliding with %d\n", obj1.first, obj2.first);
+                //printf("%d colliding with %d\n", obj1.first, obj2.first);
                 collides = true;
+				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
+				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
+				ArrowModel *arrow1 = dynamic_cast<ArrowModel*>(obj1.second);
+				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
+
+				if(warrior1 != 0 || warrior2 != 0 && arrow1 != 0 || arrow2 != 0){
+					DeleteModel(obj1.second);
+					DeleteModel(obj2.second);
+				}
                 break;
             }
         }
@@ -197,12 +246,12 @@ void PlayingState::Update(float deltatime, bool * keys) {
         collides = false;
     }
 
-	for (auto &m : models) {
-		m.second->update(deltatime);
-	}
-    for (auto &m : collisionModels) {
-        m.second->update(deltatime);
-    }
+//	for (auto &m : models) {
+//		m.second->update(deltatime);
+//	}
+//    for (auto &m : collisionModels) {
+//        m.second->update(deltatime);
+//    }
 
 	AddWarrior();
 	//bow->getModel()->update(deltatime);
@@ -228,11 +277,20 @@ void PlayingState::HandleEvents() {
    
 }
 
+
 void PlayingState::AddModel(CollisionModel *model) {
     collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
 }
 
-
+void PlayingState::DeleteModel(CollisionModel *model) {
+	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
+	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
+		if(iter->second == model){
+			collisionModels.erase(iter);
+			break;
+		}
+	}
+}
 
 
 

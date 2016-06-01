@@ -198,3 +198,8 @@ void MenuState::preDraw()
 void MenuState::AddModel(CollisionModel *model) {
 
 }
+
+void MenuState::DeleteModel(CollisionModel* model)
+{
+
+}
