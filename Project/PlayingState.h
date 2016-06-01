@@ -26,14 +26,16 @@ class PlayingState : public GameState {
         virtual void Draw() override;
 		virtual void preDraw() override;
 		virtual void AddModel(CollisionModel * model) override;
-		struct PointXY SpawnEnemies();
+		static struct PointXY SpawnEnemies();
+		virtual void AddWarrior();
+		void DeleteModel(CollisionModel *model);
 
     private:
 		int counter = 0;
         GameStateManager *manager;
-        vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function, non colliding.
+		vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function, non colliding.
 		vector<pair<int, CollisionModel*>> collisionModels;
-
+		int enemyCount = 0;
 		AnimatedBowModel * bow;
 		Camera * camera;
 		WiiHandler * wiiHandler;
