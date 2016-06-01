@@ -91,6 +91,10 @@ void PlayingState::AddWarrior(){
 		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
 		AddModel(warrior);
 		enemyCount++;
+	}else if(enemyCount >= 20){
+		for( auto &m : collisionModels){
+			DeleteModel(m.second);
+		}
 	}
 }
 
@@ -222,7 +226,15 @@ void PlayingState::AddModel(CollisionModel *model) {
     collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
 }
 
-
+void PlayingState::DeleteModel(CollisionModel *model) {
+	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
+	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
+		if(iter.base()->second == model){
+			collisionModels.erase(iter);
+			break;
+		}
+	}
+}
 
 
 
