@@ -55,7 +55,6 @@ void onDisplay() {
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
 	gameManager.Draw();
 	// Process all OpenGL routine s as quickly as possible
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -93,10 +92,6 @@ void onTimer(int id) {
 	}
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-
-	//	printf("This x pos: %f \n", camera.posX);
-	//	printf("This y pos: %f \n", camera.posY);
-	//	printf("This z pos: %f \n", camera.posZ);
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	oldTimeSinceStart = timeSinceStart;
