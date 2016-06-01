@@ -199,7 +199,6 @@ void PlayingState::Update(float deltatime, bool * keys) {
 				counter = 0;
 			}
 		}
-		ScalePowerUp();
 	}
 	else
 	{

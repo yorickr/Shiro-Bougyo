@@ -127,9 +127,8 @@ void BowModel::fireArrow()
 {
 	camera_->posY;
 	float camrotx = 0;
-
-	ArrowModel *newArrow = new ArrowModel(camera_->posX * -1 , camera_->posY * -1 ,camera_->posZ * -1, camera_->rotX * -1.3, (camera_->rotY * -1) - 180);
-
+	ArrowModel *newArrow;
+	newArrow = new ArrowModel(camera_->posX * -1, camera_->posY * -1, camera_->posZ * -1, camera_->rotX * -1.3, (camera_->rotY * -1) - 180);
 
 	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
 

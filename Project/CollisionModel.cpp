@@ -118,6 +118,7 @@ void CollisionModel::draw() {
     glRotatef(xrot, 1, 0, 0);
     glRotatef(yrot, 0, 1, 0);
     glRotatef(zrot, 0, 0, 1);
+	glScalef(xscale, yscale, zscale);
 
     if (DRAW_BOUNDING_BOX) {
 //        glLineWidth(5);
