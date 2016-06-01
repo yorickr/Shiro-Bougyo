@@ -29,7 +29,9 @@ class PlayingState : public GameState {
 		static struct PointXY SpawnEnemies();
 		virtual void AddWarrior();
 		void DeleteModel(CollisionModel *model);
+		virtual void ScalePowerUp();
 
+		
     private:
 		int counter = 0;
         GameStateManager *manager;
@@ -39,6 +41,7 @@ class PlayingState : public GameState {
 		AnimatedBowModel * bow;
 		Camera * camera;
 		WiiHandler * wiiHandler;
+		void PowerUpThread();
 };
 
 

@@ -37,7 +37,6 @@ void WarriorModel::update(float deltatime) {
 	}
 
 	//xpos = -2.25;
-	
 }
 
 void WarriorModel::InitBoundingSpheres() {
@@ -60,6 +59,13 @@ void WarriorModel::InitBoundingSpheres() {
 
     boundingSpheres.push_back(new Sphere(x, 0.65f, z, 0.17f)); //Magic values for the legs
     boundingSpheres.push_back(new Sphere(x, 0.35f, z, 0.17f)); //Magic values for the legs
+}
+
+void WarriorModel::setSize(int newSize)
+{
+	this->xscale = newSize;
+	this->yscale = newSize;
+	this->zscale = newSize;
 }
 
 

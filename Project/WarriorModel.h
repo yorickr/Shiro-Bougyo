@@ -10,5 +10,8 @@ public:
 	~WarriorModel();
 	void update(float deltatime) override;
 	void InitBoundingSpheres() override;
+	void setSize(int);
+private:
+	short right;
 };
 
