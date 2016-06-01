@@ -10,6 +10,8 @@
 #include <thread>
 #include "rs232.h"
 #include "Util.h"
+#include "GameStateManager.h"
+#include "PlayingState.h"
 
 
 class SerialHandler {
@@ -18,8 +20,9 @@ private:
 	bool initializeCommPort();
 	void connectThread();
 	int commPortNumber;
+	GameStateManager gameManager;
 public:
-	SerialHandler(int commPortNumber);
+	SerialHandler(int commPortNumber, GameStateManager gameManager);
 	~SerialHandler();
 	void sendCommand(std::string);
 	std::string receiveCommand();

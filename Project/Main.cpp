@@ -23,7 +23,7 @@
 #define DELTATIME_MODIFIER 10;
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT);
+SerialHandler serial = SerialHandler(COMMPORT,gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
@@ -79,7 +79,13 @@ void onTimer(int id) {
 	if (keys['a']) camera.posX++;
 	if (keys['x']) camera.posY--;
 	if (keys['c']) camera.posY++;
-	if (keys['m']) {
+	if (keys['m']) { //Scale powerup.
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+	if (keys['n']) { //
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
 		if (playState)
