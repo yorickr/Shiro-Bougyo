@@ -19,6 +19,24 @@ WarriorModel::~WarriorModel()
 
 void WarriorModel::update(float deltatime) {
     yrot += 0.5 * deltatime;
+	//ypos = -3.25;
+	if(rand() % 4 < 2){
+		if (zpos > -2.25)
+			zpos -= (float(rand() % 100)) / 2000;
+		else if (zpos < -2.25)
+			zpos += (float(rand() % 100)) / 2000;
+		if (xpos > -2.25)
+			xpos -= (float(rand() % 100)) / 2000;
+		else if (xpos < -2.25)
+			xpos += (float(rand() % 100)) / 2000;
+	}else
+	{
+		zpos += sin(rand()) / 20;
+		xpos += sin(rand()) / 20;
+	}
+
+	//xpos = -2.25;
+	
 }
 
 void WarriorModel::InitBoundingSpheres() {
