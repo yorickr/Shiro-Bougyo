@@ -177,7 +177,7 @@ void PlayingState::Update(float deltatime) {
 				ArrowModel *arrow1 = dynamic_cast<ArrowModel*>(obj1.second);
 				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
 
-				if(warrior1 != 0 || warrior2 != 0 && arrow1 != 0 || arrow2 != 0){
+				if((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)){
 					DeleteModel(obj1.second);
 					DeleteModel(obj2.second);
 				}
@@ -191,7 +191,7 @@ void PlayingState::Update(float deltatime) {
         collides = false;
     }
 
-    for(auto &m : models) { 
+    for(auto &m : models) {
         m.second->update(deltatime);
     }
     for (auto &m : collisionModels) {
@@ -233,7 +233,7 @@ void PlayingState::Update(float deltatime, bool * keys) {
 				ArrowModel *arrow1 = dynamic_cast<ArrowModel*>(obj1.second);
 				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
 
-				if(warrior1 != 0 || warrior2 != 0 && arrow1 != 0 || arrow2 != 0){
+				if((warrior1 != 0 || warrior2 != 0 )&& (arrow1 != 0 || arrow2 != 0)){
 					DeleteModel(obj1.second);
 					DeleteModel(obj2.second);
 				}
@@ -246,12 +246,12 @@ void PlayingState::Update(float deltatime, bool * keys) {
         collides = false;
     }
 
-//	for (auto &m : models) {
-//		m.second->update(deltatime);
-//	}
-//    for (auto &m : collisionModels) {
-//        m.second->update(deltatime);
-//    }
+	for (auto &m : models) {
+		m.second->update(deltatime);
+	}
+    for (auto &m : collisionModels) {
+        m.second->update(deltatime);
+    }
 
 	AddWarrior();
 	//bow->getModel()->update(deltatime);
