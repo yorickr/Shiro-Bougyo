@@ -7,7 +7,7 @@
 #include <iostream>
 #endif 
 
-int audiotest(int argc, char **argv) {
+int audiotest() {
     //Start SDL
     SDL_Init( SDL_INIT_EVERYTHING );
 
@@ -41,7 +41,7 @@ int audiotest(int argc, char **argv) {
         }
     }
 
-    //while(true);
+    while(true);
     //cleanup
     Mix_FreeMusic( music );
 

@@ -5,6 +5,6 @@
 #ifndef SHIRO_BOUGYO_OPENAL_EXAMPLE_H
 #define SHIRO_BOUGYO_OPENAL_EXAMPLE_H
 
-int audiotest(int argc, char **argv);
+int audiotest();
 
 #endif //SHIRO_BOUGYO_OPENAL_EXAMPLE_H
