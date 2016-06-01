@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <cmath>
 #include "WarriorModel.h"
 
 
