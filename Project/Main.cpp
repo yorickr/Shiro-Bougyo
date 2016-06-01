@@ -15,6 +15,8 @@
 #include "SerialHandler.h"
 #include "Camera.h"
 
+#include "PlayingState.h"
+
 #include "WiiHandler.h"
 
 #define COMMPORT 4
@@ -77,6 +79,13 @@ void onTimer(int id) {
 	if (keys['a']) camera.posX++;
 	if (keys['x']) camera.posY--;
 	if (keys['c']) camera.posY++;
+	if (keys['m']) {
+		GameState* currentState = gameManager.getCurrentState();
+		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
+		if (playState)
+			playState->ScalePowerUp();
+	}
+
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 
 	//	printf("This x pos: %f \n", camera.posX);
