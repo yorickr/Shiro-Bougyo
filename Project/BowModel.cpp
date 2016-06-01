@@ -125,7 +125,7 @@ float BowModel::toRadian(float degree) {
 
 void BowModel::fireArrow()
 {
-	camera_->posY;
+//	camera_->posY;
 	ArrowModel *newArrow = new ArrowModel(0,1,10);
 	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
 

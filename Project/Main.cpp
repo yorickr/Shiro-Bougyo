@@ -20,8 +20,10 @@
 #define COMMPORT 4
 #define DELTATIME_MODIFIER 10;
 
+#include "sdl_audio.h"
+
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT);
+//SerialHandler serial = SerialHandler(COMMPORT);
 bool keys[255];
 void* wiiFunc(void * argument);
 Camera camera;
@@ -61,8 +63,8 @@ void onDisplay() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
-	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
-	serialThread.detach();
+//	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
+//	serialThread.detach();
 }
 
 void onIdle() {
@@ -180,6 +182,8 @@ int main(int argc, char* argv[]) {
 	memset(keys, 0, sizeof(keys));
 	
 	gameManager.Init(&camera, &wiiHandler);
+
+	audiotest(argc, argv);
 
 	glutMainLoop();
 }
