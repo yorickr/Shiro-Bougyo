@@ -2,6 +2,7 @@
 // Created by Yorick Rommers on 11/05/16.
 //
 
+#include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
@@ -12,6 +13,7 @@
 #include "AnimatedBowModel.h"
 #include "ArrowModel.h"
 #include "PointXY.h"
+#include "Util.h"
 
 
 #ifdef __APPLE__
@@ -98,6 +100,29 @@ void PlayingState::AddWarrior(){
 	}
 }
 
+void PlayingState::ScalePowerUp() {
+	for (auto &m : collisionModels) {
+		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
+		if (warrior != 0) {
+			warrior->setSize(3);
+		}
+	}
+	std::thread serialThread(&PlayingState::PowerUpThread,this); //Serialthread
+	serialThread.detach();
+}
+
+void PlayingState::PowerUpThread()
+{
+	Util::USleep(30000);
+	//Restore warrior scale:
+	for (auto &m : collisionModels) {
+		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
+		if (warrior != 0) {
+			warrior->setSize(1);
+		}
+	}
+}
+
 void PlayingState::Cleanup() {
 
 }
@@ -145,7 +170,7 @@ void PlayingState::Update(float deltatime) {
         collides = false;
     }
 
-    for(auto &m : models) {
+    for(auto &m : models) { 
         m.second->update(deltatime);
     }
     for (auto &m : collisionModels) {
@@ -168,6 +193,7 @@ void PlayingState::Update(float deltatime, bool * keys) {
 				counter = 0;
 			}
 		}
+		ScalePowerUp();
 	}
 	else
 	{
@@ -222,6 +248,7 @@ void PlayingState::HandleEvents() {
    
 }
 
+
 void PlayingState::AddModel(CollisionModel *model) {
     collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
 }
@@ -229,7 +256,7 @@ void PlayingState::AddModel(CollisionModel *model) {
 void PlayingState::DeleteModel(CollisionModel *model) {
 	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
 	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
-		if(iter.base()->second == model){
+		if(iter->second == model){
 			collisionModels.erase(iter);
 			break;
 		}
