@@ -55,15 +55,6 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
 
-
-	//4 Warriors
-	for (int i = 1; i < 10; i++ ) 
-	{
-		PointXY point = SpawnEnemies();
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
-		models.push_back(pair<int, ObjModel*>(i, warrior));
-	}
-
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
@@ -108,6 +99,11 @@ void PlayingState::AddWarrior(){
 		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
 		AddModel(warrior);
 		enemyCount++;
+	}else if(enemyCount >= 20){
+		for( auto &m : collisionModels){
+			DeleteModel(m.second);
+		}
+        enemyCount = 0;
 	}
 }
 
@@ -191,13 +187,12 @@ void PlayingState::Update(float deltatime) {
         collides = false;
     }
 
-    for(auto &m : models) {
-        m.second->update(deltatime);
-    }
-    for (auto &m : collisionModels) {
-        m.second->update(deltatime);
-    }
-
+//    for(auto &m : models) {
+//        m.second->update(deltatime);
+//    }
+//    for (auto &m : collisionModels) {
+//        m.second->update(deltatime);
+//    }
 	//bow->getModel()->update(deltatime);
 }
 
@@ -210,9 +205,13 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		else bow->setIndex(2);
 		if (counter >= 100)
 		{
+			bow->nextModel();
+			if (counter >= 59)
+			{
 				bow->getModel()->update(-1);
 				bow->setIndex(0);
 				counter = 0;
+			}
 		}
 	}
 	else
