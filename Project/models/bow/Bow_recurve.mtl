@@ -1,18 +1,24 @@
-newmtl Bow_recurve1:Bow_recurve
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
+# 
+# 
+newmtl Bow_recurve
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
 map_Kd bowrecurve_D.png
-Ni 1.00
-Ks 0.00 0.00 0.00
-Ns 96.08
-newmtl Bow_recurve1:zippo
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 0.00 0.00 0.00
+
+
+newmtl zippo
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
 map_Kd zippo_D.png
-Ni 1.00
-Ks 0.00 0.00 0.00
-Ns 96.08
+
+
