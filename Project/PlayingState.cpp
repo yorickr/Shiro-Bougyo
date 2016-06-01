@@ -11,7 +11,7 @@
 #include "StationaryObjModel.h"
 #include "AnimatedBowModel.h"
 #include "ArrowModel.h"
-
+#include "PointXY.h"
 
 
 #ifdef __APPLE__
@@ -46,28 +46,56 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
 
-	//Warrior
-	for (int i = 1; i < 5; i++ )
-	{
-		WarriorModel *warrior = new WarriorModel(i *2, -i);
-		collisionModels.push_back(pair<int, CollisionModel*>(i, warrior));
-	}
 
-	//arrow
-	ArrowModel *arrow = new ArrowModel(1.5f,0, 1.5f);
-	arrow->xpos = -10;
-	arrow->zpos = 10;
-	collisionModels.push_back(pair<int, CollisionModel*>(1337, arrow));
-
-
-	WarriorModel *warrior = new WarriorModel(1.5f,1.5f);
-	collisionModels.push_back(pair<int, CollisionModel*>(231231, warrior));
-	
-	//world 
-	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
+	//World
+	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
-	models.push_back(pair<int, ObjModel*>(1, world));
+	models.push_back(pair<int, ObjModel*>(13, world));
+}
+
+struct PointXY PlayingState::SpawnEnemies(){
+	int portalNo = rand() % 4;
+	float portalx;
+	float portaly;
+
+	switch(portalNo){
+		case 1:
+			portalx = 10.7;
+			portaly = -16.0;
+			break;
+		case 2:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+		case 3:
+			portalx = -10.3;
+			portaly = -16.0;
+			break;
+		default:
+			portalx = 18.7;
+			portaly = -9.0;
+			break;
+	}
+
+	struct PointXY point;
+	point.X = portalx;
+	point.Y = portaly;
+	return point;
+}
+
+void PlayingState::AddWarrior(){
+	int random = rand() % 60;
+	if(enemyCount < 20 && random < 5){
+		PointXY point = SpawnEnemies();
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
+		AddModel(warrior);
+		enemyCount++;
+	}else if(enemyCount >= 20){
+		for( auto &m : collisionModels){
+			DeleteModel(m.second);
+		}
+	}
 }
 
 void PlayingState::Cleanup() {
@@ -86,10 +114,10 @@ void PlayingState::Update(float deltatime) {
 	if(wiiHandler->is_A)
 	{
 		counter++;
-			if (counter % 20 == 0)
+			if (counter % 1 == 0)
 			{
 				bow->nextModel();
-				if(counter >= 59)
+				if(counter >= 3)
 				{
 					bow->getModel()->update(-1);
 					bow->setIndex(0);
@@ -169,6 +197,8 @@ void PlayingState::Update(float deltatime, bool * keys) {
     for (auto &m : collisionModels) {
         m.second->update(deltatime);
     }
+
+	AddWarrior();
 	//bow->getModel()->update(deltatime);
 }
 
@@ -196,7 +226,15 @@ void PlayingState::AddModel(CollisionModel *model) {
     collisionModels.push_back(pair<int, CollisionModel*>(collisionModels.size(), model));
 }
 
-
+void PlayingState::DeleteModel(CollisionModel *model) {
+	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
+	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
+		if(iter.base()->second == model){
+			collisionModels.erase(iter);
+			break;
+		}
+	}
+}
 
 
 

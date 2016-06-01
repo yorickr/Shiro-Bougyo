@@ -31,7 +31,7 @@ int audiotest(int argc, char **argv) {
         }
     }
 
-    while(true);
+//    while(true);
     //cleanup
     Mix_FreeMusic( music );
 
