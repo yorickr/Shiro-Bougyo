@@ -53,11 +53,19 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
         printf("B pressed\n");
     }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
-        printf("UP pressed\n");
-    }
+		//printf("UP pressed\n");
+		Up_pressed = true;
+	}else
+	{
+		Up_pressed = false;
+	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_DOWN))	{
-        printf("DOWN pressed\n");
-    }
+       // printf("DOWN pressed\n");
+		Down_pressed = true;
+	}else
+	{
+		Down_pressed = false;
+	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_LEFT))	{
         printf("LEFT pressed\n");
     }

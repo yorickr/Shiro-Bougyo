@@ -4,28 +4,34 @@ project(Shiro_Bougyo)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wdeprecated-declarations")
 
-set(SOURCE_FILES
-    Project/Entity.h
-    Project/GameState.cpp
-    Project/GameState.h
-    Project/GameStateManager.cpp
-    Project/GameStateManager.h
-    Project/Main.cpp
-    Project/MenuState.cpp
-    Project/MenuState.h
-        Project/ObjModel.cpp
-        Project/ObjModel.h
-        Project/PlayingState.cpp Project/PlayingState.h Project/Camera.h Project/WiiHandler.cpp Project/WiiHandler.h
-        Project/rs232.c Project/rs232.h Project/SerialHandler.cpp Project/SerialHandler.h
+FILE(GLOB SOURCE_FILES
+        "Project/*.cpp"
+        "Project/*.h"
+        "Project/*.c"
+        )
 
-        Project/Util.cpp Project/Util.h Project/WarriorModel.cpp Project/WarriorModel.h
-        Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h
-        Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
-        Project/ArrowModel.cpp Project/ArrowModel.h
-        Project/MenuModel.cpp Project/MenuModel.h
-        Project/CollisionModel.cpp Project/CollisionModel.h Project/PointXY.h
-Project/sdl_audio.cpp Project/sdl_audio.h
-)
+#set(SOURCE_FILES
+#    Project/Entity.h
+#    Project/GameState.cpp
+#    Project/GameState.h
+#    Project/GameStateManager.cpp
+#    Project/GameStateManager.h
+#    Project/Main.cpp
+#    Project/MenuState.cpp
+#    Project/MenuState.h
+#        Project/ObjModel.cpp
+#        Project/ObjModel.h
+#        Project/PlayingState.cpp Project/PlayingState.h Project/Camera.h Project/WiiHandler.cpp Project/WiiHandler.h
+#        Project/rs232.c Project/rs232.h Project/SerialHandler.cpp Project/SerialHandler.h
+#
+#        Project/Util.cpp Project/Util.h Project/WarriorModel.cpp Project/WarriorModel.h
+#        Project/BowModel.cpp Project/BowModel.h Project/StationaryObjModel.cpp Project/StationaryObjModel.h
+#        Project/AnimatedBowModel.cpp Project/AnimatedBowModel.h Project/AnimatedModel.cpp Project/AnimatedModel.h
+#        Project/ArrowModel.cpp Project/ArrowModel.h
+#        Project/MenuModel.cpp Project/MenuModel.h
+#        Project/CollisionModel.cpp Project/CollisionModel.h Project/PointXY.h
+#Project/sdl_audio.cpp Project/sdl_audio.h
+#)
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})

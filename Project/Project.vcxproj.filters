@@ -144,6 +144,18 @@
     <ClInclude Include="sdl_audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedExitButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedPlayButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSettingsButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -154,6 +166,18 @@
     </ClCompile>
     <ClCompile Include="sdl_audio.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedExitButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedPlayButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSettingsButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

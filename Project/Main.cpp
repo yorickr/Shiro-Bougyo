@@ -38,7 +38,7 @@ int WindowHight = 1080;
 int oldTimeSinceStart = 0;
 
 void onDisplay() {
-		//	glClearColor(0.6f, 0.6f, 1, 1);
+	//	glClearColor(0.6f, 0.6f, 1, 1);
 //	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 //
 //	glMatrixMode(GL_PROJECTION);
