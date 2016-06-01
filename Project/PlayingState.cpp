@@ -41,6 +41,9 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	camera->posX = 2.5;
 	camera->posZ = 6;
 
+	cam->posZ = 3.2;
+	cam->posY = 1.8;
+	cam->rotY = 180;
 	//light
 
 	//bow
@@ -51,6 +54,15 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 
 	bow = new AnimatedBowModel(temp, hand);
 	//bow = new AnimatedBowModel(models); #1#
+
+
+	//4 Warriors
+	for (int i = 1; i < 10; i++ ) 
+	{
+		PointXY point = SpawnEnemies();
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
+		models.push_back(pair<int, ObjModel*>(i, warrior));
+	}
 
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");

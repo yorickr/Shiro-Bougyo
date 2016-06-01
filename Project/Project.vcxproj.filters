@@ -124,6 +124,17 @@
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
     <ClInclude Include="SecondWarriorModel.h">
+		<Filter>Header Files\ObjectModels</Filter>
+    <ClInclude Include="ButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedExitButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedPlayButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSettingsButtonModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
   </ItemGroup>
@@ -152,7 +163,19 @@
     <ClCompile Include="GameStateManager.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
+
     <ClCompile Include="SecondWarriorModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    <ClCompile Include="ButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedExitButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedPlayButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSettingsButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
   </ItemGroup>
