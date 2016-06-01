@@ -15,6 +15,7 @@ public:
 	void draw() override;
 	void update(float deltatime) override;
 	//void update(float deltatime, bool *keys) override;
+	void SetPositions(float x, float y, float z, float rotx, float roty);
 private:
 	Camera * camera;
 	WiiHandler * wiiHandler;

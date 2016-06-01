@@ -4,7 +4,10 @@
 #include "GameState.h"
 #include "Camera.h"
 #include "MenuModel.h"
-#include "AnimatedBowModel.h"
+#include "AnimatedExitButtonModel.h"
+#include "ButtonModel.h"
+#include "AnimatedPlayButtonModel.h"
+#include "AnimatedSettingsButtonModel.h"
 
 class MenuState : public GameState  {
 	// Inherited via GameState
@@ -27,9 +30,12 @@ class MenuState : public GameState  {
 		WiiHandler * wiiHandler;
 		MenuModel * menu;
 		vector<pair<int, ObjModel*> > models;
-		AnimatedBowModel * playbuttons;
-		AnimatedBowModel * settingsbuttons;
-		AnimatedBowModel * Exitbuttons;
+		AnimatedPlayButtonModel * playbuttons;
+		AnimatedSettingsButtonModel * settingsbuttons;
+		AnimatedExitButtonModel * Exitbuttons;
+		ButtonModel *buttonPlaymodel;
+		ButtonModel *buttonSettingsmodel;
+		ButtonModel *buttonExitmodel;
 };
 
 #endif
