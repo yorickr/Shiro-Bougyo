@@ -19,8 +19,12 @@ WarriorModel::~WarriorModel()
 
 //Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    yrot += 0.8 * deltatime;
-    ypos += 0.01 * deltatime;
+	if (right%30 > 0 && right % 30 < 15)
+		yrot += 0.8 * deltatime;
+	else
+		yrot -= 0.8 * deltatime;
+	right++;
+    zpos += 0.01 * deltatime;
 }
 
 void WarriorModel::InitBoundingSpheres() {
@@ -43,6 +47,13 @@ void WarriorModel::InitBoundingSpheres() {
 
     boundingSpheres.push_back(new Sphere(x, 0.65f, z, 0.17f)); //Magic values for the legs
     boundingSpheres.push_back(new Sphere(x, 0.35f, z, 0.17f)); //Magic values for the legs
+}
+
+void WarriorModel::setSize(int newSize)
+{
+	this->xscale = newSize;
+	this->yscale = newSize;
+	this->zscale = newSize;
 }
 
 
