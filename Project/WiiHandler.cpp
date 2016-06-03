@@ -35,8 +35,8 @@
 
 
 
-void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
-    Camera* mainCamera = camera;
+void WiiHandler::handle_event(struct wiimote_t* wm) {
+//    Camera* mainCamera = camera;
 
     //printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
 
@@ -203,78 +203,21 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
 //               nc->js.center.y,
 //               nc->js.max.y);
 
-        if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
-            mainCamera->rotX -= nc->js.y * 2;
-            if(mainCamera->rotX > 30){
-                mainCamera->rotX = 30;
-            }else if(mainCamera->rotX < -30){
-                mainCamera->rotX = -30;
-            }
-            mainCamera->rotY += nc->js.x * 2;
-            glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
-        }
+//        if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
+//            mainCamera->rotX -= nc->js.y * 2;
+//            if(mainCamera->rotX > 30){
+//                mainCamera->rotX = 30;
+//            }else if(mainCamera->rotX < -30){
+//                mainCamera->rotX = -30;
+//            }
+//            mainCamera->rotY += nc->js.x * 2;
+//            glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
+//        }
 
 
 
 
-    } else if (wm->exp.type == EXP_CLASSIC) {
-        /* classic controller */
-        struct classic_ctrl_t* cc = (classic_ctrl_t*)&wm->exp.classic;
-
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_ZL)) {
-            printf("Classic: ZL pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_B)) {
-            printf("Classic: B pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_Y)) {
-            printf("Classic: Y pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_A)) {
-            printf("Classic: A pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_X)) {
-            printf("Classic: X pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_ZR)) {
-            printf("Classic: ZR pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_LEFT)) {
-            printf("Classic: LEFT pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_UP)) {
-            printf("Classic: UP pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_RIGHT)) {
-            printf("Classic: RIGHT pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_DOWN)) {
-            printf("Classic: DOWN pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_FULL_L)) {
-            printf("Classic: FULL L pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_MINUS)) {
-            printf("Classic: MINUS pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_HOME)) {
-            printf("Classic: HOME pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_PLUS)) {
-            printf("Classic: PLUS pressed\n");
-        }
-        if (IS_PRESSED(cc, CLASSIC_CTRL_BUTTON_FULL_R)) {
-            printf("Classic: FULL R pressed\n");
-        }
-
-        printf("classic L button pressed:         %f\n", cc->l_shoulder);
-        printf("classic R button pressed:         %f\n", cc->r_shoulder);
-        printf("classic left joystick angle:      %f\n", cc->ljs.ang);
-        printf("classic left joystick magnitude:  %f\n", cc->ljs.mag);
-        printf("classic right joystick angle:     %f\n", cc->rjs.ang);
-        printf("classic right joystick magnitude: %f\n", cc->rjs.mag);
     }
-
     if (wm->exp.type == EXP_MOTION_PLUS ||
         wm->exp.type == EXP_MOTION_PLUS_NUNCHUK) {
        // printf("Motion+ angular rates (deg/sec): pitch:%03.2f roll:%03.2f yaw:%03.2f\n",
@@ -384,8 +327,7 @@ short WiiHandler::any_wiimote_connected(wiimote** wm, int wiimotes) {
  *	Connect to up to two wiimotes and print any events
  *	that occur on either device.
  */
-void WiiHandler::wiiMoteTest(Camera* cam) {
-    Camera* mainCamera = cam;
+void WiiHandler::wiiMoteTest() {
     wiimote** wiimotes;
     int found, connected;
 
@@ -495,7 +437,7 @@ void WiiHandler::wiiMoteTest(Camera* cam) {
                 switch (wiimotes[i]->event) {
                     case WIIUSE_EVENT:
                         /* a generic event occurred */
-                        handle_event(wiimotes[i],mainCamera);
+                        handle_event(wiimotes[i]);
                         if(i == 0){
                             wiiMoteP1 = wiimotes[i];
                         }else if(i == 1){
