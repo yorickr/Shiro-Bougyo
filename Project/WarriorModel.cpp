@@ -4,7 +4,7 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z):CollisionModel("models/warrior/warrior.obj")
+WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename):CollisionModel(filename)
 {
 	xpos = x;
 	zpos = z;

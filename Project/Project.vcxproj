@@ -169,7 +169,6 @@
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="rs232.c" />
-    <ClCompile Include="SecondWarriorModel.cpp" />
     <ClCompile Include="sdl_audio.cpp" />
     <ClCompile Include="SerialHandler.cpp" />
     <ClCompile Include="StationaryObjModel.cpp" />
@@ -197,7 +196,6 @@
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="rs232.h" />
-    <ClInclude Include="SecondWarriorModel.h" />
     <ClInclude Include="sdl_audio.h" />
     <ClInclude Include="SerialHandler.h" />
     <ClInclude Include="StationaryObjModel.h" />

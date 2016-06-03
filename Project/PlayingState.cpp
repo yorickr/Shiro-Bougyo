@@ -6,6 +6,7 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "SecondWarriorModel.h"
 #include "MenuModel.h"
 
 #include "AnimatedModel.h"
@@ -97,7 +98,21 @@ void PlayingState::AddWarrior(){
 	int random = rand() % 60;
 	if(enemyCount < 20 && random < 5){
 		PointXY point = SpawnEnemies();
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
+		WarriorType type;
+		string filename;
+		if(random % 2)
+		{
+			type = WarriorType::first;
+			filename = "models/warrior/warrior.obj";
+			//WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+			//AddModel(warrior);
+		}else
+		{
+			type = WarriorType::second;
+			filename = "models/secondwarrior/warrior.obj";
+		}
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+		
 		AddModel(warrior);
 		enemyCount++;
 	}else if(enemyCount >= 20){

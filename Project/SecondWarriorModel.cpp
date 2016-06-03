@@ -1,7 +1,7 @@
 #include "SecondWarriorModel.h"
 
 
-SecondWarriorModel::SecondWarriorModel(float x, float z): CollisionModel("")
+SecondWarriorModel::SecondWarriorModel(float x, float z): CollisionModel("models/secondwarrior/warrior.obj")
 {
 	xpos = x;
 	zpos = z;
