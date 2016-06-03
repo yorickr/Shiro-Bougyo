@@ -209,8 +209,8 @@ void PlayingState::Update(float deltatime, bool keys) {
 //		counter = 0;
 //		bow->setIndex(0);
 //	}
-
-    players.at(1)->getCamera()->rotX++;
+    if(players.size() > 1){
+    players.at(1)->getCamera()->rotX++;}
 
     bool collides = false;
     for (auto &obj1 : collisionModels) {
@@ -282,7 +282,7 @@ void PlayingState::Draw() {
 
 //    printf("Draw\n");
 
-    if (players.size() > 1) { //TODO: replace with players.size
+    if (players.size() == 2) { //TODO: replace with players.size
         Camera *cam1 = players.at(0)->getCamera();
         Camera *cam2 = players.at(1)->getCamera();
 
