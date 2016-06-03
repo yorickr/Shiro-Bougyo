@@ -71,8 +71,8 @@ void onDisplay() {
 }
 
 void initializeThreads(){
-//	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
-//	wiiThread.detach();
+	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	wiiThread.detach();
 	std::thread musicThread(&musicFunc, nullptr); //Music Thread
 	musicThread.detach();
 //	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
