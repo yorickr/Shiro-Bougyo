@@ -7,6 +7,7 @@
 #include "Player.h"
 
 class GameState;
+class Player;
 
 class GameStateManager {
 public:
@@ -28,7 +29,7 @@ public:
 
     void Update(float deltatime);
 
-    void Update(float deltatime, bool *keys);
+    void Update(float deltatime, bool keys);
 
     void Draw();
 
