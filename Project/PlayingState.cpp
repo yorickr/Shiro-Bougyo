@@ -15,6 +15,7 @@
 #include "ArrowModel.h"
 #include "PointXY.h"
 #include "Util.h"
+#include "GateModel.h"
 
 
 #ifdef __APPLE__
@@ -62,6 +63,8 @@ void PlayingState::Init(GameStateManager *game, Camera *cam, WiiHandler * hand) 
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
+
+	AddModel(new GateModel("models/blok/blok.obj"));
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -115,12 +118,13 @@ void PlayingState::AddWarrior(){
 		
 		AddModel(warrior);
 		enemyCount++;
-	}else if(enemyCount >= 20){
-		for( auto &m : collisionModels){
-			DeleteModel(m.second);
-		}
-        enemyCount = 0;
 	}
+//	else if(enemyCount >= 20){
+//		for( auto &m : collisionModels){
+//			DeleteModel(m.second);
+//		}
+//        enemyCount = 0;
+//	}
 }
 
 void PlayingState::ScalePowerUp() {

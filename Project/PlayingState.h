@@ -42,6 +42,7 @@ class PlayingState : public GameState {
 		Camera * camera;
 		WiiHandler * wiiHandler;
 		void PowerUpThread();
+		CollisionModel * gate;
 };
 
 
