@@ -36,6 +36,8 @@ FILE(GLOB SOURCE_FILES
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})
 
+find_package(SDL REQUIRED)
+find_package(SDL_mixer REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${SDL_INCLUDE_DIRS} ${SDL_MIXER_INCLUDE_DIRS})

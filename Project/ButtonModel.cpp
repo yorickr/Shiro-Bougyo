@@ -3,9 +3,8 @@
 #include "Camera.h"
 #include "WiiHandler.h"
 
-ButtonModel::ButtonModel(Camera * camera, WiiHandler * wiiHandler, GameState * state, string filename):ObjModel(filename)
+ButtonModel::ButtonModel(WiiHandler * wiiHandler, GameState * state, string filename):ObjModel(filename)
 {
-	this->camera = camera;
 	this->wiiHandler = wiiHandler;
 	this->state = state;
 	SetPositions(0, 0, 0, 0, 0);

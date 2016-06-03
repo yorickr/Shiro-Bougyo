@@ -13,16 +13,18 @@
 #include <GL/glut.h>
 #endif
 
-void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
+void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 {
 	this->manager = game;
-	this->camera = cam;
+//	this->camera = cam;
 	this->wiiHandler = hand;
-	cam->posX = 0;
-	cam->posY = 0;
+//	cam->posX = 0;
+//	cam->posY = 0;
+    Camera* cam = new Camera();
+
 
 	// Menu
-	menu = new MenuModel(cam,hand,"models/Menu/Menu.obj");
+	menu = new MenuModel(hand,"models/Menu/Menu.obj");
 	cam->posX = 3.7;
 	cam->posY = -4;
 	cam->posZ = -12;
@@ -35,10 +37,10 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 	
 	// playButton 
 	vector<ObjModel*> playbutton;
-	buttonPlaymodel = new ButtonModel(cam, hand, this, "models/buttons/playbuttonPressed.obj");
+	buttonPlaymodel = new ButtonModel(hand, this, "models/buttons/playbuttonPressed.obj");
 	playbutton.push_back(buttonPlaymodel);
 	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
-	buttonPlaymodel = new ButtonModel(cam, hand, this, "models/buttons/playbutton.obj");
+	buttonPlaymodel = new ButtonModel(hand, this, "models/buttons/playbutton.obj");
 	playbutton.push_back(buttonPlaymodel);
 	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
 	playbuttons = new AnimatedPlayButtonModel(playbutton, hand);
@@ -46,24 +48,25 @@ void MenuState::Init(GameStateManager * game, Camera * cam, WiiHandler * hand)
 
 	//SettingsButton
 	vector<ObjModel*> settingbutton;
-	buttonSettingsmodel = new ButtonModel(cam, hand, this, "models/buttons/settingsButton.obj");
+	buttonSettingsmodel = new ButtonModel( hand, this, "models/buttons/settingsButton.obj");
 	settingbutton.push_back(buttonSettingsmodel);
 	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
-	buttonSettingsmodel = new ButtonModel(cam, hand, this, "models/buttons/settingsButtonPressed.obj");
+	buttonSettingsmodel = new ButtonModel(hand, this, "models/buttons/settingsButtonPressed.obj");
 	settingbutton.push_back(buttonSettingsmodel);
 	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
 	settingsbuttons = new AnimatedSettingsButtonModel(settingbutton, hand);
 
 	//ExitButton
 	vector<ObjModel*> exitbutton;
-	buttonExitmodel = new ButtonModel(cam, hand, this, "models/buttons/ExitButton.obj");
+	buttonExitmodel = new ButtonModel( hand, this, "models/buttons/ExitButton.obj");
 	exitbutton.push_back(buttonExitmodel);
 	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
-	buttonExitmodel = new ButtonModel(cam, hand, this, "models/buttons/ExitButtonPressed.obj");
+	buttonExitmodel = new ButtonModel( hand, this, "models/buttons/ExitButtonPressed.obj");
 	exitbutton.push_back(buttonExitmodel);
 	Exitbuttons = new AnimatedExitButtonModel(exitbutton, hand);
 	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
 
+    players.push_back(new Player(cam, 1));
 
 }
 
@@ -91,7 +94,7 @@ void MenuState::Update(float deltatime)
 	}
 }
 
-void MenuState::Update(float deltatime, bool * keys)
+void MenuState::Update(float deltatime, bool keys)
 {
 	if(wiiHandler->Down_pressed || wiiHandler->is_A)
 	{
@@ -118,19 +121,23 @@ void MenuState::Update(float deltatime, bool * keys)
 
 void MenuState::Draw()
 {
-	//Make StartMenu and push to models vector
-	for (auto &m : models) {
-		m.second->draw();
-	}
-	Exitbuttons->getModel()->draw();
-	settingsbuttons->getModel()->draw();
-	playbuttons->getModel()->draw();
+    //draw 1 player full screen
+    Camera *cam1 = players.at(0)->getCamera();
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
+
+    glMatrixMode(GL_MODELVIEW);
+
+    glLoadIdentity();
+
+    glRotatef(cam1->rotX, 1, 0, 0);
+    glRotatef(cam1->rotY, 0, 1, 0);
+    glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+    DrawModels();
 }
 
-void MenuState::preDraw()
-{
-
-}
 
 void MenuState::AddModel(CollisionModel *model) {
 
@@ -140,3 +147,20 @@ void MenuState::DeleteModel(CollisionModel* model)
 {
 
 }
+
+std::vector<Player *> MenuState::GetPlayers() {
+	return players;
+}
+
+void MenuState::DrawModels() {
+    for (auto &m : models) {
+        m.second->draw();
+    }
+    Exitbuttons->getModel()->draw();
+    settingsbuttons->getModel()->draw();
+    playbuttons->getModel()->draw();
+}
+
+
+
+
