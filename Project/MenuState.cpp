@@ -2,6 +2,8 @@
 #include "Camera.h"
 #include "MenuModel.h"
 #include "ButtonModel.h"
+#include "Player.h"
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -65,8 +67,8 @@ void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 	exitbutton.push_back(buttonExitmodel);
 	Exitbuttons = new AnimatedExitButtonModel(exitbutton, hand);
 	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
-
-    players.push_back(new Player(cam, 1));
+	
+    players.push_back(new Player(cam, this->wiiHandler, this, 1));
 
 }
 

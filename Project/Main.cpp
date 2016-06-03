@@ -103,8 +103,8 @@ void onTimer(int id) {
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	oldTimeSinceStart = timeSinceStart;
 	//TODO: for testing remove keys for final release:
-
-	gameManager.Update(deltatime, &keys['t']);
+	bool t = keys['t'];
+	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
@@ -212,7 +212,6 @@ int main(int argc, char* argv[]) {
 
     glutKeyboardUpFunc(onKeyboardUp);
 
-    //glutMotionFunc(mouseFunction);
     glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
