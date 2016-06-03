@@ -44,7 +44,7 @@ void onDisplay() {
 //
 //	glMatrixMode(GL_PROJECTION);
 //	glLoadIdentity();
-//	gluPerspective(60.0f, (float)WindowWidth / WindowHeight, 0.1,100);
+//	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
 //
 //
 //	glMatrixMode(GL_MODELVIEW);
@@ -52,7 +52,7 @@ void onDisplay() {
 //
 //	glLoadIdentity();
 
-	//load bow
+    //load bow
 
 //	gameManager.preDraw();
 //	glRotatef(camera.rotX, 1, 0, 0);
@@ -60,13 +60,14 @@ void onDisplay() {
 //	glTranslatef(camera.posX, camera.posY, camera.posZ);
 //	gameManager.Draw();
 
-	// Process all OpenGL routine s as quickly as possible
+    // Process all OpenGL routine s as quickly as possible
 
 	gameManager.Draw();
 
 
-	glFlush();
-	glutSwapBuffers();
+
+    glFlush();
+    glutSwapBuffers();
 }
 
 void initializeThreads(){

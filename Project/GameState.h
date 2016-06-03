@@ -22,7 +22,7 @@ public:
 
     virtual void Update(float deltatime) = 0;
 
-    virtual void Update(float deltatime, bool *keys) = 0;
+    virtual void Update(float deltatime, bool keys) = 0;
 
     virtual void Draw() = 0;
 
