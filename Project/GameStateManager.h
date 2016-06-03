@@ -19,6 +19,7 @@ class GameStateManager {
 		void previousState();
 		GameState* getCurrentState();
 
+
 		void HandleEvents();
 		void Update(float deltatime);
 		void Update(float deltatime, bool * keys);
