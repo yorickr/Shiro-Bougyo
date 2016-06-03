@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <cmath>
 #include "WarriorModel.h"
 
@@ -21,7 +21,7 @@ WarriorModel::~WarriorModel()
 
 //Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    //yrot += 0.5 * deltatime;
+    yrot += 0.5 * deltatime;
 	//ypos = -3.25;
 	if(rand() % 4 < 2){
 		if (zpos > -2.25)

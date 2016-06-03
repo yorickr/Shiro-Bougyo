@@ -31,8 +31,14 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayingState.cpp">
       <Filter>Source Files\GameStates</Filter>
@@ -58,7 +64,19 @@
     <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ArrowModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedBowModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="AnimatedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StationaryObjModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,22 +123,37 @@
     <ClInclude Include="AnimatedModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedBowModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrowModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StationaryObjModel.h">
-      <Filter>Header Files\ObjectModels</Filter>
-    </ClInclude>
-    <ClInclude Include="ArrowModel.h">
-      <Filter>Header Files\ObjectModels</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedBowModel.h">
-      <Filter>Header Files\ObjectModels</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl_audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
-    <ClInclude Include="MenuModel.h">
+    <ClInclude Include="AnimatedExitButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedPlayButtonModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSettingsButtonModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,26 +161,40 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrowModel.cpp">
-      <Filter>Source Files\ObjectModels</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedBowModel.cpp">
-      <Filter>Source Files\ObjectModels</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl_audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-    <ClCompile Include="MenuModel.cpp">
+    <ClCompile Include="AnimatedExitButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-    <ClCompile Include="StationaryObjModel.cpp">
+    <ClCompile Include="AnimatedPlayButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files\GameStates</Filter>
+    <ClCompile Include="AnimatedSettingsButtonModel.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateManager.cpp">
-      <Filter>Source Files\GameStates</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="test.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sword_slash.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="arrow_hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_pull.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_shot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
