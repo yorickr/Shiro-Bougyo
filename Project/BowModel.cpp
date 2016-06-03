@@ -32,8 +32,8 @@ void BowModel::SetPositions(float x, float y, float rotx, float roty) {
 
 	xpos = bowPostion;
 	ypos = y;
-	zpos = -0.11;
-	yrot = -45;
+	zpos = -1.5;
+	yrot = 180;
 
 
 }
