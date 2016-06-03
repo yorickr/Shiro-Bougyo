@@ -71,12 +71,12 @@ void onDisplay() {
 }
 
 void initializeThreads(){
-//	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
-//	wiiThread.detach();
+	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	wiiThread.detach();
 	std::thread musicThread(&musicFunc, nullptr); //Music Thread
 	musicThread.detach();
-//	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
-//	serialThread.detach();
+	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
+	serialThread.detach();
 }
 
 void onIdle() {
@@ -85,12 +85,6 @@ void onIdle() {
 
 void onTimer(int id) {
 	if (keys[27]) exit(0);
-//	if (keys['w']) camera.posZ++;
-//	if (keys['s']) camera.posZ--;
-//	if (keys['d']) camera.posX--;
-//	if (keys['a']) camera.posX++;
-//	if (keys['x']) camera.posY--;
-//	if (keys['c']) camera.posY++;
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
@@ -135,7 +129,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteTest(gameManager.GetPlayers().at(0)->getCamera());
+	wiiHandler.wiiMoteTest();
 	return 0;
 }
 
