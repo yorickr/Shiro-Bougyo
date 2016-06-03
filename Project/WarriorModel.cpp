@@ -4,7 +4,7 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z):CollisionModel("models/warrior/warrior.obj")
+WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename):CollisionModel(filename)
 {
 	xpos = x;
 	zpos = z;
@@ -23,7 +23,16 @@ WarriorModel::~WarriorModel()
 void WarriorModel::update(float deltatime) {
     yrot += 0.5 * deltatime;
 	//ypos = -3.25;
-	if(rand() % 4 < 2){
+
+	//first walk z position
+	if(zpos > 0)
+	{
+		zpos -= (float(rand() % 100)) / 2000;
+		if(rand()%2)xpos -= (float(rand() % 100)) / 2000;
+		else xpos += (float(rand() % 100)) / 2000;
+	}
+
+	if(rand() % 2){
 		if (zpos > -2.25)
 			zpos -= (float(rand() % 100)) / 2000;
 		else if (zpos < -2.25)
@@ -37,8 +46,7 @@ void WarriorModel::update(float deltatime) {
 		zpos += sin(rand()) / 20;
 		xpos += sin(rand()) / 20;
 	}
-
-	//xpos = -2.25;
+	
 }
 
 void WarriorModel::InitBoundingSpheres() {

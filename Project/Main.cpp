@@ -30,6 +30,7 @@ bool keys[255];
 void* wiiFunc(void * argument);
 void* musicFunc(void * argument);
 Camera camera;
+
 WiiHandler wiiHandler;
 int buttonPressed = 0;
 int WindowWidth = 1920;

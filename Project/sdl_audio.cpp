@@ -1,12 +1,12 @@
 #ifdef __APPLE__
+#include <SDL.h>
 #include <sdl_mixer.h>
 #include <string>
-#include <SDL.h>
 
 #else
 #include "SDL.h"
 #include "sdl_mixer.h"
-#endif
+#endif 
 
 int playSound(std::string fileName);
 

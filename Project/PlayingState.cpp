@@ -6,6 +6,7 @@
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
+#include "SecondWarriorModel.h"
 #include "MenuModel.h"
 
 #include "AnimatedModel.h"
@@ -97,7 +98,21 @@ void PlayingState::AddWarrior(){
 	int random = rand() % 60;
 	if(enemyCount < 20 && random < 5){
 		PointXY point = SpawnEnemies();
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y);
+		WarriorType type;
+		string filename;
+		if(random % 2)
+		{
+			type = WarriorType::first;
+			filename = "models/warrior/warrior.obj";
+			//WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+			//AddModel(warrior);
+		}else
+		{
+			type = WarriorType::second;
+			filename = "models/secondwarrior/warrior.obj";
+		}
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+		
 		AddModel(warrior);
 		enemyCount++;
 	}else if(enemyCount >= 20){
@@ -169,7 +184,7 @@ void PlayingState::Update(float deltatime) {
         for (auto &obj2 : collisionModels) {
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
 			{
-				printf("%d colliding with %d\n", obj1.first, obj2.first);
+//				printf("%d colliding with %d\n", obj1.first, obj2.first);
 				collides = true;
 				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
 				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
