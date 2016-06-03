@@ -8,6 +8,9 @@
 #include "AnimatedBowModel.h"
 #include "Camera.h"
 
+class GameState;
+class AnimatedBowModel;
+
 class Player {
 public:
     Player(Camera * camera, WiiHandler * hand, GameState * state, unsigned char playerID);

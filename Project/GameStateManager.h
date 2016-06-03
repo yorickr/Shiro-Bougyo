@@ -7,6 +7,7 @@
 #include "Player.h"
 
 class GameState;
+class Player;
 
 class GameStateManager {
 public:

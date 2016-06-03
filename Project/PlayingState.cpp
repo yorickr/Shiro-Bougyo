@@ -85,6 +85,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     players.push_back(new Player(cam1, hand, this, 1));
     players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow();
+	players[1]->makeBow();
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -360,7 +361,8 @@ void PlayingState::Draw() {
 }
 
 void PlayingState::preTranslateDraw(Player * p) {
-	p->bow->getModel()->draw();
+	if(p->bow)
+		p->bow->getModel()->draw();
 }
 
 void PlayingState::HandleEvents() {
