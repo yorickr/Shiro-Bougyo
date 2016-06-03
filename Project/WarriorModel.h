@@ -12,6 +12,7 @@ public:
 	~WarriorModel();
 	void update(float deltatime) override;
 	void InitBoundingSpheres() override;
+	void PowerUpBoundingSpheres();
 	void setSize(int);
 	bool removeHealth(int health);	//returns true if health <= 0 otherwise false
 private:

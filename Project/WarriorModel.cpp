@@ -50,8 +50,8 @@ void WarriorModel::update(float deltatime) {
 }
 
 void WarriorModel::InitBoundingSpheres() {
-
-    //Calculate width
+	boundingSpheres.clear();
+	//Calculate width
     float width = vertices_max->x - vertices_min->x;
     float depth = vertices_max->z - vertices_min->z;
 
@@ -69,6 +69,28 @@ void WarriorModel::InitBoundingSpheres() {
 
     boundingSpheres.push_back(new Sphere(x, 0.65f, z, 0.17f)); //Magic values for the legs
     boundingSpheres.push_back(new Sphere(x, 0.35f, z, 0.17f)); //Magic values for the legs
+}
+
+void WarriorModel::PowerUpBoundingSpheres() {
+	boundingSpheres.clear();
+	//Calculate width
+	float width = vertices_max->x - vertices_min->x;
+	float depth = vertices_max->z - vertices_min->z;
+
+	//X, Y and Z of sphere is the middle of the model
+
+	float x, z ;
+	x = z = 0;
+
+	x = width / 2 + vertices_min->x;
+	z = depth / 2+vertices_min->z;
+
+	boundingSpheres.push_back((new Sphere(x, 3.6f, z, 0.375f))); //Magic values for the head
+
+	boundingSpheres.push_back(new Sphere(x, 2.7f, z, 0.60f)); //Magic values for the torso
+
+	boundingSpheres.push_back(new Sphere(x, 1.95f, z, 0.51f)); //Magic values for the legs
+	boundingSpheres.push_back(new Sphere(x, 1.05f, z, 0.51f)); //Magic values for the legs
 }
 
 void WarriorModel::setSize(int newSize)
