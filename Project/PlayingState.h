@@ -45,7 +45,7 @@ public:
 
     virtual void DeleteModel(CollisionModel *model) override;
 
-    virtual void ScalePowerUp();
+	virtual void ScalePowerUp();
 
     virtual std::vector<Player*> GetPlayers() override ;
 
@@ -59,7 +59,7 @@ private:
     int enemyCount = 0;
     AnimatedBowModel *bow;
     WiiHandler *wiiHandler;
-
+	CollisionModel * gate;
     void PowerUpThread();
 
 };
