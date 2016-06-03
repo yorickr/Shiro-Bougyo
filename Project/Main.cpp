@@ -29,22 +29,22 @@ SerialHandler serial = SerialHandler(COMMPORT, gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 void* musicFunc(void * argument);
-Camera camera;
+//Camera camera;
 
 WiiHandler wiiHandler;
 int buttonPressed = 0;
 int WindowWidth = 1920;
-int WindowHight = 1080;
+int WindowHeight = 1080;
 
 int oldTimeSinceStart = 0;
 
 void onDisplay() {
-		//	glClearColor(0.6f, 0.6f, 1, 1);
-//	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+	glClearColor(0.6f, 0.6f, 1, 1);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 //
 //	glMatrixMode(GL_PROJECTION);
 //	glLoadIdentity();
-//	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
+//	gluPerspective(60.0f, (float)WindowWidth / WindowHeight, 0.1,100);
 //
 //
 //	glMatrixMode(GL_MODELVIEW);
@@ -52,7 +52,7 @@ void onDisplay() {
 //
 //	glLoadIdentity();
 
-    //load bow
+	//load bow
 
 //	gameManager.preDraw();
 //	glRotatef(camera.rotX, 1, 0, 0);
@@ -60,67 +60,18 @@ void onDisplay() {
 //	glTranslatef(camera.posX, camera.posY, camera.posZ);
 //	gameManager.Draw();
 
-    // Process all OpenGL routine s as quickly as possible
+	// Process all OpenGL routine s as quickly as possible
 
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-    for (int loop = 0; loop < 2; loop++)                /* Loop To Draw Our 4 Views */
-    {
-//		glColor3ub(r[loop],g[loop],b[loop]);	/* Assign Color To Current View */
-        glClearColor(0.6f, 0.6f, 1, 1);
-
-        if (loop == 0)    /* If We Are Drawing The First Scene */
-        {
-            /* Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height */
-            glViewport(0, 0, WindowWidth / 2, WindowHight);
-            glMatrixMode(GL_PROJECTION);        /* Select The Projection Matrix */
-            glLoadIdentity();                            /* Reset The Projection Matrix */
-            gluPerspective(60.0f, (float) WindowWidth / WindowHight, 0.1, 100);
-
-        }
-
-        if (loop == 1)    /* If We Are Drawing The Second Scene */
-        {
-//			/* Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height */
-            glViewport(WindowWidth / 2, 0, WindowWidth / 2, WindowHight);
-            glMatrixMode(GL_PROJECTION);        /* Select The Projection Matrix */
-            glLoadIdentity();                            /* Reset The Projection Matrix */
-            gluPerspective(60.0f, (float) WindowWidth / WindowHight, 0.1, 100);
-        }
-
-        glMatrixMode(GL_MODELVIEW);            /* Select The Modelview Matrix */
-        glLoadIdentity();                                /* Reset The Modelview Matrix */
-
-        glClear(GL_DEPTH_BUFFER_BIT);        /* Clear Depth Buffer */
-
-        if (loop == 0)    /* Are We Drawing The First Image?  (Original Texture... Ortho) */
-        {
-            gameManager.preDraw();
-            glRotatef(camera.rotX, 1, 0, 0);
-            glRotatef(camera.rotY, 0, 1, 0);
-            glTranslatef(camera.posX, camera.posY, camera.posZ);
-            gameManager.Draw();
-        }
-
-        if (loop == 1)    /* Are We Drawing The Second Image?  (3D Texture Mapped Sphere... Perspective) */
-        {
-            gameManager.preDraw();
-            glRotatef(camera.rotX, 1, 0, 0);
-            glRotatef(camera.rotY, 0, 1, 0);
-            glTranslatef(camera.posX, camera.posY, camera.posZ);
-            gameManager.Draw();
-        }
-
-    }
+	gameManager.Draw();
 
 
-    glFlush();
-    glutSwapBuffers();
+	glFlush();
+	glutSwapBuffers();
 }
 
 void initializeThreads(){
-	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
-	wiiThread.detach();
+//	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+//	wiiThread.detach();
 	std::thread musicThread(&musicFunc, nullptr); //Music Thread
 	musicThread.detach();
 //	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
@@ -133,12 +84,12 @@ void onIdle() {
 
 void onTimer(int id) {
 	if (keys[27]) exit(0);
-	if (keys['w']) camera.posZ++;
-	if (keys['s']) camera.posZ--;
-	if (keys['d']) camera.posX--;
-	if (keys['a']) camera.posX++;
-	if (keys['x']) camera.posY--;
-	if (keys['c']) camera.posY++;
+//	if (keys['w']) camera.posZ++;
+//	if (keys['s']) camera.posZ--;
+//	if (keys['d']) camera.posX--;
+//	if (keys['a']) camera.posX++;
+//	if (keys['x']) camera.posY--;
+//	if (keys['c']) camera.posY++;
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
@@ -183,7 +134,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteTest(&camera);
+	wiiHandler.wiiMoteTest(gameManager.GetPlayers().at(0)->getCamera());
 	return 0;
 }
 
@@ -198,18 +149,18 @@ void onKeyboardUp(unsigned char key, int, int) {
 
 void mousePassiveMotion(int x, int y) {
 		int dx = x - WindowWidth / 2;
-		int dy = y - WindowHight / 2;
+		int dy = y - WindowHeight / 2;
 		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
 		{
-			camera.rotX += dy / 10.0f;
-			if (camera.rotX > 30) {
-				camera.rotX = 30;
+			gameManager.GetPlayers().at(0)->getCamera()->rotX += dy / 10.0f;
+			if (gameManager.GetPlayers().at(0)->getCamera()->rotX > 30) {
+				gameManager.GetPlayers().at(0)->getCamera()->rotX = 30;
 			}
-			else if (camera.rotX < -30) {
-				camera.rotX = -30;
+			else if (gameManager.GetPlayers().at(0)->getCamera()->rotX < -30) {
+				gameManager.GetPlayers().at(0)->getCamera()->rotX = -30;
 			}
-			camera.rotY += dx / 10.0f;
-			glutWarpPointer(WindowWidth / 2, WindowHight / 2);
+			gameManager.GetPlayers().at(0)->getCamera()->rotY += dx / 10.0f;
+			glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 		}
 }
 
@@ -233,12 +184,23 @@ void mouseFunc(int button, int state, int x, int y) {
     }
 }
 
+void windowReshape(int w, int h){
+	WindowWidth = w;
+	WindowHeight = h;
+	gameManager.width = w;
+	gameManager.height = h;
+	for ( auto &player : gameManager.GetPlayers()) {
+		player->getCamera()->width = w;
+		player->getCamera()->height = h;
+	}
+}
+
 
 int main(int argc, char* argv[]) {
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-	glutInitWindowSize(WindowWidth,	WindowHight);
+	glutInitWindowSize(WindowWidth,	WindowHeight);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
@@ -249,11 +211,7 @@ int main(int argc, char* argv[]) {
 #endif
     glutIdleFunc(onIdle);
     glutDisplayFunc(onDisplay);
-    glutReshapeFunc([](int w, int h) {
-        WindowWidth = w;
-        WindowHight = h;
-//        glViewport(0, 0, w, h);
-    });
+	glutReshapeFunc(windowReshape);
     glutKeyboardFunc(onKeyboard);
     glutTimerFunc(1000 / 60, onTimer, 1);
 
@@ -264,10 +222,10 @@ int main(int argc, char* argv[]) {
     glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
 	
-	glutWarpPointer(WindowWidth / 2, WindowHight / 2);
+	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
 	
-	gameManager.Init(&camera, &wiiHandler);
+	gameManager.Init(&wiiHandler);
 
 	glutMainLoop();
 }

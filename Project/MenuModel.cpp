@@ -4,9 +4,9 @@
 #include "MenuModel.h"
 
 
-MenuModel::MenuModel(Camera * cam, WiiHandler * wiihandler, string filename) : ObjModel(filename)
+MenuModel::MenuModel(WiiHandler * wiihandler, string filename) : ObjModel(filename)
 {
-	this->camera = cam;
+//	this->camera = cam;
 	this->wiiHandler = wiihandler;
 }
 

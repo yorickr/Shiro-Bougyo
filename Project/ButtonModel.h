@@ -10,7 +10,7 @@ class ButtonModel :
 	public ObjModel
 {
 public:
-	ButtonModel(Camera * camera, WiiHandler * wiiHandler, GameState * state, string filename);
+	ButtonModel( WiiHandler * wiiHandler, GameState * state, string filename);
 	~ButtonModel();
 	void draw() override;
 	void update(float deltatime) override;
