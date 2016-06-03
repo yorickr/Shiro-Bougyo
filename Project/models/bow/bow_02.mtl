@@ -1,4 +1,13 @@
-newmtl Bow_recurve
+newmtl Arrow:arrow
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Arrow_D.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 96.08
+newmtl bow_02:Bow_recurve
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
@@ -7,7 +16,7 @@ map_Kd bowrecurve_D.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 96.08
-newmtl zippo
+newmtl bow_02:zippo
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
