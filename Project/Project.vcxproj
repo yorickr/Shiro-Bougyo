@@ -197,11 +197,8 @@
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="rs232.h" />
-<<<<<<< HEAD
     <ClInclude Include="SecondWarriorModel.h" />
-=======
     <ClInclude Include="sdl_audio.h" />
->>>>>>> refs/remotes/origin/dev
     <ClInclude Include="SerialHandler.h" />
     <ClInclude Include="StationaryObjModel.h" />
     <ClInclude Include="Util.h" />
