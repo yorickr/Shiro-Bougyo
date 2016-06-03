@@ -21,7 +21,7 @@ WarriorModel::~WarriorModel()
 
 //Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    //yrot += 0.5 * deltatime;
+    yrot += 0.5 * deltatime;
 	//ypos = -3.25;
 
 	//first walk z position

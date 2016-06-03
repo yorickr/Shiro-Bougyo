@@ -112,9 +112,9 @@ void onDisplay() {
 
     }
 
+
     glFlush();
     glutSwapBuffers();
-
 }
 
 void initializeThreads(){

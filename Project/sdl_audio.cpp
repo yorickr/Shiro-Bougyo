@@ -8,6 +8,8 @@
 #include "sdl_mixer.h"
 #endif 
 
+int playSound(std::string fileName);
+
 int playTheme() {
 	return playSound("test.wav");
 }

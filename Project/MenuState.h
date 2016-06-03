@@ -25,7 +25,6 @@ class MenuState : public GameState  {
 		virtual void AddModel(CollisionModel * model) override;
 	    void DeleteModel(CollisionModel *model) override;
 		//void DrawCrosshair(int x, int y);
-
 	private:
 		int counter = 0;
 		GameStateManager *manager;
@@ -40,4 +39,5 @@ class MenuState : public GameState  {
 		ButtonModel *buttonSettingsmodel;
 		ButtonModel *buttonExitmodel;
 };
+
 #endif
