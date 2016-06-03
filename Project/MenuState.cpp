@@ -93,85 +93,22 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool * keys)
 {
-	/*if (wiiHandler->Down_pressed || wiiHandler->is_A)
+	if(wiiHandler->Down_pressed || wiiHandler->is_A)
 	{
- 		counter++;
-		if(counter  == 10)
+		counter += 1;
+		if (counter % 30 == 0)
 		{
-			if(wiiHandler->is_A)
-			{
-				manager->nextState();
-			}
+			playbuttons->setIndex(1);
+			settingsbuttons->setIndex(1);
 		}
-		if (counter == 20)
+		if (counter % 60 == 0)
 		{
-			playbuttons->nextModel();
-			settingsbuttons->nextModel();
-		}
-		if (counter >= 30)
-		{
-			settingsbuttons->previousModel();
-			Exitbuttons->nextModel();
-			if(wiiHandler->is_A)
+			settingsbuttons->setIndex(0);
+			Exitbuttons->setIndex(1);
+			if (wiiHandler->is_A)
 			{
 				exit(0);
 			}
-			counter = 40;
-		}
-	}
-	if(wiiHandler->Up_pressed || *keys == true)
-	{
-		counter--;
-		if(counter < 30)
-		{
-			settingsbuttons->nextModel();
-			Exitbuttons->previousModel();
-		}
-		if(counter < 20)
-		{
-			playbuttons->nextModel();
-			settingsbuttons->previousModel();
-		}
-		if(counter < 10)
-		{
-			playbuttons->previousModel();
-			counter = 0;
-		}
-	}*/
-
-	if(wiiHandler->Down_pressed || wiiHandler->is_A)
-	{
-		counter++;
-		if(wiiHandler->Down_pressed == true || counter == 10)
-		{
-			if (wiiHandler->is_A)
-			{
-				manager->nextState();
-			}
-		}else if(counter == 15)
-		{
-			wiiHandler->Down_pressed = false;
-			playbuttons->nextModel();
-		}
-
-		if (wiiHandler->Down_pressed == true || counter == 20)
-		{
-			settingsbuttons->nextModel();
-		}
-		else if (counter == 25)
-		{
-			wiiHandler->Down_pressed = false;
-			settingsbuttons->previousModel();
-		}
-
-		if (wiiHandler->Down_pressed == true || counter == 30)
-		{
-			Exitbuttons->nextModel();
-		}
-		else if (counter == 35)
-		{
-			wiiHandler->Down_pressed = false;
-			Exitbuttons->previousModel();
 		}
 	}
 	for (auto &m : models) {

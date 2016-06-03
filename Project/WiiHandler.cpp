@@ -100,7 +100,8 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
      *	Pressing plus will tell the wiimote we are interested in movement.
      */
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS)) {
-        wiiuse_motion_sensing(wm, 1);
+        /*wiiuse_motion_sensing(wm, 1);*/
+		wiiuse_set_ir(wm, 1);
     }
 
     /*
@@ -113,7 +114,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm, Camera* camera) {
     }
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
-        wiiuse_set_ir(wm, 1);
+        
     }
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_DOWN)) {
         wiiuse_set_ir(wm, 0);
@@ -343,6 +344,7 @@ void WiiHandler::handle_ctrl_status(struct wiimote_t* wm) {
     //printf("leds:            %i %i %i %i\n", WIIUSE_IS_LED_SET(wm, 1), WIIUSE_IS_LED_SET(wm, 2), WIIUSE_IS_LED_SET(wm, 3), WIIUSE_IS_LED_SET(wm, 4));
     //printf("battery:         %f %%\n", wm->battery_level);
 }
+
 
 
 /**
