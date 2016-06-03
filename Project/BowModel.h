@@ -27,7 +27,7 @@ private:
 	void SetPositions(float x, float y, float rotx, float roty);
 	void setCrosshairPositions(float x, float y, float rotx, float roty) const;
 	
-	float bowPostion = 0.8;
+	float bowPostion = 0.8f;
 	int wiiXPos = 0;
 	int wiiYPos = 0;
 };

@@ -15,6 +15,7 @@
 #include "ArrowModel.h"
 #include "PointXY.h"
 #include "Util.h"
+#include "GateModel.h"
 
 
 #ifdef __APPLE__
@@ -78,12 +79,15 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
+	AddModel(new GateModel("models/blok/blok.obj"));
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
     cam2->height = game->height;
-    players.push_back(new Player(cam1, 1));
-    players.push_back(new Player(cam2, 2));
+    players.push_back(new Player(cam1, hand, this, 1));
+    players.push_back(new Player(cam2, hand, this, 2));
+	players[0]->makeBow();
+	players[1]->makeBow();
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -137,12 +141,13 @@ void PlayingState::AddWarrior(){
 		
 		AddModel(warrior);
 		enemyCount++;
-	}else if(enemyCount >= 20){
-		for( auto &m : collisionModels){
-			DeleteModel(m.second);
-		}
-        enemyCount = 0;
 	}
+//	else if(enemyCount >= 20){
+//		for( auto &m : collisionModels){
+//			DeleteModel(m.second);
+//		}
+//        enemyCount = 0;
+//	}
 }
 
 void PlayingState::ScalePowerUp() {
@@ -170,45 +175,39 @@ void PlayingState::PowerUpThread()
 	}
 }
 
-void PlayingState::Cleanup() {
+void PlayingState::Cleanup() {}
 
-}
+void PlayingState::Pause() {}
 
-void PlayingState::Pause() {
-
-}
-
-void PlayingState::Resume() {
-
-}
+void PlayingState::Resume() {}
 
 void PlayingState::Update(float deltatime) {
 	Update(deltatime, false);
 }
 
 void PlayingState::Update(float deltatime, bool keys) {
-//	if (wiiHandler->is_A || *keys == true)
-//	{
-//		counter += deltatime;
-//		if (counter < 33) bow->setIndex(0);
-//		else if (counter < 66) bow->setIndex(1);
-//		else bow->setIndex(2);
-//		if (counter >= 100)
-//		{
-//			bow->nextModel();
-//			if (counter >= 59)
-//			{
-//				bow->getModel()->update(-1);
-//				bow->setIndex(0);
-//				counter = 0;
-//			}
-//		}
-//	}
-//	else
-//	{
-//		counter = 0;
-//		bow->setIndex(0);
-//	}
+	if (wiiHandler->is_A || keys == true)
+	{
+		counter += deltatime;
+		if (counter < 33) players[0]->bow->setIndex(0);
+		else if (counter < 66) players[0]->bow->setIndex(1);
+		else players[0]->bow->setIndex(2);
+		if (counter >= 100)
+		{
+			players[0]->bow->nextModel();
+			if (counter >= 59)
+			{
+				players[0]->bow->getModel()->update(-1);
+				players[0]->bow->setIndex(0);
+				counter = 0;
+			}
+		}
+	}
+	else
+	{
+		counter = 0;
+		players[0]->bow->setIndex(0);
+	}
 
     players.at(1)->getCamera()->rotX++;
 
@@ -282,7 +281,7 @@ void PlayingState::Draw() {
 
 //    printf("Draw\n");
 
-    if (players.size() > 1) { //TODO: replace with players.size
+    if (players.size() == 2) { //TODO: replace with players.size
         Camera *cam1 = players.at(0)->getCamera();
         Camera *cam2 = players.at(1)->getCamera();
 
@@ -365,8 +364,8 @@ void PlayingState::Draw() {
 }
 
 void PlayingState::preTranslateDraw(Player * p) {
-//	bow->getModel()->draw();
-//	DrawModels();
+	if(p->bow)
+		p->bow->getModel()->draw();
 }
 
 void PlayingState::HandleEvents() {

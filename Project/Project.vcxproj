@@ -163,6 +163,7 @@
     <ClCompile Include="CollisionModel.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="GateModel.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuModel.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="GateModel.h" />
     <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />

@@ -45,7 +45,7 @@ public:
 
     virtual void DeleteModel(CollisionModel *model) override;
 
-    virtual void ScalePowerUp();
+	virtual void ScalePowerUp();
 
     virtual std::vector<Player*> GetPlayers() override ;
 
@@ -57,9 +57,8 @@ private:
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;
-    AnimatedBowModel *bow;
     WiiHandler *wiiHandler;
-
+	CollisionModel * gate;
     void PowerUpThread();
 
 };

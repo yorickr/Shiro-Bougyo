@@ -9,13 +9,29 @@ Camera *Player::getCamera() {
     return nullptr;
 }
 
+Player::Player(Camera* camera, ::WiiHandler* hand, GameState * state, unsigned char playerID)
+{
+	this->gamestate_ = state;
+	this->c = camera;
+	this->wiiHandler_ = hand;
+	this->playerID = playerID;
+}
+
 Player::~Player() {
 
 }
 
-Player::Player(Camera *camera, unsigned char pid) : c(camera), playerID(pid){
-
+void Player::makeBow()
+{
+	vector<ObjModel*> temp;
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_recurve.obj", gamestate_, c));
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_01.obj", gamestate_, c));
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_02.obj", gamestate_, c));
+	
+	this->bow = new AnimatedBowModel(temp, wiiHandler_);
 }
+
+
 
 unsigned char Player::getPlayerID() {
     return playerID;
