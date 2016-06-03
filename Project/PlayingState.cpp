@@ -159,57 +159,7 @@ void PlayingState::Resume() {
 }
 
 void PlayingState::Update(float deltatime) {
-	if(wiiHandler->is_A)
-	{
-		counter++;
-			if (counter % 1 == 0)
-			{
-				bow->nextModel();
-				if(counter >= 3)
-				{
-					bow->getModel()->update(-1);
-					bow->setIndex(0);
-					counter = 0;
-				}
-			}
-	}else
-	{
-		counter = 0;
-	}
-		
-    bool collides = false;
-    for( auto &obj1 : collisionModels) {
-        for (auto &obj2 : collisionModels) {
-            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(obj2.second))) //get<1> returns a vector with the spheres that are colliding
-			{
-//				printf("%d colliding with %d\n", obj1.first, obj2.first);
-				collides = true;
-				WarriorModel *warrior1 = dynamic_cast<WarriorModel*>(obj1.second);
-				WarriorModel *warrior2 = dynamic_cast<WarriorModel*>(obj2.second);
-				ArrowModel *arrow1 = dynamic_cast<ArrowModel*>(obj1.second);
-				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
-
-				if((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)){
-					DeleteModel(obj1.second);
-					DeleteModel(obj2.second);
-				}
-
-				break;
-			}
-		}
-        if(!collides) {
-            obj1.second->update(deltatime);
-        }
-        collides = false;
-    }
-
-//    for(auto &m : models) {
-//        m.second->update(deltatime);
-//    }
-//    for (auto &m : collisionModels) {
-//        m.second->update(deltatime);
-//    }
-	//bow->getModel()->update(deltatime);
+	Update(deltatime, false);
 }
 
 void PlayingState::Update(float deltatime, bool * keys) {
@@ -249,8 +199,30 @@ void PlayingState::Update(float deltatime, bool * keys) {
 				ArrowModel *arrow2 = dynamic_cast<ArrowModel*>(obj2.second);
 
 				if((warrior1 != 0 || warrior2 != 0 )&& (arrow1 != 0 || arrow2 != 0)){
-					DeleteModel(obj1.second);
-					DeleteModel(obj2.second);
+
+					//TODO: Check if arrow came from player 1 or player 2
+					if(arrow1 != nullptr)
+					{
+						DeleteModel(arrow1);
+					}else
+					{
+						DeleteModel(arrow2);
+					}
+
+					//TODO: check sort warrior is shot
+					if(warrior1 != nullptr)
+					{
+						//returns false if warrior health <= 0
+						if(warrior1->removeHealth(100))
+							DeleteModel(warrior1);
+					}else
+					{
+						//returns false if warrior health <= 0
+						if (warrior2->removeHealth(100))
+							DeleteModel(warrior2);
+					}
+					//DeleteModel(obj1.second);
+					//DeleteModel(obj2.second);
 				}
                 break;
             }

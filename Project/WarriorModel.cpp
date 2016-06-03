@@ -23,28 +23,28 @@ WarriorModel::~WarriorModel()
 void WarriorModel::update(float deltatime) {
     yrot += 0.5 * deltatime;
 	//ypos = -3.25;
-
+	int random = rand();
 	//first walk z position
 	if(zpos > 0)
 	{
-		zpos -= (float(rand() % 100)) / 2000;
-		if(rand()%2)xpos -= (float(rand() % 100)) / 2000;
-		else xpos += (float(rand() % 100)) / 2000;
+		zpos -= (float(random % 100)) / 2000;
+		if(random%2)xpos -= (random % 100) / 2000;
+		else xpos += (random % 100) / 2000;
 	}
 
-	if(rand() % 2){
+	else if(rand() % 2){
 		if (zpos > -2.25)
-			zpos -= (float(rand() % 100)) / 2000;
+			zpos -= (float(random % 100)) / 2000;
 		else if (zpos < -2.25)
-			zpos += (float(rand() % 100)) / 2000;
+			zpos += (float(random % 100)) / 2000;
 		if (xpos > -2.25)
-			xpos -= (float(rand() % 100)) / 2000;
+			xpos -= (float(random % 100)) / 2000;
 		else if (xpos < -2.25)
-			xpos += (float(rand() % 100)) / 2000;
+			xpos += (float(random % 100)) / 2000;
 	}else
 	{
-		zpos += sin(rand()) / 20;
-		xpos += sin(rand()) / 20;
+		zpos += sin(random) / 20;
+		xpos += sin(random) / 20;
 	}
 	
 }
@@ -78,6 +78,11 @@ void WarriorModel::setSize(int newSize)
 	this->zscale = newSize;
 }
 
+bool WarriorModel::removeHealth(int health)
+{
+	this->health -= health;
+	return this->health <= 0;
+}
 
 
 

@@ -45,7 +45,7 @@ void ArrowModel::update(float deltatime) {
 	xpos += (sin(toRadian(yrot))) * 0.1 * deltatime;
 	
 	//gravity
-	xrot += 0.2 * deltatime ;
+	xrot += 0.1 * deltatime ;
 
 	if(ypos < -15 )
 	{
