@@ -82,8 +82,9 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam1->height = game->height;
     cam2->width = game->width;
     cam2->height = game->height;
-    players.push_back(new Player(cam1, 1));
-    players.push_back(new Player(cam2, 2));
+    players.push_back(new Player(cam1, hand, this, 1));
+    players.push_back(new Player(cam2, hand, this, 2));
+	players[0]->makeBow();
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -170,45 +171,39 @@ void PlayingState::PowerUpThread()
 	}
 }
 
-void PlayingState::Cleanup() {
+void PlayingState::Cleanup() {}
 
-}
+void PlayingState::Pause() {}
 
-void PlayingState::Pause() {
-
-}
-
-void PlayingState::Resume() {
-
-}
+void PlayingState::Resume() {}
 
 void PlayingState::Update(float deltatime) {
 	Update(deltatime, false);
 }
 
 void PlayingState::Update(float deltatime, bool keys) {
-//	if (wiiHandler->is_A || *keys == true)
-//	{
-//		counter += deltatime;
-//		if (counter < 33) bow->setIndex(0);
-//		else if (counter < 66) bow->setIndex(1);
-//		else bow->setIndex(2);
-//		if (counter >= 100)
-//		{
-//			bow->nextModel();
-//			if (counter >= 59)
-//			{
-//				bow->getModel()->update(-1);
-//				bow->setIndex(0);
-//				counter = 0;
-//			}
-//		}
-//	}
-//	else
-//	{
-//		counter = 0;
-//		bow->setIndex(0);
-//	}
+	//if (wiiHandler->is_A || keys == true)
+	//{
+	//	counter += deltatime;
+	//	if (counter < 33) bow->setIndex(0);
+	//	else if (counter < 66) bow->setIndex(1);
+	//	else bow->setIndex(2);
+	//	if (counter >= 100)
+	//	{
+	//		bow->nextModel();
+	//		if (counter >= 59)
+	//		{
+	//			bow->getModel()->update(-1);
+	//			bow->setIndex(0);
+	//			counter = 0;
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	counter = 0;
+	//	bow->setIndex(0);
+	//}
 
     players.at(1)->getCamera()->rotX++;
 
@@ -365,8 +360,7 @@ void PlayingState::Draw() {
 }
 
 void PlayingState::preTranslateDraw(Player * p) {
-//	bow->getModel()->draw();
-//	DrawModels();
+	p->bow->getModel()->draw();
 }
 
 void PlayingState::HandleEvents() {

@@ -218,7 +218,6 @@ int main(int argc, char* argv[]) {
 
     glutKeyboardUpFunc(onKeyboardUp);
 
-    //glutMotionFunc(mouseFunction);
     glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
     glutMouseFunc(mouseFunc);
