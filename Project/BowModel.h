@@ -15,19 +15,17 @@ public:
 	BowModel( WiiHandler * wiiHandler, string filename, GameState * state, Camera * camera);
 	~BowModel();
 	void draw() override;
-	float toRadian(float degree);
-	void fireArrow();
+	static float toRadian(float degree);
+	void fireArrow() const;
 	void update(float deltatime) override;
 private:
 	ObjModel * crosshair;
 	GameState * state;
 	Camera* camera_;
-	ArrowModel * arrow;
 	WiiHandler * wiiHandler;
-	int counter = 0;
+
 	void SetPositions(float x, float y, float rotx, float roty);
-	void setCrosshairPositions(float x, float y, float rotx, float roty);
-	void setArrowPosition();
+	void setCrosshairPositions(float x, float y, float rotx, float roty) const;
 	
 	float bowPostion = 0.8;
 	int wiiXPos = 0;

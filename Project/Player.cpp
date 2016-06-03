@@ -13,9 +13,15 @@ Player::~Player() {
 
 }
 
-Player::Player(Camera *camera) : c(camera) {
+Player::Player(Camera *camera, unsigned char pid) : c(camera), playerID(pid){
 
 }
+
+unsigned char Player::getPlayerID() {
+    return playerID;
+}
+
+
 
 
 

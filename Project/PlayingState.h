@@ -12,37 +12,56 @@
 #include "BowModel.h"
 #include "AnimatedModel.h"
 #include "AnimatedBowModel.h"
+#include "Player.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
-    public:
-        virtual void Init(GameStateManager * game, Camera * camera, WiiHandler * hand) override;
-        virtual void Cleanup() override;
-        virtual void Pause() override;
-        virtual void Resume() override;
-        virtual void HandleEvents() override;
-        virtual void Update(float deltatime) override;
-		virtual void Update(float deltatime, bool * keys) override;
-        virtual void Draw() override;
-		virtual void preDraw() override;
-		virtual void AddModel(CollisionModel * model) override;
-		static struct PointXY SpawnEnemies();
-		virtual void AddWarrior();
-		virtual void DeleteModel(CollisionModel *model) override;
-		virtual void ScalePowerUp();
+public:
+    virtual void Init(GameStateManager *game, WiiHandler *hand) override;
 
-		
-    private:
-		int counter = 0;
-        GameStateManager *manager;
-		vector<pair<int, ObjModel*> > models; //Models to be drawn by the Draw() function, non colliding.
-		vector<pair<int, CollisionModel*>> collisionModels;
-		int enemyCount = 0;
-		AnimatedBowModel * bow;
-		Camera * camera;
-		WiiHandler * wiiHandler;
-		void PowerUpThread();
-		CollisionModel * gate;
+    virtual void Cleanup() override;
+
+    virtual void Pause() override;
+
+    virtual void Resume() override;
+
+    virtual void HandleEvents() override;
+
+    virtual void Update(float deltatime) override;
+
+    virtual void Update(float deltatime, bool keys) override;
+
+    void preTranslateDraw(Player *p);
+
+    virtual void Draw() override;
+
+    virtual void DrawModels() override;
+
+    virtual void AddModel(CollisionModel *model) override;
+
+    static struct PointXY SpawnEnemies();
+
+    virtual void AddWarrior();
+
+    virtual void DeleteModel(CollisionModel *model) override;
+
+	virtual void ScalePowerUp();
+
+    virtual std::vector<Player*> GetPlayers() override ;
+
+
+private:
+    vector<Player *> players;
+    int counter = 0;
+    GameStateManager *manager;
+    vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
+    vector<pair<int, CollisionModel *>> collisionModels;
+    int enemyCount = 0;
+    AnimatedBowModel *bow;
+    WiiHandler *wiiHandler;
+	CollisionModel * gate;
+    void PowerUpThread();
+
 };
 
 

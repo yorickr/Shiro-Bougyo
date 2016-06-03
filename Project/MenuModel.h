@@ -7,7 +7,7 @@ class MenuModel :
 	public ObjModel
 {	
 public:
-	MenuModel(Camera * camera, WiiHandler * wiiHandler,string filename);
+	MenuModel(WiiHandler * wiiHandler,string filename);
 	~MenuModel();
     void draw() override;
 	void update(float deltatime) override;
@@ -19,7 +19,6 @@ public:
 	ObjModel * exitButton;
 	ObjModel * exitButtonPressed;
 private: 
-	Camera * camera;
 	int counter = 0;
 	void SetPositionMenu(float x, float y, float rotx, float roty);
 	WiiHandler * wiiHandler;

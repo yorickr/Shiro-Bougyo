@@ -4,38 +4,52 @@
 #include <vector>
 #include "Camera.h"
 #include "WiiHandler.h"
+#include "Player.h"
 
 class GameState;
 
 class GameStateManager {
-	public:
-		void Init(Camera * cam, WiiHandler * wiiHandler);
-		void Cleanup();
+public:
+    void Init(WiiHandler *wiiHandler);
 
-		/*void ChangeState(GameState* state);
-		void PushState(GameState* state);
-		void PopState();*/
-		void nextState();
-		void previousState();
-		GameState* getCurrentState();
+    void Cleanup();
+
+    /*void ChangeState(GameState* state);
+    void PushState(GameState* state);
+    void PopState();*/
+    void nextState();
+
+    void previousState();
+
+    GameState *getCurrentState();
 
 
-		void HandleEvents();
-		void Update(float deltatime);
-		void Update(float deltatime, bool * keys);
-		void Draw();
+    void HandleEvents();
 
-		bool Running() { return m_running; }
-		void Quit() { m_running = false; }
+    void Update(float deltatime);
 
-	void preDraw();
+    void Update(float deltatime, bool *keys);
+
+    void Draw();
+
+    std::vector<Player*> GetPlayers();
+
+    bool Running() { return m_running; }
+
+    void Quit() { m_running = false; }
+
+    int width = 0;
+    int height = 0;
+
 private:
-		// the stack of states
-		std::vector<GameState*> states;
-		short currentState;
-		bool m_running;
-		Camera * camera;
-		WiiHandler * wiiHandler;
+    // the stack of states
+    std::vector<GameState *> states;
+    short currentState;
+    bool m_running;
+    WiiHandler *wiiHandler;
+
+
 
 };
+
 #endif
