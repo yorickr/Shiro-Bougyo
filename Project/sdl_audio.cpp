@@ -1,6 +1,6 @@
 #ifdef __APPLE__
-#include "SDL/SDL.h"
-#include <SDL/sdl_mixer.h>
+#include <SDL.h>
+#include <sdl_mixer.h>
 #include <string>
 
 #else
