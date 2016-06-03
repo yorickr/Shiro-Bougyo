@@ -113,6 +113,7 @@ void PlayingState::ScalePowerUp() {
 		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
 		if (warrior != 0) {
 			warrior->setSize(3);
+			warrior->PowerUpBoundingSpheres();
 		}
 	}
 	std::thread serialThread(&PlayingState::PowerUpThread,this); //Serialthread
@@ -127,6 +128,7 @@ void PlayingState::PowerUpThread()
 		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
 		if (warrior != 0) {
 			warrior->setSize(1);
+			warrior->InitBoundingSpheres();
 		}
 	}
 }
