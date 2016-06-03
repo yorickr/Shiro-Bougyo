@@ -206,7 +206,9 @@ void mousePassiveMotion(int x, int y) {
 				camera.rotX = 30;
 			}
 			else if (camera.rotX < -30) {
+
 				camera.rotX = -30;
+				
 			}
 			camera.rotY += dx / 10.0f;
 			glutWarpPointer(WindowWidth / 2, WindowHight / 2);
