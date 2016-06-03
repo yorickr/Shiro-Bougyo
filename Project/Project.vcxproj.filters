@@ -24,6 +24,7 @@
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WarriorModel.cpp" />
     <ClCompile Include="WiiHandler.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedBowModel.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Util.h" />
     <ClInclude Include="WarriorModel.h" />
     <ClInclude Include="WiiHandler.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />

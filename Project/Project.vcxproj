@@ -167,6 +167,7 @@
     <ClCompile Include="MenuModel.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="rs232.c" />
     <ClCompile Include="sdl_audio.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="rs232.h" />
