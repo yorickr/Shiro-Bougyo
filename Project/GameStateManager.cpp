@@ -4,14 +4,13 @@
 #include "PlayingState.h"
 
 
-void GameStateManager::Init(Camera * cam, WiiHandler * hand)
+void GameStateManager::Init(WiiHandler * hand)
 {
-	this->camera = cam;
 	this->wiiHandler = hand;
 	Cleanup();
 	states.push_back(new MenuState());
 	states.push_back(new PlayingState());
-	states.at(currentState)->Init(this, camera, wiiHandler);
+	states.at(currentState)->Init(this, wiiHandler);
 	//Add list of states here
 }
 
@@ -25,7 +24,7 @@ void GameStateManager::nextState()
 {
 	if (currentState < states.size() -1) {
 		currentState++;
-		states.at(currentState)->Init(this, camera, wiiHandler);
+		states.at(currentState)->Init(this, wiiHandler);
 	}
 }
 
@@ -33,7 +32,7 @@ void GameStateManager::previousState()
 {
 	if (currentState > 0) {
 		currentState--;
-		states.at(currentState)->Init(this, camera, wiiHandler);
+		states.at(currentState)->Init(this, wiiHandler);
 	}
 }
 
@@ -66,7 +65,8 @@ void GameStateManager::Draw()
 		states.at(currentState)->Draw();
 }
 
-void GameStateManager::preDraw()
-{
-	states.at(currentState)->preDraw();
+std::vector<Player *> GameStateManager::GetPlayers() {
+	return states.at(currentState)->GetPlayers();
 }
+
+

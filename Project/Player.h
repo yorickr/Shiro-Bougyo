@@ -10,13 +10,15 @@
 
 class Player {
 public:
-    Player(Camera * camera);
+    Player(Camera * camera, unsigned char playerID);
     ~Player();
 
     Camera* getCamera();
+    unsigned char getPlayerID();
 
 private:
     Camera* c;
+    unsigned char playerID;
 
 };
 
