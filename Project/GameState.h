@@ -4,9 +4,10 @@
 #include "GameStateManager.h"
 #include "Camera.h"
 #include "CollisionModel.h"
-#include "Player.h"
 
 class ObjModel;
+class GameStateManager;
+class Player;
 
 class GameState {
 public:
