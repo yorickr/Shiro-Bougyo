@@ -57,7 +57,6 @@ private:
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;
-    AnimatedBowModel *bow;
     WiiHandler *wiiHandler;
 
     void PowerUpThread();

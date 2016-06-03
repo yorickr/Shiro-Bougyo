@@ -109,8 +109,8 @@ void onTimer(int id) {
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	oldTimeSinceStart = timeSinceStart;
 	//TODO: for testing remove keys for final release:
-
-	gameManager.Update(deltatime, &keys['t']);
+	bool t = keys['t'];
+	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);

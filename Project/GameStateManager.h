@@ -29,7 +29,7 @@ public:
 
     void Update(float deltatime);
 
-    void Update(float deltatime, bool *keys);
+    void Update(float deltatime, bool keys);
 
     void Draw();
 

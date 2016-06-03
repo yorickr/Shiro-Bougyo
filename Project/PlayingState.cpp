@@ -183,28 +183,28 @@ void PlayingState::Update(float deltatime) {
 }
 
 void PlayingState::Update(float deltatime, bool keys) {
-	//if (wiiHandler->is_A || keys == true)
-	//{
-	//	counter += deltatime;
-	//	if (counter < 33) bow->setIndex(0);
-	//	else if (counter < 66) bow->setIndex(1);
-	//	else bow->setIndex(2);
-	//	if (counter >= 100)
-	//	{
-	//		bow->nextModel();
-	//		if (counter >= 59)
-	//		{
-	//			bow->getModel()->update(-1);
-	//			bow->setIndex(0);
-	//			counter = 0;
-	//		}
-	//	}
-	//}
-	//else
-	//{
-	//	counter = 0;
-	//	bow->setIndex(0);
-	//}
+	if (wiiHandler->is_A || keys == true)
+	{
+		counter += deltatime;
+		if (counter < 33) players[0]->bow->setIndex(0);
+		else if (counter < 66) players[0]->bow->setIndex(1);
+		else players[0]->bow->setIndex(2);
+		if (counter >= 100)
+		{
+			players[0]->bow->nextModel();
+			if (counter >= 59)
+			{
+				players[0]->bow->getModel()->update(-1);
+				players[0]->bow->setIndex(0);
+				counter = 0;
+			}
+		}
+	}
+	else
+	{
+		counter = 0;
+		players[0]->bow->setIndex(0);
+	}
 
     players.at(1)->getCamera()->rotX++;
 
