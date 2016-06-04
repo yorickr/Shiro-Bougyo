@@ -98,24 +98,59 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
-	if(wiiHandler->Down_pressed || wiiHandler->is_A)
+	if(wiiHandler->Down_pressed)
 	{
 		counter += 1;
-		if (counter % 30 == 0)
+		if (counter >5 && counter < 10)
 		{
 			playbuttons->setIndex(1);
 			settingsbuttons->setIndex(1);
 		}
-		if (counter % 60 == 0)
+		if (counter > 10 && counter < 15)
 		{
 			settingsbuttons->setIndex(0);
+			playbuttons->setIndex(1);
 			Exitbuttons->setIndex(1);
-			if (wiiHandler->is_A)
-			{
-				exit(0);
-			}
+			counter = 15;
+		}else if (counter > 15)
+		{
+			counter = 15;
 		}
 	}
+	if (wiiHandler->Up_pressed)
+	{
+		counter -= 1;
+		if (counter < 10)
+		{
+			Exitbuttons->setIndex(0);
+			settingsbuttons->setIndex(1);
+		}
+		if (counter <5)
+		{
+			settingsbuttons->setIndex(0);
+			playbuttons->setIndex(0);
+			counter = 0;
+		}else if(counter < 0)
+		{
+			counter = 0;
+		}
+	}
+	if(counter  == 0)
+	{
+		if(wiiHandler->is_A)
+		{
+			manager->nextState();
+			counter = 0;
+		}
+	}else if (counter > 10 && counter < 16)
+	{
+		if (wiiHandler->is_A)
+		{
+			exit(0);
+		}
+	}
+
+
 	for (auto &m : models) {
 		m.second->update(deltatime);
 	}
