@@ -98,6 +98,7 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
+	// Wiimote down pres button
 	if(wiiHandler->Down_pressed)
 	{
 		counter += 1;
@@ -117,6 +118,8 @@ void MenuState::Update(float deltatime, bool keys)
 			counter = 15;
 		}
 	}
+
+	// Wiimote Up pres button
 	if (wiiHandler->Up_pressed)
 	{
 		counter -= 1;
@@ -135,6 +138,8 @@ void MenuState::Update(float deltatime, bool keys)
 			counter = 0;
 		}
 	}
+
+	// Wiimote A pres button to go to next state
 	if(counter  == 0)
 	{
 		if(wiiHandler->is_A)

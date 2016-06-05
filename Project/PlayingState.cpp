@@ -79,6 +79,8 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
+
+	//Gate model for colliding
 	AddModel(new GateModel("models/blok/blok.obj"));
     cam1->width = game->width;
     cam1->height = game->height;
@@ -124,7 +126,6 @@ void PlayingState::AddWarrior(){
 	int random = rand() % 60;
 	if(enemyCount < 20 && random < 5){
 		PointXY point = SpawnEnemies();
-		WarriorType type;
 		string filename;
 		if(random % 2)
 		{
@@ -138,7 +139,6 @@ void PlayingState::AddWarrior(){
 			filename = "models/secondwarrior/warrior.obj";
 		}
 		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
-		
 		AddModel(warrior);
 		enemyCount++;
 	}
@@ -209,50 +209,82 @@ void PlayingState::Update(float deltatime, bool keys) {
 		players[0]->bow->setIndex(0);
 	}
 
-    players.at(1)->getCamera()->rotX++;
+	players.at(1)->getCamera()->rotX++;
 
-    bool collides = false;
-    for (auto &obj1 : collisionModels) {
-        for (auto &obj2 : collisionModels) {
-            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
-                    obj2.second))) //get<1> returns a vector with the spheres that are colliding
-            {
-//                printf("%d colliding with %d\n", obj1.first, obj2.first);
-                collides = true;
-                WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
-                WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
-                ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
-                ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
+	//Collision Gate with Warrior
+	bool collidesGate = false;
+	for (auto &Warrior : collisionModels)
+	{
+		for (auto &Gate : collisionModels)
+		{
+			if(Warrior != Gate && std::get<0>(Warrior.second->CollidesWith(Gate.second)))
+			{
+				collidesGate = true;
+				WarriorModel *warrior = dynamic_cast<WarriorModel *>(Warrior.second);
+				WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(Warrior.second);
+				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second);
+				if (warrior != 0 || Gates != 0)
+				{
+					counterWarrior += 1;
+					vector<ObjModel*>first;
+					if (counterWarrior > 5 &&  counterWarrior < 10)
+					{
+						FirstStandModel = new WarriorModel(warrior->xpos, warrior->ypos, type = WarriorType::first, "models/warrior/warriorAttack/FirstStand.obj");
+					}
+				}
+			}
+		}
+		if (!collidesGate) {
+			Warrior.second->update(deltatime);
+		}
+		collidesGate = false;
+	}
 
-                if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+	// Collision warrior and arrow
+	bool collides = false;
+	for (auto &obj1 : collisionModels) {
+		for (auto &obj2 : collisionModels) {
+			if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
+				obj2.second))) //get<1> returns a vector with the spheres that are colliding
+			{
+				//                printf("%d colliding with %d\n", obj1.first, obj2.first);
+				collides = true;
+				WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
+				WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
+				ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
+				ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
 
-                    //TODO: Check if arrow came from player 1 or player 2
-                    if (arrow1 != nullptr) {
-                        DeleteModel(arrow1);
-                    } else {
-                        DeleteModel(arrow2);
-                    }
+				if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
 
-                    //TODO: check sort warrior is shot
-                    if (warrior1 != nullptr) {
-                        //returns false if warrior health <= 0
-                        if (warrior1->removeHealth(100))
-                            DeleteModel(warrior1);
-                    } else {
-                        //returns false if warrior health <= 0
-                        if (warrior2->removeHealth(100))
-                            DeleteModel(warrior2);
-                    }
-                    //DeleteModel(obj1.second);
-                    //DeleteModel(obj2.second);
-                }
-                break;
-            }
-        }
-        if (!collides) {
-            obj1.second->update(deltatime);
-        }
-        collides = false;
+					//TODO: Check if arrow came from player 1 or player 2
+					if (arrow1 != nullptr) {
+						DeleteModel(arrow1);
+					}
+					else {
+						DeleteModel(arrow2);
+					}
+
+					//TODO: check sort warrior is shot
+					if (warrior1 != nullptr) {
+						//returns false if warrior health <= 0
+						if (warrior1->removeHealth(100))
+							DeleteModel(warrior1);
+					}
+					else {
+						//returns false if warrior health <= 0
+						if (warrior2->removeHealth(100))
+							DeleteModel(warrior2);
+					}
+					//DeleteModel(obj1.second);
+					//DeleteModel(obj2.second);
+				}
+				break;
+			}
+		}
+		if (!collides) {
+			obj1.second->update(deltatime);
+		}
+		collides = false;
     }
 
     for (auto &m : models) {

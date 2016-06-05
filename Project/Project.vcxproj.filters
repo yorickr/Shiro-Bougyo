@@ -25,60 +25,6 @@
     <Filter Include="Header Files\ObjectModels">
       <UniqueIdentifier>{08273317-a40e-47fd-92b6-040088979576}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="AnimatedBowModel.cpp" />
-    <ClCompile Include="AnimatedExitButtonModel.cpp" />
-    <ClCompile Include="AnimatedModel.cpp" />
-    <ClCompile Include="AnimatedPlayButtonModel.cpp" />
-    <ClCompile Include="AnimatedSettingsButtonModel.cpp" />
-    <ClCompile Include="ArrowModel.cpp" />
-    <ClCompile Include="BowModel.cpp" />
-    <ClCompile Include="ButtonModel.cpp" />
-    <ClCompile Include="CollisionModel.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MenuModel.cpp" />
-    <ClCompile Include="MenuState.cpp" />
-    <ClCompile Include="ObjModel.cpp" />
-    <ClCompile Include="PlayingState.cpp" />
-    <ClCompile Include="rs232.c" />
-    <ClCompile Include="sdl_audio.cpp" />
-    <ClCompile Include="SerialHandler.cpp" />
-    <ClCompile Include="StationaryObjModel.cpp" />
-    <ClCompile Include="Util.cpp" />
-    <ClCompile Include="WarriorModel.cpp" />
-    <ClCompile Include="WiiHandler.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="GateModel.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AnimatedBowModel.h" />
-    <ClInclude Include="AnimatedExitButtonModel.h" />
-    <ClInclude Include="AnimatedModel.h" />
-    <ClInclude Include="AnimatedPlayButtonModel.h" />
-    <ClInclude Include="AnimatedSettingsButtonModel.h" />
-    <ClInclude Include="ArrowModel.h" />
-    <ClInclude Include="BowModel.h" />
-    <ClInclude Include="ButtonModel.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CollisionModel.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="MenuModel.h" />
-    <ClInclude Include="MenuState.h" />
-    <ClInclude Include="objmodel.h" />
-    <ClInclude Include="PlayingState.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="rs232.h" />
-    <ClInclude Include="sdl_audio.h" />
-    <ClInclude Include="SerialHandler.h" />
-    <ClInclude Include="StationaryObjModel.h" />
-    <ClInclude Include="Util.h" />
-    <ClInclude Include="WarriorModel.h" />
-    <ClInclude Include="WiiHandler.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="GateModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />
@@ -189,6 +135,18 @@
     <ClInclude Include="AnimatedSettingsButtonModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
+    <ClInclude Include="GateModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdl_audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedAttackWarriorOne.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -227,5 +185,34 @@
     <ClCompile Include="AnimatedSettingsButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
+    <ClCompile Include="GateModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdl_audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedAttackWarriorOne.cpp">
+      <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="arrow_hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_pull.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_shot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sword_slash.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="test.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
