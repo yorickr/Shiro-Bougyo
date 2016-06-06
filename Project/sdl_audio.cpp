@@ -2,12 +2,14 @@
 #include <SDL.h>
 #include <sdl_mixer.h>
 #include <string>
+#include <unistd.h>
 
 #else
 #include "SDL.h"
 #include "sdl_mixer.h"
-#endif 
 #include <windows.h>
+#endif 
+
 
 #include "sdl_audio.h"
 
@@ -91,7 +93,11 @@ int SDL_Audio::playSound(std::string fileName) {
 
     while(true)
     {
+		#ifdef __APPLE__
+		usleep(1000000);
+		#else
 		Sleep(10000);
+        #endif
     }
     //cleanup
 	if(theme){ Mix_FreeMusic(sound); }

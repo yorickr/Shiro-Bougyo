@@ -35,7 +35,7 @@
 
 
 
-void WiiHandler::handle_event(struct wiimote_t* wm) {
+void WiiHandler::handle_event(struct wiimote_t* wm,int i) {
 //    Camera* mainCamera = camera;
 
     //printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
@@ -43,10 +43,20 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
     /* if a button is pressed, report it */
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
         //printf("A pressed\n");
-		is_A = true;
+        if(i == 0){
+            is_A1 = true;
+        }
+        if(i == 1){
+            is_A2 = true;
+        }
     }else
     {
-		is_A = false;
+        if(i == 0){
+            is_A1 = false;
+        }
+        if(i == 1){
+            is_A2 = false;
+        }
     }
 
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
@@ -54,17 +64,38 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
     }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
 		//printf("UP pressed\n");
-		Up_pressed = true;
+
+        if(i == 0){
+            Up1_pressed = true;
+        }
+        if(i == 1){
+            Up2_pressed = true;
+        }
 	}else
 	{
-		Up_pressed = false;
+        if(i == 0){
+            Up1_pressed = false;
+        }
+        if(i == 1){
+            Up2_pressed = false;
+        }
 	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_DOWN))	{
        // printf("DOWN pressed\n");
-		Down_pressed = true;
+        if(i == 0){
+            Down1_pressed = true;
+        }
+        if(i == 1){
+            Down2_pressed = true;
+        }
 	}else
 	{
-		Down_pressed = false;
+        if(i == 0){
+            Down1_pressed = false;
+        }
+        if(i == 1){
+            Down2_pressed = false;
+        }
 	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_LEFT))	{
         printf("LEFT pressed\n");
@@ -185,6 +216,29 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
         }
         if (IS_PRESSED(nc, NUNCHUK_BUTTON_Z)) {
             printf("Nunchuk: Z pressed\n");
+        }
+
+        if(i == 0){
+            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1) {
+                rot1X -= nc->js.y * 2;
+                if (rot1X > 30) {
+                    rot1X = 30;
+                } else if (rot1X < -30) {
+                    rot1X = -30;
+                }
+                rot1Y += nc->js.x * 2;
+            }
+        }
+        if(i == 1){
+            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
+                rot2X -= nc->js.y * 2;
+                if(rot2X > 30){
+                    rot2X = 30;
+                }else if(rot2X < -30){
+                    rot2X = -30;
+                }
+                rot2Y += nc->js.x * 2;
+            }
         }
 
 //        printf("nunchuk roll  = %f\n", nc->orient.roll);
@@ -327,6 +381,8 @@ void WiiHandler::wiiMoteLoop() {
     connected = wiiuse_connect(wiimotes, MAX_WIIMOTES);
     if (connected) {
         printf("Connected to %i wiimotes (of %i found).\n", connected, found);
+
+
     } else {
         printf("Failed to connect to any wiimote.\n");
         //return 0;
@@ -349,6 +405,12 @@ void WiiHandler::wiiMoteLoop() {
 //    Sleep(200);
 //#endif
 
+    if(wiimotes[0] != 0){
+        wiiMoteP1 = wiimotes[0];
+    }
+    if(wiimotes[1] != 0){
+        wiiMoteP2 = wiimotes[1];
+    }
     //wiiuse_rumble(wiimotes[0], 0);
     //wiiuse_rumble(wiimotes[1], 0);
 
@@ -396,33 +458,9 @@ void WiiHandler::wiiMoteLoop() {
                         /* a generic event occurred */
 
                         if(i == 0){
-                            wiiMoteP1 = wiimotes[0];
-                            handle_event(wiimotes[0]);
-                            this->nc = (nunchuk_t*)&wiiMoteP1->exp.nunchuk;
-                            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1) {
-                                rot1X -= nc->js.y * 2;
-                                if (rot1X > 30) {
-                                    rot1X = 30;
-                                } else if (rot1X < -30) {
-                                    rot1X = -30;
-                                }
-                                rot1Y += nc->js.x * 2;
-                            }
-                        }
-
-                        if(i == 1){
-                            wiiMoteP2 = wiimotes[1];
-                            handle_event(wiimotes[1]);
-                            this->nc = (nunchuk_t*)&wiiMoteP2->exp.nunchuk;
-                            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
-                                rot2X -= nc->js.y * 2;
-                                if(rot2X > 30){
-                                    rot2X = 30;
-                                }else if(rot2X < -30){
-                                    rot2X = -30;
-                                }
-                                rot2Y += nc->js.x * 2;
-                            }
+                            handle_event(wiimotes[0], 0);
+                        }else if(i == 1){
+                            handle_event(wiimotes[1], 1);
                         }
 
                         break;

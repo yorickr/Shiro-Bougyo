@@ -219,21 +219,18 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
-
-    if (wiiHandler->wiiMoteP1) {
         /* nunchuk */
-        players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
-        players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
-        glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
-    }
-    if (wiiHandler->wiiMoteP2) {
+        players[0]->getCamera()->rotX = wiiHandler->rot1X;
+        players[0]->getCamera()->rotY = wiiHandler->rot1Y;
+        glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;
         players[1]->getCamera()->rotY = wiiHandler->rot2Y;
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
-    }
 
-	if (wiiHandler->is_A || keys == true)
+	//speler 1 booog
+	if (wiiHandler->is_A1 || keys == true)
 	{
 		counter += deltatime;
 		if (counter < 33) players[0]->bow->setIndex(0);
@@ -254,6 +251,29 @@ void PlayingState::Update(float deltatime, bool keys){
 	{
 		counter = 0;
 		players[0]->bow->setIndex(0);
+	}
+
+	if (wiiHandler->is_A2 || keys == true)
+	{
+		counter += deltatime;
+		if (counter < 33) players[1]->bow->setIndex(0);
+		else if (counter < 66) players[1]->bow->setIndex(1);
+		else players[1]->bow->setIndex(2);
+		if (counter >= 100)
+		{
+			players[1]->bow->nextModel();
+			if (counter >= 59)
+			{
+				players[1]->bow->getModel()->update(-1);
+				players[1]->bow->setIndex(0);
+				counter = 0;
+			}
+		}
+	}
+	else
+	{
+		counter = 0;
+		players[1]->bow->setIndex(0);
 	}
 
     bool collides = false;
