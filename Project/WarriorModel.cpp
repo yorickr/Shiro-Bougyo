@@ -4,12 +4,14 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename):CollisionModel(filename)
+WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename, GameState * state):CollisionModel(filename)
 {
 	this->warriortype = type;
 	xpos = x;
 	zpos = z;
 	ypos = -3;
+	isDead = 0;
+	this->game = state;
     //Because the base class InitBoundingSpheres has been called, we need to clear boundingSpheres.
     boundingSpheres.clear(); //Clear base boundingspheres
     WarriorModel::InitBoundingSpheres();
@@ -22,7 +24,7 @@ WarriorModel::~WarriorModel()
 
 //Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    yrot += 0.5 * deltatime;
+    //yrot += 0.5 * deltatime;
 	//ypos = -3.25;
 	int random = rand();
 	//first walk z position
@@ -47,6 +49,11 @@ void WarriorModel::update(float deltatime) {
 		zpos += sin(random) / 20;
 		xpos += sin(random) / 20;
 	}
+	if (isDead == 1 && xrot < 90)
+		xrot += 15;
+	else if(!(isDead == 0))
+		game->DeleteModel(this);
+
 	
 }
 
@@ -100,6 +107,7 @@ void WarriorModel::setSize(int newSize)
 	this->yscale = newSize;
 	this->zscale = newSize;
 }
+
 void WarriorModel::setPosition(int x, int y, int z)
 {
 	if(x != 0)
@@ -129,11 +137,19 @@ bool WarriorModel::removeHealth(Player * player)
 
 	if (health <= 0)
 	{
+		isDead = 1;
 		player->addKill();
-		return true;
+		return false;
 	}
 		
 	return false;
+}
+
+void WarriorModel::setRotation(int x, int y, int z)
+{
+	this->xrot = x;
+	this->yrot = y;
+	this->zrot = z;
 }
 
 
