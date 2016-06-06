@@ -16,7 +16,9 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
+
 #include "sdl_audio.h"
+#include "SerialHandler.h"
 
 
 #ifdef __APPLE__
@@ -24,7 +26,7 @@
 #include <GLUT/glut.h>
 #include <cstdlib>
 #include <iostream>
-
+#include <cmath>
 #else
 #include <tuple>
 #include <windows.h>
@@ -39,6 +41,8 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
+	SerialHandler *serial = manager->getSerialHandler();
+	serial->sendCommand("EGM");
 	
 
     Camera* cam1 = new Camera();
@@ -62,16 +66,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posZ = 3.2;
     cam2->posY = 1.8;
     cam2->rotY = 180;
-	//light
 
-	//bow
-//	vector<ObjModel*> temp;
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj", this, cam));
-//
-//	bow = new AnimatedBowModel(temp, hand);
-	//bow = new AnimatedBowModel(models); #1#
 
 
 	//World
@@ -138,17 +133,11 @@ void PlayingState::AddWarrior(){
 			type = WarriorType::second;
 			filename = "models/secondwarrior/warrior.obj";
 		}
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename,this);
 		
 		AddModel(warrior);
 		enemyCount++;
 	}
-//	else if(enemyCount >= 20){
-//		for( auto &m : collisionModels){
-//			DeleteModel(m.second);
-//		}
-//        enemyCount = 0;
-//	}
 }
 
 void PlayingState::ScalePowerUp() {
@@ -159,8 +148,14 @@ void PlayingState::ScalePowerUp() {
 			warrior->PowerUpBoundingSpheres();
 		}
 	}
-	std::thread serialThread(&PlayingState::PowerUpThread,this); //Serialthread
-	serialThread.detach();
+	std::thread scaleThread(&PlayingState::PowerUpThread,this); //Serialthread
+	scaleThread.detach();
+}
+
+void PlayingState::DestoryPowerUp()
+{
+	std::thread destroyThread(&PlayingState::DestroyPowerUpThread, this); //Serialthread
+	destroyThread.detach();
 }
 
 void PlayingState::PowerUpThread()
@@ -176,6 +171,36 @@ void PlayingState::PowerUpThread()
 	}
 }
 
+void PlayingState::DestroyPowerUpThread()
+{
+	float height = 0;
+	int war;
+	int rot = 0;
+	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
+	while (height < 40) {
+		for (iter = collisionModels.begin(), war = 0; iter != collisionModels.end() && war < 10; ++iter, war++) {
+				WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+				if (warrior != 0) {
+					warrior->setPosition(0,height,0);
+					warrior->setRotation(warrior->xrot, rot, warrior->zrot);
+				}
+			}
+		rot+=60;
+		height+=0.1;
+		Util::USleep(30);
+	}
+	//removing them:
+	for (int count = 0; count < 10; count++) {
+		for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter) {
+			WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+			if (warrior != 0) {
+				collisionModels.erase(iter);
+				break;
+			}
+		}
+	}
+}
+
 void PlayingState::Cleanup() {}
 
 void PlayingState::Pause() {}
@@ -186,7 +211,22 @@ void PlayingState::Update(float deltatime) {
 	Update(deltatime, false);
 }
 
-void PlayingState::Update(float deltatime, bool keys) {
+void PlayingState::Update(float deltatime, bool keys){
+
+
+    if (wiiHandler->wiiMoteP1) {
+        /* nunchuk */
+        players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+        players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+        glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+    }
+    if (wiiHandler->wiiMoteP2) {
+        /* nunchuk */
+        players[1]->getCamera()->rotX = wiiHandler->rot2X;
+        players[1]->getCamera()->rotY = wiiHandler->rot2Y;
+        glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
+    }
+
 	if (wiiHandler->is_A || keys == true)
 	{
 		counter += deltatime;
@@ -210,17 +250,16 @@ void PlayingState::Update(float deltatime, bool keys) {
 		players[0]->bow->setIndex(0);
 	}
 
-    players.at(1)->getCamera()->rotX++;
-
     bool collides = false;
     for (auto &obj1 : collisionModels) {
         for (auto &obj2 : collisionModels) {
+			
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
                     obj2.second))) //get<1> returns a vector with the spheres that are colliding
             {
 //                printf("%d colliding with %d\n", obj1.first, obj2.first);
                 collides = true;
-                WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
+				WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
                 WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
                 ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
                 ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
@@ -228,25 +267,27 @@ void PlayingState::Update(float deltatime, bool keys) {
                 if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
 					std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
 					arrowHitThread.detach();
-                    //TODO: Check if arrow came from player 1 or player 2
+
+					//set player who shot the arrow
+					Player * from_player;
                     if (arrow1 != nullptr) {
+						from_player = arrow1->getPlayer();
                         DeleteModel(arrow1);
                     } else {
+						from_player = arrow2->getPlayer();
                         DeleteModel(arrow2);
                     }
 
-                    //TODO: check sort warrior is shot
+                    
                     if (warrior1 != nullptr) {
                         //returns false if warrior health <= 0
-                        if (warrior1->removeHealth(100))
-                            DeleteModel(warrior1);
+						warrior1->removeHealth(from_player);
+						
                     } else {
                         //returns false if warrior health <= 0
-                        if (warrior2->removeHealth(100))
-                            DeleteModel(warrior2);
+						warrior2->removeHealth(from_player);
+                      
                     }
-                    //DeleteModel(obj1.second);
-                    //DeleteModel(obj2.second);
                 }
                 break;
             }
