@@ -19,13 +19,13 @@
 
 #include "WiiHandler.h"
 
-#define COMMPORT 4
+#define COMMPORT 5
 #define DELTATIME_MODIFIER 10;
 
 #include "sdl_audio.h"
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT, gameManager);
+SerialHandler serial = SerialHandler(COMMPORT, &gameManager);
 
 bool keys[255];
 void* wiiFunc(void * argument);
@@ -73,8 +73,8 @@ void onDisplay() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc, nullptr); //WiiMote Thread
 	wiiThread.detach();
-	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
-	musicThread.detach();
+	//std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
+	//musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -119,9 +119,9 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
+		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
 			gameManager.nextState();
-		}
+		//}
 		break;
 	default:
 		//just to please CLion.
@@ -140,20 +140,20 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
-//		int dx = x - WindowWidth / 2;
-//		int dy = y - WindowHeight / 2;
-//		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-//		{
-//			gameManager.GetPlayers().at(0)->getCamera()->rotX += dy / 10.0f;
-//			if (gameManager.GetPlayers().at(0)->getCamera()->rotX > 30) {
-//				gameManager.GetPlayers().at(0)->getCamera()->rotX = 30;
-//			}
-//			else if (gameManager.GetPlayers().at(0)->getCamera()->rotX < -30) {
-//				gameManager.GetPlayers().at(0)->getCamera()->rotX = -30;
-//			}
-//			gameManager.GetPlayers().at(0)->getCamera()->rotY += dx / 10.0f;
-//			glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
-//		}
+		int dx = x - WindowWidth / 2;
+		int dy = y - WindowHeight / 2;
+		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
+		{
+			gameManager.GetPlayers().at(0)->getCamera()->rotX += dy / 10.0f;
+			if (gameManager.GetPlayers().at(0)->getCamera()->rotX > 30) {
+				gameManager.GetPlayers().at(0)->getCamera()->rotX = 30;
+			}
+			else if (gameManager.GetPlayers().at(0)->getCamera()->rotX < -30) {
+				gameManager.GetPlayers().at(0)->getCamera()->rotX = -30;
+			}
+			gameManager.GetPlayers().at(0)->getCamera()->rotY += dx / 10.0f;
+			glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
+		}
 }
 
 

@@ -49,6 +49,8 @@ public:
 
 	virtual void DestoryPowerUp();
 
+	virtual void SetEnemyCount(int offset);
+
     virtual std::vector<Player*> GetPlayers() override ;
 
 

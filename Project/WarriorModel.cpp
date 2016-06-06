@@ -10,6 +10,7 @@ WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename, 
 	xpos = x;
 	zpos = z;
 	ypos = -3;
+	yrot += 180;
 	isDead = 0;
 	this->game = state;
     //Because the base class InitBoundingSpheres has been called, we need to clear boundingSpheres.
@@ -51,10 +52,8 @@ void WarriorModel::update(float deltatime) {
 	}
 	if (isDead == 1 && xrot < 90)
 		xrot += 15;
-	else if(!(isDead == 0))
+	else if (!(isDead == 0)) 
 		game->DeleteModel(this);
-
-	
 }
 
 void WarriorModel::InitBoundingSpheres() {
