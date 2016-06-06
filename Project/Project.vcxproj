@@ -218,7 +218,7 @@
     <Media Include="bow_pull.wav" />
     <Media Include="bow_shot.wav" />
     <Media Include="sword_slash.wav" />
-    <Media Include="test.wav" />
+    <Media Include="theme.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
