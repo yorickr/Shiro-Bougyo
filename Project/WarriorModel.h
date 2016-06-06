@@ -14,6 +14,7 @@ public:
 	void InitBoundingSpheres() override;
 	void PowerUpBoundingSpheres();
 	void setSize(int);
+	void setPosition(int, int, int);
 	bool removeHealth(int health);	//returns true if health <= 0 otherwise false
 private:
 	int health = 100;

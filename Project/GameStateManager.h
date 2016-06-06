@@ -4,14 +4,18 @@
 #include <vector>
 #include "Camera.h"
 #include "WiiHandler.h"
+
 #include "Player.h"
 
 class GameState;
+class SerialHandler;
 class Player;
 
 class GameStateManager {
 public:
     void Init(WiiHandler *wiiHandler);
+	void addSerialHandler(SerialHandler *serialHandler);
+	SerialHandler* getSerialHandler();
 
     void Cleanup();
 
@@ -48,6 +52,7 @@ private:
     short currentState;
     bool m_running;
     WiiHandler *wiiHandler;
+	SerialHandler *serialHandler;
 
 
 

@@ -49,6 +49,8 @@ public:
 
 	virtual void ScalePowerUp();
 
+	virtual void DestoryPowerUp();
+
     virtual std::vector<Player*> GetPlayers() override ;
 
 
@@ -66,8 +68,7 @@ private:
     void PowerUpThread();
 	WarriorModel *warriorOne;
 	AnimatedAttackWarriorOne *FirstStand;
-	
-
+	void DestroyPowerUpThread();
 };
 
 
