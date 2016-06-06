@@ -24,13 +24,17 @@ Player::~Player() {
 void Player::makeBow()
 {
 	vector<ObjModel*> temp;
-	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_recurve.obj", gamestate_, c));
-	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_01.obj", gamestate_, c));
-	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_02.obj", gamestate_, c));
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_recurve.obj", gamestate_, c, this));
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_01.obj", gamestate_, c, this));
+	temp.push_back(new BowModel(wiiHandler_, "models/bow/Bow_02.obj", gamestate_, c, this));
 	
 	this->bow = new AnimatedBowModel(temp, wiiHandler_);
 }
 
+void Player::addKill()
+{
+	kills++;
+}
 
 
 unsigned char Player::getPlayerID() {
