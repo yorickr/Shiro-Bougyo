@@ -10,8 +10,12 @@
 
 # define M_PI           3.14159265358979323846  /* pi */
 
-ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state) : CollisionModel("models/Arrow/Arrow.obj") {
+class Player;
+
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player) : CollisionModel("models/Arrow/Arrow.obj") {
 	this->state = state;
+	this->player_ = player;
+
     //startpoint arrow:
 	xpos = startx;
 	ypos = starty;
@@ -51,6 +55,12 @@ void ArrowModel::update(float deltatime) {
 	{
 		state->DeleteModel(this);
 	}
+}
+
+
+Player* ArrowModel::getPlayer() const
+{
+	return player_;
 }
 
 void ArrowModel::draw() {
