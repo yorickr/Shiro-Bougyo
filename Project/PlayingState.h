@@ -47,6 +47,8 @@ public:
 
 	virtual void ScalePowerUp();
 
+	virtual void DestoryPowerUp();
+
     virtual std::vector<Player*> GetPlayers() override ;
 
 
@@ -60,7 +62,7 @@ private:
     WiiHandler *wiiHandler;
 	CollisionModel * gate;
     void PowerUpThread();
-
+	void DestroyPowerUpThread();
 };
 
 

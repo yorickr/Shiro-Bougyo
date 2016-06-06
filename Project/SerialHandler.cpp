@@ -99,10 +99,8 @@ void SerialHandler::handleReceivedCommand(std::string command)
 				playState->ScalePowerUp();
 			else if (command == "PP2")
 				printf("smthing");
-		}
-			
+		}			
 	}
-
 }
 
 bool SerialHandler::isConnected()

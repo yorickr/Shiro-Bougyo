@@ -333,4 +333,21 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="arrow_hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_pull.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="bow_shot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="sword_slash.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="test.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

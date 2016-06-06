@@ -16,6 +16,7 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
+#include "SerialHandler.h"
 
 
 #ifdef __APPLE__
@@ -38,6 +39,8 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
+	SerialHandler *serial = manager->getSerialHandler();
+	serial->sendCommand("EGM");
 	
 
     Camera* cam1 = new Camera();
@@ -143,8 +146,14 @@ void PlayingState::ScalePowerUp() {
 			warrior->PowerUpBoundingSpheres();
 		}
 	}
-	std::thread serialThread(&PlayingState::PowerUpThread,this); //Serialthread
-	serialThread.detach();
+	std::thread scaleThread(&PlayingState::PowerUpThread,this); //Serialthread
+	scaleThread.detach();
+}
+
+void PlayingState::DestoryPowerUp()
+{
+	std::thread destroyThread(&PlayingState::DestroyPowerUpThread, this); //Serialthread
+	destroyThread.detach();
 }
 
 void PlayingState::PowerUpThread()
@@ -156,6 +165,34 @@ void PlayingState::PowerUpThread()
 		if (warrior != 0) {
 			warrior->setSize(1);
 			warrior->InitBoundingSpheres();
+		}
+	}
+}
+
+void PlayingState::DestroyPowerUpThread()
+{
+	int height = 0;
+	int war;
+	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
+	while (height < 40) {
+		for (iter = collisionModels.begin(), war = 0; iter != collisionModels.end() && war < 10; ++iter, war++) {
+				WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+				if (warrior != 0) {
+					warrior->setPosition(0,height,0);
+					//warrior->PowerUpBoundingSpheres();
+				}
+			}
+		height++;
+		Util::USleep(100);
+	}
+	//removing them:
+	for (int count = 0; count < 10; count++) {
+		for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter) {
+			WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+			if (warrior != 0) {
+				collisionModels.erase(iter);
+				break;
+			}
 		}
 	}
 }

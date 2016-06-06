@@ -15,12 +15,12 @@ public:
 	void InitBoundingSpheres() override;
 	void PowerUpBoundingSpheres();
 	void setSize(int);
-	
 	bool removeHealth(Player* player);
+	void setPosition(int, int, int);
+	bool removeHealth(int health);	//returns true if health <= 0 otherwise false
 	int health = 100;
-	//returns true if health <= 0 otherwise false
-private:
-	
+
+private:	
 	WarriorType warriortype;
 	short right;
 };
