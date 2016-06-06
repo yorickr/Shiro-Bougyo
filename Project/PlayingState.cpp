@@ -131,7 +131,7 @@ void PlayingState::AddWarrior(){
 			type = WarriorType::second;
 			filename = "models/secondwarrior/warrior.obj";
 		}
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename,this);
 		
 		AddModel(warrior);
 		enemyCount++;
@@ -171,19 +171,21 @@ void PlayingState::PowerUpThread()
 
 void PlayingState::DestroyPowerUpThread()
 {
-	int height = 0;
+	float height = 0;
 	int war;
+	int rot = 0;
 	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
 	while (height < 40) {
 		for (iter = collisionModels.begin(), war = 0; iter != collisionModels.end() && war < 10; ++iter, war++) {
 				WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
 				if (warrior != 0) {
 					warrior->setPosition(0,height,0);
-					//warrior->PowerUpBoundingSpheres();
+					warrior->setRotation(warrior->xrot, rot, warrior->zrot);
 				}
 			}
-		height++;
-		Util::USleep(100);
+		rot+=60;
+		height+=0.1;
+		Util::USleep(30);
 	}
 	//removing them:
 	for (int count = 0; count < 10; count++) {
@@ -249,15 +251,17 @@ void PlayingState::Update(float deltatime, bool keys){
     bool collides = false;
     for (auto &obj1 : collisionModels) {
         for (auto &obj2 : collisionModels) {
+			
             if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
                     obj2.second))) //get<1> returns a vector with the spheres that are colliding
             {
 //                printf("%d colliding with %d\n", obj1.first, obj2.first);
                 collides = true;
-                WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
+				WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
                 WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
                 ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
                 ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
+
                 if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
 					//set player who shot the arrow
 					Player * from_player;
@@ -273,13 +277,11 @@ void PlayingState::Update(float deltatime, bool keys){
                     if (warrior1 != nullptr) {
                         //returns false if warrior health <= 0
 						warrior1->removeHealth(from_player);
-						if(warrior1->health <=0)
-							DeleteModel(warrior1);
+						
                     } else {
                         //returns false if warrior health <= 0
 						warrior2->removeHealth(from_player);
-                        if (warrior2->health <=0)
-                            DeleteModel(warrior2);
+                      
                     }
                 }
                 break;
