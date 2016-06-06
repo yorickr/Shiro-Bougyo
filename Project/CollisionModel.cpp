@@ -7,7 +7,7 @@
 #include <tuple>
 
 //TODO: Remove me before the final release
-#define DRAW_BOUNDING_BOX true
+#define DRAW_BOUNDING_BOX false
 
 CollisionModel::Sphere::Sphere(float x, float y, float z, float radius):x(x), y(y), z(z), radius(radius) {
     //Initialize a sphere

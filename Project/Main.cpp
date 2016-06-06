@@ -146,20 +146,20 @@ void onKeyboardUp(unsigned char key, int, int) {
 }
 
 void mousePassiveMotion(int x, int y) {
-		int dx = x - WindowWidth / 2;
-		int dy = y - WindowHeight / 2;
-		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
-		{
-			gameManager.GetPlayers().at(0)->getCamera()->rotX += dy / 10.0f;
-			if (gameManager.GetPlayers().at(0)->getCamera()->rotX > 30) {
-				gameManager.GetPlayers().at(0)->getCamera()->rotX = 30;
-			}
-			else if (gameManager.GetPlayers().at(0)->getCamera()->rotX < -30) {
-				gameManager.GetPlayers().at(0)->getCamera()->rotX = -30;
-			}
-			gameManager.GetPlayers().at(0)->getCamera()->rotY += dx / 10.0f;
-			glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
-		}
+//		int dx = x - WindowWidth / 2;
+//		int dy = y - WindowHeight / 2;
+//		if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
+//		{
+//			gameManager.GetPlayers().at(0)->getCamera()->rotX += dy / 10.0f;
+//			if (gameManager.GetPlayers().at(0)->getCamera()->rotX > 30) {
+//				gameManager.GetPlayers().at(0)->getCamera()->rotX = 30;
+//			}
+//			else if (gameManager.GetPlayers().at(0)->getCamera()->rotX < -30) {
+//				gameManager.GetPlayers().at(0)->getCamera()->rotX = -30;
+//			}
+//			gameManager.GetPlayers().at(0)->getCamera()->rotY += dx / 10.0f;
+//			glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
+//		}
 }
 
 
