@@ -26,6 +26,7 @@
 
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT, gameManager);
+
 bool keys[255];
 void* wiiFunc(void * argument);
 void* musicFunc(void * argument);
@@ -73,8 +74,8 @@ void onDisplay() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
-	//std::thread musicThread(&musicFunc, nullptr); //Music Thread
-	//musicThread.detach();
+	std::thread musicThread(&musicFunc, nullptr); //Music Thread
+	musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -95,7 +96,7 @@ void onTimer(int id) {
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
 		if (playState)
-			playState->ScalePowerUp();
+			playState->DestoryPowerUp();
 	}
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
@@ -220,6 +221,7 @@ int main(int argc, char* argv[]) {
 	memset(keys, 0, sizeof(keys));
 	
 	gameManager.Init(&wiiHandler);
+	gameManager.addSerialHandler(&serial);
 
 	glutMainLoop();
 }

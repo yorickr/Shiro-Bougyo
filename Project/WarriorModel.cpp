@@ -100,6 +100,16 @@ void WarriorModel::setSize(int newSize)
 	this->zscale = newSize;
 }
 
+void WarriorModel::setPosition(int x, int y, int z)
+{
+	if(x != 0)
+	this->xpos = x;
+	if(y != 0)
+	this->ypos = y;
+	if(z != 0)
+	this->zpos = z;
+}
+
 bool WarriorModel::removeHealth(int health)
 {
 	this->health -= health;
