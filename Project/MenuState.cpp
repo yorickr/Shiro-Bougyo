@@ -7,6 +7,7 @@
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+#include <cmath>
 
 #else
 #include <windows.h>
@@ -33,9 +34,6 @@ void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 	cam->rotX = 0;
 	cam->rotY = -40;
 	models.push_back(pair<int, ObjModel*>(1, menu));
-
-
-
 	
 	// playButton 
 	vector<ObjModel*> playbutton;
@@ -94,10 +92,27 @@ void MenuState::Update(float deltatime)
 	for (auto &m : models) {
 		m.second->draw();
 	}
+
+
+	if (wiiHandler->wiiMoteP1) {
+		/* nunchuk */
+		players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+		players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+		glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+	}
+
 }
 
 void MenuState::Update(float deltatime, bool keys)
 {
+
+	if (wiiHandler->wiiMoteP1) {
+		/* nunchuk */
+		players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+		players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+		glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+	}
+
 	/*if (wiiHandler->Down_pressed || wiiHandler->is_A)
 	{
  		counter++;
@@ -182,6 +197,8 @@ void MenuState::Update(float deltatime, bool keys)
 	for (auto &m : models) {
 		m.second->update(deltatime);
 	}
+
+
 }
 
 void MenuState::Draw()

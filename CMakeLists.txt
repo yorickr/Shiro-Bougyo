@@ -34,7 +34,7 @@ FILE(GLOB SOURCE_FILES
 #)
 
 
-add_executable(Shiro_Bougyo ${SOURCE_FILES} Project/GateModel.cpp Project/GateModel.h)
+add_executable(Shiro_Bougyo ${SOURCE_FILES})
 
 find_package(SDL REQUIRED)
 find_package(SDL_mixer REQUIRED)
