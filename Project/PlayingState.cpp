@@ -24,7 +24,7 @@
 #include <GLUT/glut.h>
 #include <cstdlib>
 #include <iostream>
-
+#include <cmath>
 #else
 #include <tuple>
 #include <windows.h>
@@ -209,7 +209,22 @@ void PlayingState::Update(float deltatime) {
 	Update(deltatime, false);
 }
 
-void PlayingState::Update(float deltatime, bool keys) {
+void PlayingState::Update(float deltatime, bool keys){
+
+
+    if (wiiHandler->wiiMoteP1) {
+        /* nunchuk */
+        players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+        players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+        glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+    }
+    if (wiiHandler->wiiMoteP2) {
+        /* nunchuk */
+        players[1]->getCamera()->rotX = wiiHandler->rot2X;
+        players[1]->getCamera()->rotY = wiiHandler->rot2Y;
+        glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
+    }
+
 	if (wiiHandler->is_A || keys == true)
 	{
 		counter += deltatime;
@@ -232,9 +247,6 @@ void PlayingState::Update(float deltatime, bool keys) {
 		counter = 0;
 		players[0]->bow->setIndex(0);
 	}
-
-    players.at(1)->getCamera()->rotX++;
-
 
     bool collides = false;
     for (auto &obj1 : collisionModels) {
