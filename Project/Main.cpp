@@ -119,9 +119,7 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
-			gameManager.nextState();
-		}
+		gameManager.nextState();
 		break;
 	default:
 		//just to please CLion.
@@ -196,7 +194,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	//glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
