@@ -147,6 +147,9 @@
     <ClInclude Include="AnimatedAttackWarriorOne.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedCollisionModel.h">
+      <Filter>Header Files\ObjectModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="AnimatedAttackWarriorOne.cpp">
       <Filter>Source Files\ObjectModels</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedCollisionModel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,14 +1,13 @@
 #pragma once
-#pragma once
-#include "AnimatedModel.h"
 #include "WiiHAndler.h"
 #include "BowModel.h"
+#include "AnimatedCollisionModel.h"
 
 class AnimatedAttackWarriorOne :
-	public AnimatedModel
+	public AnimatedCollisionModel
 {
 public:
-	AnimatedAttackWarriorOne(vector<ObjModel*> models);
+	AnimatedAttackWarriorOne(vector<CollisionModel *>models);
 	~AnimatedAttackWarriorOne();
 
 };

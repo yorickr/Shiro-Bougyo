@@ -64,8 +64,9 @@ private:
     WiiHandler *wiiHandler;
 	CollisionModel * gate;
     void PowerUpThread();
-	WarriorModel *FirstStandModel;
+	WarriorModel *warriorOne;
 	AnimatedAttackWarriorOne *FirstStand;
+	
 
 };
 

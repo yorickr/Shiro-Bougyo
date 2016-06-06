@@ -138,8 +138,13 @@ void PlayingState::AddWarrior(){
 			type = WarriorType::second;
 			filename = "models/secondwarrior/warrior.obj";
 		}
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
-		AddModel(warrior);
+		vector<CollisionModel*>warrior_model;
+		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename);
+		warrior_model.push_back(warriorOne);
+		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj");
+		warrior_model.push_back(warriorOne);
+		FirstStand = new AnimatedAttackWarriorOne(warrior_model);
+		AddModel(warriorOne);
 		enemyCount++;
 	}
 //	else if(enemyCount >= 20){
@@ -213,6 +218,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 
 	//Collision Gate with Warrior
 	bool collidesGate = false;
+
 	for (auto &Warrior : collisionModels)
 	{
 		for (auto &Gate : collisionModels)
@@ -223,15 +229,20 @@ void PlayingState::Update(float deltatime, bool keys) {
 				WarriorModel *warrior = dynamic_cast<WarriorModel *>(Warrior.second);
 				WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(Warrior.second);
 				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second);
-				if (warrior != 0 || Gates != 0)
-				{
+
 					counterWarrior += 1;
 					vector<ObjModel*>first;
 					if (counterWarrior > 5 &&  counterWarrior < 10)
 					{
-						FirstStandModel = new WarriorModel(warrior->xpos, warrior->ypos, type = WarriorType::first, "models/warrior/warriorAttack/FirstStand.obj");
+						FirstStand->setIndex(0);
 					}
-				}
+					if(counterWarrior > 10 && counterWarrior < 20)
+					{
+						FirstStand->setIndex(1);
+					}else if(counterWarrior > 21)
+					{
+						counterWarrior = 0;
+					}
 			}
 		}
 		if (!collidesGate) {
@@ -306,6 +317,7 @@ void PlayingState::DrawModels(){
     for( auto &n : collisionModels) {
         n.second->draw();
     }
+	//FirstStand->getModel()->draw();
 }
 
 
