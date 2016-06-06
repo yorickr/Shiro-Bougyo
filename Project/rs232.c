@@ -196,7 +196,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
   Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
   if(Cport[comport_number]==-1)
   {
-    perror("unable to open comport ");
+    //perror("unable to open comport ");
     return(1);
   }
 
@@ -569,7 +569,7 @@ http://technet.microsoft.com/en-us/library/cc732236.aspx
 
   if(Cport[comport_number]==INVALID_HANDLE_VALUE)
   {
-    printf("unable to open comport\n");
+    //printf("unable to open comport\n");
     return(1);
   }
 

@@ -24,7 +24,7 @@ bool SerialHandler::initializeCommPort()
 	int baudrate = 9600;
 
 	if (RS232_OpenComport(cPortNr, baudrate, "8N1")) {
-		printf("Failed to connect to COMM%i\n" + commPortNumber);
+		//printf("Failed to connect to COMM%i\n" + commPortNumber);
 		return 0;
 	}
 	else {
@@ -84,8 +84,9 @@ void SerialHandler::receiveThread()
 				printf("Serial device disconnected");
 			}
 		}
-		else
-			printf("not conencted\n");
+		else{ 
+			//printf("not connected\n"); 
+		}
 		Util::USleep(1000);
 	}
 }

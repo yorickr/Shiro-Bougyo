@@ -28,7 +28,6 @@ GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT, gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
-void* musicFunc(void * argument);
 //Camera camera;
 
 WiiHandler wiiHandler;
@@ -71,10 +70,10 @@ void onDisplay() {
 }
 
 void initializeThreads(){
-	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	std::thread wiiThread(&wiiFunc, nullptr); //WiiMote Thread
 	wiiThread.detach();
-	//std::thread musicThread(&musicFunc, nullptr); //Music Thread
-	//musicThread.detach();
+	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
+	musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -130,11 +129,6 @@ void onKeyboard(unsigned char key, int, int) {
 
 void* wiiFunc(void * argument) {
 	wiiHandler.wiiMoteTest();
-	return 0;
-}
-
-void* musicFunc(void * argument) {
-	playTheme();
 	return 0;
 }
 

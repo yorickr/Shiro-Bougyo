@@ -16,6 +16,7 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
+#include "sdl_audio.h"
 
 
 #ifdef __APPLE__
@@ -225,7 +226,8 @@ void PlayingState::Update(float deltatime, bool keys) {
                 ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
 
                 if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
-
+					std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
+					arrowHitThread.detach();
                     //TODO: Check if arrow came from player 1 or player 2
                     if (arrow1 != nullptr) {
                         DeleteModel(arrow1);
