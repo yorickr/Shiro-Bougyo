@@ -42,6 +42,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 //	this->camera = cam;
     this->wiiHandler = hand;
 	SerialHandler *serial = manager->getSerialHandler();
+	//Enable the pressure plates:
 	serial->sendCommand("EGM");
 	
 
@@ -156,6 +157,11 @@ void PlayingState::DestoryPowerUp()
 {
 	std::thread destroyThread(&PlayingState::DestroyPowerUpThread, this); //Serialthread
 	destroyThread.detach();
+}
+
+void PlayingState::SetEnemyCount(int offset)
+{
+	enemyCount += offset;
 }
 
 void PlayingState::PowerUpThread()
@@ -443,6 +449,10 @@ void PlayingState::DeleteModel(CollisionModel *model) {
 	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
 	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
 		if(iter->second == model){
+			WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+			if (warrior != 0) {
+				SetEnemyCount(-1);
+			}
 			collisionModels.erase(iter);
 			break;
 		}
