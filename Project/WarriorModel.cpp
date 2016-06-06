@@ -113,7 +113,6 @@ void WarriorModel::setPosition(int x, int y, int z)
 bool WarriorModel::removeHealth(Player * player)
 {
 	health -= 35;
-	this->ypos += 1;
 	//if player 1 hits first warriortype
 	if (player->playerID == 1 && (this->warriortype == WarriorType::first))
 	{
@@ -129,7 +128,11 @@ bool WarriorModel::removeHealth(Player * player)
 	}
 
 	if (health <= 0)
+	{
+		player->addKill();
 		return true;
+	}
+		
 	return false;
 }
 

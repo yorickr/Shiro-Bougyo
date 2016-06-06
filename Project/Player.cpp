@@ -31,6 +31,10 @@ void Player::makeBow()
 	this->bow = new AnimatedBowModel(temp, wiiHandler_);
 }
 
+void Player::addKill()
+{
+	kills++;
+}
 
 
 unsigned char Player::getPlayerID() {

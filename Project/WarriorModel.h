@@ -15,9 +15,8 @@ public:
 	void InitBoundingSpheres() override;
 	void PowerUpBoundingSpheres();
 	void setSize(int);
-	bool removeHealth(Player* player);
+	bool removeHealth(Player* player);//returns true if health <= 0 otherwise false
 	void setPosition(int, int, int);
-	bool removeHealth(int health);	//returns true if health <= 0 otherwise false
 	int health = 100;
 
 private:	
