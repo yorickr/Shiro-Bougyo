@@ -16,14 +16,14 @@ public:
     Player(Camera * camera, WiiHandler * hand, GameState * state, unsigned char playerID);
     ~Player();
 	void makeBow();
-
+	unsigned char playerID;
     Camera* getCamera();
     unsigned char getPlayerID();
 	AnimatedBowModel * bow;
 private:
 	WiiHandler * wiiHandler_;
     Camera* c;
-    unsigned char playerID;
+    
 	GameState* gamestate_;
 };
 

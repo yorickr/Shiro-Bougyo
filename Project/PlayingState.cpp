@@ -61,16 +61,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posZ = 3.2;
     cam2->posY = 1.8;
     cam2->rotY = 180;
-	//light
 
-	//bow
-//	vector<ObjModel*> temp;
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj", this, cam));
-//
-//	bow = new AnimatedBowModel(temp, hand);
-	//bow = new AnimatedBowModel(models); #1#
 
 
 	//World
@@ -142,12 +133,6 @@ void PlayingState::AddWarrior(){
 		AddModel(warrior);
 		enemyCount++;
 	}
-//	else if(enemyCount >= 20){
-//		for( auto &m : collisionModels){
-//			DeleteModel(m.second);
-//		}
-//        enemyCount = 0;
-//	}
 }
 
 void PlayingState::ScalePowerUp() {
@@ -223,28 +208,29 @@ void PlayingState::Update(float deltatime, bool keys) {
                 WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
                 ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
                 ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
-
                 if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
-
-                    //TODO: Check if arrow came from player 1 or player 2
+					//set player who shot the arrow
+					Player * from_player;
                     if (arrow1 != nullptr) {
+						from_player = arrow1->getPlayer();
                         DeleteModel(arrow1);
                     } else {
+						from_player = arrow2->getPlayer();
                         DeleteModel(arrow2);
                     }
 
-                    //TODO: check sort warrior is shot
+                    
                     if (warrior1 != nullptr) {
                         //returns false if warrior health <= 0
-                        if (warrior1->removeHealth(100))
-                            DeleteModel(warrior1);
+						warrior1->removeHealth(from_player);
+						if(warrior1->health <=0)
+							DeleteModel(warrior1);
                     } else {
                         //returns false if warrior health <= 0
-                        if (warrior2->removeHealth(100))
+						warrior2->removeHealth(from_player);
+                        if (warrior2->health <=0)
                             DeleteModel(warrior2);
                     }
-                    //DeleteModel(obj1.second);
-                    //DeleteModel(obj2.second);
                 }
                 break;
             }

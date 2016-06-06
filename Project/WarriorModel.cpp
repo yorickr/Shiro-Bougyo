@@ -6,6 +6,7 @@
 
 WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename):CollisionModel(filename)
 {
+	this->warriortype = type;
 	xpos = x;
 	zpos = z;
 	ypos = -3;
@@ -84,7 +85,7 @@ void WarriorModel::PowerUpBoundingSpheres() {
 
 	x = width / 2 + vertices_min->x;
 	z = depth / 2+vertices_min->z;
-
+ 
 	boundingSpheres.push_back((new Sphere(x, 3.6f, z, 0.375f))); //Magic values for the head
 
 	boundingSpheres.push_back(new Sphere(x, 2.7f, z, 0.60f)); //Magic values for the torso
@@ -100,11 +101,30 @@ void WarriorModel::setSize(int newSize)
 	this->zscale = newSize;
 }
 
-bool WarriorModel::removeHealth(int health)
+bool WarriorModel::removeHealth(Player* player)
 {
-	this->health -= health;
-	return this->health <= 0;
+	health -= 35;
+	this->ypos += 1;
+	//if player 1 hits first warriortype
+	if (player->playerID == 1 && (this->warriortype == WarriorType::first))
+	{
+		//critical shot:
+		this->health = 0;
+	}
+
+	//if player 2 hits second warriortype
+	if (player->playerID == 2 && (this->warriortype == WarriorType::second))
+	{
+		//critical shot:
+		this->health = 0;
+	}
+
+	if (health <= 0)
+		return true;
+	return false;
 }
+
+
 
 
 
