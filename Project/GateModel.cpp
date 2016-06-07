@@ -15,6 +15,7 @@ GateModel::GateModel(string filename) : CollisionModel(filename){
 
 GateModel::~GateModel()
 {
+
 }
 
 void GateModel::InitBoundingSpheres() {

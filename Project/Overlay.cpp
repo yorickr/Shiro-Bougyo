@@ -28,6 +28,59 @@ Overlay::~Overlay()
 {
 }
 
+
+
+
+void Overlay::drawHealthBar(Player * player, GateModel * gate)
+{
+	//init glut overlay
+	initdraw();
+	
+	int margin = 100;
+
+	Camera * cam = player->getCamera();
+	int x0 = cam->width - margin - 75;
+	int y0 = margin;
+	int x1 = cam->width - margin;
+	int y1 = cam->height - margin;
+	
+	double xpbarHeight = y1 - y0;
+
+	//xpbarbackground:
+	glBegin(GL_QUADS);
+	glColor3f(0,1,0);
+	glVertex2f(x1, y0);
+	glVertex2f(x0,y0);
+
+	glColor3f(1, 0, 0);
+	glVertex2f(x0, y1);
+	glVertex2f(x1,y1);
+	glEnd();
+
+	//drawindicator:
+
+	float indicatorpos = (xpbarHeight * gate->getHealth()) / 100 ;
+
+	int indicatorx0 = x0 - 10;
+	int indicatory0 = cam->height - indicatorpos -5 - margin;
+	int indicatorx1 = x1 + 10;
+	int indicatory1 = cam->height - indicatorpos + 5 - margin;
+
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glVertex2f(indicatorx1, indicatory0);
+	glVertex2f(indicatorx0, indicatory0);
+	glVertex2f(indicatorx0, indicatory1);
+	glVertex2f(indicatorx1, indicatory1);
+	glEnd();
+
+	//reset settings:
+	stopDrawing();
+}
+
+
+///Game Over screen
+
 void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool haswon) {
 	//init glut overlay
 	initdraw();
@@ -72,7 +125,7 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 
 	glutdrawstring("Game Over " ,  playerone->getCamera()->width / 2 - 75, 100, GLUT_BITMAP_TIMES_ROMAN_24);
 
-
+	//reset settings:
 	stopDrawing();
 }
 

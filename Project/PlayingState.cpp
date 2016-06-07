@@ -78,7 +78,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
-	AddModel(new GateModel("models/blok/blok.obj"));
+	this->gate = new GateModel("models/blok/blok.obj");
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
@@ -403,9 +403,12 @@ void PlayingState::Draw() {
                 DrawModels();
             }
 
-			//TODO: call this method if gameover :) 
-			overlay_->drawGameOver(this->players, loop, true);
+			//draw port xpbar
 
+
+			//TODO: call this method if gameover :) 
+			//overlay_->drawGameOver(this->players, loop, true);
+			overlay_->drawHealthBar(players.at(0), this->gate);
         }
     }
 

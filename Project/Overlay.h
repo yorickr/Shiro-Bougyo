@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Player.h"
-
+#include "GateModel.h"
 
 class Overlay
 {
@@ -10,7 +10,7 @@ public:
 	Overlay();
 	~Overlay();
 	void drawGameOver(std::vector<Player*> players, int playerId, bool haswon);
-	
+	void drawHealthBar(Player * player, GateModel * gate);
 
 private:
 	void initdraw();

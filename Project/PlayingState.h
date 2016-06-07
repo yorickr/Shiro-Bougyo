@@ -14,6 +14,7 @@
 #include "AnimatedBowModel.h"
 #include "Player.h"
 #include "Overlay.h"
+#include "GateModel.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -63,7 +64,7 @@ private:
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;
     WiiHandler *wiiHandler;
-	CollisionModel * gate;
+	GateModel * gate;
 	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();

@@ -349,9 +349,6 @@
     <Media Include="sword_slash.wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="test.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
   </ItemGroup>
   <ItemGroup>
     <Media Include="arrow_hit.wav">

@@ -13,7 +13,16 @@ public:
     GateModel(string filename);
     ~GateModel();
     void InitBoundingSpheres() override;
+	
+	void setHealth(int health) {
+		health_ = health;
+	}
+
+	int getHealth() {
+		return health_;
+	}
 private:
+	int health_ = 75;
 
 };
 
