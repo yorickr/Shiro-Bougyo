@@ -19,6 +19,7 @@
 
 #include "sdl_audio.h"
 #include "SerialHandler.h"
+#include "Overlay.h"
 
 
 #ifdef __APPLE__
@@ -41,6 +42,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
+	this->overlay_ = new Overlay();
 	SerialHandler *serial = manager->getSerialHandler();
 	//Enable the pressure plates:
 	serial->sendCommand("EGM");
@@ -401,6 +403,9 @@ void PlayingState::Draw() {
                 DrawModels();
             }
 
+			//TODO: call this method if gameover :) 
+			overlay_->drawGameOver(this->players, loop, true);
+
         }
     }
 
@@ -427,8 +432,10 @@ void PlayingState::Draw() {
         glRotatef(cam1->rotY, 0, 1, 0);
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         DrawModels();
-
+		overlay_->drawGameOver(this->players, 0, true);
     }
+
+	
 
 }
 

@@ -13,6 +13,7 @@
 #include "AnimatedModel.h"
 #include "AnimatedBowModel.h"
 #include "Player.h"
+#include "Overlay.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -63,6 +64,7 @@ private:
     int enemyCount = 0;
     WiiHandler *wiiHandler;
 	CollisionModel * gate;
+	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
 };
