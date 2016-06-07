@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>sdl\lib\x65;sdl_mixer\lib\x64;freeglut\lib\x64;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>sdl\lib\x64;sdl_mixer\lib\x64;freeglut\lib;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2_mixer.lib;SDL2.lib;wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -218,7 +218,7 @@
     <Media Include="bow_pull.wav" />
     <Media Include="bow_shot.wav" />
     <Media Include="sword_slash.wav" />
-    <Media Include="test.wav" />
+    <Media Include="theme.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,7 +21,7 @@
 #include <unistd.h>                     /* for usleep */
 #endif
 
-#define MAX_WIIMOTES				4
+#define MAX_WIIMOTES				2
 
 
 /**
@@ -35,7 +35,7 @@
 
 
 
-void WiiHandler::handle_event(struct wiimote_t* wm) {
+void WiiHandler::handle_event(struct wiimote_t* wm,int i) {
 //    Camera* mainCamera = camera;
 
     //printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
@@ -43,10 +43,20 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
     /* if a button is pressed, report it */
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_A)) {
         //printf("A pressed\n");
-		is_A = true;
+        if(i == 0){
+            is_A1 = true;
+        }
+        if(i == 1){
+            is_A2 = true;
+        }
     }else
     {
-		is_A = false;
+        if(i == 0){
+            is_A1 = false;
+        }
+        if(i == 1){
+            is_A2 = false;
+        }
     }
 
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
@@ -54,17 +64,38 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
     }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
 		//printf("UP pressed\n");
-		Up_pressed = true;
+
+        if(i == 0){
+            Up1_pressed = true;
+        }
+        if(i == 1){
+            Up2_pressed = true;
+        }
 	}else
 	{
-		Up_pressed = false;
+        if(i == 0){
+            Up1_pressed = false;
+        }
+        if(i == 1){
+            Up2_pressed = false;
+        }
 	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_DOWN))	{
        // printf("DOWN pressed\n");
-		Down_pressed = true;
+        if(i == 0){
+            Down1_pressed = true;
+        }
+        if(i == 1){
+            Down2_pressed = true;
+        }
 	}else
 	{
-		Down_pressed = false;
+        if(i == 0){
+            Down1_pressed = false;
+        }
+        if(i == 1){
+            Down2_pressed = false;
+        }
 	}
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_LEFT))	{
         printf("LEFT pressed\n");
@@ -93,7 +124,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
      *	This is useful because it saves battery power.
      */
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_MINUS)) {
-        wiiuse_motion_sensing(wm, 0);
+        //wiiuse_motion_sensing(wm, 0);
     }
 
     /*
@@ -101,7 +132,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
      */
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_PLUS)) {
         /*wiiuse_motion_sensing(wm, 1);*/
-		wiiuse_set_ir(wm, 1);
+		//wiiuse_set_ir(wm, 1);
     }
 
     /*
@@ -114,10 +145,9 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
     }
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
-        
     }
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_DOWN)) {
-        wiiuse_set_ir(wm, 0);
+        //wiiuse_set_ir(wm, 0);
     }
 
     /*
@@ -125,14 +155,14 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
      */
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_ONE)) {
         if (WIIUSE_USING_EXP(wm)) {
-            wiiuse_set_motion_plus(wm, 2);    // nunchuck pass-through
+            //wiiuse_set_motion_plus(wm, 2);    // nunchuck pass-through
         } else {
-            wiiuse_set_motion_plus(wm, 1);    // standalone
+            //wiiuse_set_motion_plus(wm, 1);    // standalone
         }
     }
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_TWO)) {
-        wiiuse_set_motion_plus(wm, 0); // off
+        //wiiuse_set_motion_plus(wm, 0); // off
     }
 
     /* if the accelerometer is turned on then print angles */
@@ -188,6 +218,29 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
             printf("Nunchuk: Z pressed\n");
         }
 
+        if(i == 0){
+            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1) {
+                rot1X -= nc->js.y * 2;
+                if (rot1X > 30) {
+                    rot1X = 30;
+                } else if (rot1X < -30) {
+                    rot1X = -30;
+                }
+                rot1Y += nc->js.x * 2;
+            }
+        }
+        if(i == 1){
+            if(abs(nc->js.x * 10) > 1 || abs(nc->js.y * 10) > 1){
+                rot2X -= nc->js.y * 2;
+                if(rot2X > 30){
+                    rot2X = 30;
+                }else if(rot2X < -30){
+                    rot2X = -30;
+                }
+                rot2Y += nc->js.x * 2;
+            }
+        }
+
 //        printf("nunchuk roll  = %f\n", nc->orient.roll);
 //        printf("nunchuk pitch = %f\n", nc->orient.pitch);
 //        printf("nunchuk yaw   = %f\n", nc->orient.yaw);
@@ -214,10 +267,6 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
 //            mainCamera->rotY += nc->js.x * 2;
 //            glutWarpPointer(mainCamera->width / 2, mainCamera->height / 2);
 //        }
-
-
-
-
     }
     if (wm->exp.type == EXP_MOTION_PLUS ||
         wm->exp.type == EXP_MOTION_PLUS_NUNCHUK) {
@@ -227,39 +276,6 @@ void WiiHandler::handle_event(struct wiimote_t* wm) {
        //        wm->exp.mp.angle_rate_gyro.yaw);
     }
 }
-
-/**
- *	@brief Callback that handles a read event.
- *
- *	@param wm		Pointer to a wiimote_t structure.
- *	@param data		Pointer to the filled data block.
- *	@param len		Length in bytes of the data block.
- *
- *	This function is called automatically by the wiiuse library when
- *	the wiimote has returned the full data requested by a previous
- *	call to wiiuse_read_data().
- *
- *	You can read data on the wiimote, such as Mii data, if
- *	you know the offset address and the length.
- *
- *	The \a data pointer was specified on the call to wiiuse_read_data().
- *	At the time of this function being called, it is not safe to deallocate
- *	this buffer.
- */
-void WiiHandler::handle_read(struct wiimote_t* wm, byte* data, unsigned short len) {
-    int i = 0;
-
-   /* printf("\n\n--- DATA READ [wiimote id %i] ---\n", wm->unid);
-    printf("finished read of size %i\n", len);
-    for (; i < len; ++i) {
-        if (!(i % 16)) {
-            printf("\n");
-        }
-        printf("%x ", data[i]);
-    }
-    printf("\n\n");*/
-}
-
 
 /**
  *	@brief Callback that handles a controller status event.
@@ -300,11 +316,7 @@ void WiiHandler::handle_ctrl_status(struct wiimote_t* wm) {
  */
 void WiiHandler::handle_disconnect(wiimote* wm) {
     //printf("\n\n--- DISCONNECTED [wiimote id %i] ---\n", wm->unid);
-}
 
-
-void WiiHandler::test(struct wiimote_t* wm, byte* data, unsigned short len) {
-   // printf("test: %i [%x %x %x %x]\n", len, data[0], data[1], data[2], data[3]);
 }
 
 short WiiHandler::any_wiimote_connected(wiimote** wm, int wiimotes) {
@@ -329,13 +341,12 @@ short WiiHandler::any_wiimote_connected(wiimote** wm, int wiimotes) {
  *	Connect to up to two wiimotes and print any events
  *	that occur on either device.
  */
-void WiiHandler::wiiMoteTest() {
+void WiiHandler::wiiMoteLoop() {
     wiimote** wiimotes;
     int found, connected;
 
     /*
      *	Initialize an array of wiimote objects.
-     *
      *	The parameter is the number of wiimotes I want to create.
      */
     wiimotes =  wiiuse_init(MAX_WIIMOTES);
@@ -351,7 +362,7 @@ void WiiHandler::wiiMoteTest() {
      *
      *	This will return the number of actual wiimotes that are in discovery mode.
      */
-    found = wiiuse_find(wiimotes, MAX_WIIMOTES, 5);
+    found = wiiuse_find(wiimotes, MAX_WIIMOTES, 8);
     if (!found) {
         printf("No wiimotes found.\n");
         //return 0;
@@ -370,6 +381,8 @@ void WiiHandler::wiiMoteTest() {
     connected = wiiuse_connect(wiimotes, MAX_WIIMOTES);
     if (connected) {
         printf("Connected to %i wiimotes (of %i found).\n", connected, found);
+
+
     } else {
         printf("Failed to connect to any wiimote.\n");
         //return 0;
@@ -382,8 +395,6 @@ void WiiHandler::wiiMoteTest() {
      */
     wiiuse_set_leds(wiimotes[0], WIIMOTE_LED_1);
     wiiuse_set_leds(wiimotes[1], WIIMOTE_LED_2);
-    wiiuse_set_leds(wiimotes[2], WIIMOTE_LED_3);
-    wiiuse_set_leds(wiimotes[3], WIIMOTE_LED_4);
 
     //wiiuse_rumble(wiimotes[0], 1);
     //wiiuse_rumble(wiimotes[1], 1);
@@ -394,6 +405,12 @@ void WiiHandler::wiiMoteTest() {
 //    Sleep(200);
 //#endif
 
+    if(wiimotes[0] != 0){
+        wiiMoteP1 = wiimotes[0];
+    }
+    if(wiimotes[1] != 0){
+        wiiMoteP2 = wiimotes[1];
+    }
     //wiiuse_rumble(wiimotes[0], 0);
     //wiiuse_rumble(wiimotes[1], 0);
 
@@ -439,12 +456,13 @@ void WiiHandler::wiiMoteTest() {
                 switch (wiimotes[i]->event) {
                     case WIIUSE_EVENT:
                         /* a generic event occurred */
-                        handle_event(wiimotes[i]);
+
                         if(i == 0){
-                            wiiMoteP1 = wiimotes[i];
+                            handle_event(wiimotes[0], 0);
                         }else if(i == 1){
-                            wiiMoteP2 = wiimotes[i];
+                            handle_event(wiimotes[1], 1);
                         }
+
                         break;
 
                     case WIIUSE_STATUS:
@@ -467,28 +485,15 @@ void WiiHandler::wiiMoteTest() {
                         break;
 
                     case WIIUSE_NUNCHUK_INSERTED:
-                        /*
-                         *	a nunchuk was inserted
-                         *	This is a good place to set any nunchuk specific
-                         *	threshold values.  By default they are the same
-                         *	as the wiimote.
-                         */
                         /* wiiuse_set_nunchuk_orient_threshold((struct nunchuk_t*)&wiimotes[i]->exp.nunchuk, 90.0f); */
                         /* wiiuse_set_nunchuk_accel_threshold((struct nunchuk_t*)&wiimotes[i]->exp.nunchuk, 100); */
                         printf("Nunchuk inserted.\n");
                         break;
-
-                    case WIIUSE_CLASSIC_CTRL_INSERTED:
-                        printf("Classic controller inserted.\n");
-                        break;
-
-
                     case WIIUSE_MOTION_PLUS_ACTIVATED:
                         printf("Motion+ was activated\n");
                         break;
 
                     case WIIUSE_NUNCHUK_REMOVED:
-                    case WIIUSE_CLASSIC_CTRL_REMOVED:
                     case WIIUSE_MOTION_PLUS_REMOVED:
                         /* some expansion was removed */
                         handle_ctrl_status(wiimotes[i]);

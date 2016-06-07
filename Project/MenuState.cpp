@@ -7,6 +7,7 @@
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+#include <cmath>
 #include <cstdlib>
 
 #else
@@ -34,9 +35,6 @@ void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 	cam->rotX = 0;
 	cam->rotY = -40;
 	models.push_back(pair<int, ObjModel*>(1, menu));
-
-
-
 	
 	// playButton 
 	vector<ObjModel*> playbutton;
@@ -95,11 +93,17 @@ void MenuState::Update(float deltatime)
 	for (auto &m : models) {
 		m.second->draw();
 	}
+
 }
 
 void MenuState::Update(float deltatime, bool keys)
 {
-	if(wiiHandler->Down_pressed)
+	players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+	players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+	glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+
+	if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
+	if(wiiHandler->Down1_pressed)
 	{
 		counter += 1;
 		if (counter >5 && counter < 10)
@@ -118,7 +122,7 @@ void MenuState::Update(float deltatime, bool keys)
 			counter = 15;
 		}
 	}
-	if (wiiHandler->Up_pressed)
+	if (wiiHandler->Up1_pressed)
 	{
 		counter -= 1;
 		if (counter < 10)
@@ -138,14 +142,16 @@ void MenuState::Update(float deltatime, bool keys)
 	}
 	if(counter  == 0)
 	{
-		if(wiiHandler->is_A)
+		if(wiiHandler->is_A1)
 		{
-			manager->nextState();
+			if(wiiHandler->wiiMoteP1 != 0 && wiiHandler->wiiMoteP1->exp.type == EXP_NUNCHUK){
+				manager->nextState();
+			}
 			counter = 0;
 		}
 	}else if (counter > 10 && counter < 16)
 	{
-		if (wiiHandler->is_A)
+		if (wiiHandler->is_A1)
 		{
 			exit(0);
 		}
@@ -155,6 +161,8 @@ void MenuState::Update(float deltatime, bool keys)
 	for (auto &m : models) {
 		m.second->update(deltatime);
 	}
+
+
 }
 
 void MenuState::Draw()

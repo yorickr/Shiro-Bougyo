@@ -1,6 +1,6 @@
 #include "SerialHandler.h"
 
-SerialHandler::SerialHandler(int commPortNumber, GameStateManager gameManager)
+SerialHandler::SerialHandler(int commPortNumber, GameStateManager *gameManager)
 {
 	connected = false;
 	this->commPortNumber = commPortNumber;
@@ -57,7 +57,7 @@ std::string SerialHandler::receiveCommand()
 	if (received > 0) {
 		char actualReceivedCommand[128];
 		buf[received] = 0; //Null terminator
-		for (int x = 0; x < received; x++) {
+		for (int x = 0; x <= received; x++) {
 			if (buf[x] == '\n') {
 				actualReceivedCommand[x] = 0;
 				break;
@@ -75,8 +75,10 @@ void SerialHandler::receiveThread()
 		if (isConnected()) {
 			try {
 				std::string received = receiveCommand();
-				printf("Received following command: %s\n", received.c_str());
-				handleReceivedCommand(received);
+				if (received != "") {
+					printf("Received following command: %s\n", received.c_str());
+					handleReceivedCommand(received);
+				}
 			}
 			catch (int e) {
 				connected = false;
@@ -84,8 +86,9 @@ void SerialHandler::receiveThread()
 				printf("Serial device disconnected");
 			}
 		}
-		else
-			printf("not conencted\n");
+		else{ 
+			//printf("not connected\n"); 
+		}
 		Util::USleep(1000);
 	}
 }
@@ -93,12 +96,12 @@ void SerialHandler::receiveThread()
 void SerialHandler::handleReceivedCommand(std::string command)
 {
 	if (command == "PP1" || command == "PP2") { //Check if the action needs to be executed from playingstate.
-		PlayingState *playState = dynamic_cast<PlayingState*>(gameManager.getCurrentState());
+		PlayingState *playState = dynamic_cast<PlayingState*>(gameManager->getCurrentState());
 		if (playState) {
 			if (command == "PP1")
 				playState->ScalePowerUp();
 			else if (command == "PP2")
-				printf("smthing");
+				playState->DestoryPowerUp();
 		}			
 	}
 }
