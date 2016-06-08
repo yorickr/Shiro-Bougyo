@@ -1,3 +1,4 @@
+#define MOUSE true
 #include "MenuState.h"
 #include "Camera.h"
 #include "MenuModel.h"
@@ -98,87 +99,95 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
-
 	// Wiimote down pres button
 	if (wiiHandler->wiiMoteP1) {
 		/* nunchuk */
+
+	//nunchuck
+		if (!MOUSE) {
+
+			players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+			players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+			glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+		}
+
+
 		players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
 		players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
 		glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
-	}
 
-	players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
-	players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
-	glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
 
-	if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
-	if(wiiHandler->Down1_pressed)
-	{
-		counter += 1;
-		if (counter >5 && counter < 10)
-		{
-			playbuttons->setIndex(1);
-			settingsbuttons->setIndex(1);
-		}
-		if (counter > 10 && counter < 15)
-		{
-			settingsbuttons->setIndex(0);
-			playbuttons->setIndex(1);
-			Exitbuttons->setIndex(1);
-			counter = 15;
-		}else if (counter > 15)
-		{
-			counter = 15;
-		}
-	}
-
-	// Wiimote Up pres button
-	if (wiiHandler->Up1_pressed)
-
-	{
-		counter -= 1;
-		if (counter < 10)
-		{
-			Exitbuttons->setIndex(0);
-			settingsbuttons->setIndex(1);
-		}
-		if (counter <5)
-		{
-			settingsbuttons->setIndex(0);
-			playbuttons->setIndex(0);
-			counter = 0;
-		}else if(counter < 0)
-		{
-			counter = 0;
-		}
-	}
-
-	// Wiimote A pres button to go to next state
-	if(counter  == 0)
-	{
-		if(wiiHandler->is_A1)
-		{
-			if(wiiHandler->wiiMoteP1 != 0 && wiiHandler->wiiMoteP1->exp.type == EXP_NUNCHUK){
-				manager->nextState();
+		if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
+			if (wiiHandler->Down1_pressed)
+			{
+				counter += 1;
+				if (counter > 5 && counter < 10)
+				{
+					playbuttons->setIndex(1);
+					settingsbuttons->setIndex(1);
+				}
+				if (counter > 10 && counter < 15)
+				{
+					settingsbuttons->setIndex(0);
+					playbuttons->setIndex(1);
+					Exitbuttons->setIndex(1);
+					counter = 15;
+				}
+				else if (counter > 15)
+				{
+					counter = 15;
+				}
 			}
-			counter = 0;
-		}
-	}else if (counter > 10 && counter < 16)
-	{
-		if (wiiHandler->is_A1)
+
+		// Wiimote Up pres button
+		if (wiiHandler->Up1_pressed)
+
 		{
-			exit(0);
+			counter -= 1;
+			if (counter < 10)
+			{
+				Exitbuttons->setIndex(0);
+				settingsbuttons->setIndex(1);
+			}
+			if (counter < 5)
+			{
+				settingsbuttons->setIndex(0);
+				playbuttons->setIndex(0);
+				counter = 0;
+			}
+			else if (counter < 0)
+			{
+				counter = 0;
+			}
 		}
+
+		// Wiimote A pres button to go to next state
+		if (counter == 0)
+		{
+			if (wiiHandler->is_A1)
+			{
+				if (wiiHandler->wiiMoteP1 != 0 && wiiHandler->wiiMoteP1->exp.type == EXP_NUNCHUK) {
+					manager->nextState();
+				}
+				counter = 0;
+			}
+		}
+		else if (counter > 10 && counter < 16)
+		{
+			if (wiiHandler->is_A1)
+			{
+				exit(0);
+			}
+		}
+
+
+		for (auto &m : models) {
+			m.second->update(deltatime);
+		}
+
+
 	}
-
-
-	for (auto &m : models) {
-		m.second->update(deltatime);
-	}
-
-
 }
-
 void MenuState::Draw()
 {
     //draw 1 player full screen

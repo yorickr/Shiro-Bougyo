@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-
+#define MOUSE true //set false to enable nunchuk or true to enable mouse
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
@@ -138,15 +138,6 @@ void PlayingState::AddWarrior(){
 		}
 		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename, this);
 		AddModel(warriorOne);
-/*		WarriorModel *warriorTwo = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj", this);
-		AddModel(warriorTwo);
-		WarriorModel *warriorThree = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/ThirdStand.obj", this);
-		AddModel(warriorThree);
-		FirstStand = new AnimatedAttackWarriorOne(collisionModels);*/
-		if(collidesGate)
-		{
-			FirstStand->setIndex(1);
-		}
 		enemyCount++;
 	}
 }
@@ -229,15 +220,24 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys) {
 
-	/* nunchuk */
-	players[0]->getCamera()->rotX = wiiHandler->rot1X;
-	players[0]->getCamera()->rotY = wiiHandler->rot1Y;
-	glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
 
 	/* nunchuk */
-	players[1]->getCamera()->rotX = wiiHandler->rot2X;
+	/*players[0]->getCamera()->rotX = wiiHandler->rot1X;
+	players[0]->getCamera()->rotY = wiiHandler->rot1Y;
+	glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);*/
+
+        /* nunchuk */
+		if (!MOUSE) {
+			players[0]->getCamera()->rotX = wiiHandler->rot1X;
+			players[0]->getCamera()->rotY = wiiHandler->rot1Y;
+			glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+		}
+
+
+	/* nunchuk */
+	/*players[1]->getCamera()->rotX = wiiHandler->rot2X;
 	players[1]->getCamera()->rotY = wiiHandler->rot2Y;
-	glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
+	glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);*/
 
 	//speler 1 booog
 	if (wiiHandler->is_A1 || keys == true)
@@ -286,6 +286,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 			Warrior.second->update(deltatime);
 		}
 		collidesGate = false;
+	}
 
 		if (wiiHandler->is_A2 || keys == true)
 		{
@@ -371,7 +372,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 		AddWarrior();
 		//bow->getModel()->update(deltatime);
 	}
-}
+
 void PlayingState::DrawModels(){
 
     for( auto &m : models) {

@@ -41,32 +41,8 @@ int oldTimeSinceStart = 0;
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
-//
-//
-//	glMatrixMode(GL_MODELVIEW);
-//
-//
-//	glLoadIdentity();
-
-    //load bow
-
-//	gameManager.preDraw();
-//	glRotatef(camera.rotX, 1, 0, 0);
-//	glRotatef(camera.rotY, 0, 1, 0);
-//	glTranslatef(camera.posX, camera.posY, camera.posZ);
-//	gameManager.Draw();
-
-    // Process all OpenGL routine s as quickly as possible
-
 	gameManager.Draw();
-
-
-
-    glFlush();
+	glFlush();
     glutSwapBuffers();
 }
 
@@ -196,7 +172,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	glutFullScreen();
+	//glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);

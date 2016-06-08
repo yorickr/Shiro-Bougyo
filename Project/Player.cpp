@@ -42,15 +42,5 @@ unsigned char Player::getPlayerID() {
 }
 
 int Player::getKills() {
-	return this->kills;
-	
+	return this->kills;	
 }
-
-
-
-
-
-
-
-
-
