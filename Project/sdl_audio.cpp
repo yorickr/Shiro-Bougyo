@@ -109,7 +109,6 @@ int SDL_Audio::playSound(std::string fileName) {
     //cleanup
 	if (theme) { Mix_FreeMusic(sound); }
 	else { Mix_FreeChunk(effect); }
-	printf("cleaning sound/effect\n");
     //Mix_CloseAudio();
     //SDL_Quit();
 

@@ -76,7 +76,7 @@ void onTimer(int id) {
 	}
 
 	//for testing remove keys for final release:
-	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);

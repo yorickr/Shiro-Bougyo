@@ -17,10 +17,10 @@ public:
 	void update(float deltatime) override;
 	void InitBoundingSpheres() override;
 	void PowerUpBoundingSpheres();
-	void setSize(int);
+	void setSize(float);
 	bool removeHealth(Player* player);//returns true if health <= 0 otherwise false
 	void setPosition(int, int, int);
-	void setRotation(int, int, int);
+	void setRotation(float, float, float);
 private:
 	int health = 100;
 	WarriorType warriortype;

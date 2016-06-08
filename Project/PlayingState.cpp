@@ -53,23 +53,23 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     Camera* cam2 = new Camera();
 
 
-	cam1->rotY = 180;
-	cam1->posY = 1;
-	cam1->posX = 2.5;
-	cam1->posZ = 6;
+	cam1->rotY = 180.0f;
+	cam1->posY = 1.0f;
+	cam1->posX = 2.5f;
+	cam1->posZ = 6.0f;
 
-	cam1->posZ = 3.2;
-	cam1->posY = 1.8;
-	cam1->rotY = 180;
+	cam1->posZ = 3.2f;
+	cam1->posY = 1.8f;
+	cam1->rotY = 180.0f;
 
-    cam2->rotY = 180;
-    cam2->posY = 5;
-    cam2->posX = 2.5;
-    cam2->posZ = 6;
+    cam2->rotY = 180.0f;
+    cam2->posY = 5.0f;
+    cam2->posX = 2.5f;
+    cam2->posZ = 6.0f;
 
-    cam2->posZ = 3.2;
-    cam2->posY = 1.8;
-    cam2->rotY = 180;
+    cam2->posZ = 3.2f;
+    cam2->posY = 1.8f;
+    cam2->rotY = 180.0f;
 
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
@@ -101,20 +101,20 @@ struct PointXY PlayingState::SpawnEnemies(){
 
 	switch(portalNo){
 		case 1:
-			portalx = 10.7;
-			portaly = -16.0;
+			portalx = 10.7f;
+			portaly = -16.0f;
 			break;
 		case 2:
-			portalx = 18.7;
-			portaly = -9.0;
+			portalx = 18.7f;
+			portaly = -9.0f;
 			break;
 		case 3:
-			portalx = -10.3;
-			portaly = -16.0;
+			portalx = -10.3f;
+			portaly = -16.0f;
 			break;
 		default:
-			portalx = 18.7;
-			portaly = -9.0;
+			portalx = 18.7f;
+			portaly = -9.0f;
 			break;
 	}
 
@@ -152,7 +152,7 @@ void PlayingState::ScalePowerUp() {
 	for (auto &m : collisionModels) {
 		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
 		if (warrior != 0) {
-			warrior->setSize(3);
+			warrior->setSize(3.0f);
 			warrior->PowerUpBoundingSpheres();
 		}
 	}
@@ -178,7 +178,7 @@ void PlayingState::PowerUpThread()
 	for (auto &m : collisionModels) {
 		WarriorModel *warrior = dynamic_cast<WarriorModel*>(m.second);
 		if (warrior != 0) {
-			warrior->setSize(1);
+			warrior->setSize(1.0f);
 			warrior->InitBoundingSpheres();
 		}
 	}
@@ -194,12 +194,12 @@ void PlayingState::DestroyPowerUpThread()
 		for (iter = collisionModels.begin(), war = 0; iter != collisionModels.end() && war < 10; ++iter, war++) {
 				WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
 				if (warrior != 0) {
-					warrior->setPosition(0,height,0);
-					warrior->setRotation(warrior->xrot, rot, warrior->zrot);
+					warrior->setPosition(0,(int)height,0);
+					warrior->setRotation(warrior->xrot, (float)rot, warrior->zrot);
 				}
 			}
 		rot+=60;
-		height+=0.1;
+		height+=0.1f;
 		Util::USleep(30);
 	}
 	//removing them:
@@ -247,7 +247,7 @@ void PlayingState::Update(float deltatime, bool keys){
 	//speler 1 booog
 	if (wiiHandler->is_B1 || keys)
 	{
-		counter1 += deltatime;
+		counter1 += (int)deltatime;
 		if (counter1 < 33) players[0]->bow->setIndex(0);
 		else if (counter1 < 66) players[0]->bow->setIndex(1);
 		else players[0]->bow->setIndex(2);
@@ -270,7 +270,7 @@ void PlayingState::Update(float deltatime, bool keys){
 
 	if (wiiHandler->is_B2)
 	{
-		counter2 += deltatime;
+		counter2 += (int)deltatime;
 		if (counter2 < 33) players[1]->bow->setIndex(0);
 		else if (counter2 < 66) players[1]->bow->setIndex(1);
 		else players[1]->bow->setIndex(2);
