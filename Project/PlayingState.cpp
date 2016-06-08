@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-#define MOUSE false //set false to enable nunchuk or true to enable mouse
+#define MOUSE true //set false to enable nunchuk or true to enable mouse
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
@@ -53,28 +53,39 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 
 
 	cam1->rotY = 180;
-	cam1->posY = 1;
-	cam1->posX = 2.5;
-	cam1->posZ = 6;
-
+	cam1->posX = 4;
 	cam1->posZ = 3.2;
 	cam1->posY = 1.8;
-	cam1->rotY = 180;
 
-    cam2->rotY = 180;
-    cam2->posY = 5;
-    cam2->posX = 2.5;
-    cam2->posZ = 6;
-
+	cam2->rotY = 180;
+    cam2->posX = 1;
     cam2->posZ = 3.2;
     cam2->posY = 1.8;
-    cam2->rotY = 180;
+
 
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
+
+	player1 = new StationaryObjModel("models/warrior/warrior.obj");
+	player1->xpos = -1;
+	player1->ypos = -2;
+	player1->zpos = -3.4;
+	player1->xscale = 0.2f;
+	player1->yscale = 0.2f;
+	player1->zscale = 0.2f;
+	models.push_back(pair<int, ObjModel*>(11, player1));
+
+	player2 = new StationaryObjModel("models/warrior/warrior.obj");
+	player2->xpos = -4;
+	player2->ypos = -2;
+	player2->zpos = -3.4;
+	player2->xscale = 0.2f;
+	player2->yscale = 0.2f;
+	player2->zscale = 0.2f;
+	models.push_back(pair<int, ObjModel*>(10, player2));
 
 	this->gate = new GateModel("models/blok/blok.obj");
     cam1->width = game->width;
@@ -219,13 +230,15 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
+
+
     for (int i = 0; i < players.size(); i++) {
         if (i == 0 && !MOUSE) {
             players[i]->getCamera()->rotX = wiiHandler->rot1X;
             players[i]->getCamera()->rotY = wiiHandler->rot1Y;
             glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
         }
-        if (i == 1) {
+        if (i == 1 && !MOUSE) {
             players[i]->getCamera()->rotX = wiiHandler->rot2X;
             players[i]->getCamera()->rotY = wiiHandler->rot2Y;
             glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
@@ -326,6 +339,9 @@ void PlayingState::Update(float deltatime, bool keys){
         }
         collides = false;
     }
+
+	models.at(1).second->yrot = -players.at(1)->getCamera()->rotY + 180;
+	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
 
     for (auto &m : models) {
         m.second->update(deltatime);

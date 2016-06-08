@@ -69,6 +69,8 @@ private:
 	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
+	ObjModel *player1;
+	ObjModel *player2;
 };
 
 

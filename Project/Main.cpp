@@ -98,6 +98,12 @@ void onKeyboard(unsigned char key, int, int) {
 	case ']':
 		gameManager.nextState();
 		break;
+	case 'l':
+		gameManager.GetPlayers().at(1)->getCamera()->rotY+=3;
+		break;
+	case 'k':
+		gameManager.GetPlayers().at(1)->getCamera()->rotY-=3;
+		break;
 	default:
 		//just to please CLion.
 		break;
