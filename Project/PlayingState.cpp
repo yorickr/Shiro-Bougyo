@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-
+#define MOUSE true
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
@@ -222,9 +222,11 @@ void PlayingState::Update(float deltatime) {
 void PlayingState::Update(float deltatime, bool keys){
 
         /* nunchuk */
-        players[0]->getCamera()->rotX = wiiHandler->rot1X;
-        players[0]->getCamera()->rotY = wiiHandler->rot1Y;
-        glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+		if (!MOUSE) {
+			players[0]->getCamera()->rotX = wiiHandler->rot1X;
+			players[0]->getCamera()->rotY = wiiHandler->rot1Y;
+			glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+		}
 
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;

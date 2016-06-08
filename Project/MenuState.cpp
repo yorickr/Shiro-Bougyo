@@ -1,3 +1,4 @@
+#define MOUSE true
 #include "MenuState.h"
 #include "Camera.h"
 #include "MenuModel.h"
@@ -98,9 +99,12 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
-	players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
-	players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
-	glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+	//nunchuck
+	if (!MOUSE) {
+		players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+		players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+		glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+	}
 
 	if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
 	if(wiiHandler->Down1_pressed)
