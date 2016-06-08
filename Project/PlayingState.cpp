@@ -162,7 +162,7 @@ void PlayingState::AddWarrior(){
 
 
 		vector<CollisionModel*> models;
-		warriorOne = new WarriorModel(-point.X, -point.Y, type, staticModels.at(filename1), this);
+		warriorOne = new WarriorModel(-point.X,-point.Y, type, staticModels.at(filename1), this);
 		models.push_back(warriorOne);
 		warriorOne = new WarriorModel(-2.3, -2.3, type, staticModels.at(4), this);
 		models.push_back(warriorOne);
@@ -323,6 +323,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 			{
 				gate->setHealth(gate->getHealth() - 1);
 			}
+			// Animating Warrior
 			if (collidesGate)
 			{
 				counterWarrior += 1;
@@ -342,10 +343,9 @@ void PlayingState::Update(float deltatime, bool keys) {
 				{
 					Warrior.second->setIndex(3);
 				}
-				if (counterWarrior > 60)
+				else if (counterWarrior > 60)
 				{
 					counterWarrior = 0;
-					Warrior.second->setIndex(0);
 				}
 			}
 		}
