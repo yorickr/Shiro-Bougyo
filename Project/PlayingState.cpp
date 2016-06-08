@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-#define MOUSE true
+#define MOUSE true //set false to enable nunchuk or true to enable mouse
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
