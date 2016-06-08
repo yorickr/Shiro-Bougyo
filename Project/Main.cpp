@@ -96,7 +96,9 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		gameManager.nextState();
+		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
+			gameManager.nextState();
+		//}
 		break;
 	default:
 		//just to please CLion.
@@ -106,7 +108,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteLoop();
+	//wiiHandler.wiiMoteLoop();
 	return 0;
 }
 
@@ -171,7 +173,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	glutFullScreen();
+	//glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
@@ -183,11 +185,8 @@ int main(int argc, char* argv[]) {
     glutTimerFunc(1000 / 60, onTimer, 1);
 
     glutKeyboardUpFunc(onKeyboardUp);
-
-    glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
-    glutMouseFunc(mouseFunc);
-	
+
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
 
