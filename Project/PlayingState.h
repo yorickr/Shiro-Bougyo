@@ -77,6 +77,8 @@ private:
     void PowerUpThread();
 	void DestroyPowerUpThread();
 	bool collidesGate = false;
+	AnimatedAttackWarriorOne * animatedWarior;
+
 };
 
 
