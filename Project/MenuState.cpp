@@ -97,7 +97,7 @@ void MenuState::Update(float deltatime)
 	}
 }
 
-void MenuState::Update(float deltatime, bool keys)
+void MenuState::Update(float deltatime, bool * keys)
 {
 	if(wiiHandler->Down_pressed)
 	{

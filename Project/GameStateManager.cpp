@@ -53,7 +53,7 @@ void GameStateManager::Update(float deltatime)
 		states.at(currentState)->Update(deltatime);
 }
 
-void GameStateManager::Update(float deltatime, bool keys)
+void GameStateManager::Update(float deltatime, bool * keys)
 {
 	if (!states.empty())
 		states.at(currentState)->Update(deltatime, keys);

@@ -84,6 +84,8 @@ void onIdle() {
 }
 
 void onTimer(int id) {
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+
 	if (keys[27]) exit(0);
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
@@ -98,15 +100,13 @@ void onTimer(int id) {
 			playState->ScalePowerUp();
 	}
 
-	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
-	oldTimeSinceStart = timeSinceStart;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
-	gameManager.Update(deltatime, t);
+	gameManager.Update(deltatime, keys);
 	oldTimeSinceStart = timeSinceStart;
-	//gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
@@ -195,11 +195,12 @@ int main(int argc, char* argv[]) {
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-	glutInitWindowSize(WindowWidth,	WindowHeight);
+//	glutInitWindowSize(WindowWidth,	WindowHeight);
+    glutInitWindowSize(800, 600);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	glutFullScreen();
+//	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);

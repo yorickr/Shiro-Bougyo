@@ -29,7 +29,7 @@ public:
 
     virtual void Update(float deltatime) override;
 
-    virtual void Update(float deltatime, bool keys) override;
+    virtual void Update(float deltatime, bool * keys) override;
 
     void preTranslateDraw(Player *p);
 
@@ -51,7 +51,7 @@ public:
 
 
 private:
-    vector<Player *> players;
+    std::vector<Player *> players;
     int counter = 0;
     GameStateManager *manager;
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
@@ -60,6 +60,7 @@ private:
     WiiHandler *wiiHandler;
 	CollisionModel * gate;
     void PowerUpThread();
+	void test(bool * keys);
 
 };
 

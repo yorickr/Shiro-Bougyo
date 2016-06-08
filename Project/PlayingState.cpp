@@ -2,7 +2,6 @@
 // Created by Yorick Rommers on 11/05/16.
 //
 
-#include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
 #include "WarriorModel.h"
@@ -16,6 +15,7 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
+#include "HeadTracking.h"
 
 
 #ifdef __APPLE__
@@ -23,6 +23,8 @@
 #include <GLUT/glut.h>
 #include <cstdlib>
 #include <iostream>
+#include <cmath>
+#include <thread>
 
 #else
 #include <tuple>
@@ -34,15 +36,32 @@
 #include <iostream>
 #endif
 
+//TODO: Test
+
+GLfloat src_pos[]= { 0.0,10.0,0.0,1.0};
+float fov = 50.0;
+float disteye=15;
+//mode free
+float tx=0,ty=0,tz=0,rx=0,ry=180,rz=0,z=1;
+float TransfoMatrix[16]={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
+int mode = 1; //0=free, 1=follow
+GLint id_repere;
+int eye = 1;
+double interEye = 0.0; //0.02;
+int frame = 0;
+int Height=1,Width=1; //fenetre
+
+static const float znear = 1.0;
+
+HeadTracking * h;
+
 void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
-	
 
     Camera* cam1 = new Camera();
     Camera* cam2 = new Camera();
-
 
 	cam1->rotY = 180;
 	cam1->posY = 1;
@@ -85,9 +104,13 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-    players.push_back(new Player(cam2, hand, this, 2));
+//    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow();
-	players[1]->makeBow();
+//	players[1]->makeBow();
+
+    //this must come after players
+    h = new HeadTracking(this->players);
+    h->initThread();
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -182,11 +205,42 @@ void PlayingState::Pause() {}
 void PlayingState::Resume() {}
 
 void PlayingState::Update(float deltatime) {
-	Update(deltatime, false);
+    bool key[255];
+	Update(deltatime, key);
 }
 
-void PlayingState::Update(float deltatime, bool keys) {
-	if (wiiHandler->is_A || keys == true)
+void PlayingState::test(bool * keys) {
+
+    if (keys['w']) {
+        players.at(0)->getCamera()->headtrack_y = players.at(0)->getCamera()->headtrack_lasty + 0.1f;
+    }
+    if (keys['s']) {
+        players.at(0)->getCamera()->headtrack_y = players.at(0)->getCamera()->headtrack_lasty - 0.1f;
+    }
+    //+, -
+    if (keys['+']) {
+        interEye *= 1.2;
+    }
+    if (keys['-']) {
+        interEye /= 1.2;
+    }
+    if(keys[' ']) {
+        printf("Head values\n"
+                       "Head_x: %f %f\n"
+                       "Head_y: %f %f\n"
+                       "Head_z: %f %f\n",
+
+               players.at(0)->getCamera()->headtrack_x, players.at(0)->getCamera()->headtrack_lastx, players.at(0)->getCamera()->headtrack_y,
+               players.at(0)->getCamera()->headtrack_lasty, players.at(0)->getCamera()->headtrack_s, players.at(0)->getCamera()->headtrack_lasts);
+    }
+}
+
+void PlayingState::Update(float deltatime, bool * keys) {
+    //TODO: Test
+
+    test(keys);
+
+	if (wiiHandler->is_A || keys['t'] )
 	{
 		counter += deltatime;
 		if (counter < 33) players[0]->bow->setIndex(0);
@@ -209,7 +263,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 		players[0]->bow->setIndex(0);
 	}
 
-    players.at(1)->getCamera()->rotX++;
+//    players.at(1)->getCamera()->rotX++;
 
     bool collides = false;
     for (auto &obj1 : collisionModels) {
@@ -343,20 +397,87 @@ void PlayingState::Draw() {
         Camera *cam1 = players.at(0)->getCamera();
 //        printf("Camera : \n %f %f %f\n", cam1->posX, cam1->posY, cam1->posZ);
 //        printf("%d %d\n", cam1->width, cam1->height);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
-
-
-        glMatrixMode(GL_MODELVIEW);
-
-        glLoadIdentity();
+//        glMatrixMode(GL_PROJECTION);
+//        glLoadIdentity();
+////        gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
+////        gluLookAt(headX, headY, headDist, headX, headY, 0, 0.0f, 1.0f, 0.0f);
+//        gluLookAt(cam1->posX, cam1->posY, 1, cam1->posX, cam1->posY, 0, 0.0f, 1.0f, 0.0f);
+//
+//
+//        glMatrixMode(GL_MODELVIEW);
+//
+//        glLoadIdentity();
 
 //        load bow
-        preTranslateDraw(players.at(0));
-        glRotatef(cam1->rotX, 1, 0, 0);
-        glRotatef(cam1->rotY, 0, 1, 0);
-        glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+//        preTranslateDraw(players.at(0));
+//        glRotatef(cam1->rotX, 1, 0, 0);
+//        glRotatef(cam1->rotY, 0, 1, 0);
+//        glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+
+        //TODO: Test
+        static float shearmatrix[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
+        if (cam1->headtrack_lastx != cam1->headtrack_x || cam1->headtrack_lasty != cam1->headtrack_y
+            || cam1->headtrack_lasts != cam1->headtrack_s)
+        {
+            if (cam1->headtrack_lasts == 0)
+                cam1->headtrack_lasts = cam1->headtrack_s;
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            gluPerspective(fov,cam1->width/cam1->height,znear,50.0);
+            float perspectmatrix[16];
+            glGetFloatv(GL_PROJECTION_MATRIX, perspectmatrix);
+
+            //identity
+            for (int i=0; i<16; i++)
+                shearmatrix[i] = 0.0;
+            for (int i=0; i<4;i++)
+                shearmatrix[i*4+i] = 1.0;
+
+            shearmatrix[8] = cam1->headtrack_x;
+            shearmatrix[12] = znear * cam1->headtrack_x;
+            shearmatrix[9] = cam1->headtrack_y;
+            shearmatrix[13] = znear * cam1->headtrack_y;
+
+            glLoadIdentity();
+            glMultMatrixf(perspectmatrix);
+        }
+        /* initialisation de la matrice de la sc�ne */
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glMultMatrixf(shearmatrix);
+        //glTranslatef( interEye*(double)(eye*2-1),0, 0);
+//        eye = 1-eye;
+        if (mode==0)
+        {
+            GLdouble eyex  = disteye*cos(ry*M_PI/180)*cos(rz*M_PI/180)+tx
+                                        ,eyey = disteye*sin(ry*M_PI/180)*cos(rz*M_PI/180)+ty
+                                        ,eyez=disteye*sin(rz*M_PI/180)+tz;
+            gluLookAt(eyex,eyey,eyez,tx,ty,tz,0.0,0.0,1.0);
+        }
+        else
+        {
+            glPushMatrix();
+            glLoadIdentity();
+            glScalef(z,z,z);
+            glRotatef(ry,0,1,0);
+            glRotatef(rz,-1,0,0);
+            glRotatef(rx,0,0,1);
+            glTranslatef(tx, ty, tz);
+//            glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+            glMultMatrixf(TransfoMatrix);
+            glGetFloatv(GL_MODELVIEW_MATRIX,TransfoMatrix);
+            glPopMatrix();
+            glMultMatrixf(TransfoMatrix);
+            tx=ty=tz=rx=ry=rz=0;
+            z=1;
+        }
+        cam1->headtrack_lastx = cam1->headtrack_x;
+        cam1->headtrack_lasty = cam1->headtrack_y;
+        cam1->headtrack_lasts = cam1->headtrack_s;
+        glLightfv(GL_LIGHT0,GL_POSITION,src_pos);
+        glCallList(id_repere);
+        glDisable(GL_LIGHTING);
+
         DrawModels();
 
     }
