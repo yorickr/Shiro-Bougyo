@@ -74,8 +74,8 @@ void BowModel::fireArrow() const
 	float camrotx = 0;
 	ArrowModel *newArrow;
 	int roty = camera_->rotY;
-	if(roty<0){
-		roty *= -1;
+	while(roty<0){
+		roty += 360;
 	}
 	roty = int(roty) % 360;
 

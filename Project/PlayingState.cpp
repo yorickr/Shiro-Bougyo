@@ -238,7 +238,7 @@ void PlayingState::Update(float deltatime, bool keys){
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
 
 	//speler 1 booog
-	if (wiiHandler->is_B1)
+	if (wiiHandler->is_B1 || keys)
 	{
 		counter1 += deltatime;
 		if (counter1 < 33) players[0]->bow->setIndex(0);
