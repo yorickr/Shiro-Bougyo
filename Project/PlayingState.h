@@ -13,6 +13,8 @@
 #include "AnimatedModel.h"
 #include "AnimatedBowModel.h"
 #include "Player.h"
+#include "Overlay.h"
+#include "GateModel.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -56,13 +58,15 @@ public:
 
 private:
     vector<Player *> players;
-    int counter = 0;
+    int counter1 = 0;
+	int counter2 = 0;
     GameStateManager *manager;
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;
     WiiHandler *wiiHandler;
-	CollisionModel * gate;
+	GateModel * gate;
+	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
 };

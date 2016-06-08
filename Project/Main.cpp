@@ -41,32 +41,8 @@ int oldTimeSinceStart = 0;
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
-//
-//
-//	glMatrixMode(GL_MODELVIEW);
-//
-//
-//	glLoadIdentity();
-
-    //load bow
-
-//	gameManager.preDraw();
-//	glRotatef(camera.rotX, 1, 0, 0);
-//	glRotatef(camera.rotY, 0, 1, 0);
-//	glTranslatef(camera.posX, camera.posY, camera.posZ);
-//	gameManager.Draw();
-
-    // Process all OpenGL routine s as quickly as possible
-
 	gameManager.Draw();
-
-
-
-    glFlush();
+	glFlush();
     glutSwapBuffers();
 }
 
@@ -84,6 +60,7 @@ void onIdle() {
 }
 
 void onTimer(int id) {
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME); //This has to be the first line in this method.
 	if (keys[27]) exit(0);
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
@@ -98,16 +75,16 @@ void onTimer(int id) {
 			playState->DestoryPowerUp();
 	}
 
-	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
-	oldTimeSinceStart = timeSinceStart;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
-	glutTimerFunc(1000 / 60, onTimer, 1);
+
+    oldTimeSinceStart = timeSinceStart;
+    glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
 void onKeyboard(unsigned char key, int, int) {

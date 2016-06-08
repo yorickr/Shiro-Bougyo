@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-
+#define MOUSE true //set false to enable nunchuk or true to enable mouse
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
@@ -19,6 +19,7 @@
 
 #include "sdl_audio.h"
 #include "SerialHandler.h"
+#include "Overlay.h"
 
 
 #ifdef __APPLE__
@@ -41,6 +42,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
+	this->overlay_ = new Overlay();
 	SerialHandler *serial = manager->getSerialHandler();
 	//Enable the pressure plates:
 	serial->sendCommand("EGM");
@@ -68,15 +70,13 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posY = 1.8;
     cam2->rotY = 180;
 
-
-
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
-	AddModel(new GateModel("models/blok/blok.obj"));
+	this->gate = new GateModel("models/blok/blok.obj");
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
@@ -219,10 +219,18 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
-        /* nunchuk */
-        players[0]->getCamera()->rotX = wiiHandler->rot1X;
-        players[0]->getCamera()->rotY = wiiHandler->rot1Y;
-        glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+    for (int i = 0; i < players.size(); i++) {
+        if (i == 0 && !MOUSE) {
+            players[i]->getCamera()->rotX = wiiHandler->rot1X;
+            players[i]->getCamera()->rotY = wiiHandler->rot1Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+        if (i == 1) {
+            players[i]->getCamera()->rotX = wiiHandler->rot2X;
+            players[i]->getCamera()->rotY = wiiHandler->rot2Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+    }
 
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;
@@ -230,49 +238,49 @@ void PlayingState::Update(float deltatime, bool keys){
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
 
 	//speler 1 booog
-	if (wiiHandler->is_A1 || keys == true)
+	if (wiiHandler->is_B1)
 	{
-		counter += deltatime;
-		if (counter < 33) players[0]->bow->setIndex(0);
-		else if (counter < 66) players[0]->bow->setIndex(1);
+		counter1 += deltatime;
+		if (counter1 < 33) players[0]->bow->setIndex(0);
+		else if (counter1 < 66) players[0]->bow->setIndex(1);
 		else players[0]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter1 >= 100)
 		{
 			players[0]->bow->nextModel();
-			if (counter >= 59)
+			if (counter1 >= 59)
 			{
 				players[0]->bow->getModel()->update(-1);
 				players[0]->bow->setIndex(0);
-				counter = 0;
+				counter1 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter1 = 0;
 		players[0]->bow->setIndex(0);
 	}
 
-	if (wiiHandler->is_A2 || keys == true)
+	if (wiiHandler->is_B2)
 	{
-		counter += deltatime;
-		if (counter < 33) players[1]->bow->setIndex(0);
-		else if (counter < 66) players[1]->bow->setIndex(1);
+		counter2 += deltatime;
+		if (counter2 < 33) players[1]->bow->setIndex(0);
+		else if (counter2 < 66) players[1]->bow->setIndex(1);
 		else players[1]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter2 >= 100)
 		{
 			players[1]->bow->nextModel();
-			if (counter >= 59)
+			if (counter2 >= 59)
 			{
 				players[1]->bow->getModel()->update(-1);
 				players[1]->bow->setIndex(0);
-				counter = 0;
+				counter2 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter2 = 0;
 		players[1]->bow->setIndex(0);
 	}
 
@@ -401,6 +409,12 @@ void PlayingState::Draw() {
                 DrawModels();
             }
 
+			//draw port xpbar
+
+
+			//TODO: call this method if gameover :) 
+			//overlay_->drawGameOver(this->players, loop, true);
+			overlay_->drawHealthBar(players.at(0), this->gate);
         }
     }
 
@@ -427,8 +441,10 @@ void PlayingState::Draw() {
         glRotatef(cam1->rotY, 0, 1, 0);
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         DrawModels();
-
+		overlay_->drawGameOver(this->players, 0, true);
     }
+
+	
 
 }
 

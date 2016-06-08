@@ -102,6 +102,9 @@
     <ClInclude Include="sdl_audio.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Overlay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />
@@ -310,6 +313,9 @@
     <ClCompile Include="sdl_audio.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Overlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="arrow_hit.wav">
@@ -322,9 +328,6 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="sword_slash.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="test.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>
@@ -344,9 +347,6 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="sword_slash.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="test.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>
