@@ -217,6 +217,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="ArrowModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
@@ -250,6 +253,7 @@
     <ClCompile Include="AnimatedSettingsButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
+
     <ClCompile Include="AnimatedBowModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
