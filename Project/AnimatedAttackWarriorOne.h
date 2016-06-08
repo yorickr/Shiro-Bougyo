@@ -2,12 +2,13 @@
 #include "WiiHAndler.h"
 #include "BowModel.h"
 #include "AnimatedCollisionModel.h"
+#include "WarriorModel.h"
 
 class AnimatedAttackWarriorOne :
 	public AnimatedCollisionModel
 {
 public:
-#include "WarriorModel.h"
+	AnimatedAttackWarriorOne(vector<CollisionModel*> models);
 	~AnimatedAttackWarriorOne();
 
 };
