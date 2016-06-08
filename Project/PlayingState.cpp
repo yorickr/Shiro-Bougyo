@@ -150,7 +150,7 @@ void PlayingState::AddWarrior(){
 
 
 		vector<CollisionModel*> models;
-		WarriorModel * warriorOne = new WarriorModel(-2.5, -2.3, type, staticModels.at(filename1), this);
+		WarriorModel * warriorOne = new WarriorModel(-point.X, -point.Y, type, staticModels.at(filename1), this);
 
 
 		WarriorModel *warriorTwo = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, staticModels.at(filename1), this);
@@ -293,32 +293,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 
 	players.at(1)->getCamera()->rotX++;
 
-	//Collision Gate with Warrior
-	for (auto &Warrior : animatedcollisionmodels_)
-	{
-		for (auto &Gate : collisionModels)
-		{
-
-			if ((Warrior.second->getModel() != Gate.second) && std::get<0>(Warrior.second->getModel()->CollidesWith(Gate.second)))
-			{
-				collidesGate = true;
-				WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(Gate.second);
-				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second->getModel());
-				if (warrior1 != 0 && Gates != 0)
-				{
-					//FirstStand->setIndex(1);
-					if(rand() & 10 == 1){
-						gate->setHealth(gate->getHealth() - 2);
-					}
-					
-				}
-			}
-		}
-		if (!collidesGate) {
-			Warrior.second->getModel()->update(deltatime);
-		}
-		collidesGate = false;
-	}
+	
 	if (wiiHandler->is_B2)
 	{
 		counter2 += deltatime;
@@ -380,12 +355,28 @@ void PlayingState::Update(float deltatime, bool keys) {
 		for (auto &m : models) {
 			m.second->update(deltatime);
 		}
-		for (auto &m : collisionModels) {
-			m.second->update(deltatime);
+
+
+		//Collision Gate with Warrior
+		for (auto &Warrior : animatedcollisionmodels_)
+		{
+			if ((Warrior.second->getModel() != this->gate) && std::get<0>(Warrior.second->getModel()->CollidesWith(this->gate)))
+			{
+				collidesGate = true;
+				//remove health from gate
+				if(rand() %  20 == 1){
+					gate->setHealth(gate->getHealth() - 1);
+				}
+				
+			}
+			if (!collidesGate) {
+				Warrior.second->getModel()->update(deltatime);
+			}
+			collidesGate = false;
 		}
 
+
 		
-		//bow->getModel()->update(deltatime);
 	}
 
 
@@ -506,6 +497,12 @@ void PlayingState::Draw() {
 
 			//draw port xpbar
 
+
+			//check if gate is finished
+			if (gate->getHealth() <= 0) {
+				//show gameover menu
+				overlay_->drawGameOver(players, loop, false);
+			}
 
 			//TODO: call this method if gameover :) 
 			//overlay_->drawGameOver(this->players, loop, true);
