@@ -90,10 +90,15 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 	
 	
 	//Draw overlay red is lose otherwise green
-	glColor3f(!haswon, haswon, 0);
+	//glColor3f(!haswon, haswon, 0);
 	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(!haswon, haswon, 0, 0.55);
+
 	//space between objects
 	int margin = 200;
+
 
 	//drawBackground:
 	glBegin(GL_QUADS);
@@ -131,7 +136,7 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 
 void Overlay::drawPlayerInfo(Player * player, int x0, int y0, int x1, int y1, bool iscurrentPlayer) {
 	//if cuurent player white, else black
-	glColor3f(iscurrentPlayer, iscurrentPlayer, iscurrentPlayer);
+	glColor4f(iscurrentPlayer, iscurrentPlayer, iscurrentPlayer, 0.8);
 	
 	glBegin(GL_QUADS);
 	glVertex2f(x0, y1);
@@ -141,6 +146,7 @@ void Overlay::drawPlayerInfo(Player * player, int x0, int y0, int x1, int y1, bo
 	glEnd();
 	
 	glColor3f(1, 0, 0);
+
 
 	if (iscurrentPlayer) {
 		glutdrawstring("YOU: ", x0 + 50, y0 + 50, GLUT_BITMAP_HELVETICA_18);
