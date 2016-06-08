@@ -5,6 +5,8 @@
 #include "AnimatedModel.h"
 #include <math.h>
 #include "GameState.h"
+#include "sdl_audio.h"
+#include <thread>
 
 # define M_PI           3.14159265358979323846  /* pi */
 
@@ -66,6 +68,8 @@ float BowModel::toRadian(float degree) {
 
 void BowModel::fireArrow() const
 {
+	std::thread bowShotThread(&SDL_Audio::playBowShot, SDL_Audio()); //Play bow shot sound
+	bowShotThread.detach();
 	camera_->posY;
 	float camrotx = 0;
 	ArrowModel *newArrow;

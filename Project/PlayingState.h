@@ -15,6 +15,8 @@
 #include "Player.h"
 #include "WarriorModel.h"
 #include "AnimatedAttackWarriorOne.h"
+#include "Overlay.h"
+#include "GateModel.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -51,6 +53,8 @@ public:
 
 	virtual void DestoryPowerUp();
 
+	virtual void SetEnemyCount(int offset);
+
     virtual std::vector<Player*> GetPlayers() override ;
 
 
@@ -64,7 +68,8 @@ private:
     int enemyCount = 0;
 	int counterWarrior = 0;
     WiiHandler *wiiHandler;
-	CollisionModel * gate;
+	GateModel * gate;
+	Overlay * overlay_;
     void PowerUpThread();
 	WarriorModel *warriorOne;
 	AnimatedAttackWarriorOne *FirstStand;

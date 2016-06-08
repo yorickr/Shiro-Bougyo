@@ -21,6 +21,7 @@ public:
 
 	Camera* getCamera();
     unsigned char getPlayerID();
+	int getKills();
 	AnimatedBowModel * bow;
 private:
 	WiiHandler * wiiHandler_;

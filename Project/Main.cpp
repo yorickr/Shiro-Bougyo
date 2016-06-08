@@ -19,17 +19,16 @@
 
 #include "WiiHandler.h"
 
-#define COMMPORT 4
+#define COMMPORT 5
 #define DELTATIME_MODIFIER 10;
 
 #include "sdl_audio.h"
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT, gameManager);
+SerialHandler serial = SerialHandler(COMMPORT, &gameManager);
 
 bool keys[255];
 void* wiiFunc(void * argument);
-void* musicFunc(void * argument);
 //Camera camera;
 
 WiiHandler wiiHandler;
@@ -72,10 +71,10 @@ void onDisplay() {
 }
 
 void initializeThreads(){
-	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	std::thread wiiThread(&wiiFunc, nullptr); //WiiMote Thread
 	wiiThread.detach();
-	//std::thread musicThread(&musicFunc, nullptr); //Music Thread
-	//musicThread.detach();
+	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
+	musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -107,7 +106,7 @@ void onTimer(int id) {
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
-	gameManager.Update(deltatime);
+	//gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
@@ -133,11 +132,6 @@ void onKeyboard(unsigned char key, int, int) {
 
 void* wiiFunc(void * argument) {
 	//wiiHandler.wiiMoteLoop();
-	return 0;
-}
-
-void* musicFunc(void * argument) {
-	playTheme();
 	return 0;
 }
 
@@ -202,7 +196,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	//glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
@@ -214,11 +208,8 @@ int main(int argc, char* argv[]) {
     glutTimerFunc(1000 / 60, onTimer, 1);
 
     glutKeyboardUpFunc(onKeyboardUp);
-
-    glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
-    glutMouseFunc(mouseFunc);
-	
+
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
 
