@@ -152,7 +152,7 @@ ObjModel::ObjModel(std::string fileName) {
             for (size_t i = 0; i < materials.size(); i++) {
                 MaterialInfo *info = materials[i];
                 if (info->name == params[1]) {
-                    currentGroup->materialIndex = i;
+                    currentGroup->materialIndex = (int)i;
                     break;
                 }
             }
@@ -273,7 +273,7 @@ void ObjModel::draw() {
 		glVertexPointer(3, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data()) );
 		glNormalPointer(GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+3 );
 		glTexCoordPointer(2, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+6 );
-		glDrawArrays(GL_TRIANGLES, 0, gr.vecs.size());
+		glDrawArrays(GL_TRIANGLES, 0, (GLsizei)gr.vecs.size());
 			
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);

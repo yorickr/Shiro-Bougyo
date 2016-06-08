@@ -69,6 +69,7 @@ private:
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
 	vector<pair<int, AnimatedCollisionModel *>> animatedcollisionmodels_;
+	vector<ObjModel *> playerModels;
     int enemyCount = 0;
 	int counterWarrior = 0;
     WiiHandler *wiiHandler;
@@ -76,9 +77,11 @@ private:
 	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
+
+	ObjModel *player1;
+	ObjModel *player2;
 	bool collidesGate = false;
 	AnimatedAttackWarriorOne * animatedWarior;
-
 };
 
 

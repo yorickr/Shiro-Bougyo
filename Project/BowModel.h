@@ -31,7 +31,7 @@ private:
 	void setCrosshairPositions(float x, float y, float rotx, float roty) const;
 	
 	float bowPostion = 0.8f;
-	int wiiXPos = 0;
-	int wiiYPos = 0;
+	float wiiXPos = 0.0f;
+	float wiiYPos = 0.0f;
 };
 

@@ -46,30 +46,30 @@ void Overlay::drawHealthBar(Player * player, GateModel * gate)
 
 	//xpbarbackground:
 	glBegin(GL_QUADS);
-	glColor3f(0,1,0);
-	glVertex2f(x1, y0);
-	glVertex2f(x0,y0);
+	glColor3f((GLfloat)0, (GLfloat)1, (GLfloat)0);
+	glVertex2f((GLfloat)x1, (GLfloat)y0);
+	glVertex2f((GLfloat)x0, (GLfloat)y0);
 
-	glColor3f(1, 0, 0);
-	glVertex2f(x0, y1);
-	glVertex2f(x1,y1);
+	glColor3f((GLfloat)1, (GLfloat)0, (GLfloat)0);
+	glVertex2f((GLfloat)x0, (GLfloat)y1);
+	glVertex2f((GLfloat)x1, (GLfloat)y1);
 	glEnd();
 
 	//drawindicator:
 
-	float indicatorpos = (xpbarHeight * gate->getHealth()) / 100 ;
+	float indicatorpos = (float)(xpbarHeight * gate->getHealth()) / 100 ;
 
 	int indicatorx0 = x0 - 10;
-	int indicatory0 = cam->height - indicatorpos -5 - margin;
+	int indicatory0 = cam->height - (int)indicatorpos - 5 - margin;
 	int indicatorx1 = x1 + 10;
-	int indicatory1 = cam->height - indicatorpos + 5 - margin;
+	int indicatory1 = cam->height - (int)indicatorpos + 5 - margin;
 
 	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
-	glVertex2f(indicatorx1, indicatory0);
-	glVertex2f(indicatorx0, indicatory0);
-	glVertex2f(indicatorx0, indicatory1);
-	glVertex2f(indicatorx1, indicatory1);
+	glVertex2f((GLfloat)indicatorx1, (GLfloat)indicatory0);
+	glVertex2f((GLfloat)indicatorx0, (GLfloat)indicatory0);
+	glVertex2f((GLfloat)indicatorx0, (GLfloat)indicatory1);
+	glVertex2f((GLfloat)indicatorx1, (GLfloat)indicatory1);
 	glEnd();
 
 	//reset settings:
@@ -93,7 +93,7 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor4f(!haswon, haswon, 0, 0.55);
+	glColor4f(!haswon, haswon, 0, (GLfloat)0.55);
 
 	//space between objects
 	int margin = 200;
@@ -101,10 +101,10 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 
 	//drawBackground:
 	glBegin(GL_QUADS);
-	glVertex2f(margin, playerone->getCamera()->height - margin);
-	glVertex2f(margin, margin);
-	glVertex2f(playerone->getCamera()->width - margin, margin);
-	glVertex2f(playerone->getCamera()->width - margin, playerone->getCamera()->height - margin);
+	glVertex2f((GLfloat)margin, (GLfloat)playerone->getCamera()->height - margin);
+	glVertex2f((GLfloat)margin, (GLfloat)margin);
+	glVertex2f((GLfloat)playerone->getCamera()->width - margin, (GLfloat)margin);
+	glVertex2f((GLfloat)playerone->getCamera()->width - margin, (GLfloat)playerone->getCamera()->height - margin);
 	glEnd();
 
 	margin += 25;
@@ -137,13 +137,13 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 
 void Overlay::drawPlayerInfo(Player * player, int x0, int y0, int x1, int y1, bool iscurrentPlayer) {
 	//if cuurent player white, else black
-	glColor4f(iscurrentPlayer, iscurrentPlayer, iscurrentPlayer, 0.8);
+	glColor4f(iscurrentPlayer, iscurrentPlayer, iscurrentPlayer, (GLfloat)0.8f);
 	
 	glBegin(GL_QUADS);
-	glVertex2f(x0, y1);
-	glVertex2f(x0, y0);
-	glVertex2f(x1, y0);
-	glVertex2f(x1, y1);
+	glVertex2f((GLfloat)x0, (GLfloat)y1);
+	glVertex2f((GLfloat)x0, (GLfloat)y0);
+	glVertex2f((GLfloat)x1, (GLfloat)y0);
+	glVertex2f((GLfloat)x1, (GLfloat)y1);
 	glEnd();
 	
 	glColor3f(1, 0, 0);
@@ -185,7 +185,7 @@ void Overlay::stopDrawing()
 
 void Overlay::glutdrawstring(std::string str, int x, int y, void* style)
 {
-	glRasterPos2f(x, y);
+	glRasterPos2f((GLfloat)x, (GLfloat)y);
 	for (int i = 0; i < str.size(); i++)
 	{
 		glutBitmapCharacter(style, str[i]);

@@ -7,7 +7,7 @@
 #include <unistd.h>
 #endif
 
-static class Util {
+class Util {
 	public:
 		static void USleep(int);
 
