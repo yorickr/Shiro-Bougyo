@@ -8,14 +8,14 @@
 #include "GameState.h"
 #include "CollisionModel.h"
 
+class Player;
 class GameState;
 
 class ArrowModel : public CollisionModel {
 public:
     //ArrowModel( float x, float y, float z);
 
-
-	ArrowModel(float startx, float starty, float startz, float xdirection, float ydirection, GameState * state);
+	ArrowModel(float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player);
 	~ArrowModel(void);
 
 	void InitBoundingSpheres() override;
@@ -23,9 +23,10 @@ public:
 	float toRadian(float degree);
 	void draw() override;
     void update(float deltatime) override;
-
+	Player* getPlayer() const;
 private:
 	GameState * state;
+	Player * player_;
 };
 
 

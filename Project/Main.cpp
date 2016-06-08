@@ -74,8 +74,8 @@ void onDisplay() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
-	std::thread musicThread(&musicFunc, nullptr); //Music Thread
-	musicThread.detach();
+	//std::thread musicThread(&musicFunc, nullptr); //Music Thread
+	//musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -107,7 +107,7 @@ void onTimer(int id) {
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
-	//gameManager.Update(deltatime);
+	gameManager.Update(deltatime);
 	glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
@@ -120,7 +120,9 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		gameManager.nextState();
+		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
+			gameManager.nextState();
+		//}
 		break;
 	default:
 		//just to please CLion.
@@ -130,7 +132,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteTest();
+	//wiiHandler.wiiMoteLoop();
 	return 0;
 }
 
@@ -200,7 +202,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	glutFullScreen();
+	//glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);
@@ -219,7 +221,7 @@ int main(int argc, char* argv[]) {
 	
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
-	
+
 	gameManager.Init(&wiiHandler);
 	gameManager.addSerialHandler(&serial);
 

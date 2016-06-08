@@ -69,6 +69,7 @@ private:
 	WarriorModel *warriorOne;
 	AnimatedAttackWarriorOne *FirstStand;
 	void DestroyPowerUpThread();
+	bool collidesGate = false;
 };
 
 

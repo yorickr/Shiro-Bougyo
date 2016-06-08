@@ -24,7 +24,7 @@
 #include <GLUT/glut.h>
 #include <cstdlib>
 #include <iostream>
-
+#include <cmath>
 #else
 #include <tuple>
 #include <windows.h>
@@ -64,16 +64,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posZ = 3.2;
     cam2->posY = 1.8;
     cam2->rotY = 180;
-	//light
 
-	//bow
-//	vector<ObjModel*> temp;
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj", this, cam));
-//	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj", this, cam));
-//
-//	bow = new AnimatedBowModel(temp, hand);
-	//bow = new AnimatedBowModel(models); #1#
 
 
 	//World
@@ -141,21 +132,19 @@ void PlayingState::AddWarrior(){
 			type = WarriorType::second;
 			filename = "models/secondwarrior/warrior.obj";
 		}
-		//vector<CollisionModel*>warrior_model;
-		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename);
-		/*warrior_model.push_back(warriorOne);
-		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj");
-		warrior_model.push_back(warriorOne);
-		FirstStand = new AnimatedAttackWarriorOne(warrior_model);*/
+		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename, this);
 		AddModel(warriorOne);
+/*		WarriorModel *warriorTwo = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj", this);
+		AddModel(warriorTwo);
+		WarriorModel *warriorThree = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/ThirdStand.obj", this);
+		AddModel(warriorThree);
+		FirstStand = new AnimatedAttackWarriorOne(collisionModels);*/
+		if(collidesGate)
+		{
+			FirstStand->setIndex(1);
+		}
 		enemyCount++;
 	}
-//	else if(enemyCount >= 20){
-//		for( auto &m : collisionModels){
-//			DeleteModel(m.second);
-//		}
-//        enemyCount = 0;
-//	}
 }
 
 void PlayingState::ScalePowerUp() {
@@ -191,19 +180,21 @@ void PlayingState::PowerUpThread()
 
 void PlayingState::DestroyPowerUpThread()
 {
-	int height = 0;
+	float height = 0;
 	int war;
+	int rot = 0;
 	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
 	while (height < 40) {
 		for (iter = collisionModels.begin(), war = 0; iter != collisionModels.end() && war < 10; ++iter, war++) {
 				WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
 				if (warrior != 0) {
 					warrior->setPosition(0,height,0);
-					//warrior->PowerUpBoundingSpheres();
+					warrior->setRotation(warrior->xrot, rot, warrior->zrot);
 				}
 			}
-		height++;
-		Util::USleep(100);
+		rot+=60;
+		height+=0.1;
+		Util::USleep(30);
 	}
 	//removing them:
 	for (int count = 0; count < 10; count++) {
@@ -227,7 +218,22 @@ void PlayingState::Update(float deltatime) {
 	Update(deltatime, false);
 }
 
-void PlayingState::Update(float deltatime, bool keys) {
+void PlayingState::Update(float deltatime, bool keys){
+
+
+    if (wiiHandler->wiiMoteP1) {
+        /* nunchuk */
+        players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+        players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+        glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+    }
+    if (wiiHandler->wiiMoteP2) {
+        /* nunchuk */
+        players[1]->getCamera()->rotX = wiiHandler->rot2X;
+        players[1]->getCamera()->rotY = wiiHandler->rot2Y;
+        glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
+    }
+
 	if (wiiHandler->is_A || keys == true)
 	{
 		counter += deltatime;
@@ -251,11 +257,10 @@ void PlayingState::Update(float deltatime, bool keys) {
 		players[0]->bow->setIndex(0);
 	}
 
+
 	players.at(1)->getCamera()->rotX++;
 
 	//Collision Gate with Warrior
-	bool collidesGate = false;
-
 	for (auto &Warrior : collisionModels)
 	{
 		for (auto &Gate : collisionModels)
@@ -263,23 +268,11 @@ void PlayingState::Update(float deltatime, bool keys) {
 			if(Warrior != Gate && std::get<0>(Warrior.second->CollidesWith(Gate.second)))
 			{
 				collidesGate = true;
-				WarriorModel *warrior = dynamic_cast<WarriorModel *>(Warrior.second);
-				WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(Warrior.second);
+				WarriorModel *warrior = dynamic_cast<WarriorModel *>(Gate.second);
 				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second);
-
-					counterWarrior += 1;
-					vector<ObjModel*>first;
-					if (counterWarrior > 5 &&  counterWarrior < 10)
-					{
-						FirstStand->setIndex(0);
-					}
-					if(counterWarrior > 10 && counterWarrior < 20)
-					{
-						FirstStand->setIndex(1);
-					}else if(counterWarrior > 21)
-					{
-						counterWarrior = 0;
-					}
+				if(warrior != 0 && Gates != 0)
+				{
+				}
 			}
 		}
 		if (!collidesGate) {
@@ -288,51 +281,50 @@ void PlayingState::Update(float deltatime, bool keys) {
 		collidesGate = false;
 	}
 
-	// Collision warrior and arrow
-	bool collides = false;
-	for (auto &obj1 : collisionModels) {
-		for (auto &obj2 : collisionModels) {
-			if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
-				obj2.second))) //get<1> returns a vector with the spheres that are colliding
-			{
-				//                printf("%d colliding with %d\n", obj1.first, obj2.first);
-				collides = true;
+    bool collides = false;
+    for (auto &obj1 : collisionModels) {
+        for (auto &obj2 : collisionModels) {
+			
+            if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
+                    obj2.second))) //get<1> returns a vector with the spheres that are colliding
+            {
+//                printf("%d colliding with %d\n", obj1.first, obj2.first);
+                collides = true;
 				WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
-				WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
-				ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
-				ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
+                WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
+                ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
+                ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
 
-				if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+                if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+					//set player who shot the arrow
+					Player * from_player;
+                    if (arrow1 != nullptr) {
+						from_player = arrow1->getPlayer();
+                        DeleteModel(arrow1);
+                    } else {
+						from_player = arrow2->getPlayer();
+                        DeleteModel(arrow2);
+                    }
 
-					//TODO: Check if arrow came from player 1 or player 2
-					if (arrow1 != nullptr) {
-						DeleteModel(arrow1);
-					}
-					else {
-						DeleteModel(arrow2);
-					}
+                    
+                    if (warrior1 != nullptr) {
+                        //returns false if warrior health <= 0
+						warrior1->removeHealth(from_player);
+						
+                    } else {
+                        //returns false if warrior health <= 0
+						warrior2->removeHealth(from_player);
+                      
+                    }
+                }
+                break;
+            }
+        }
+        if (!collides) {
+            obj1.second->update(deltatime);
+        }
+        collides = false;
 
-					//TODO: check sort warrior is shot
-					if (warrior1 != nullptr) {
-						//returns false if warrior health <= 0
-						if (warrior1->removeHealth(100))
-							DeleteModel(warrior1);
-					}
-					else {
-						//returns false if warrior health <= 0
-						if (warrior2->removeHealth(100))
-							DeleteModel(warrior2);
-					}
-					//DeleteModel(obj1.second);
-					//DeleteModel(obj2.second);
-				}
-				break;
-			}
-		}
-		if (!collides) {
-			obj1.second->update(deltatime);
-		}
-		collides = false;
     }
 
     for (auto &m : models) {
@@ -354,7 +346,7 @@ void PlayingState::DrawModels(){
     for( auto &n : collisionModels) {
         n.second->draw();
     }
-	//FirstStand->getModel()->draw();
+//	FirstStand->getModel()->draw();
 }
 
 
@@ -432,14 +424,13 @@ void PlayingState::Draw() {
         glMatrixMode(GL_MODELVIEW);
 
         glLoadIdentity();
-
 //        load bow
         preTranslateDraw(players.at(0));
         glRotatef(cam1->rotX, 1, 0, 0);
         glRotatef(cam1->rotY, 0, 1, 0);
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         DrawModels();
-
+		//FirstStand->getModel()->draw();
     }
 
 }

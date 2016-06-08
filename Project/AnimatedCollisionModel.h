@@ -4,7 +4,7 @@
 class AnimatedCollisionModel
 {
 public:
-	AnimatedCollisionModel(vector<CollisionModel*> models);
+	AnimatedCollisionModel(vector<pair<int, CollisionModel *>> models);
 	CollisionModel* getModel();
 	CollisionModel* previousModel();
 	CollisionModel* nextModel();
@@ -12,7 +12,7 @@ public:
 	~AnimatedCollisionModel();
 
 private:
-	vector<CollisionModel*> objects;
+	vector<pair<int, CollisionModel *>> objects;
 	int index = 0;
 
 };

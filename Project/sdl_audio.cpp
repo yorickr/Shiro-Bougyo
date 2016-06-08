@@ -7,6 +7,7 @@
 #include "SDL.h"
 #include "sdl_mixer.h"
 #endif 
+#include <windows.h>
 
 int playSound(std::string fileName);
 
@@ -64,7 +65,10 @@ int playSound(std::string fileName) {
         }
     }
 
-    while(true);
+    while(true)
+    {
+		Sleep(10000);
+    }
     //cleanup
     Mix_FreeMusic(sound);
 

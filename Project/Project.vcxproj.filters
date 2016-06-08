@@ -135,21 +135,6 @@
     <ClInclude Include="AnimatedSettingsButtonModel.h">
       <Filter>Header Files\ObjectModels</Filter>
     </ClInclude>
-    <ClInclude Include="GateModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdl_audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedAttackWarriorOne.h">
-      <Filter>Header Files\ObjectModels</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedCollisionModel.h">
-      <Filter>Header Files\ObjectModels</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -188,54 +173,5 @@
     <ClCompile Include="AnimatedSettingsButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-    <ClCompile Include="GateModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sdl_audio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedAttackWarriorOne.cpp">
-      <Filter>Source Files\ObjectModels</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedCollisionModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="arrow_hit.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="bow_pull.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="bow_shot.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="sword_slash.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="test.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="arrow_hit.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="bow_pull.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="bow_shot.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="sword_slash.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="test.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
   </ItemGroup>
 </Project>
