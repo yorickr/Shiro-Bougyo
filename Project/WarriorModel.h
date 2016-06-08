@@ -12,7 +12,7 @@ class WarriorModel :
 	public CollisionModel
 {
 public:
-	WarriorModel(float x, float z, WarriorType type, string filename, GameState *game);
+	WarriorModel(float x, float z, WarriorType type, ObjModel *model, GameState *game);
 	~WarriorModel();
 	void update(float deltatime) override;
 	void InitBoundingSpheres() override;

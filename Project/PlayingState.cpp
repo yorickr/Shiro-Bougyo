@@ -38,6 +38,7 @@
 #include <iostream>
 #endif
 
+
 void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
@@ -70,23 +71,27 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posY = 1.8;
     cam2->rotY = 180;
 
-
-
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
-	this->gate = new GateModel("models/blok/blok.obj");
+	//adding warriors:
+	staticModels.push_back(new ObjModel("models/warrior/warrior.obj")); //warrior 1
+	staticModels.push_back(new ObjModel("models/secondwarrior/warrior.obj")); //warrior 2
+	staticModels.push_back(new ObjModel("models/blok/blok.obj")); //Gate
+	staticModels.push_back(new ObjModel("models/Arrow/Arrow.obj")); //arrow
+
+	this->gate = new GateModel(staticModels.at(2));
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
     players.push_back(new Player(cam2, hand, this, 2));
-	players[0]->makeBow();
-	players[1]->makeBow();
+	players[0]->makeBow(staticModels.at(3));
+	players[1]->makeBow(staticModels.at(3));
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -124,19 +129,19 @@ void PlayingState::AddWarrior(){
 	if(enemyCount < 20 && random < 5){
 		PointXY point = SpawnEnemies();
 		WarriorType type;
-		string filename;
+		ObjModel *model;
 		if(random % 2)
 		{
 			type = WarriorType::first;
-			filename = "models/warrior/warrior.obj";
+			model = staticModels.at(0);
 			//WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
 			//AddModel(warrior);
 		}else
 		{
 			type = WarriorType::second;
-			filename = "models/secondwarrior/warrior.obj";
+			model = staticModels.at(1);
 		}
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename,this);
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, model, this);
 		
 		AddModel(warrior);
 		enemyCount++;
@@ -221,12 +226,18 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
-        /* nunchuk */
-		if (!MOUSE) {
-			players[0]->getCamera()->rotX = wiiHandler->rot1X;
-			players[0]->getCamera()->rotY = wiiHandler->rot1Y;
-			glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
-		}
+    for (int i = 0; i < players.size(); i++) {
+        if (i == 0 && !MOUSE) {
+            players[i]->getCamera()->rotX = wiiHandler->rot1X;
+            players[i]->getCamera()->rotY = wiiHandler->rot1Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+        if (i == 1) {
+            players[i]->getCamera()->rotX = wiiHandler->rot2X;
+            players[i]->getCamera()->rotY = wiiHandler->rot2Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+    }
 
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;
@@ -234,49 +245,49 @@ void PlayingState::Update(float deltatime, bool keys){
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
 
 	//speler 1 booog
-	if (wiiHandler->is_A1 || keys == true)
+	if (wiiHandler->is_B1 || keys)
 	{
-		counter += deltatime;
-		if (counter < 33) players[0]->bow->setIndex(0);
-		else if (counter < 66) players[0]->bow->setIndex(1);
+		counter1 += deltatime;
+		if (counter1 < 33) players[0]->bow->setIndex(0);
+		else if (counter1 < 66) players[0]->bow->setIndex(1);
 		else players[0]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter1 >= 100)
 		{
 			players[0]->bow->nextModel();
-			if (counter >= 59)
+			if (counter1 >= 59)
 			{
 				players[0]->bow->getModel()->update(-1);
 				players[0]->bow->setIndex(0);
-				counter = 0;
+				counter1 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter1 = 0;
 		players[0]->bow->setIndex(0);
 	}
 
-	if (wiiHandler->is_A2 || keys == true)
+	if (wiiHandler->is_B2)
 	{
-		counter += deltatime;
-		if (counter < 33) players[1]->bow->setIndex(0);
-		else if (counter < 66) players[1]->bow->setIndex(1);
+		counter2 += deltatime;
+		if (counter2 < 33) players[1]->bow->setIndex(0);
+		else if (counter2 < 66) players[1]->bow->setIndex(1);
 		else players[1]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter2 >= 100)
 		{
 			players[1]->bow->nextModel();
-			if (counter >= 59)
+			if (counter2 >= 59)
 			{
 				players[1]->bow->getModel()->update(-1);
 				players[1]->bow->setIndex(0);
-				counter = 0;
+				counter2 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter2 = 0;
 		players[1]->bow->setIndex(0);
 	}
 

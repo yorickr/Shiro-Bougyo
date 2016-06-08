@@ -13,7 +13,7 @@ class BowModel :
 	public ObjModel
 {
 public:
-	BowModel(WiiHandler * hand, string filename, GameState * state, Camera * cam, Player * player);
+	BowModel(WiiHandler * hand, string filename, GameState * state, Camera * cam, Player * player, ObjModel *arrowModel);
 	~BowModel();
 	void draw() override;
 	static float toRadian(float degree);
@@ -25,6 +25,7 @@ private:
 	Camera* camera_;
 	WiiHandler * wiiHandler;
 	Player * player_;
+	ObjModel *arrowModel;
 
 	void SetPositions(float x, float y, float rotx, float roty);
 	void setCrosshairPositions(float x, float y, float rotx, float roty) const;

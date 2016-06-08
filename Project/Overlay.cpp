@@ -29,8 +29,6 @@ Overlay::~Overlay()
 }
 
 
-
-
 void Overlay::drawHealthBar(Player * player, GateModel * gate)
 {
 	//init glut overlay
@@ -77,6 +75,7 @@ void Overlay::drawHealthBar(Player * player, GateModel * gate)
 	//reset settings:
 	stopDrawing();
 }
+
 
 
 ///Game Over screen
@@ -127,6 +126,8 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 		drawPlayerInfo(players[i], x0, y0, x1, y1, isCurrentPlayer);
 
 	}
+
+
 
 	glutdrawstring("Game Over " ,  playerone->getCamera()->width / 2 - 75, 100, GLUT_BITMAP_TIMES_ROMAN_24);
 

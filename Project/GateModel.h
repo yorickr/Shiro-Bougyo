@@ -10,7 +10,7 @@
 
 class GateModel : public CollisionModel{
 public:
-    GateModel(string filename);
+    GateModel(ObjModel *model);
     ~GateModel();
     void InitBoundingSpheres() override;
 	

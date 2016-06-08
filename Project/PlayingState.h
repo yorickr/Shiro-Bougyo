@@ -58,8 +58,10 @@ public:
 
 private:
     vector<Player *> players;
-    int counter = 0;
+    int counter1 = 0;
+	int counter2 = 0;
     GameStateManager *manager;
+	vector<ObjModel *> staticModels;
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;

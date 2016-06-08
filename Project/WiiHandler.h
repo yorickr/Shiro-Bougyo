@@ -29,6 +29,9 @@ public:
 	bool Up2_pressed = false;
 	bool Down2_pressed = false;
 
+	bool is_B1 = false;
+	bool is_B2 = false;
+
 	int player1X = 0;
 	int player1Y = 0;
 

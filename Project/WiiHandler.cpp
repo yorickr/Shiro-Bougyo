@@ -60,7 +60,20 @@ void WiiHandler::handle_event(struct wiimote_t* wm,int i) {
     }
 
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_B)) {
-        printf("B pressed\n");
+        if(i == 0){
+            is_B1 = true;
+        }
+        if(i == 1){
+            is_B2 = true;
+        }
+    }else
+    {
+        if(i == 0){
+            is_B1 = false;
+        }
+        if(i == 1){
+            is_B2 = false;
+        }
     }
     if (IS_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
 		//printf("UP pressed\n");
@@ -141,7 +154,7 @@ void WiiHandler::handle_event(struct wiimote_t* wm,int i) {
      *	if B is pressed but is not held, toggle the rumble
      */
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_B)) {
-        wiiuse_toggle_rumble(wm);
+        //wiiuse_toggle_rumble(wm);
     }
 
     if (IS_JUST_PRESSED(wm, WIIMOTE_BUTTON_UP)) {
@@ -456,13 +469,7 @@ void WiiHandler::wiiMoteLoop() {
                 switch (wiimotes[i]->event) {
                     case WIIUSE_EVENT:
                         /* a generic event occurred */
-
-                        if(i == 0){
-                            handle_event(wiimotes[0], 0);
-                        }else if(i == 1){
-                            handle_event(wiimotes[1], 1);
-                        }
-
+                            handle_event(wiimotes[i], i);
                         break;
 
                     case WIIUSE_STATUS:
