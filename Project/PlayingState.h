@@ -13,6 +13,8 @@
 #include "AnimatedModel.h"
 #include "AnimatedBowModel.h"
 #include "Player.h"
+#include "Overlay.h"
+#include "GateModel.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -49,6 +51,8 @@ public:
 
 	virtual void DestoryPowerUp();
 
+	virtual void SetEnemyCount(int offset);
+
     virtual std::vector<Player*> GetPlayers() override ;
 
 
@@ -60,7 +64,8 @@ private:
     vector<pair<int, CollisionModel *>> collisionModels;
     int enemyCount = 0;
     WiiHandler *wiiHandler;
-	CollisionModel * gate;
+	GateModel * gate;
+	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
 };

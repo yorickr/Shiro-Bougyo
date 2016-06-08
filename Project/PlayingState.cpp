@@ -16,7 +16,10 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
+
+#include "sdl_audio.h"
 #include "SerialHandler.h"
+#include "Overlay.h"
 
 
 #ifdef __APPLE__
@@ -39,7 +42,9 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
     this->wiiHandler = hand;
+	this->overlay_ = new Overlay();
 	SerialHandler *serial = manager->getSerialHandler();
+	//Enable the pressure plates:
 	serial->sendCommand("EGM");
 	
 
@@ -73,7 +78,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
-	AddModel(new GateModel("models/blok/blok.obj"));
+	this->gate = new GateModel("models/blok/blok.obj");
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
@@ -156,6 +161,11 @@ void PlayingState::DestoryPowerUp()
 	destroyThread.detach();
 }
 
+void PlayingState::SetEnemyCount(int offset)
+{
+	enemyCount += offset;
+}
+
 void PlayingState::PowerUpThread()
 {
 	Util::USleep(30000);
@@ -211,21 +221,18 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
-
-    if (wiiHandler->wiiMoteP1) {
         /* nunchuk */
-        players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
-        players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
-        glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
-    }
-    if (wiiHandler->wiiMoteP2) {
+        players[0]->getCamera()->rotX = wiiHandler->rot1X;
+        players[0]->getCamera()->rotY = wiiHandler->rot1Y;
+        glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
+
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;
         players[1]->getCamera()->rotY = wiiHandler->rot2Y;
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
-    }
 
-	if (wiiHandler->is_A || keys == true)
+	//speler 1 booog
+	if (wiiHandler->is_A1 || keys == true)
 	{
 		counter += deltatime;
 		if (counter < 33) players[0]->bow->setIndex(0);
@@ -248,6 +255,29 @@ void PlayingState::Update(float deltatime, bool keys){
 		players[0]->bow->setIndex(0);
 	}
 
+	if (wiiHandler->is_A2 || keys == true)
+	{
+		counter += deltatime;
+		if (counter < 33) players[1]->bow->setIndex(0);
+		else if (counter < 66) players[1]->bow->setIndex(1);
+		else players[1]->bow->setIndex(2);
+		if (counter >= 100)
+		{
+			players[1]->bow->nextModel();
+			if (counter >= 59)
+			{
+				players[1]->bow->getModel()->update(-1);
+				players[1]->bow->setIndex(0);
+				counter = 0;
+			}
+		}
+	}
+	else
+	{
+		counter = 0;
+		players[1]->bow->setIndex(0);
+	}
+
     bool collides = false;
     for (auto &obj1 : collisionModels) {
         for (auto &obj2 : collisionModels) {
@@ -263,6 +293,9 @@ void PlayingState::Update(float deltatime, bool keys){
                 ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
 
                 if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+					std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
+					arrowHitThread.detach();
+
 					//set player who shot the arrow
 					Player * from_player;
                     if (arrow1 != nullptr) {
@@ -370,6 +403,12 @@ void PlayingState::Draw() {
                 DrawModels();
             }
 
+			//draw port xpbar
+
+
+			//TODO: call this method if gameover :) 
+			//overlay_->drawGameOver(this->players, loop, true);
+			overlay_->drawHealthBar(players.at(0), this->gate);
         }
     }
 
@@ -396,8 +435,10 @@ void PlayingState::Draw() {
         glRotatef(cam1->rotY, 0, 1, 0);
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         DrawModels();
-
+		overlay_->drawGameOver(this->players, 0, true);
     }
+
+	
 
 }
 
@@ -418,6 +459,10 @@ void PlayingState::DeleteModel(CollisionModel *model) {
 	std::vector<pair<int, CollisionModel*>>::const_iterator iter;
 	for (iter = collisionModels.begin(); iter != collisionModels.end(); ++iter){
 		if(iter->second == model){
+			WarriorModel *warrior = dynamic_cast<WarriorModel*>(iter->second);
+			if (warrior != 0) {
+				SetEnemyCount(-1);
+			}
 			collisionModels.erase(iter);
 			break;
 		}

@@ -201,7 +201,7 @@ void ObjModel::CalcMinVertex() {
             smallestz = vertice->z;
         }
     }
-    printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
+    //printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
 
     //Transform it into a vertex.
     vertices_min = new Vec3f(smallestx, smallesty, smallestz);
@@ -235,7 +235,7 @@ void ObjModel::CalcMaxVertex() {
         }
     }
 
-    printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
+    //printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
     vertices_max = new Vec3f(maxx, maxy, maxz);
 }
 
@@ -321,10 +321,11 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
         else if (params[0] == "map_kd") {
             currentMaterial->hasTexture = true;
             currentMaterial->texture = new Texture(dirName + "/" + params[1]);
-            std::cout << "Made material named " << params[1] << std::endl;
-        }
-        else
-            std::cout << "Didn't parse " << params[0] << " in material file" << std::endl;
+            //std::cout << "Made material named " << params[1] << std::endl;
+        }else{
+			//std::cout << "Didn't parse " << params[0] << " in material file" << std::endl;
+		}
+            
     }
     if (currentMaterial != NULL)
         materials.push_back(currentMaterial);
