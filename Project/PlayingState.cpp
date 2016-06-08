@@ -232,11 +232,6 @@ void PlayingState::Update(float deltatime, bool keys){
         }
     }
 
-        /* nunchuk */
-        players[1]->getCamera()->rotX = wiiHandler->rot2X;
-        players[1]->getCamera()->rotY = wiiHandler->rot2Y;
-        glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
-
 	//speler 1 booog
 	if (wiiHandler->is_B1)
 	{
