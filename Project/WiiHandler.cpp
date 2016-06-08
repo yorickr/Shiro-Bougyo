@@ -459,7 +459,8 @@ void WiiHandler::wiiMoteLoop() {
      */
 
     while (any_wiimote_connected(wiimotes, MAX_WIIMOTES)) {
-        if (wiiuse_poll(wiimotes, MAX_WIIMOTES)) {
+        //wiiuse_poll(wiimotes,MAX_WIIMOTES);
+//        if (wiiuse_poll(wiimotes, MAX_WIIMOTES)) {
             /*
              *	This happens if something happened on any wiimote.
              *	So go through each one and check if anything happened.
@@ -511,7 +512,7 @@ void WiiHandler::wiiMoteLoop() {
                         break;
                 }
             }
-        }
+        //}
     }
     /*
      *	Disconnect the wiimotes
