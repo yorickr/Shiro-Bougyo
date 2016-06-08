@@ -1,17 +1,13 @@
 #include "AnimatedCollisionModel.h"
 
-AnimatedCollisionModel::AnimatedCollisionModel(vector<pair<int, CollisionModel *>> models)
+AnimatedCollisionModel::AnimatedCollisionModel(vector<CollisionModel *> models)
 {
 	objects = models;
 }
 
 CollisionModel * AnimatedCollisionModel::getModel()
 {
-	for(int i = 0; i < objects.size(); i++)
-	{
-		index = i;
-		return objects[index].second;
-	}
+	return objects[index];
 }
 
 CollisionModel * AnimatedCollisionModel::previousModel()
@@ -19,11 +15,7 @@ CollisionModel * AnimatedCollisionModel::previousModel()
 	if (index > 0)
 	{
 		index--;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			index = i;
-			return objects[index].second;
-		}
+		return objects[index];
 	}
 }
 
@@ -32,20 +24,12 @@ CollisionModel * AnimatedCollisionModel::nextModel()
 	if (index < objects.size() - 1)
 	{
 		index++;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			index = i;
-			return objects[index].second;
-		}
+		return objects[index];
 	}
 	else
 	{
 		index = 0;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			index = i;
-			return objects[index].second;
-		}
+		return objects[index];
 	}
 }
 

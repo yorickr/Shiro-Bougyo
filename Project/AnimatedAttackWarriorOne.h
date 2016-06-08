@@ -7,7 +7,7 @@ class AnimatedAttackWarriorOne :
 	public AnimatedCollisionModel
 {
 public:
-	AnimatedAttackWarriorOne(vector<pair<int, CollisionModel *>> models);
+	AnimatedAttackWarriorOne(vector<CollisionModel *>models);
 	~AnimatedAttackWarriorOne();
 
 };

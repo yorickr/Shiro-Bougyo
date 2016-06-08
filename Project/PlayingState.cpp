@@ -138,6 +138,19 @@ void PlayingState::AddWarrior(){
 		}
 		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename, this);
 		AddModel(warriorOne);
+		vector<CollisionModel*>warriors;
+		warriors.push_back(warriorOne);
+		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj", this);
+		warriors.push_back(warriorOne);
+		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/SecondStand.obj", this);
+		for (int i = 0; i < warriors.size(); i++)
+		{
+			AddModel(warriors[i]);
+		}
+		for (int i = 0; i < collisionModels.size(); i++)
+		{
+			FirstStand = new AnimatedAttackWarriorOne(warriors);
+		}
 		enemyCount++;
 	}
 }
@@ -279,6 +292,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second);
 				if (warrior != 0 && Gates != 0)
 				{
+					FirstStand->setIndex(1);
 				}
 			}
 		}
@@ -381,7 +395,7 @@ void PlayingState::DrawModels(){
     for( auto &n : collisionModels) {
         n.second->draw();
     }
-//	FirstStand->getModel()->draw();
+	FirstStand->getModel()->draw();
 }
 
 
