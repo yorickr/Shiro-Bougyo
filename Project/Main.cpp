@@ -76,7 +76,7 @@ void onTimer(int id) {
 	}
 
 	//for testing remove keys for final release:
-	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
@@ -99,6 +99,12 @@ void onKeyboard(unsigned char key, int, int) {
 		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
 			gameManager.nextState();
 		//}
+		break;
+	case 'l':
+		gameManager.GetPlayers().at(1)->getCamera()->rotY+=3;
+		break;
+	case 'k':
+		gameManager.GetPlayers().at(1)->getCamera()->rotY-=3;
 		break;
 	default:
 		//just to please CLion.
@@ -173,7 +179,7 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-	//glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);

@@ -37,19 +37,19 @@ ArrowModel::~ArrowModel()
 
 
 float ArrowModel::toRadian(float degree) {
-	return (degree / 180) * M_PI;
+	return (degree / 180.0f) * (float)M_PI;
 }
 
 
 void ArrowModel::update(float deltatime) {
 
-	ypos -= (sin(toRadian(xrot))) * 0.1 * deltatime;
-	zpos += cos(toRadian(yrot))* 0.1 * deltatime;
+	ypos -= (sin(toRadian(xrot))) * 0.1f * deltatime;
+	zpos += cos(toRadian(yrot))* 0.1f * deltatime;
 	//if rotate on y as: 
-	xpos += (sin(toRadian(yrot))) * 0.1 * deltatime;
+	xpos += (sin(toRadian(yrot))) * 0.1f * deltatime;
 	
 	//gravity
-	xrot += 0.1 * deltatime ;
+	xrot += 0.1f * deltatime ;
 
 	if(ypos < -15 )
 	{
