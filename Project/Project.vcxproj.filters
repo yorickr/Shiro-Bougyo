@@ -105,6 +105,15 @@
     <ClInclude Include="Overlay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedAttackWarriorOne.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedCollisionModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedAttackWarriorTwo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />
@@ -253,7 +262,6 @@
     <ClCompile Include="AnimatedSettingsButtonModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
-
     <ClCompile Include="AnimatedBowModel.cpp">
       <Filter>Source Files\ObjectModels</Filter>
     </ClCompile>
@@ -318,6 +326,15 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="Overlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedAttackWarriorOne.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedCollisionModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedAttackWarriorTwo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
