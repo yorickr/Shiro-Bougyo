@@ -70,8 +70,6 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posY = 1.8;
     cam2->rotY = 180;
 
-
-
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
 	world->xpos = -2;
@@ -240,49 +238,49 @@ void PlayingState::Update(float deltatime, bool keys){
         glutWarpPointer(players.at(1)->getCamera()->width / 2, players.at(1)->getCamera()->height / 2);
 
 	//speler 1 booog
-	if (wiiHandler->is_A1 || keys == true)
+	if (wiiHandler->is_B1)
 	{
-		counter += deltatime;
-		if (counter < 33) players[0]->bow->setIndex(0);
-		else if (counter < 66) players[0]->bow->setIndex(1);
+		counter1 += deltatime;
+		if (counter1 < 33) players[0]->bow->setIndex(0);
+		else if (counter1 < 66) players[0]->bow->setIndex(1);
 		else players[0]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter1 >= 100)
 		{
 			players[0]->bow->nextModel();
-			if (counter >= 59)
+			if (counter1 >= 59)
 			{
 				players[0]->bow->getModel()->update(-1);
 				players[0]->bow->setIndex(0);
-				counter = 0;
+				counter1 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter1 = 0;
 		players[0]->bow->setIndex(0);
 	}
 
-	if (wiiHandler->is_A2 || keys == true)
+	if (wiiHandler->is_B2)
 	{
-		counter += deltatime;
-		if (counter < 33) players[1]->bow->setIndex(0);
-		else if (counter < 66) players[1]->bow->setIndex(1);
+		counter2 += deltatime;
+		if (counter2 < 33) players[1]->bow->setIndex(0);
+		else if (counter2 < 66) players[1]->bow->setIndex(1);
 		else players[1]->bow->setIndex(2);
-		if (counter >= 100)
+		if (counter2 >= 100)
 		{
 			players[1]->bow->nextModel();
-			if (counter >= 59)
+			if (counter2 >= 59)
 			{
 				players[1]->bow->getModel()->update(-1);
 				players[1]->bow->setIndex(0);
-				counter = 0;
+				counter2 = 0;
 			}
 		}
 	}
 	else
 	{
-		counter = 0;
+		counter2 = 0;
 		players[1]->bow->setIndex(0);
 	}
 

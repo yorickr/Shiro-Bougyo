@@ -128,6 +128,8 @@ void Overlay::drawGameOver(std::vector<Player *> players, int playerId, bool has
 
 	}
 
+
+
 	glutdrawstring("Game Over " ,  playerone->getCamera()->width / 2 - 75, 100, GLUT_BITMAP_TIMES_ROMAN_24);
 
 	//reset settings:
