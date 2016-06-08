@@ -34,8 +34,8 @@ public:
     virtual void Update(float deltatime) override;
 
     virtual void Update(float deltatime, bool keys) override;
-
-    void preTranslateDraw(Player *p);
+	bool CheckCollision(CollisionModel* obj1, CollisionModel* obj2);
+	void preTranslateDraw(Player *p);
 
     virtual void Draw() override;
 
@@ -65,14 +65,13 @@ private:
     GameStateManager *manager;
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
+	vector<pair<int, AnimatedCollisionModel *>> animatedcollisionmodels_;
     int enemyCount = 0;
 	int counterWarrior = 0;
     WiiHandler *wiiHandler;
 	GateModel * gate;
 	Overlay * overlay_;
     void PowerUpThread();
-	WarriorModel *warriorOne;
-	AnimatedAttackWarriorOne *FirstStand;
 	void DestroyPowerUpThread();
 	bool collidesGate = false;
 };

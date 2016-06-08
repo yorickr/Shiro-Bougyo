@@ -122,37 +122,39 @@ struct PointXY PlayingState::SpawnEnemies(){
 
 void PlayingState::AddWarrior(){
 	int random = rand() % 60;
-	if(enemyCount < 20 && random < 5){
+	if (enemyCount < 20 && random < 5) {
 		PointXY point = SpawnEnemies();
-		string filename;
-		if(random % 2)
+		string filename1;
+		//string filename2;
+		if (random % 2)
 		{
 			type = WarriorType::first;
-			filename = "models/warrior/warrior.obj";
-			//WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
-			//AddModel(warrior);
-		}else
+			filename1 = "models/warrior/warrior.obj";
+		}
+		else
 		{
 			type = WarriorType::second;
-			filename = "models/secondwarrior/warrior.obj";
+			filename1 = "models/secondwarrior/warrior.obj";
 		}
-		warriorOne = new WarriorModel(-point.X, -point.Y, type, filename, this);
-		AddModel(warriorOne);
-		vector<CollisionModel*>warriors;
-		warriors.push_back(warriorOne);
-		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/FirstStand.obj", this);
-		warriors.push_back(warriorOne);
-		warriorOne = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/SecondStand.obj", this);
-		for (int i = 0; i < warriors.size(); i++)
-		{
-			AddModel(warriors[i]);
-		}
-		for (int i = 0; i < collisionModels.size(); i++)
-		{
-			FirstStand = new AnimatedAttackWarriorOne(warriors);
-		}
-		enemyCount++;
+		//make animated warrior:
+
+
+		vector<CollisionModel*> models;
+		WarriorModel * warriorOne = new WarriorModel(-point.X, -point.Y, type, filename1, this);
+
+		//todo: source filename2
+		WarriorModel *warriorTwo = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, "models/warrior/warriorAttack/SecondStand.obj", this);
+
+		models.push_back(warriorOne);
+		models.push_back(warriorTwo);
+		
+		AnimatedAttackWarriorOne * animatedWarior = new AnimatedAttackWarriorOne(models);
+
+		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0,animatedWarior));
+		
 	}
+
+
 }
 
 void PlayingState::ScalePowerUp() {
@@ -285,6 +287,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 	{
 		for (auto &Gate : collisionModels)
 		{
+
 			if (Warrior != Gate && std::get<0>(Warrior.second->CollidesWith(Gate.second)))
 			{
 				collidesGate = true;
@@ -292,7 +295,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 				GateModel *Gates = dynamic_cast<GateModel *>(Warrior.second);
 				if (warrior != 0 && Gates != 0)
 				{
-					FirstStand->setIndex(1);
+					//FirstStand->setIndex(1);
 				}
 			}
 		}
@@ -328,52 +331,35 @@ void PlayingState::Update(float deltatime, bool keys) {
 		bool collides = false;
 		for (auto &obj1 : collisionModels) {
 			for (auto &obj2 : collisionModels) {
-
-				if (obj1 != obj2 && std::get<0>(obj1.second->CollidesWith(
-					obj2.second))) //get<1> returns a vector with the spheres that are colliding
-				{
-					//                printf("%d colliding with %d\n", obj1.first, obj2.first);
-					collides = true;
-					WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1.second);
-					WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2.second);
-					ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1.second);
-					ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2.second);
-
-					if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
-						std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
-						arrowHitThread.detach();
-
-						//set player who shot the arrow
-						Player * from_player;
-						if (arrow1 != nullptr) {
-							from_player = arrow1->getPlayer();
-							DeleteModel(arrow1);
-						}
-						else {
-							from_player = arrow2->getPlayer();
-							DeleteModel(arrow2);
-						}
-
-
-						if (warrior1 != nullptr) {
-							//returns false if warrior health <= 0
-							warrior1->removeHealth(from_player);
-
-						}
-						else {
-							//returns false if warrior health <= 0
-							warrior2->removeHealth(from_player);
-
-						}
-					}
-					break;
-				}
+				collides = CheckCollision(obj1.second, obj2.second);
+				
 			}
+			
+			for (auto &obj3 : animatedcollisionmodels_)
+			{
+				collides = CheckCollision(obj1.second, obj3.second->getModel());
+			}
+
 			if (!collides) {
 				obj1.second->update(deltatime);
 			}
 			collides = false;
+		}
 
+		for (auto &obj1 : animatedcollisionmodels_) {
+			for (auto &obj2 : animatedcollisionmodels_) {
+				collides = CheckCollision(obj1.second->getModel(), obj2.second->getModel());
+
+			}
+
+			for (auto &obj3 : collisionModels) {
+				collides = CheckCollision(obj1.second->getModel(), obj3.second);
+
+			}
+
+			if (!collides) {
+				obj1.second->getModel()->update(deltatime);
+			}
 		}
 
 		for (auto &m : models) {
@@ -387,6 +373,52 @@ void PlayingState::Update(float deltatime, bool keys) {
 		//bow->getModel()->update(deltatime);
 	}
 
+
+bool PlayingState::CheckCollision(CollisionModel * obj1, CollisionModel * obj2)
+{
+	bool collides = false;
+	if (obj1 != obj2 && std::get<0>(obj1->CollidesWith(
+		obj2))) //get<1> returns a vector with the spheres that are colliding
+	{
+		//                printf("%d colliding with %d\n", obj1.first, obj2.first);
+		collides = true;
+		WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1);
+		WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2);
+		ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1);
+		ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2);
+
+		if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+			std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
+			arrowHitThread.detach();
+
+			//set player who shot the arrow
+			Player * from_player;
+			if (arrow1 != nullptr) {
+				from_player = arrow1->getPlayer();
+				DeleteModel(arrow1);
+			}
+			else {
+				from_player = arrow2->getPlayer();
+				DeleteModel(arrow2);
+			}
+
+
+			if (warrior1 != nullptr) {
+				//returns false if warrior health <= 0
+				warrior1->removeHealth(from_player);
+
+			}
+			else {
+				//returns false if warrior health <= 0
+				warrior2->removeHealth(from_player);
+
+			}
+		}
+		
+	}
+	return collides;
+}
+
 void PlayingState::DrawModels(){
 
     for( auto &m : models) {
@@ -395,7 +427,10 @@ void PlayingState::DrawModels(){
     for( auto &n : collisionModels) {
         n.second->draw();
     }
-	FirstStand->getModel()->draw();
+	for(auto &o : animatedcollisionmodels_){
+		o.second->getModel()->draw();
+	}
+	//FirstStand->getModel()->draw();
 }
 
 

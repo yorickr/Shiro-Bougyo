@@ -7,7 +7,7 @@ class AnimatedAttackWarriorOne :
 	public AnimatedCollisionModel
 {
 public:
-	AnimatedAttackWarriorOne(vector<CollisionModel *>models);
+#include "WarriorModel.h"
 	~AnimatedAttackWarriorOne();
 
 };
