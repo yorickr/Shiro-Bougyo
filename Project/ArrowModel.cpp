@@ -12,7 +12,7 @@
 
 class Player;
 
-ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player) : CollisionModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player, ObjModel *model) : CollisionModel(model) {
 	this->state = state;
 	this->player_ = player;
 
@@ -82,8 +82,6 @@ void ArrowModel::InitBoundingSpheres() {
 	x = width / 2 + vertices_min->x;
 	y = height / 2 + vertices_min->y;
 	z = depth / 2 + vertices_min->z;
-
-	printf("DO NOT FEAR ARROW IS HERE\n");
 
 	//depth
 

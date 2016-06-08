@@ -15,7 +15,7 @@ class Player {
 public:
     Player(Camera * camera, WiiHandler * hand, GameState * state, unsigned char playerID);
     ~Player();
-	void makeBow();
+	void makeBow(ObjModel *arrowModel);
 	void addKill();
 	unsigned char playerID;
 

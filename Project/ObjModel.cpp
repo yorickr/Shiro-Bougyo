@@ -175,6 +175,10 @@ ObjModel::ObjModel(std::string fileName) {
 	}
 }
 
+ObjModel::ObjModel()
+{
+}
+
 void ObjModel::CalcMinVertex() {
     float smallestx, smallesty, smallestz;
     smallestx = smallesty = smallestz = 0;
