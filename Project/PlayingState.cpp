@@ -221,12 +221,18 @@ void PlayingState::Update(float deltatime) {
 
 void PlayingState::Update(float deltatime, bool keys){
 
-        /* nunchuk */
-		if (!MOUSE) {
-			players[0]->getCamera()->rotX = wiiHandler->rot1X;
-			players[0]->getCamera()->rotY = wiiHandler->rot1Y;
-			glutWarpPointer(players[0]->getCamera()->width / 2, players[0]->getCamera()->height / 2);
-		}
+    for (int i = 0; i < players.size(); i++) {
+        if (i == 0 && !MOUSE) {
+            players[i]->getCamera()->rotX = wiiHandler->rot1X;
+            players[i]->getCamera()->rotY = wiiHandler->rot1Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+        if (i == 1) {
+            players[i]->getCamera()->rotX = wiiHandler->rot2X;
+            players[i]->getCamera()->rotY = wiiHandler->rot2Y;
+            glutWarpPointer(players.at(i)->getCamera()->width / 2, players.at(i)->getCamera()->height / 2);
+        }
+    }
 
         /* nunchuk */
         players[1]->getCamera()->rotX = wiiHandler->rot2X;

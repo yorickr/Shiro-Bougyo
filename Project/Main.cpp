@@ -60,6 +60,7 @@ void onIdle() {
 }
 
 void onTimer(int id) {
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME); //This has to be the first line in this method.
 	if (keys[27]) exit(0);
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
@@ -74,16 +75,16 @@ void onTimer(int id) {
 			playState->DestoryPowerUp();
 	}
 
-	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	//for testing remove keys for final release:
 	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
-	oldTimeSinceStart = timeSinceStart;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
-	glutTimerFunc(1000 / 60, onTimer, 1);
+
+    oldTimeSinceStart = timeSinceStart;
+    glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
 void onKeyboard(unsigned char key, int, int) {
