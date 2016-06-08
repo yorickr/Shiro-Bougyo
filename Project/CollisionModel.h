@@ -8,12 +8,13 @@
 
 #include "ObjModel.h"
 
-class CollisionModel : public ObjModel{
+class CollisionModel {
 
 public:
-    CollisionModel(const string &filename) : ObjModel(filename) { }
+	CollisionModel(ObjModel *model);
 
-    void draw() override;
+	virtual void draw();
+	virtual void update(float deltatime);
 
     class Sphere {
     public:
@@ -40,6 +41,34 @@ public:
     virtual void CalcBoundingSpheres();
 
     virtual void InitBoundingSpheres();
+
+
+	union {
+		struct {
+			float xrot, yrot, zrot; //Rotation of our model, in degrees
+		};
+		float rotation[3];
+	};
+
+	union {
+		struct {
+			float xpos, ypos, zpos; //Position of our model
+		};
+		float pos[3];
+	};
+
+	union {
+		struct {
+			float xscale, yscale, zscale; //Position of our model
+		};
+		float scale[3];
+	};
+
+	Vec3f *vertices_min; //This is the vertex with the smallest x, y and z.
+	Vec3f *vertices_max; //See above, but the opposite.
+
+	private:
+		ObjModel *model;
 };
 
 

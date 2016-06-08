@@ -30,21 +30,21 @@ void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 
 	// Menu
 	menu = new MenuModel(hand,"models/Menu/Menu.obj");
-	cam->posX = 3.7;
-	cam->posY = -4;
-	cam->posZ = -12;
-	cam->rotX = 0;
-	cam->rotY = -40;
+	cam->posX = 3.7f;
+	cam->posY = -4.0f;
+	cam->posZ = -12.0f;
+	cam->rotX = 0.0f;
+	cam->rotY = -40.0f;
 	models.push_back(pair<int, ObjModel*>(1, menu));
 	
 	// playButton 
 	vector<ObjModel*> playbutton;
 	buttonPlaymodel = new ButtonModel(hand, this, "models/buttons/playbuttonPressed.obj");
 	playbutton.push_back(buttonPlaymodel);
-	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
+	buttonPlaymodel->SetPositions(-6.2f, 2.7f, 6.5f, 0.0f, 30.0f);
 	buttonPlaymodel = new ButtonModel(hand, this, "models/buttons/playbutton.obj");
 	playbutton.push_back(buttonPlaymodel);
-	buttonPlaymodel->SetPositions(-6.2, 2.7, 6.5, 0, 30);
+	buttonPlaymodel->SetPositions(-6.2f, 2.7f, 6.5f, 0.0f, 30.0f);
 	playbuttons = new AnimatedPlayButtonModel(playbutton, hand);
 
 
@@ -52,21 +52,21 @@ void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 	vector<ObjModel*> settingbutton;
 	buttonSettingsmodel = new ButtonModel( hand, this, "models/buttons/settingsButton.obj");
 	settingbutton.push_back(buttonSettingsmodel);
-	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
+	buttonSettingsmodel->SetPositions(-6.2f, 2.2f, 6.5f, 0.0f, 30.0f);
 	buttonSettingsmodel = new ButtonModel(hand, this, "models/buttons/settingsButtonPressed.obj");
 	settingbutton.push_back(buttonSettingsmodel);
-	buttonSettingsmodel->SetPositions(-6.2, 2.2, 6.5, 0, 30);
+	buttonSettingsmodel->SetPositions(-6.2f, 2.2f, 6.5f, 0.0f, 30.0f);
 	settingsbuttons = new AnimatedSettingsButtonModel(settingbutton, hand);
 
 	//ExitButton
 	vector<ObjModel*> exitbutton;
 	buttonExitmodel = new ButtonModel( hand, this, "models/buttons/ExitButton.obj");
 	exitbutton.push_back(buttonExitmodel);
-	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
+	buttonExitmodel->SetPositions(-6.2f, 1.7f, 6.5f, 0.0f, 30.0f);
 	buttonExitmodel = new ButtonModel( hand, this, "models/buttons/ExitButtonPressed.obj");
 	exitbutton.push_back(buttonExitmodel);
 	Exitbuttons = new AnimatedExitButtonModel(exitbutton, hand);
-	buttonExitmodel->SetPositions(-6.2, 1.7, 6.5, 0, 30);
+	buttonExitmodel->SetPositions(-6.2f, 1.7f, 6.5f, 0.0f, 30.0f);
 	
     players.push_back(new Player(cam, this->wiiHandler, this, 1));
 
@@ -99,76 +99,95 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
+	// Wiimote down pres button
+	if (wiiHandler->wiiMoteP1) {
+		/* nunchuk */
+
 	//nunchuck
-	if (!MOUSE) {
+		if (!MOUSE) {
+
+			players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
+			players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
+			glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
+		}
+
+
 		players.at(0)->getCamera()->rotX = wiiHandler->rot1X;
 		players.at(0)->getCamera()->rotY = wiiHandler->rot1Y;
 		glutWarpPointer(players.at(0)->getCamera()->width / 2, players.at(0)->getCamera()->height / 2);
-	}
 
-	if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
-	if(wiiHandler->Down1_pressed)
-	{
-		counter += 1;
-		if (counter >5 && counter < 10)
-		{
-			playbuttons->setIndex(1);
-			settingsbuttons->setIndex(1);
-		}
-		if (counter > 10 && counter < 15)
-		{
-			settingsbuttons->setIndex(0);
-			playbuttons->setIndex(1);
-			Exitbuttons->setIndex(1);
-			counter = 15;
-		}else if (counter > 15)
-		{
-			counter = 15;
-		}
-	}
-	if (wiiHandler->Up1_pressed)
-	{
-		counter -= 1;
-		if (counter < 10)
-		{
-			Exitbuttons->setIndex(0);
-			settingsbuttons->setIndex(1);
-		}
-		if (counter <5)
-		{
-			settingsbuttons->setIndex(0);
-			playbuttons->setIndex(0);
-			counter = 0;
-		}else if(counter < 0)
-		{
-			counter = 0;
-		}
-	}
-	if(counter  == 0)
-	{
-		if(wiiHandler->is_A1)
-		{
-			if(wiiHandler->wiiMoteP1 != 0 && wiiHandler->wiiMoteP1->exp.type == EXP_NUNCHUK){
-				manager->nextState();
+
+		if (wiiHandler->Down1_pressed || wiiHandler->is_A1)
+			if (wiiHandler->Down1_pressed)
+			{
+				counter += 1;
+				if (counter > 5 && counter < 10)
+				{
+					playbuttons->setIndex(1);
+					settingsbuttons->setIndex(1);
+				}
+				if (counter > 10 && counter < 15)
+				{
+					settingsbuttons->setIndex(0);
+					playbuttons->setIndex(1);
+					Exitbuttons->setIndex(1);
+					counter = 15;
+				}
+				else if (counter > 15)
+				{
+					counter = 15;
+				}
 			}
-			counter = 0;
-		}
-	}else if (counter > 10 && counter < 16)
-	{
-		if (wiiHandler->is_A1)
+
+		// Wiimote Up pres button
+		if (wiiHandler->Up1_pressed)
+
 		{
-			exit(0);
+			counter -= 1;
+			if (counter < 10)
+			{
+				Exitbuttons->setIndex(0);
+				settingsbuttons->setIndex(1);
+			}
+			if (counter < 5)
+			{
+				settingsbuttons->setIndex(0);
+				playbuttons->setIndex(0);
+				counter = 0;
+			}
+			else if (counter < 0)
+			{
+				counter = 0;
+			}
 		}
+
+		// Wiimote A pres button to go to next state
+		if (counter == 0)
+		{
+			if (wiiHandler->is_A1)
+			{
+				if (wiiHandler->wiiMoteP1 != 0 && wiiHandler->wiiMoteP1->exp.type == EXP_NUNCHUK) {
+					manager->nextState();
+				}
+				counter = 0;
+			}
+		}
+		else if (counter > 10 && counter < 16)
+		{
+			if (wiiHandler->is_A1)
+			{
+				exit(0);
+			}
+		}
+
+
+		for (auto &m : models) {
+			m.second->update(deltatime);
+		}
+
+
 	}
-
-
-	for (auto &m : models) {
-		m.second->update(deltatime);
-	}
-
-
 }
-
 void MenuState::Draw()
 {
     //draw 1 player full screen

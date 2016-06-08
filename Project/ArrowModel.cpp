@@ -12,7 +12,7 @@
 
 class Player;
 
-ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player) : CollisionModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player, ObjModel *model) : CollisionModel(model) {
 	this->state = state;
 	this->player_ = player;
 
@@ -37,19 +37,19 @@ ArrowModel::~ArrowModel()
 
 
 float ArrowModel::toRadian(float degree) {
-	return (degree / 180) * M_PI;
+	return (degree / 180.0f) * (float)M_PI;
 }
 
 
 void ArrowModel::update(float deltatime) {
 
-	ypos -= (sin(toRadian(xrot))) * 0.1 * deltatime;
-	zpos += cos(toRadian(yrot))* 0.1 * deltatime;
+	ypos -= (sin(toRadian(xrot))) * 0.1f * deltatime;
+	zpos += cos(toRadian(yrot))* 0.1f * deltatime;
 	//if rotate on y as: 
-	xpos += (sin(toRadian(yrot))) * 0.1 * deltatime;
+	xpos += (sin(toRadian(yrot))) * 0.1f * deltatime;
 	
 	//gravity
-	xrot += 0.1 * deltatime ;
+	xrot += 0.1f * deltatime ;
 
 	if(ypos < -15 )
 	{
@@ -82,8 +82,6 @@ void ArrowModel::InitBoundingSpheres() {
 	x = width / 2 + vertices_min->x;
 	y = height / 2 + vertices_min->y;
 	z = depth / 2 + vertices_min->z;
-
-	printf("DO NOT FEAR ARROW IS HERE\n");
 
 	//depth
 

@@ -15,7 +15,7 @@ class ArrowModel : public CollisionModel {
 public:
     //ArrowModel( float x, float y, float z);
 
-	ArrowModel(float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player);
+	ArrowModel(float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player, ObjModel *model);
 	~ArrowModel(void);
 
 	void InitBoundingSpheres() override;

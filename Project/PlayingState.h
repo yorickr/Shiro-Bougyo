@@ -13,6 +13,8 @@
 #include "AnimatedModel.h"
 #include "AnimatedBowModel.h"
 #include "Player.h"
+#include "WarriorModel.h"
+#include "AnimatedAttackWarriorOne.h"
 #include "Overlay.h"
 #include "GateModel.h"
 
@@ -32,8 +34,8 @@ public:
     virtual void Update(float deltatime) override;
 
     virtual void Update(float deltatime, bool keys) override;
-
-    void preTranslateDraw(Player *p);
+	bool CheckCollision(CollisionModel* obj1, CollisionModel* obj2);
+	void preTranslateDraw(Player *p);
 
     virtual void Draw() override;
 
@@ -58,19 +60,28 @@ public:
 
 private:
     vector<Player *> players;
+	WarriorType type;
     int counter1 = 0;
 	int counter2 = 0;
+
     GameStateManager *manager;
+	vector<ObjModel *> staticModels;
     vector<pair<int, ObjModel *> > models; //Models to be drawn by the Draw() function, non colliding.
     vector<pair<int, CollisionModel *>> collisionModels;
+	vector<pair<int, AnimatedCollisionModel *>> animatedcollisionmodels_;
+	vector<ObjModel *> playerModels;
     int enemyCount = 0;
+	int counterWarrior = 0;
     WiiHandler *wiiHandler;
 	GateModel * gate;
 	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
+
 	ObjModel *player1;
 	ObjModel *player2;
+	bool collidesGate = false;
+
 };
 
 

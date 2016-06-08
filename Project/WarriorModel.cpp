@@ -4,7 +4,7 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename, GameState * state):CollisionModel(filename)
+WarriorModel::WarriorModel(float x, float z, WarriorType type, ObjModel *model, GameState * state):CollisionModel(model)
 {
 	this->warriortype = type;
 	xpos = x;
@@ -47,8 +47,8 @@ void WarriorModel::update(float deltatime) {
 			xpos += (float(random % 100)) / 2000;
 	}else
 	{
-		zpos += sin(random) / 20;
-		xpos += sin(random) / 20;
+		zpos += (float)sin(random) / 20.0f;
+		xpos += (float)sin(random) / 20.0f;
 	}
 	if (isDead == 1 && xrot < 90)
 		xrot += 15;
@@ -100,7 +100,7 @@ void WarriorModel::PowerUpBoundingSpheres() {
 	boundingSpheres.push_back(new Sphere(x, 1.05f, z, 0.51f)); //Magic values for the legs
 }
 
-void WarriorModel::setSize(int newSize)
+void WarriorModel::setSize(float newSize)
 {
 	this->xscale = newSize;
 	this->yscale = newSize;
@@ -110,11 +110,11 @@ void WarriorModel::setSize(int newSize)
 void WarriorModel::setPosition(int x, int y, int z)
 {
 	if(x != 0)
-	this->xpos = x;
+	this->xpos = (float)x;
 	if(y != 0)
-	this->ypos = y;
+	this->ypos = (float)y;
 	if(z != 0)
-	this->zpos = z;
+	this->zpos = (float)z;
 }
 
 bool WarriorModel::removeHealth(Player * player)
@@ -144,7 +144,7 @@ bool WarriorModel::removeHealth(Player * player)
 	return false;
 }
 
-void WarriorModel::setRotation(int x, int y, int z)
+void WarriorModel::setRotation(float x, float y, float z)
 {
 	this->xrot = x;
 	this->yrot = y;

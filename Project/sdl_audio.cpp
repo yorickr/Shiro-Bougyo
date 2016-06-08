@@ -58,6 +58,7 @@ int SDL_Audio::playSound(std::string fileName) {
     //The music that will be played
     Mix_Music *sound = NULL;
 	Mix_Chunk *effect = NULL;
+	int effectPlayChannel = 0;
 
     //Load the music
 	//Fix for the OSX project, because our path starts from shiro-bougyo instead of Project
@@ -73,38 +74,43 @@ int SDL_Audio::playSound(std::string fileName) {
 		printf("muziek null\n");
         return false;
     }
-
+	
 	if (theme) {
 		if (Mix_PlayingMusic() == 0)
 		{
-			/*printf("playingMusic == 0\n");*/
 			//Play the music
 			if (Mix_PlayMusic(sound, -1) == -1)
 			{
-				/*printf("Mix_Playmusic == -1\n");*/
+				return false;
 			}
 		}
 	} else {
-		if (Mix_PlayChannel(-1, effect, 0) == -1)
+		//play effect
+		effectPlayChannel = Mix_PlayChannel(-1, effect, 0);
+		printf("EffectPlayChannel: %d \n", effectPlayChannel);
+		if (effectPlayChannel == -1)
 		{
-			return 1;
+			return false;
 		}
 	}
 
-    while(true)
-    {
+	bool musicPlaying = true;
+	while (musicPlaying) {
 		#ifdef __APPLE__
 		usleep(1000000);
 		#else
 		Sleep(10000);
-        #endif
-    }
+		#endif
+		if(!theme)
+			if (Mix_Playing(effectPlayChannel) == 0) 
+				musicPlaying = false;
+	}
+
     //cleanup
-	if(theme){ Mix_FreeMusic(sound); }
+	if (theme) { Mix_FreeMusic(sound); }
 	else { Mix_FreeChunk(effect); }
-    
-    Mix_CloseAudio();
-    SDL_Quit();
+    //Mix_CloseAudio();
+    //SDL_Quit();
 
     return 0;
 }

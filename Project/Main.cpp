@@ -76,7 +76,7 @@ void onTimer(int id) {
 	}
 
 	//for testing remove keys for final release:
-	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
 	bool t = keys['t'];
 	gameManager.Update(deltatime, t);
@@ -96,7 +96,9 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		gameManager.nextState();
+		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
+			gameManager.nextState();
+		//}
 		break;
 	case 'l':
 		gameManager.GetPlayers().at(1)->getCamera()->rotY+=3;
@@ -112,7 +114,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteLoop();
+	//wiiHandler.wiiMoteLoop();
 	return 0;
 }
 
@@ -189,11 +191,8 @@ int main(int argc, char* argv[]) {
     glutTimerFunc(1000 / 60, onTimer, 1);
 
     glutKeyboardUpFunc(onKeyboardUp);
-
-    glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
-    glutMouseFunc(mouseFunc);
-	
+
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
 
