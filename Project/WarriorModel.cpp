@@ -4,7 +4,7 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename, GameState * state):CollisionModel(filename)
+WarriorModel::WarriorModel(float x, float z, WarriorType type, ObjModel *model, GameState * state):CollisionModel(model)
 {
 	this->warriortype = type;
 	xpos = x;

@@ -38,6 +38,7 @@
 #include <iostream>
 #endif
 
+
 void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
 //	this->camera = cam;
@@ -76,15 +77,21 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
 
-	this->gate = new GateModel("models/blok/blok.obj");
+	//adding warriors:
+	staticModels.push_back(new ObjModel("models/warrior/warrior.obj")); //warrior 1
+	staticModels.push_back(new ObjModel("models/secondwarrior/warrior.obj")); //warrior 2
+	staticModels.push_back(new ObjModel("models/blok/blok.obj")); //Gate
+	staticModels.push_back(new ObjModel("models/Arrow/Arrow.obj")); //arrow
+
+	this->gate = new GateModel(staticModels.at(2));
     cam1->width = game->width;
     cam1->height = game->height;
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
     players.push_back(new Player(cam2, hand, this, 2));
-	players[0]->makeBow();
-	players[1]->makeBow();
+	players[0]->makeBow(staticModels.at(3));
+	players[1]->makeBow(staticModels.at(3));
 }
 
 struct PointXY PlayingState::SpawnEnemies(){
@@ -122,19 +129,19 @@ void PlayingState::AddWarrior(){
 	if(enemyCount < 20 && random < 5){
 		PointXY point = SpawnEnemies();
 		WarriorType type;
-		string filename;
+		ObjModel *model;
 		if(random % 2)
 		{
 			type = WarriorType::first;
-			filename = "models/warrior/warrior.obj";
+			model = staticModels.at(0);
 			//WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename);
 			//AddModel(warrior);
 		}else
 		{
 			type = WarriorType::second;
-			filename = "models/secondwarrior/warrior.obj";
+			model = staticModels.at(1);
 		}
-		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, filename,this);
+		WarriorModel *warrior = new WarriorModel(-point.X, -point.Y, type, model, this);
 		
 		AddModel(warrior);
 		enemyCount++;

@@ -12,7 +12,7 @@
 
 class Player;
 
-ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player) : CollisionModel("models/Arrow/Arrow.obj") {
+ArrowModel::ArrowModel( float startx, float starty, float startz, float xdirection, float ydirection, GameState * state, Player * player, ObjModel *model) : CollisionModel(model) {
 	this->state = state;
 	this->player_ = player;
 
