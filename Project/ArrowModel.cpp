@@ -83,8 +83,6 @@ void ArrowModel::InitBoundingSpheres() {
 	y = height / 2 + vertices_min->y;
 	z = depth / 2 + vertices_min->z;
 
-	printf("DO NOT FEAR ARROW IS HERE\n");
-
 	//depth
 
 	for (int i = 0; i < 8; i++) {
