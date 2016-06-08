@@ -29,8 +29,6 @@ Overlay::~Overlay()
 }
 
 
-
-
 void Overlay::drawHealthBar(Player * player, GateModel * gate)
 {
 	//init glut overlay
@@ -77,6 +75,7 @@ void Overlay::drawHealthBar(Player * player, GateModel * gate)
 	//reset settings:
 	stopDrawing();
 }
+
 
 
 ///Game Over screen

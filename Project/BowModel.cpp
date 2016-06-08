@@ -12,11 +12,12 @@
 
 class Player;
 
-BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera * cam, Player * player): ObjModel(filename) {
+BowModel::BowModel(WiiHandler * hand, string filename, GameState * state, Camera * cam, Player * player, ObjModel *arrowModel): ObjModel(filename) {
 	this->wiiHandler = hand;
 	this->camera_ = cam;
 	this->state = state;
 	this->player_ = player;
+	this->arrowModel = arrowModel;
 	crosshair = new ObjModel("models/crosshair/crosshair.obj");
 	SetPositions(0, 0, 0, 0);
 	//arrow  = new ArrowModel(xpos, ypos, zpos, 0,0, state);
@@ -79,7 +80,10 @@ void BowModel::fireArrow() const
 	}
 	roty = int(roty) % 360;
 
-	newArrow = new ArrowModel(camera_->posX * -1, camera_->posY * -1, camera_->posZ * -1, camera_->rotX * -1.3, roty *-1 -180, state, player_);
+	
+
+	newArrow = new ArrowModel(camera_->posX * -1, camera_->posY * -1, camera_->posZ * -1, camera_->rotX * -1.3, (roty * -1) - 180, state, player_, arrowModel);
+
 
 	float xrotcam = 0, yrotcam = 0, zrotcam = 0;
 

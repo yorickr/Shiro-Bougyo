@@ -151,8 +151,11 @@ public:
     Vec3f *vertices_max; //See above, but the opposite.
 
     ObjModel(std::string filename);
+	ObjModel();
 
 	virtual ~ObjModel(void);
+
+
 
     virtual void draw();
 

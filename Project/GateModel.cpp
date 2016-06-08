@@ -4,7 +4,7 @@
 
 #include "GateModel.h"
 
-GateModel::GateModel(string filename) : CollisionModel(filename){
+GateModel::GateModel(ObjModel *model) : CollisionModel(model){
     xpos = -2.3f;
     zpos = -2.25f;
     ypos = -3.5;
