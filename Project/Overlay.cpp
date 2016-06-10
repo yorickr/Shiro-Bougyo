@@ -192,4 +192,28 @@ void Overlay::glutdrawstring(std::string str, int x, int y, void* style)
 	}
 }
 
+void Overlay::drawSettings(int* playersAmount, Camera * cam)
+{
+	//init glut overlay
+	initdraw();
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(0, 0, 1, (GLfloat)0.55);
+
+	//space between objects
+	int margin = 200;
+
+
+	//drawBackground:
+	glBegin(GL_QUADS);
+	glVertex2f((GLfloat)margin, (GLfloat)1080 - margin);
+	glVertex2f((GLfloat)margin, (GLfloat)margin);
+	glVertex2f((GLfloat)cam->width - margin, (GLfloat)margin);
+	glVertex2f((GLfloat)cam->width - margin, cam->height - margin);
+	glEnd();
+	
+	
+	stopDrawing();
+}
 

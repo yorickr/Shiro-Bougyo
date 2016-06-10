@@ -8,6 +8,7 @@
 #include "ButtonModel.h"
 #include "AnimatedPlayButtonModel.h"
 #include "AnimatedSettingsButtonModel.h"
+#include "Overlay.h"
 
 class MenuState : public GameState {
     // Inherited via GameState
@@ -42,6 +43,7 @@ public:
 private:
     int counter = 0;
     std::vector<Player*> players;
+	Overlay * overlay_;;
     GameStateManager *manager;
     WiiHandler *wiiHandler;
     MenuModel *menu;
@@ -52,6 +54,7 @@ private:
     ButtonModel *buttonPlaymodel;
     ButtonModel *buttonSettingsmodel;
     ButtonModel *buttonExitmodel;
+	bool drawSettingsOVerlay = false;
 };
 
 #endif

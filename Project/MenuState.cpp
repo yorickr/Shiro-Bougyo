@@ -20,6 +20,7 @@
 
 void MenuState::Init(GameStateManager * game, WiiHandler * hand)
 {
+	this->overlay_ = new Overlay();
 	this->manager = game;
 //	this->camera = cam;
 	this->wiiHandler = hand;
@@ -99,6 +100,10 @@ void MenuState::Update(float deltatime)
 
 void MenuState::Update(float deltatime, bool keys)
 {
+	//for testing::
+	this->drawSettingsOVerlay = keys;
+
+
 	// Wiimote down pres button
 	if (wiiHandler->wiiMoteP1) {
 		/* nunchuk */
@@ -171,6 +176,9 @@ void MenuState::Update(float deltatime, bool keys)
 				}
 				counter = 0;
 			}
+		}else if(counter > 0 && counter <=10 && wiiHandler->is_A1)
+		{
+			
 		}
 		else if (counter > 10 && counter < 16)
 		{
@@ -205,6 +213,12 @@ void MenuState::Draw()
     glRotatef(cam1->rotY, 0, 1, 0);
     glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
     DrawModels();
+
+	if(drawSettingsOVerlay)
+	{
+		int *players = 0;
+		overlay_->drawSettings(players, cam1);
+	}
 }
 
 
