@@ -2,7 +2,7 @@
 // Created by Yorick Rommers on 2016/06/08.
 //
 
-#include <zconf.h>
+#include "Util.h"
 #include <thread>
 #include "HeadTracking.h"
 
@@ -76,13 +76,17 @@ float calcHeadPos(int pos, int camwidth) {
 }
 
 void HeadTracking::cameraThreadFunc() {
-    VideoCapture cap(1); // capture from default camera
+    VideoCapture cap(0); // capture from default camera
     Mat frame;
     int camWidth = 640, camHeight = 480;
     cap.set(CV_CAP_PROP_FRAME_WIDTH, camWidth);
     cap.set(CV_CAP_PROP_FRAME_HEIGHT, camHeight);
 
-    face_cascade.load("Project/opencv_xml/haarcascade_frontalface_alt.xml"); // load face classifiers
+	std::string file = "opencv_xml/haarcascade_frontalface_alt.xml";
+#if __APPLE__
+	file = "Project/" + file;
+#endif
+    face_cascade.load(file); // load face classifiers
 //    eyes_cascade.load("Project/opencv_xml/haarcascade_eye_tree_eyeglasses.xml"); // load eye classifiers
 
     std::vector<pair<int, Point>> points;
@@ -104,7 +108,8 @@ void HeadTracking::cameraThreadFunc() {
                     players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
                 }
             }
-            usleep(1000 * (1000 / 100));
+			Util::USleep(100);
+			//usleep(1000 * (1000 / 100));
         }
     }
 }
