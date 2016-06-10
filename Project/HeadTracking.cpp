@@ -55,7 +55,7 @@ std::vector<std::pair<int, Point>> detectFace(Mat frame, unsigned int playerSize
             retFaces.push_back(pair<int, Point>(0, center));
         }
         else{
-            if (center.x < (frame.size().width) / 2) { //If left player
+            if (center.x > (frame.size().width) / 2) { //If left player
                 printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
                 printf("left player \n");
                 retFaces.push_back(pair<int, Point>(0, center));
@@ -101,7 +101,7 @@ void HeadTracking::cameraThreadFunc() {
                     players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
                 }
                 else if(face.first == 1){
-//                    players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
+                    players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
                 }
             }
             usleep(1000 * (1000 / 100));

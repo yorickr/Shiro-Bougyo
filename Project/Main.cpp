@@ -195,12 +195,12 @@ int main(int argc, char* argv[]) {
 	initializeThreads();
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
-//	glutInitWindowSize(WindowWidth,	WindowHeight);
-    glutInitWindowSize(800, 600);
+	glutInitWindowSize(WindowWidth,	WindowHeight);
+//    glutInitWindowSize(800, 600);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
-//	glutFullScreen();
+	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
 	CGSetLocalEventsSuppressionInterval(0.0);

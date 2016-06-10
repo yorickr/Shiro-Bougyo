@@ -20,6 +20,7 @@ public:
     Camera* getCamera();
     unsigned char getPlayerID();
 	AnimatedBowModel * bow;
+    float shearmatrix[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 private:
 	WiiHandler * wiiHandler_;
     Camera* c;

@@ -309,7 +309,7 @@ void PlayingState::DrawModels(){
 void headTrackTranslation(Player *p) {
     //TODO: Test
 //    printf("TRANSLATING FOR PLAYER %d\n", p->getPlayerID());
-    static float shearmatrix[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+
     if (p->getCamera()->headtrack_lastx != p->getCamera()->headtrack_x ||
         p->getCamera()->headtrack_lasty != p->getCamera()->headtrack_y
         || p->getCamera()->headtrack_lasts != p->getCamera()->headtrack_s) {
@@ -324,14 +324,14 @@ void headTrackTranslation(Player *p) {
 
         //identity
         for (int i = 0; i < 16; i++)
-            shearmatrix[i] = 0.0;
+            p->shearmatrix[i] = 0.0;
         for (int i = 0; i < 4; i++)
-            shearmatrix[i * 4 + i] = 1.0;
+            p->shearmatrix[i * 4 + i] = 1.0;
 
-        shearmatrix[8] = p->getCamera()->headtrack_x;
-        shearmatrix[12] = znear * p->getCamera()->headtrack_x;
-        shearmatrix[9] = p->getCamera()->headtrack_y;
-        shearmatrix[13] = znear * p->getCamera()->headtrack_y;
+        p->shearmatrix[8] = p->getCamera()->headtrack_x;
+        p->shearmatrix[12] = znear * p->getCamera()->headtrack_x;
+        p->shearmatrix[9] = p->getCamera()->headtrack_y;
+        p->shearmatrix[13] = znear * p->getCamera()->headtrack_y;
 
 //        glLoadIdentity();
 //        glMultMatrixf(perspectmatrix);
@@ -339,7 +339,7 @@ void headTrackTranslation(Player *p) {
     /* initialisation de la matrice de la scene */
 //    glMatrixMode(GL_MODELVIEW);
 //    glLoadIdentity();
-    glMultMatrixf(shearmatrix);
+    glMultMatrixf(p->shearmatrix);
 
 //    glPushMatrix();
 //    glLoadIdentity();
@@ -396,24 +396,26 @@ void PlayingState::Draw() {
 
             glClear(GL_DEPTH_BUFFER_BIT);        /* Clear Depth Buffer */
 
-            if (loop == 0)
-            {
+            if (loop == 0) {
+//                glPushMatrix();
                 preTranslateDraw(players.at(0));
                 headTrackTranslation(players.at(0));
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
                 DrawModels();
+//                glPopMatrix();
             }
 
-            if (loop == 1)
-            {
+            if (loop == 1) {
+//                glPushMatrix();
                 preTranslateDraw(players.at(1));
-                headTrackTranslation(players.at(1));
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
+                headTrackTranslation(players.at(1));
                 DrawModels();
+//                glPopMatrix();
             }
 
         }
@@ -424,7 +426,7 @@ void PlayingState::Draw() {
 
 //        printf("Player %u draw\n", players.at(0)->getPlayerID());
 
-//        Camera *cam1 = players.at(0)->getCamera();
+        Camera *cam1 = players.at(0)->getCamera();
 //        printf("Camera : \n %f %f %f\n", cam1->posX, cam1->posY, cam1->posZ);
 //        printf("%d %d\n", cam1->width, cam1->height);
 //        glMatrixMode(GL_PROJECTION);
@@ -439,11 +441,10 @@ void PlayingState::Draw() {
 //        glLoadIdentity();
 
 //        load bow
-//        preTranslateDraw(players.at(0));
-//        glRotatef(cam1->rotX, 1, 0, 0);
-//        glRotatef(cam1->rotY, 0, 1, 0);
-//        glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
-
+        preTranslateDraw(players.at(0));
+        glRotatef(cam1->rotX, 1, 0, 0);
+        glRotatef(cam1->rotY, 0, 1, 0);
+        glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         headTrackTranslation(players.at(0));
         DrawModels();
 
