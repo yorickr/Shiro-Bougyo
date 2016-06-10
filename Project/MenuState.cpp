@@ -1,4 +1,4 @@
-#define MOUSE false
+#define MOUSE true
 #include "MenuState.h"
 #include "Camera.h"
 #include "MenuModel.h"
@@ -98,7 +98,7 @@ void MenuState::Update(float deltatime)
 
 }
 
-void MenuState::Update(float deltatime, bool keys)
+void MenuState::Update(float deltatime, bool * keys)
 {
 	//for testing::
 	this->drawSettingsOVerlay = keys;

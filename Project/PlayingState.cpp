@@ -15,7 +15,7 @@
 #include "PointXY.h"
 #include "Util.h"
 #include "GateModel.h"
-
+#include "HeadTracking.h"
 #include "sdl_audio.h"
 #include "SerialHandler.h"
 #include "Overlay.h"
@@ -27,6 +27,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
+#include <thread>
+
 #else
 #include <tuple>
 #include <windows.h>
@@ -37,6 +39,9 @@
 #include <iostream>
 #endif
 
+static const float znear = 1.0;
+
+HeadTracking * h;
 
 void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     this->manager = game;
@@ -51,6 +56,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     Camera* cam1 = new Camera();
     Camera* cam2 = new Camera();
 
+
 	cam1->rotY = 180;
 	cam1->posX = 4;
 	cam1->posZ = 3.2;
@@ -61,6 +67,18 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posX = 1;
     cam2->posZ = 3.2;
     cam2->posY = 1.8;
+    cam2->rotY = 180;
+	//light
+
+	//bow
+//	vector<ObjModel*> temp;
+//	temp.push_back(new BowModel(hand, "models/bow/Bow_recurve.obj", this, cam));
+//	temp.push_back(new BowModel(hand, "models/bow/Bow_01.obj", this, cam));
+//	temp.push_back(new BowModel(hand, "models/bow/Bow_02.obj", this, cam));
+//
+//	bow = new AnimatedBowModel(temp, hand);
+	//bow = new AnimatedBowModel(models); #1#
+
 
 	//World
 	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
@@ -104,9 +122,13 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-    players.push_back(new Player(cam2, hand, this, 2));
+//    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow(staticModels.at(3));
-	players[1]->makeBow(staticModels.at(3));
+//	players[1]->makeBow(staticModels.at(3));
+
+    //this must come after players
+    h = new HeadTracking(this->players);
+    h->initThread();
 
 	for (int i = 0; i < 20; i++){
 		AddWarrior();
@@ -176,7 +198,7 @@ void PlayingState::AddWarrior(){
 		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0, animatedWarior));
 		
 		vector<CollisionModel*> models2;
-		warriorTwo = new WarriorModel(-point.X, -point.Y,type, staticModels.at(filename1), this);
+		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(filename1), this);
 		models2.push_back(warriorTwo);
 		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(7), this);
 		models2.push_back(warriorTwo);
@@ -211,7 +233,6 @@ void PlayingState::SetEnemyCount(int offset)
 {
 	enemyCount += offset;
 }
-
 void PlayingState::PowerUpThread()
 {
 	Util::USleep(30000);
@@ -255,6 +276,7 @@ void PlayingState::DestroyPowerUpThread()
 	}
 }
 
+
 void PlayingState::Cleanup() {}
 
 void PlayingState::Pause() {}
@@ -262,10 +284,11 @@ void PlayingState::Pause() {}
 void PlayingState::Resume() {}
 
 void PlayingState::Update(float deltatime) {
-	Update(deltatime, false);
+	bool keys[255];
+	Update(deltatime, keys);
 }
 
-void PlayingState::Update(float deltatime, bool keys) {
+void PlayingState::Update(float deltatime, bool * keys) {
 
 
 	/* nunchuk */
@@ -289,7 +312,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 	}
 
 	//speler 1 booog
-	if (wiiHandler->is_B1 || keys)
+	if (wiiHandler->is_B1 || keys['t'])
 	{
 		counter1 += (int)deltatime;
 		if (counter1 < 33) players[0]->bow->setIndex(0);
@@ -312,7 +335,45 @@ void PlayingState::Update(float deltatime, bool keys) {
 		players[0]->bow->setIndex(0);
 	}
 
-	players.at(1)->getCamera()->rotX++;
+	if(players.size() ==2){
+
+	// Wii-button B2
+	if (wiiHandler->is_B2)
+	{
+		counter2 += deltatime;
+		if (counter2 < 33) players[1]->bow->setIndex(0);
+		else if (counter2 < 66) players[1]->bow->setIndex(1);
+		else players[1]->bow->setIndex(2);
+		if (counter2 >= 100)
+
+		{
+			counter2 += (int)deltatime;
+			if (counter2 < 33) players[1]->bow->setIndex(0);
+			else if (counter2 < 66) players[1]->bow->setIndex(1);
+			else players[1]->bow->setIndex(2);
+			if (counter2 >= 100)
+			{
+				players[1]->bow->nextModel();
+				if (counter2 >= 59)
+				{
+					players[1]->bow->getModel()->update(-1);
+					players[1]->bow->setIndex(0);
+					counter2 = 0;
+				}
+			}
+		}
+	}
+	else
+	{
+		counter2 = 0;
+		players[1]->bow->setIndex(0);
+
+	}
+		player1->yrot = -players.at(1)->getCamera()->rotY + 180;
+		player2->yrot = -players.at(0)->getCamera()->rotY + 180;
+	}
+
+//	players.at(1)->getCamera()->rotX++;
 
 	//Collision Gate with Warrior
 	for (auto& Warrior : animatedcollisionmodels_)
@@ -351,39 +412,6 @@ void PlayingState::Update(float deltatime, bool keys) {
 		collidesGate = false;
 	}
 
-	// Wii-button B2
-	if (wiiHandler->is_B2)
-	{
-		counter2 += deltatime;
-		if (counter2 < 33) players[1]->bow->setIndex(0);
-		else if (counter2 < 66) players[1]->bow->setIndex(1);
-		else players[1]->bow->setIndex(2);
-		if (counter2 >= 100)
-
-		{
-			counter2 += (int)deltatime;
-			if (counter2 < 33) players[1]->bow->setIndex(0);
-			else if (counter2 < 66) players[1]->bow->setIndex(1);
-			else players[1]->bow->setIndex(2);
-			if (counter2 >= 100)
-			{
-				players[1]->bow->nextModel();
-				if (counter2 >= 59)
-				{
-					players[1]->bow->getModel()->update(-1);
-					players[1]->bow->setIndex(0);
-					counter2 = 0;
-				}
-			}
-		}
-	}
-	else
-	{
-		counter2 = 0;
-		players[1]->bow->setIndex(0);
-
-	}
-
 	//check collisions
 	bool collides = false;
 	for (auto &obj1 : collisionModels) {
@@ -416,59 +444,10 @@ void PlayingState::Update(float deltatime, bool keys) {
 		obj1.second->getModel()->update(deltatime);
 			
 	}
-	player1->yrot = -players.at(1)->getCamera()->rotY + 180;
-	player2->yrot = -players.at(0)->getCamera()->rotY + 180;
+
 	AddWarrior();
 }
 
-
-
-
-
-bool PlayingState::CheckCollision(CollisionModel * obj1, CollisionModel * obj2)
-{
-	bool collides = false;
-	if (obj1 != obj2 && std::get<0>(obj1->CollidesWith(
-		obj2))) //get<1> returns a vector with the spheres that are colliding
-	{
-		//                printf("%d colliding with %d\n", obj1.first, obj2.first);
-		collides = true;
-		WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1);
-		WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2);
-		ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1);
-		ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2);
-
-		if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
-			std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
-			arrowHitThread.detach();
-
-			//set player who shot the arrow
-			Player * from_player;
-			if (arrow1 != nullptr) {
-				from_player = arrow1->getPlayer();
-				DeleteModel(arrow1);
-			}
-			else {
-				from_player = arrow2->getPlayer();
-				DeleteModel(arrow2);
-			}
-
-
-			if (warrior1 != nullptr) {
-				//returns false if warrior health <= 0
-				warrior1->removeHealth(from_player);
-
-			}
-			else {
-				//returns false if warrior health <= 0
-				warrior2->removeHealth(from_player);
-
-			}
-		}
-		
-	}
-	return collides;
-}
 
 void PlayingState::DrawModels(){
 
@@ -485,11 +464,66 @@ void PlayingState::DrawModels(){
 }
 
 
+void headTrackTranslation(Player *p) {
+	//TODO: Test
+//    printf("TRANSLATING FOR PLAYER %d\n", p->getPlayerID());
+
+	if (p->getCamera()->headtrack_lastx != p->getCamera()->headtrack_x ||
+		p->getCamera()->headtrack_lasty != p->getCamera()->headtrack_y
+		|| p->getCamera()->headtrack_lasts != p->getCamera()->headtrack_s) {
+
+		if (p->getCamera()->headtrack_lasts == 0)
+			p->getCamera()->headtrack_lasts = p->getCamera()->headtrack_s;
+//        glMatrixMode(GL_PROJECTION);
+//        glLoadIdentity();
+//        gluPerspective(fov, p->getCamera()->width / p->getCamera()->height, znear, 50.0);
+//        float perspectmatrix[16];
+//        glGetFloatv(GL_PROJECTION_MATRIX, perspectmatrix);
+
+		//identity
+		for (int i = 0; i < 16; i++)
+			p->shearmatrix[i] = 0.0;
+		for (int i = 0; i < 4; i++)
+			p->shearmatrix[i * 4 + i] = 1.0;
+
+		p->shearmatrix[8] = p->getCamera()->headtrack_x;
+		p->shearmatrix[12] = znear * p->getCamera()->headtrack_x;
+		p->shearmatrix[9] = p->getCamera()->headtrack_y;
+		p->shearmatrix[13] = znear * p->getCamera()->headtrack_y;
+
+//        glLoadIdentity();
+//        glMultMatrixf(perspectmatrix);
+	}
+	/* initialisation de la matrice de la scene */
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+	glMultMatrixf(p->shearmatrix);
+
+//    glPushMatrix();
+//    glLoadIdentity();
+//    glScalef(z, z, z);
+//    glRotatef(ry, 0, 1, 0);
+//    glRotatef(rz, -1, 0, 0);
+//    glRotatef(rx, 0, 0, 1);
+//    glTranslatef(tx, ty, tz);
+//    glMultMatrixf(TransfoMatrix);
+//    glGetFloatv(GL_MODELVIEW_MATRIX, TransfoMatrix);
+//    glPopMatrix();
+//    glMultMatrixf(TransfoMatrix);
+//    tx=0,ty=0,tz=0,rx=0,ry=180,rz=0,z=1;
+//    z = 1;
+
+	p->getCamera()->headtrack_lastx = p->getCamera()->headtrack_x;
+	p->getCamera()->headtrack_lasty = p->getCamera()->headtrack_y;
+	p->getCamera()->headtrack_lasts = p->getCamera()->headtrack_s;
+}
+
+
 void PlayingState::Draw() {
 
 //    printf("Draw\n");
 
-    if (players.size() == 2) { //TODO: replace with players.size
+    if (players.size() == 2) {
         Camera *cam1 = players.at(0)->getCamera();
         Camera *cam2 = players.at(1)->getCamera();
 
@@ -522,33 +556,26 @@ void PlayingState::Draw() {
 
             glClear(GL_DEPTH_BUFFER_BIT);        /* Clear Depth Buffer */
 
-            if (loop == 0)    /* Are We Drawing The First Image?  (Original Texture... Ortho) */
-            {
-				
-				glPushMatrix();
+            if (loop == 0) {
+//                glPushMatrix();
+                preTranslateDraw(players.at(0));
+                
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
-				player1->draw();
+				headTrackTranslation(players.at(0));
                 DrawModels();
-				glPopMatrix();
-				glDisable(GL_DEPTH_TEST);
-				preTranslateDraw(players.at(0));
-				glEnable(GL_DEPTH_TEST);
             }
 
-            if (loop == 1)    /* Are We Drawing The Second Image?  (3D Texture Mapped Sphere... Perspective) */
-            {
-				glPushMatrix();
+            if (loop == 1) {
+//                glPushMatrix();
+                preTranslateDraw(players.at(1));
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
-				player2->draw();
+                headTrackTranslation(players.at(1));
                 DrawModels();
-				glPopMatrix();
-				glDisable(GL_DEPTH_TEST);
-				preTranslateDraw(players.at(1));
-				glEnable(GL_DEPTH_TEST);
+//                glPopMatrix();
             }
 
 			//draw port xpbar
@@ -587,17 +614,26 @@ void PlayingState::Draw() {
         glMatrixMode(GL_MODELVIEW);
 
         glLoadIdentity();
+
 //        load bow
         preTranslateDraw(players.at(0));
         glRotatef(cam1->rotX, 1, 0, 0);
         glRotatef(cam1->rotY, 0, 1, 0);
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+        headTrackTranslation(players.at(0));
         DrawModels();
-		overlay_->drawGameOver(this->players, 0, true);
+		if (gate->getHealth() <= 0) {
+			//show gameover menu
+			overlay_->drawGameOver(players, 0, false);
+		}
+
+		if(animatedcollisionmodels_.size() == 0 && spawnedWarriors > 20)
+		{
+			overlay_->drawGameOver(players, 0, true);
+		}
+		overlay_->drawHealthBar(players.at(0), this->gate);
 
     }
-
-	
 
 }
 
@@ -643,6 +679,52 @@ void PlayingState::DeleteModel(CollisionModel *model) {
 vector<Player *> PlayingState::GetPlayers() {
     return players;
 }
+
+bool PlayingState::CheckCollision(CollisionModel * obj1, CollisionModel * obj2)
+{
+	bool collides = false;
+	if (obj1 != obj2 && std::get<0>(obj1->CollidesWith(
+			obj2))) //get<1> returns a vector with the spheres that are colliding
+	{
+		// printf("%d colliding with %d\n", obj1.first, obj2.first);
+		collides = true;
+		WarriorModel *warrior1 = dynamic_cast<WarriorModel *>(obj1);
+		WarriorModel *warrior2 = dynamic_cast<WarriorModel *>(obj2);
+		ArrowModel *arrow1 = dynamic_cast<ArrowModel *>(obj1);
+		ArrowModel *arrow2 = dynamic_cast<ArrowModel *>(obj2);
+
+		if ((warrior1 != 0 || warrior2 != 0) && (arrow1 != 0 || arrow2 != 0)) {
+			std::thread arrowHitThread(&SDL_Audio::playArrowHit, SDL_Audio()); //play arrowhit sound
+			arrowHitThread.detach();
+
+			//set player who shot the arrow
+			Player * from_player;
+			if (arrow1 != nullptr) {
+				from_player = arrow1->getPlayer();
+				DeleteModel(arrow1);
+			}
+			else {
+				from_player = arrow2->getPlayer();
+				DeleteModel(arrow2);
+			}
+
+
+			if (warrior1 != nullptr) {
+				//returns false if warrior health <= 0
+				warrior1->removeHealth(from_player);
+
+			}
+			else {
+				//returns false if warrior health <= 0
+				warrior2->removeHealth(from_player);
+
+			}
+		}
+
+	}
+	return collides;
+}
+
 
 
 

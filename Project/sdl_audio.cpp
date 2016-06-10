@@ -87,7 +87,7 @@ int SDL_Audio::playSound(std::string fileName) {
 	} else {
 		//play effect
 		effectPlayChannel = Mix_PlayChannel(-1, effect, 0);
-		printf("EffectPlayChannel: %d \n", effectPlayChannel);
+//		printf("EffectPlayChannel: %d \n", effectPlayChannel);
 		if (effectPlayChannel == -1)
 		{
 			return false;

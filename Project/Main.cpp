@@ -26,9 +26,9 @@
 
 GameStateManager gameManager;
 SerialHandler serial = SerialHandler(COMMPORT, &gameManager);
-
 bool keys[255];
 void* wiiFunc(void * argument);
+void* musicFunc(void * argument);
 //Camera camera;
 
 WiiHandler wiiHandler;
@@ -41,13 +41,17 @@ int oldTimeSinceStart = 0;
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
 	gameManager.Draw();
-	glFlush();
+
+
+
+    glFlush();
     glutSwapBuffers();
 }
 
 void initializeThreads(){
-	std::thread wiiThread(&wiiFunc, nullptr); //WiiMote Thread
+	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
 	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
 	musicThread.detach();
@@ -78,8 +82,7 @@ void onTimer(int id) {
 	//for testing remove keys for final release:
 	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
-	bool t = keys['t'];
-	gameManager.Update(deltatime, t);
+	gameManager.Update(deltatime, keys);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
 
@@ -96,9 +99,7 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-			//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
-			gameManager.nextState();
-		//}
+		gameManager.nextState();
 		break;
 	default:
 		//just to please CLion.
@@ -187,9 +188,13 @@ int main(int argc, char* argv[]) {
     glutKeyboardUpFunc(onKeyboardUp);
     glutPassiveMotionFunc(mousePassiveMotion);
 
+    glutMouseFunc(mouseFunction);
+    glutPassiveMotionFunc(mousePassiveMotion);
+    glutMouseFunc(mouseFunc);
+	
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
-
+	
 	gameManager.Init(&wiiHandler);
 	gameManager.addSerialHandler(&serial);
 
