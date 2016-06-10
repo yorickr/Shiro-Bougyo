@@ -122,15 +122,15 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-    players.push_back(new Player(cam2, hand, this, 2));
+//    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow(staticModels.at(3));
-	players[1]->makeBow(staticModels.at(3));
+//	players[1]->makeBow(staticModels.at(3));
 
     //this must come after players
     h = new HeadTracking(this->players);
     h->initThread();
 
-for (int i = 0; i < 20; i++){
+	for (int i = 0; i < 20; i++){
 		AddWarrior();
 	}
 }
@@ -335,7 +335,45 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		players[0]->bow->setIndex(0);
 	}
 
-	players.at(1)->getCamera()->rotX++;
+	if(players.size() ==2){
+
+	// Wii-button B2
+	if (wiiHandler->is_B2)
+	{
+		counter2 += deltatime;
+		if (counter2 < 33) players[1]->bow->setIndex(0);
+		else if (counter2 < 66) players[1]->bow->setIndex(1);
+		else players[1]->bow->setIndex(2);
+		if (counter2 >= 100)
+
+		{
+			counter2 += (int)deltatime;
+			if (counter2 < 33) players[1]->bow->setIndex(0);
+			else if (counter2 < 66) players[1]->bow->setIndex(1);
+			else players[1]->bow->setIndex(2);
+			if (counter2 >= 100)
+			{
+				players[1]->bow->nextModel();
+				if (counter2 >= 59)
+				{
+					players[1]->bow->getModel()->update(-1);
+					players[1]->bow->setIndex(0);
+					counter2 = 0;
+				}
+			}
+		}
+	}
+	else
+	{
+		counter2 = 0;
+		players[1]->bow->setIndex(0);
+
+	}
+		player1->yrot = -players.at(1)->getCamera()->rotY + 180;
+		player2->yrot = -players.at(0)->getCamera()->rotY + 180;
+	}
+
+//	players.at(1)->getCamera()->rotX++;
 
 	//Collision Gate with Warrior
 	for (auto& Warrior : animatedcollisionmodels_)
@@ -374,39 +412,6 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		collidesGate = false;
 	}
 
-	// Wii-button B2
-	if (wiiHandler->is_B2)
-	{
-		counter2 += deltatime;
-		if (counter2 < 33) players[1]->bow->setIndex(0);
-		else if (counter2 < 66) players[1]->bow->setIndex(1);
-		else players[1]->bow->setIndex(2);
-		if (counter2 >= 100)
-
-		{
-			counter2 += (int)deltatime;
-			if (counter2 < 33) players[1]->bow->setIndex(0);
-			else if (counter2 < 66) players[1]->bow->setIndex(1);
-			else players[1]->bow->setIndex(2);
-			if (counter2 >= 100)
-			{
-				players[1]->bow->nextModel();
-				if (counter2 >= 59)
-				{
-					players[1]->bow->getModel()->update(-1);
-					players[1]->bow->setIndex(0);
-					counter2 = 0;
-				}
-			}
-		}
-	}
-	else
-	{
-		counter2 = 0;
-		players[1]->bow->setIndex(0);
-
-	}
-
 	//check collisions
 	bool collides = false;
 	for (auto &obj1 : collisionModels) {
@@ -439,8 +444,7 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		obj1.second->getModel()->update(deltatime);
 			
 	}
-	player1->yrot = -players.at(1)->getCamera()->rotY + 180;
-	player2->yrot = -players.at(0)->getCamera()->rotY + 180;
+
 	AddWarrior();
 }
 
@@ -618,7 +622,15 @@ void PlayingState::Draw() {
         glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
         headTrackTranslation(players.at(0));
         DrawModels();
-		overlay_->drawGameOver(this->players, 0, true);
+		if (gate->getHealth() <= 0) {
+			//show gameover menu
+			overlay_->drawGameOver(players, 0, false);
+		}
+
+		if(animatedcollisionmodels_.size() == 0 && spawnedWarriors > 20)
+		{
+			overlay_->drawGameOver(players, 0, true);
+		}
 
     }
 
