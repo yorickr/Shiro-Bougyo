@@ -314,6 +314,42 @@ void PlayingState::Update(float deltatime, bool keys) {
 
 	players.at(1)->getCamera()->rotX++;
 
+	//Collision Gate with Warrior
+	for (auto& Warrior : animatedcollisionmodels_)
+	{
+		if ((Warrior.second->getModel() != this->gate) && std::get<0>(Warrior.second->getModel()->CollidesWith(this->gate)))
+		{
+			collidesGate = true;
+			//remove health from gate
+			if (rand() % 20 == 1)
+			{
+				gate->setHealth(gate->getHealth() - 1);
+			}
+			// Animating Warrior
+				counterWarrior += 1;
+				if (counterWarrior > 20 && counterWarrior < 30)
+				{
+					Warrior.second->setIndex(1);
+				}
+				if (counterWarrior > 30 && counterWarrior < 40)
+				{
+					Warrior.second->setIndex(2);
+				}
+				if (counterWarrior > 40 && counterWarrior < 50)
+				{
+					Warrior.second->setIndex(3);
+				} else if (counterWarrior > 60)
+				{
+					counterWarrior = 0;
+				}
+			}
+		if (!collidesGate)
+		{
+			Warrior.second->getModel()->update(deltatime);
+			Warrior.second->getModel()->draw();
+		}
+		collidesGate = false;
+	}
 
 	// Wii-button B2
 	if (wiiHandler->is_B2)
@@ -380,54 +416,6 @@ void PlayingState::Update(float deltatime, bool keys) {
 		obj1.second->getModel()->update(deltatime);
 			
 	}
-
-
-	//Collision Gate with Warrior
-	for (auto& Warrior : animatedcollisionmodels_)
-	{
-		if ((Warrior.second->getModel() != this->gate) && std::get<0>(Warrior.second->getModel()->CollidesWith(this->gate)))
-		{
-			collidesGate = true;
-			//remove health from gate
-			if (rand() % 20 == 1)
-			{
-				gate->setHealth(gate->getHealth() - 1);
-			}
-			// Animating Warrior
-			if (collidesGate)
-			{
-				counterWarrior += 1;
-				if (counterWarrior > 20 && counterWarrior < 30)
-				{
-					Warrior.second->setIndex(0);
-				}
-				if (counterWarrior > 30 && counterWarrior < 40)
-				{
-					Warrior.second->setIndex(1);
-				}
-				if (counterWarrior > 40 && counterWarrior < 50)
-				{
-					Warrior.second->setIndex(2);
-				}
-				if (counterWarrior > 50 && counterWarrior < 60)
-				{
-					Warrior.second->setIndex(3);
-				}
-				else if (counterWarrior > 60)
-				{
-					counterWarrior = 0;
-				}
-			}
-		}
-		if (!collidesGate)
-		{
-			Warrior.second->getModel()->update(deltatime);
-			Warrior.second->getModel()->draw();
-		}
-		collidesGate = false;
-	}
-
-
 	player1->yrot = -players.at(1)->getCamera()->rotY + 180;
 	player2->yrot = -players.at(0)->getCamera()->rotY + 180;
 	AddWarrior();
