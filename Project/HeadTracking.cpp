@@ -12,6 +12,8 @@ using namespace cv;
 std::vector<Rect> detectFace(Mat frame);
 
 CascadeClassifier face_cascade;
+unsigned int times_updated = 0;
+
 
 HeadTracking::~HeadTracking() {
 
@@ -25,25 +27,19 @@ bool isSamePoint(Point p1, Point p2) {
     if (abs(p1.x - p2.x) < 10 &&
         abs(p1.y - p2.y) < 10) {
         //This is the same rectangle
-//        printf("same rect-----------\n");
-        if (abs(p1.x - p2.x) > 7 &&
-            abs(p1.y - p2.y) > 7) {
-            //Check if rectangle has moved enough
-//            printf("moved enough-----------\n");
-        }
+//
+        return true;
     }
+    return false;
 }
 
-// Detect face and display it
-std::vector<Point> detectFace(Mat frame, std::vector<Point> prevPoint) {
+// Detect face
+std::vector<std::pair<int, Point>> detectFace(Mat frame, unsigned int playerSize) {
 
-    std::vector<Point> retFaces;
+    std::vector<pair<int, Point>> retFaces;
     std::vector<Rect> faces;
-    Mat frame_gray, frame_lab, output, temp;
-//    int h = frame.size().height - 1;
-//    int w = frame.size().width - 1;
+    Mat frame_gray;
     int minNeighbors = 2;
-//    bool faceNotFound = false;
 
     cvtColor(frame, frame_gray, COLOR_BGR2GRAY);   // Convert to gray
     equalizeHist(frame_gray, frame_gray);          // Equalize histogram
@@ -52,42 +48,35 @@ std::vector<Point> detectFace(Mat frame, std::vector<Point> prevPoint) {
     face_cascade.detectMultiScale(frame_gray, faces,
                                   1.1, minNeighbors,
                                   0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-//    face_cascade.detectMultiScale(frame_gray, faces, 1.2, 4, CV_HAAR_DO_CANNY_PRUNING, cvSize(30, 30));// if captured through WebCam
-    printf("start of loop-----------\n");
-    printf("prevpoint contains-----------\n");
-    for (auto &item : prevPoint) {
-        printf("Prevpt %d %d\n", item.x, item.y);
-    }
-    bool foundFaces = false;
-    if (prevPoint.size() >= 1) { //if we've previously found faces
-        foundFaces = true;
-    }
 
     for (size_t i = 0; i < faces.size(); i++) {
         Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
-        if(foundFaces){
-            retFaces.push_back(center);
+        if(playerSize == 1){
+            retFaces.push_back(pair<int, Point>(0, center));
         }
         else{
-            for (auto &prevp : prevPoint) {
-                printf("Prev %d %d\n", prevp.x, prevp.y);
-                printf("found %d %d\n", center.x, center.y);
-
+            if (center.x < (frame.size().width) / 2) { //If left player
+                printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
+                printf("left player \n");
+                retFaces.push_back(pair<int, Point>(0, center));
+            }
+            else {
+                printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
+                printf("right player \n");
+                retFaces.push_back(pair<int, Point>(1, center));
             }
         }
-        printf("end of faces-----------\n");
-    }
-    printf("retfaces contains -----------\n");
-    for (auto &m : retFaces) {
-        printf("%d %d\n", m.x, m.y);
-    }
-    printf("end of retfaces-----------\n");
 
+    }
     return retFaces;
 }
 
+float calcHeadPos(int pos, int camwidth) {
+    return (pos / (float) camwidth) * 2.0f - 1.0f;
+}
+
 void HeadTracking::cameraThreadFunc() {
-    VideoCapture cap(0); // capture from default camera
+    VideoCapture cap(1); // capture from default camera
     Mat frame;
     int camWidth = 640, camHeight = 480;
     cap.set(CV_CAP_PROP_FRAME_WIDTH, camWidth);
@@ -96,18 +85,26 @@ void HeadTracking::cameraThreadFunc() {
     face_cascade.load("Project/opencv_xml/haarcascade_frontalface_alt.xml"); // load face classifiers
 //    eyes_cascade.load("Project/opencv_xml/haarcascade_eye_tree_eyeglasses.xml"); // load eye classifiers
 
-    std::vector<Point> points;
+    std::vector<pair<int, Point>> points;
     while (cap.read(frame)) {
         if (!frame.empty()) {
-            points = detectFace(frame, points);
+            points = detectFace(frame, (unsigned int) players.size());
+            printf("points contains \n");
             for (auto &face : points) {
-                printf("-------------------------\nFace %d %d\n", face.x, face.y);
-                printf("Setting headtrack to %f\n", (face.x / (float) camWidth) * 3.0f - 1.0f);
-                players.at(0)->getCamera()->headtrack_x =
-                        (face.x / (float) camWidth) * 3.0f - 1.0f; //headtrakc x goes from -1 to 1
-//                headtrack_y = (face.y / (float)camHeight) * 2.0f -1.0f;
+                printf("Face %d pos %d %d\n", face.first, face.second.x, face.second.y);
             }
-            usleep(1000 * 60);
+            for (auto &face : points) {
+                printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
+                printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
+                if (face.first == 0) { //if player 0
+                    printf("PlayerID is %d \n", players[0]->getPlayerID());
+                    players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
+                }
+                else if(face.first == 1){
+//                    players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
+                }
+            }
+            usleep(1000 * (1000 / 100));
         }
     }
 }

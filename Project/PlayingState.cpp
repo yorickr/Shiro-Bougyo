@@ -36,21 +36,6 @@
 #include <iostream>
 #endif
 
-//TODO: Test
-
-GLfloat src_pos[]= { 0.0,10.0,0.0,1.0};
-float fov = 50.0;
-float disteye=15;
-//mode free
-float tx=0,ty=0,tz=0,rx=0,ry=180,rz=0,z=1;
-float TransfoMatrix[16]={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
-int mode = 1; //0=free, 1=follow
-GLint id_repere;
-int eye = 1;
-double interEye = 0.0; //0.02;
-int frame = 0;
-int Height=1,Width=1; //fenetre
-
 static const float znear = 1.0;
 
 HeadTracking * h;
@@ -104,9 +89,9 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-//    players.push_back(new Player(cam2, hand, this, 2));
+    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow();
-//	players[1]->makeBow();
+	players[1]->makeBow();
 
     //this must come after players
     h = new HeadTracking(this->players);
@@ -217,13 +202,6 @@ void PlayingState::test(bool * keys) {
     if (keys['s']) {
         players.at(0)->getCamera()->headtrack_y = players.at(0)->getCamera()->headtrack_lasty - 0.1f;
     }
-    //+, -
-    if (keys['+']) {
-        interEye *= 1.2;
-    }
-    if (keys['-']) {
-        interEye /= 1.2;
-    }
     if(keys[' ']) {
         printf("Head values\n"
                        "Head_x: %f %f\n"
@@ -236,8 +214,6 @@ void PlayingState::test(bool * keys) {
 }
 
 void PlayingState::Update(float deltatime, bool * keys) {
-    //TODO: Test
-
     test(keys);
 
 	if (wiiHandler->is_A || keys['t'] )
@@ -330,23 +306,76 @@ void PlayingState::DrawModels(){
     }
 }
 
+void headTrackTranslation(Player *p) {
+    //TODO: Test
+//    printf("TRANSLATING FOR PLAYER %d\n", p->getPlayerID());
+    static float shearmatrix[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+    if (p->getCamera()->headtrack_lastx != p->getCamera()->headtrack_x ||
+        p->getCamera()->headtrack_lasty != p->getCamera()->headtrack_y
+        || p->getCamera()->headtrack_lasts != p->getCamera()->headtrack_s) {
+
+        if (p->getCamera()->headtrack_lasts == 0)
+            p->getCamera()->headtrack_lasts = p->getCamera()->headtrack_s;
+//        glMatrixMode(GL_PROJECTION);
+//        glLoadIdentity();
+//        gluPerspective(fov, p->getCamera()->width / p->getCamera()->height, znear, 50.0);
+//        float perspectmatrix[16];
+//        glGetFloatv(GL_PROJECTION_MATRIX, perspectmatrix);
+
+        //identity
+        for (int i = 0; i < 16; i++)
+            shearmatrix[i] = 0.0;
+        for (int i = 0; i < 4; i++)
+            shearmatrix[i * 4 + i] = 1.0;
+
+        shearmatrix[8] = p->getCamera()->headtrack_x;
+        shearmatrix[12] = znear * p->getCamera()->headtrack_x;
+        shearmatrix[9] = p->getCamera()->headtrack_y;
+        shearmatrix[13] = znear * p->getCamera()->headtrack_y;
+
+//        glLoadIdentity();
+//        glMultMatrixf(perspectmatrix);
+    }
+    /* initialisation de la matrice de la scene */
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+    glMultMatrixf(shearmatrix);
+
+//    glPushMatrix();
+//    glLoadIdentity();
+//    glScalef(z, z, z);
+//    glRotatef(ry, 0, 1, 0);
+//    glRotatef(rz, -1, 0, 0);
+//    glRotatef(rx, 0, 0, 1);
+//    glTranslatef(tx, ty, tz);
+//    glMultMatrixf(TransfoMatrix);
+//    glGetFloatv(GL_MODELVIEW_MATRIX, TransfoMatrix);
+//    glPopMatrix();
+//    glMultMatrixf(TransfoMatrix);
+//    tx=0,ty=0,tz=0,rx=0,ry=180,rz=0,z=1;
+//    z = 1;
+
+    p->getCamera()->headtrack_lastx = p->getCamera()->headtrack_x;
+    p->getCamera()->headtrack_lasty = p->getCamera()->headtrack_y;
+    p->getCamera()->headtrack_lasts = p->getCamera()->headtrack_s;
+}
+
 
 void PlayingState::Draw() {
 
 //    printf("Draw\n");
 
-    if (players.size() == 2) { //TODO: replace with players.size
+    if (players.size() == 2) {
         Camera *cam1 = players.at(0)->getCamera();
         Camera *cam2 = players.at(1)->getCamera();
 
 
-        for (int loop = 0; loop < 2; loop++)                /* Loop To Draw Our 4 Views */
+        for (int loop = 0; loop < 2; loop++)                /* Loop To Draw Our 2 Views */
         {
             glClearColor(0.6f, 0.6f, 1, 1);
 
             if (loop == 0)    /* If We Are Drawing The First Scene */
             {
-                /* Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height */
                 glViewport(0, 0, cam1->width / 2, cam1->height);
                 glMatrixMode(GL_PROJECTION);        /* Select The Projection Matrix */
                 glLoadIdentity();                            /* Reset The Projection Matrix */
@@ -356,7 +385,6 @@ void PlayingState::Draw() {
 
             if (loop == 1)    /* If We Are Drawing The Second Scene */
             {
-//			/* Set The Viewport To The Top Left.  It Will Take Up Half The Screen Width And Height */
                 glViewport(cam2->width / 2, 0, cam2->width / 2, cam2->height);
                 glMatrixMode(GL_PROJECTION);        /* Select The Projection Matrix */
                 glLoadIdentity();                            /* Reset The Projection Matrix */
@@ -368,18 +396,20 @@ void PlayingState::Draw() {
 
             glClear(GL_DEPTH_BUFFER_BIT);        /* Clear Depth Buffer */
 
-            if (loop == 0)    /* Are We Drawing The First Image?  (Original Texture... Ortho) */
+            if (loop == 0)
             {
                 preTranslateDraw(players.at(0));
+                headTrackTranslation(players.at(0));
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
                 DrawModels();
             }
 
-            if (loop == 1)    /* Are We Drawing The Second Image?  (3D Texture Mapped Sphere... Perspective) */
+            if (loop == 1)
             {
                 preTranslateDraw(players.at(1));
+                headTrackTranslation(players.at(1));
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
@@ -394,7 +424,7 @@ void PlayingState::Draw() {
 
 //        printf("Player %u draw\n", players.at(0)->getPlayerID());
 
-        Camera *cam1 = players.at(0)->getCamera();
+//        Camera *cam1 = players.at(0)->getCamera();
 //        printf("Camera : \n %f %f %f\n", cam1->posX, cam1->posY, cam1->posZ);
 //        printf("%d %d\n", cam1->width, cam1->height);
 //        glMatrixMode(GL_PROJECTION);
@@ -414,70 +444,7 @@ void PlayingState::Draw() {
 //        glRotatef(cam1->rotY, 0, 1, 0);
 //        glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
 
-        //TODO: Test
-        static float shearmatrix[16] = {1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
-        if (cam1->headtrack_lastx != cam1->headtrack_x || cam1->headtrack_lasty != cam1->headtrack_y
-            || cam1->headtrack_lasts != cam1->headtrack_s)
-        {
-            if (cam1->headtrack_lasts == 0)
-                cam1->headtrack_lasts = cam1->headtrack_s;
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            gluPerspective(fov,cam1->width/cam1->height,znear,50.0);
-            float perspectmatrix[16];
-            glGetFloatv(GL_PROJECTION_MATRIX, perspectmatrix);
-
-            //identity
-            for (int i=0; i<16; i++)
-                shearmatrix[i] = 0.0;
-            for (int i=0; i<4;i++)
-                shearmatrix[i*4+i] = 1.0;
-
-            shearmatrix[8] = cam1->headtrack_x;
-            shearmatrix[12] = znear * cam1->headtrack_x;
-            shearmatrix[9] = cam1->headtrack_y;
-            shearmatrix[13] = znear * cam1->headtrack_y;
-
-            glLoadIdentity();
-            glMultMatrixf(perspectmatrix);
-        }
-        /* initialisation de la matrice de la sc�ne */
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glMultMatrixf(shearmatrix);
-        //glTranslatef( interEye*(double)(eye*2-1),0, 0);
-//        eye = 1-eye;
-        if (mode==0)
-        {
-            GLdouble eyex  = disteye*cos(ry*M_PI/180)*cos(rz*M_PI/180)+tx
-                                        ,eyey = disteye*sin(ry*M_PI/180)*cos(rz*M_PI/180)+ty
-                                        ,eyez=disteye*sin(rz*M_PI/180)+tz;
-            gluLookAt(eyex,eyey,eyez,tx,ty,tz,0.0,0.0,1.0);
-        }
-        else
-        {
-            glPushMatrix();
-            glLoadIdentity();
-            glScalef(z,z,z);
-            glRotatef(ry,0,1,0);
-            glRotatef(rz,-1,0,0);
-            glRotatef(rx,0,0,1);
-            glTranslatef(tx, ty, tz);
-//            glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
-            glMultMatrixf(TransfoMatrix);
-            glGetFloatv(GL_MODELVIEW_MATRIX,TransfoMatrix);
-            glPopMatrix();
-            glMultMatrixf(TransfoMatrix);
-            tx=ty=tz=rx=ry=rz=0;
-            z=1;
-        }
-        cam1->headtrack_lastx = cam1->headtrack_x;
-        cam1->headtrack_lasty = cam1->headtrack_y;
-        cam1->headtrack_lasts = cam1->headtrack_s;
-        glLightfv(GL_LIGHT0,GL_POSITION,src_pos);
-        glCallList(id_repere);
-        glDisable(GL_LIGHTING);
-
+        headTrackTranslation(players.at(0));
         DrawModels();
 
     }
