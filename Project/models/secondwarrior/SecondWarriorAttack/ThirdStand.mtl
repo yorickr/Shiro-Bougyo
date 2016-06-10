@@ -1,4 +1,4 @@
-newmtl ThirdStand:Color_A01
+newmtl Color_A01
 illum 4
 Kd 0.60 0.00 0.00
 Ka 0.00 0.00 0.00
@@ -6,17 +6,17 @@ Tf 1.00 1.00 1.00
 Ni 1.00
 Ks 0.33 0.33 0.33
 Ns 0.06
-newmtl ThirdStand:pasted__lambert5SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd new.png
-Ni 1.00
 newmtl lambert2SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd sword.png
+Ni 1.00
+newmtl pasted__lambert5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd new.png
 Ni 1.00

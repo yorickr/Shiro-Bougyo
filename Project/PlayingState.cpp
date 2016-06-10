@@ -63,7 +63,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->posY = 1.8;
 
 	//World
-	ObjModel *world = new StationaryObjModel("models/world/FirstWorld1.obj");
+	ObjModel *world = new StationaryObjModel("models/world/FirstWorld.obj");
 	world->xpos = -2;
 	world->ypos = -5;
 	models.push_back(pair<int, ObjModel*>(13, world));
@@ -85,8 +85,8 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	player2->zscale = 0.2f;
 
 	//adding warriors:
-	staticModels.push_back(new ObjModel("models/warrior/warrior.obj")); //warrior 1
-	staticModels.push_back(new ObjModel("models/secondwarrior/warrior.obj")); //warrior 2
+	staticModels.push_back(new ObjModel("models/warrior/warrior1.obj")); //warrior 1
+	staticModels.push_back(new ObjModel("models/secondwarrior/warrior1.obj")); //warrior 2
 	staticModels.push_back(new ObjModel("models/blok/blok.obj")); //Gate
 	staticModels.push_back(new ObjModel("models/Arrow/Arrow.obj")); //arrow
 	staticModels.push_back(new ObjModel("models/warrior/warriorAttack/FirstStand.obj"));
@@ -176,7 +176,7 @@ void PlayingState::AddWarrior(){
 		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0, animatedWarior));
 		
 		vector<CollisionModel*> models2;
-		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(filename1), this);
+		warriorTwo = new WarriorModel(-point.X, -point.Y, type, staticModels.at(filename1), this);
 		models2.push_back(warriorTwo);
 		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(7), this);
 		models2.push_back(warriorTwo);
