@@ -55,6 +55,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	cam1->posX = 4;
 	cam1->posZ = 3.2;
 	cam1->posY = 1.8;
+	
 
 	cam2->rotY = 180;
     cam2->posX = 1;
@@ -69,16 +70,16 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 
 	player1 = new StationaryObjModel("models/warrior/warrior.obj");
 	player1->xpos = -1;
-	player1->ypos = -2.2;
-	player1->zpos = -3;
+	player1->ypos = -2.4;
+	player1->zpos = -2.7;
 	player1->xscale = 0.2f;
 	player1->yscale = 0.2f;
 	player1->zscale = 0.2f;
 
 	player2 = new StationaryObjModel("models/warrior/warrior.obj");
 	player2->xpos = -4;
-	player2->ypos = -2.2;
-	player2->zpos = -3;
+	player2->ypos = -2.4;
+	player2->zpos = -2.7;
 	player2->xscale = 0.2f;
 	player2->yscale = 0.2f;
 	player2->zscale = 0.2f;
@@ -529,22 +530,31 @@ void PlayingState::Draw() {
 
             if (loop == 0)    /* Are We Drawing The First Image?  (Original Texture... Ortho) */
             {
-                preTranslateDraw(players.at(0));
+				
+				glPushMatrix();
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
 				player1->draw();
                 DrawModels();
+				glPopMatrix();
+				glDisable(GL_DEPTH_TEST);
+				preTranslateDraw(players.at(0));
+				glEnable(GL_DEPTH_TEST);
             }
 
             if (loop == 1)    /* Are We Drawing The Second Image?  (3D Texture Mapped Sphere... Perspective) */
             {
-                preTranslateDraw(players.at(1));
+				glPushMatrix();
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
 				player2->draw();
                 DrawModels();
+				glPopMatrix();
+				glDisable(GL_DEPTH_TEST);
+				preTranslateDraw(players.at(1));
+				glEnable(GL_DEPTH_TEST);
             }
 
 			//draw port xpbar

@@ -13,6 +13,7 @@ public:
 	float posZ = 0;
     float rotX = 0;
     float rotY = 0;
+	float scale = 1;
     int width, height = 0;
 
 };
