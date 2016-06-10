@@ -631,6 +631,7 @@ void PlayingState::Draw() {
 		{
 			overlay_->drawGameOver(players, 0, true);
 		}
+		overlay_->drawHealthBar(players.at(0), this->gate);
 
     }
 

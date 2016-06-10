@@ -1,4 +1,4 @@
-#define MOUSE false
+#define MOUSE true
 #include "MenuState.h"
 #include "Camera.h"
 #include "MenuModel.h"
