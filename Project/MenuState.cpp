@@ -97,7 +97,7 @@ void MenuState::Update(float deltatime)
 
 }
 
-void MenuState::Update(float deltatime, bool keys)
+void MenuState::Update(float deltatime, bool * keys)
 {
 	// Wiimote down pres button
 	if (wiiHandler->wiiMoteP1) {

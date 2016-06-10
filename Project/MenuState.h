@@ -26,7 +26,7 @@ public:
 
     virtual void Update(float deltatime) override;
 
-    virtual void Update(float deltatime, bool keys) override;
+    virtual void Update(float deltatime, bool * keys) override;
 
     virtual void Draw() override;
 
