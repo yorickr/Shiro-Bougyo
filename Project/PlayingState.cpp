@@ -69,16 +69,16 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 
 	player1 = new StationaryObjModel("models/warrior/warrior.obj");
 	player1->xpos = -1;
-	player1->ypos = -2;
-	player1->zpos = -3.4;
+	player1->ypos = -2.2;
+	player1->zpos = -3;
 	player1->xscale = 0.2f;
 	player1->yscale = 0.2f;
 	player1->zscale = 0.2f;
 
 	player2 = new StationaryObjModel("models/warrior/warrior.obj");
 	player2->xpos = -4;
-	player2->ypos = -2;
-	player2->zpos = -3.4;
+	player2->ypos = -2.2;
+	player2->zpos = -3;
 	player2->xscale = 0.2f;
 	player2->yscale = 0.2f;
 	player2->zscale = 0.2f;
@@ -94,8 +94,8 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/FirstStand.obj"));
 	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/SecondStand.obj"));
 	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/ThirdStand.obj"));
-	models.push_back(pair<int, ObjModel*>(10, player1));
-	models.push_back(pair<int, ObjModel*>(11, player2));
+	/*models.push_back(pair<int, ObjModel*>(10, player1));
+	models.push_back(pair<int, ObjModel*>(11, player2));*/
 	this->gate = new GateModel(staticModels.at(2));
 
     cam1->width = game->width;
@@ -422,8 +422,8 @@ void PlayingState::Update(float deltatime, bool keys) {
 			
 	}
 
-	models.at(1).second->yrot = -players.at(1)->getCamera()->rotY + 180;
-	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
+	player1->yrot = -players.at(1)->getCamera()->rotY + 180;
+	player2->yrot = -players.at(0)->getCamera()->rotY + 180;
 }
 
 
@@ -533,6 +533,7 @@ void PlayingState::Draw() {
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+				player1->draw();
                 DrawModels();
             }
 
@@ -542,6 +543,7 @@ void PlayingState::Draw() {
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
+				player2->draw();
                 DrawModels();
             }
 
