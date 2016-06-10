@@ -108,7 +108,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	//wiiHandler.wiiMoteLoop();
+	wiiHandler.wiiMoteLoop();
 	return 0;
 }
 
