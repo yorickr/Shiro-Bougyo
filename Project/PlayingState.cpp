@@ -176,7 +176,7 @@ void PlayingState::AddWarrior(){
 		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0, animatedWarior));
 		
 		vector<CollisionModel*> models2;
-		warriorTwo = new WarriorModel(-point.X, -point.Y,type, staticModels.at(filename1), this);
+		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(filename1), this);
 		models2.push_back(warriorTwo);
 		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(7), this);
 		models2.push_back(warriorTwo);
