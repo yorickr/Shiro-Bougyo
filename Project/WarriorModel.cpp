@@ -4,11 +4,15 @@
 
 
 
-WarriorModel::WarriorModel(float x, float z, WarriorType type, string filename):CollisionModel(filename)
+WarriorModel::WarriorModel(float x, float z, WarriorType type, ObjModel *model, GameState * state):CollisionModel(model)
 {
+	this->warriortype = type;
 	xpos = x;
 	zpos = z;
 	ypos = -3;
+	yrot += 180;
+	isDead = 0;
+	this->game = state;
     //Because the base class InitBoundingSpheres has been called, we need to clear boundingSpheres.
     boundingSpheres.clear(); //Clear base boundingspheres
     WarriorModel::InitBoundingSpheres();
@@ -21,7 +25,7 @@ WarriorModel::~WarriorModel()
 
 //Beam me up, Scotty!
 void WarriorModel::update(float deltatime) {
-    yrot += 0.5 * deltatime;
+    //yrot += 0.5 * deltatime;
 	//ypos = -3.25;
 	int random = rand();
 	//first walk z position
@@ -43,10 +47,13 @@ void WarriorModel::update(float deltatime) {
 			xpos += (float(random % 100)) / 2000;
 	}else
 	{
-		zpos += sin(random) / 20;
-		xpos += sin(random) / 20;
+		zpos += (float)sin(random) / 20.0f;
+		xpos += (float)sin(random) / 20.0f;
 	}
-	
+	if (isDead == 1 && xrot < 90)
+		xrot += 15;
+	else if (!(isDead == 0)) 
+		game->DeleteModel(this);
 }
 
 void WarriorModel::InitBoundingSpheres() {
@@ -84,7 +91,7 @@ void WarriorModel::PowerUpBoundingSpheres() {
 
 	x = width / 2 + vertices_min->x;
 	z = depth / 2+vertices_min->z;
-
+ 
 	boundingSpheres.push_back((new Sphere(x, 3.6f, z, 0.375f))); //Magic values for the head
 
 	boundingSpheres.push_back(new Sphere(x, 2.7f, z, 0.60f)); //Magic values for the torso
@@ -93,18 +100,58 @@ void WarriorModel::PowerUpBoundingSpheres() {
 	boundingSpheres.push_back(new Sphere(x, 1.05f, z, 0.51f)); //Magic values for the legs
 }
 
-void WarriorModel::setSize(int newSize)
+void WarriorModel::setSize(float newSize)
 {
 	this->xscale = newSize;
 	this->yscale = newSize;
 	this->zscale = newSize;
 }
 
-bool WarriorModel::removeHealth(int health)
+void WarriorModel::setPosition(int x, int y, int z)
 {
-	this->health -= health;
-	return this->health <= 0;
+	if(x != 0)
+	this->xpos = (float)x;
+	if(y != 0)
+	this->ypos = (float)y;
+	if(z != 0)
+	this->zpos = (float)z;
 }
+
+bool WarriorModel::removeHealth(Player * player)
+{
+	health -= 35;
+	//if player 1 hits first warriortype
+	if (player->playerID == 1 && (this->warriortype == WarriorType::first))
+	{
+		//critical shot:
+		this->health = 0;
+	}
+
+	//if player 2 hits second warriortype
+	if (player->playerID == 2 && (this->warriortype == WarriorType::second))
+	{
+		//critical shot:
+		this->health = 0;
+	}
+
+	if (health <= 0)
+	{
+		isDead = 1;
+		player->addKill();
+		return false;
+	}
+		
+	return false;
+}
+
+void WarriorModel::setRotation(float x, float y, float z)
+{
+	this->xrot = x;
+	this->yrot = y;
+	this->zrot = z;
+}
+
+
 
 
 

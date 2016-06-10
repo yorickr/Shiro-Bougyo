@@ -10,10 +10,17 @@
 
 class GateModel : public CollisionModel{
 public:
-    GateModel(string filename);
+    GateModel(ObjModel *model);
     ~GateModel();
     void InitBoundingSpheres() override;
+	
+	void setHealth(int health);
+
+	int getHealth() {
+		return health_;
+	}
 private:
+	int health_ = 100;
 
 };
 

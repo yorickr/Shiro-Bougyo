@@ -2,36 +2,51 @@
 #include <SDL.h>
 #include <sdl_mixer.h>
 #include <string>
+#include <unistd.h>
 
 #else
 #include "SDL.h"
 #include "sdl_mixer.h"
+#include <windows.h>
 #endif 
 
-int playSound(std::string fileName);
 
-int playTheme() {
-	return playSound("test.wav");
+#include "sdl_audio.h"
+
+SDL_Audio::SDL_Audio(){}
+
+SDL_Audio::~SDL_Audio(){}
+
+void* SDL_Audio::playTheme() {
+	playSound("theme.wav");
+	return 0;
 }
 
-int playSwordSlash() {
-	return playSound("sword_slash.wav");
+void* SDL_Audio::playSwordSlash() {
+	playSound("sword_slash.wav");
+	return 0;
 }
 
-int playArrowHit() {
-	return playSound("arrow_hit.wav");
+void* SDL_Audio::playArrowHit() {
+	playSound("arrow_hit.wav");
+	return 0;
 }
 
-int playBowPull() {
-	return playSound("bow_pull.wav");
+void* SDL_Audio::playBowPull() {
+	playSound("bow_pull.wav");
+	return 0;
 }
 
-int playBowShot() {
-	return playSound("bow_shot.wav");
+void* SDL_Audio::playBowShot() {
+	playSound("bow_shot.wav");
+	return 0;
 }
 
 //sounds that can be used: test, sword_slash, arrow_hit, bow_pull, bow_shot
-int playSound(std::string fileName) {
+int SDL_Audio::playSound(std::string fileName) {
+	bool theme(false);
+	if (fileName == "theme.wav") { theme = true; }
+	//printf("theme bool: %s\n", theme ? "true" : "false");
     //Start SDL
     SDL_Init( SDL_INIT_EVERYTHING );
 
@@ -42,36 +57,60 @@ int playSound(std::string fileName) {
 
     //The music that will be played
     Mix_Music *sound = NULL;
+	Mix_Chunk *effect = NULL;
+	int effectPlayChannel = 0;
 
     //Load the music
 	//Fix for the OSX project, because our path starts from shiro-bougyo instead of Project
 	#ifdef __APPLE__
 		fileName = "Project/" + fileName;
 	#endif
-    sound = Mix_LoadMUS(fileName.c_str());
+		if (theme) { sound = Mix_LoadMUS(fileName.c_str()); }
+		else { effect = Mix_LoadWAV(fileName.c_str()); }
 
     //If there was a problem loading the music
-    if(sound == NULL)
+    if(sound == NULL && effect == NULL)
     {
+		printf("muziek null\n");
         return false;
     }
+	
+	if (theme) {
+		if (Mix_PlayingMusic() == 0)
+		{
+			//Play the music
+			if (Mix_PlayMusic(sound, -1) == -1)
+			{
+				return false;
+			}
+		}
+	} else {
+		//play effect
+		effectPlayChannel = Mix_PlayChannel(-1, effect, 0);
+//		printf("EffectPlayChannel: %d \n", effectPlayChannel);
+		if (effectPlayChannel == -1)
+		{
+			return false;
+		}
+	}
 
-    if( Mix_PlayingMusic() == 0 )
-    {
-        //Play the music
-        if( Mix_PlayMusic(sound, -1 ) == -1 )
-        {
-        }
-    }
+	bool musicPlaying = true;
+	while (musicPlaying) {
+		#ifdef __APPLE__
+		usleep(1000000);
+		#else
+		Sleep(10000);
+		#endif
+		if(!theme)
+			if (Mix_Playing(effectPlayChannel) == 0) 
+				musicPlaying = false;
+	}
 
-    while(true);
     //cleanup
-    Mix_FreeMusic(sound);
-
-    Mix_CloseAudio();
-
-    //Quit SDL
-    SDL_Quit();
+	if (theme) { Mix_FreeMusic(sound); }
+	else { Mix_FreeChunk(effect); }
+    //Mix_CloseAudio();
+    //SDL_Quit();
 
     return 0;
 }

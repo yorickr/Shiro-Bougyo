@@ -14,6 +14,16 @@ void GameStateManager::Init(WiiHandler * hand)
 	//Add list of states here
 }
 
+void GameStateManager::addSerialHandler(SerialHandler * serialHandler)
+{
+	this->serialHandler = serialHandler;
+}
+
+SerialHandler * GameStateManager::getSerialHandler()
+{
+	return serialHandler;
+}
+
 void GameStateManager::Cleanup()
 {
 	this->states.clear();

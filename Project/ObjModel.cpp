@@ -152,7 +152,7 @@ ObjModel::ObjModel(std::string fileName) {
             for (size_t i = 0; i < materials.size(); i++) {
                 MaterialInfo *info = materials[i];
                 if (info->name == params[1]) {
-                    currentGroup->materialIndex = i;
+                    currentGroup->materialIndex = (int)i;
                     break;
                 }
             }
@@ -173,6 +173,10 @@ ObjModel::ObjModel(std::string fileName) {
 			}
 		}
 	}
+}
+
+ObjModel::ObjModel()
+{
 }
 
 void ObjModel::CalcMinVertex() {
@@ -201,7 +205,7 @@ void ObjModel::CalcMinVertex() {
             smallestz = vertice->z;
         }
     }
-    printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
+    //printf("What I've found:\n %f %f %f\n", smallestx, smallesty, smallestz);
 
     //Transform it into a vertex.
     vertices_min = new Vec3f(smallestx, smallesty, smallestz);
@@ -235,7 +239,7 @@ void ObjModel::CalcMaxVertex() {
         }
     }
 
-    printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
+    //printf("What I've found:\n %f %f %f\n", maxx, maxy, maxz);
     vertices_max = new Vec3f(maxx, maxy, maxz);
 }
 
@@ -269,7 +273,7 @@ void ObjModel::draw() {
 		glVertexPointer(3, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data()) );
 		glNormalPointer(GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+3 );
 		glTexCoordPointer(2, GL_FLOAT, sizeof(Vec), ((float*)gr.vecs.data())+6 );
-		glDrawArrays(GL_TRIANGLES, 0, gr.vecs.size());
+		glDrawArrays(GL_TRIANGLES, 0, (GLsizei)gr.vecs.size());
 			
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
@@ -321,10 +325,11 @@ void ObjModel::loadMaterialFile(std::string fileName, std::string dirName) {
         else if (params[0] == "map_kd") {
             currentMaterial->hasTexture = true;
             currentMaterial->texture = new Texture(dirName + "/" + params[1]);
-            std::cout << "Made material named " << params[1] << std::endl;
-        }
-        else
-            std::cout << "Didn't parse " << params[0] << " in material file" << std::endl;
+            //std::cout << "Made material named " << params[1] << std::endl;
+        }else{
+			//std::cout << "Didn't parse " << params[0] << " in material file" << std::endl;
+		}
+            
     }
     if (currentMaterial != NULL)
         materials.push_back(currentMaterial);

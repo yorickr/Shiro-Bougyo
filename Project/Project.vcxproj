@@ -103,13 +103,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>freeglut\include;sdl_mixer\include;sdl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>sdl\include;sdl_mixer\include;freeglut\include;sdl_mixer\include;sdl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>sdl\lib\x65;sdl_mixer\lib\x64;freeglut\lib\x64;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>sdl\lib\x64;sdl_mixer\lib\x64;freeglut\lib;wiiuse\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2_mixer.lib;SDL2.lib;wiiuse_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,7 +140,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>sdl_mixer\include;freeglut\include;sdl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>sdl\include;sdl_mixer\include;sdl_mixer\include;freeglut\include;sdl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,11 +148,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>sdl\lib\x64;freeglut\lib;wiiuse\lib;sdl_mixer\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wiiuse_debug.lib;SDL2_mixer.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;SDL2.lib;wiiuse_debug.lib;SDL2_mixer.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedAttackWarriorOne.cpp" />
+    <ClCompile Include="AnimatedAttackWarriorTwo.cpp" />
     <ClCompile Include="AnimatedBowModel.cpp" />
+    <ClCompile Include="AnimatedCollisionModel.cpp" />
     <ClCompile Include="AnimatedExitButtonModel.cpp" />
     <ClCompile Include="AnimatedModel.cpp" />
     <ClCompile Include="AnimatedPlayButtonModel.cpp" />
@@ -168,6 +171,7 @@
     <ClCompile Include="MenuModel.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="rs232.c" />
@@ -179,7 +183,10 @@
     <ClCompile Include="WiiHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedAttackWarriorOne.h" />
+    <ClInclude Include="AnimatedAttackWarriorTwo.h" />
     <ClInclude Include="AnimatedBowModel.h" />
+    <ClInclude Include="AnimatedCollisionModel.h" />
     <ClInclude Include="AnimatedExitButtonModel.h" />
     <ClInclude Include="AnimatedModel.h" />
     <ClInclude Include="AnimatedPlayButtonModel.h" />
@@ -196,6 +203,7 @@
     <ClInclude Include="MenuModel.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="objmodel.h" />
+    <ClInclude Include="Overlay.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="resource.h" />
@@ -218,7 +226,7 @@
     <Media Include="bow_pull.wav" />
     <Media Include="bow_shot.wav" />
     <Media Include="sword_slash.wav" />
-    <Media Include="test.wav" />
+    <Media Include="theme.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

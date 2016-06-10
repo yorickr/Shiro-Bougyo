@@ -19,13 +19,13 @@
 
 #include "WiiHandler.h"
 
-#define COMMPORT 4
+#define COMMPORT 5
 #define DELTATIME_MODIFIER 10;
 
 #include "sdl_audio.h"
 
 GameStateManager gameManager;
-SerialHandler serial = SerialHandler(COMMPORT, gameManager);
+SerialHandler serial = SerialHandler(COMMPORT, &gameManager);
 bool keys[255];
 void* wiiFunc(void * argument);
 void* musicFunc(void * argument);
@@ -41,26 +41,6 @@ int oldTimeSinceStart = 0;
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	gluPerspective(60.0f, (float)WindowWidth / WindowHight, 0.1,100);
-//
-//
-//	glMatrixMode(GL_MODELVIEW);
-//
-//
-//	glLoadIdentity();
-
-    //load bow
-
-//	gameManager.preDraw();
-//	glRotatef(camera.rotX, 1, 0, 0);
-//	glRotatef(camera.rotY, 0, 1, 0);
-//	glTranslatef(camera.posX, camera.posY, camera.posZ);
-//	gameManager.Draw();
-
-    // Process all OpenGL routine s as quickly as possible
 
 	gameManager.Draw();
 
@@ -73,8 +53,8 @@ void onDisplay() {
 void initializeThreads(){
 	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
 	wiiThread.detach();
-	//std::thread musicThread(&musicFunc, nullptr); //Music Thread
-	//musicThread.detach();
+	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
+	musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
 	serialThread.detach();
 }
@@ -84,8 +64,7 @@ void onIdle() {
 }
 
 void onTimer(int id) {
-	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME); //This has to be the first line in this method.
 	if (keys[27]) exit(0);
 	if (keys['m']) { //Scale powerup.
 		GameState* currentState = gameManager.getCurrentState();
@@ -97,17 +76,18 @@ void onTimer(int id) {
 		GameState* currentState = gameManager.getCurrentState();
 		PlayingState *playState = dynamic_cast<PlayingState*>(currentState);
 		if (playState)
-			playState->ScalePowerUp();
+			playState->DestoryPowerUp();
 	}
 
-
 	//for testing remove keys for final release:
-	float deltatime = (timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
-	bool t = keys['t'];
 	gameManager.Update(deltatime, keys);
 	oldTimeSinceStart = timeSinceStart;
-	glutTimerFunc(1000 / 60, onTimer, 1);
+	//gameManager.Update(deltatime);
+
+    oldTimeSinceStart = timeSinceStart;
+    glutTimerFunc(1000 / 60, onTimer, 1);
 }
 
 void onKeyboard(unsigned char key, int, int) {
@@ -129,12 +109,7 @@ void onKeyboard(unsigned char key, int, int) {
 }
 
 void* wiiFunc(void * argument) {
-	wiiHandler.wiiMoteTest();
-	return 0;
-}
-
-void* musicFunc(void * argument) {
-	playTheme();
+	wiiHandler.wiiMoteLoop();
 	return 0;
 }
 
@@ -196,7 +171,6 @@ int main(int argc, char* argv[]) {
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
 	glutInitWindowSize(WindowWidth,	WindowHeight);
-//    glutInitWindowSize(800, 600);
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
@@ -212,6 +186,7 @@ int main(int argc, char* argv[]) {
     glutTimerFunc(1000 / 60, onTimer, 1);
 
     glutKeyboardUpFunc(onKeyboardUp);
+    glutPassiveMotionFunc(mousePassiveMotion);
 
     glutMouseFunc(mouseFunction);
     glutPassiveMotionFunc(mousePassiveMotion);
@@ -221,6 +196,7 @@ int main(int argc, char* argv[]) {
 	memset(keys, 0, sizeof(keys));
 	
 	gameManager.Init(&wiiHandler);
+	gameManager.addSerialHandler(&serial);
 
 	glutMainLoop();
 }

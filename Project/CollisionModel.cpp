@@ -7,7 +7,7 @@
 #include <tuple>
 
 //TODO: Remove me before the final release
-#define DRAW_BOUNDING_BOX true
+#define DRAW_BOUNDING_BOX false
 
 CollisionModel::Sphere::Sphere(float x, float y, float z, float radius):x(x), y(y), z(z), radius(radius) {
     //Initialize a sphere
@@ -110,15 +110,26 @@ void CollisionModel::InitBoundingSpheres() {
 
 }
 
+
+CollisionModel::CollisionModel(ObjModel *model)
+{
+	xpos = ypos = zpos = xrot = yrot = zrot = 0;
+	xscale = yscale = zscale = 1;
+	this->model = model;
+	vertices_min = model->vertices_min;
+	vertices_max = model->vertices_max;
+}
+
 void CollisionModel::draw() {
-    ObjModel::draw();
+    
 
     glPushMatrix();
-    glTranslatef(xpos, ypos, zpos);
-    glRotatef(xrot, 1, 0, 0);
-    glRotatef(yrot, 0, 1, 0);
-    glRotatef(zrot, 0, 0, 1);
-	//glScalef(xscale, yscale, zscale);
+	glTranslatef(xpos, ypos, zpos);
+	glRotatef(xrot, 1, 0, 0);
+	glRotatef(yrot, 0, 1, 0);
+	glRotatef(zrot, 0, 0, 1);
+	glScalef(xscale, yscale, zscale);
+	model->draw();
 
     if (DRAW_BOUNDING_BOX) {
 //        glLineWidth(5);
@@ -165,6 +176,10 @@ void CollisionModel::draw() {
     }
 
     glPopMatrix();
+}
+
+void CollisionModel::update(float deltatime)
+{
 }
 
 

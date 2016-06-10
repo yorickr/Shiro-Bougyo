@@ -15,17 +15,21 @@ class Player {
 public:
     Player(Camera * camera, WiiHandler * hand, GameState * state, unsigned char playerID);
     ~Player();
-	void makeBow();
+	void makeBow(ObjModel *arrowModel);
+	void addKill();
+	unsigned char playerID;
 
-    Camera* getCamera();
+	Camera* getCamera();
     unsigned char getPlayerID();
+	int getKills();
 	AnimatedBowModel * bow;
     float shearmatrix[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 private:
 	WiiHandler * wiiHandler_;
     Camera* c;
-    unsigned char playerID;
+    
 	GameState* gamestate_;
+	int kills = 0;
 };
 
 

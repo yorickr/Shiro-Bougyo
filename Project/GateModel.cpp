@@ -4,7 +4,7 @@
 
 #include "GateModel.h"
 
-GateModel::GateModel(string filename) : CollisionModel(filename){
+GateModel::GateModel(ObjModel *model) : CollisionModel(model){
     xpos = -2.3f;
     zpos = -2.25f;
     ypos = -3.5;
@@ -15,6 +15,7 @@ GateModel::GateModel(string filename) : CollisionModel(filename){
 
 GateModel::~GateModel()
 {
+
 }
 
 void GateModel::InitBoundingSpheres() {
@@ -32,4 +33,16 @@ void GateModel::InitBoundingSpheres() {
     z = depth / 2+vertices_min->z;
 
     boundingSpheres.push_back((new Sphere(x, 0.7f, z, 0.7f))); //Magic values for the head
+}
+
+void GateModel::setHealth(int health)
+{
+	if (health >= 0 && health <= 100){
+		health_ = health;
+	}else if(health < 0){
+		health_ = 0;
+	}else{
+		health_ = 100;
+	}
+		
 }
