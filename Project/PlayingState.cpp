@@ -140,23 +140,24 @@ struct PointXY PlayingState::SpawnEnemies(){
 
 void PlayingState::AddWarrior(){
 	int random = rand() % 60;
-	if (enemyCount < 20 && random < 5) {
+	
+			
+	if (enemyCount < maxWarriors && random < 5 && spawnedWarriors < 70) {
+		enemyCount++;
+		spawnedWarriors++;
 		PointXY point = SpawnEnemies();
 		int filename1 = random % 2;
-		//string filename2;
 		if (random % 2)
 		{
 			type = WarriorType::first;
-			//filename1 = "models/warrior/warrior.obj";
 		}
 		else
 		{
 			type = WarriorType::second;
-			//filename1 = "models/secondwarrior/warrior.obj";
 		}
+		
+
 		//make animated warrior:
-
-
 		vector<CollisionModel*> models;
 		WarriorModel * warriorOne = new WarriorModel(-point.X, -point.Y, type, staticModels.at(filename1), this);
 
@@ -383,6 +384,8 @@ void PlayingState::Update(float deltatime, bool keys) {
 	}
 	models.at(1).second->yrot = -players.at(1)->getCamera()->rotY + 180;
 	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
+	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
+	AddWarrior();
 }
 
 
@@ -511,6 +514,11 @@ void PlayingState::Draw() {
 			if (gate->getHealth() <= 0) {
 				//show gameover menu
 				overlay_->drawGameOver(players, loop, false);
+			}
+
+			if(animatedcollisionmodels_.size() == 0 && spawnedWarriors > 20)
+			{
+				overlay_->drawGameOver(players, loop, true);
 			}
 
 			//TODO: call this method if gameover :) 
