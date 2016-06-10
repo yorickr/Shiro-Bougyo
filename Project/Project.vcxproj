@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedAttackWarriorOne.cpp" />
+    <ClCompile Include="AnimatedAttackWarriorTwo.cpp" />
     <ClCompile Include="AnimatedBowModel.cpp" />
     <ClCompile Include="AnimatedCollisionModel.cpp" />
     <ClCompile Include="AnimatedExitButtonModel.cpp" />
@@ -183,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedAttackWarriorOne.h" />
+    <ClInclude Include="AnimatedAttackWarriorTwo.h" />
     <ClInclude Include="AnimatedBowModel.h" />
     <ClInclude Include="AnimatedCollisionModel.h" />
     <ClInclude Include="AnimatedExitButtonModel.h" />

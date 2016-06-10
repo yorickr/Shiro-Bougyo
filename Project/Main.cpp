@@ -96,15 +96,9 @@ void onKeyboard(unsigned char key, int, int) {
 		gameManager.previousState();
 		break;
 	case ']':
-		//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
+			//if(wiiHandler.wiiMoteP1 != 0 && wiiHandler.wiiMoteP1->exp.type == EXP_NUNCHUK){
 			gameManager.nextState();
 		//}
-		break;
-	case 'l':
-		gameManager.GetPlayers().at(1)->getCamera()->rotY+=3;
-		break;
-	case 'k':
-		gameManager.GetPlayers().at(1)->getCamera()->rotY-=3;
 		break;
 	default:
 		//just to please CLion.

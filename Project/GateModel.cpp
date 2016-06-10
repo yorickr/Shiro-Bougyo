@@ -34,3 +34,15 @@ void GateModel::InitBoundingSpheres() {
 
     boundingSpheres.push_back((new Sphere(x, 0.7f, z, 0.7f))); //Magic values for the head
 }
+
+void GateModel::setHealth(int health)
+{
+	if (health >= 0 && health <= 100){
+		health_ = health;
+	}else if(health < 0){
+		health_ = 0;
+	}else{
+		health_ = 100;
+	}
+		
+}

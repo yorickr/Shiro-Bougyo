@@ -17,6 +17,7 @@
 #include "AnimatedAttackWarriorOne.h"
 #include "Overlay.h"
 #include "GateModel.h"
+#include "AnimatedAttackWarriorTwo.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -77,11 +78,20 @@ private:
 	Overlay * overlay_;
     void PowerUpThread();
 	void DestroyPowerUpThread();
+	
+	//all spawned enemies
+	int spawnedWarriors = 0;
+
+	//max amount warriors, increase with eacht kill
+	int maxWarriors = 20;
 
 	ObjModel *player1;
 	ObjModel *player2;
 	bool collidesGate = false;
-
+	WarriorModel * warriorOne;
+	WarriorModel *warriorTwo;
+	AnimatedAttackWarriorOne * animatedWarior;
+	AnimatedAttackWarriorTwo * animatedWarior2;
 };
 
 

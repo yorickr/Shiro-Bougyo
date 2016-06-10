@@ -14,15 +14,13 @@ public:
     ~GateModel();
     void InitBoundingSpheres() override;
 	
-	void setHealth(int health) {
-		health_ = health;
-	}
+	void setHealth(int health);
 
 	int getHealth() {
 		return health_;
 	}
 private:
-	int health_ = 75;
+	int health_ = 100;
 
 };
 
