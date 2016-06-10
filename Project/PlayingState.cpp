@@ -55,6 +55,7 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	cam1->posX = 4;
 	cam1->posZ = 3.2;
 	cam1->posY = 1.8;
+	
 
 	cam2->rotY = 180;
     cam2->posX = 1;
@@ -69,16 +70,16 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 
 	player1 = new StationaryObjModel("models/warrior/warrior.obj");
 	player1->xpos = -1;
-	player1->ypos = -2;
-	player1->zpos = -3.4;
+	player1->ypos = -2.4;
+	player1->zpos = -2.7;
 	player1->xscale = 0.2f;
 	player1->yscale = 0.2f;
 	player1->zscale = 0.2f;
 
 	player2 = new StationaryObjModel("models/warrior/warrior.obj");
 	player2->xpos = -4;
-	player2->ypos = -2;
-	player2->zpos = -3.4;
+	player2->ypos = -2.4;
+	player2->zpos = -2.7;
 	player2->xscale = 0.2f;
 	player2->yscale = 0.2f;
 	player2->zscale = 0.2f;
@@ -88,10 +89,14 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
 	staticModels.push_back(new ObjModel("models/secondwarrior/warrior.obj")); //warrior 2
 	staticModels.push_back(new ObjModel("models/blok/blok.obj")); //Gate
 	staticModels.push_back(new ObjModel("models/Arrow/Arrow.obj")); //arrow
-
-	models.push_back(pair<int, ObjModel*>(10, player1));
-	models.push_back(pair<int, ObjModel*>(11, player2));
-
+	staticModels.push_back(new ObjModel("models/warrior/warriorAttack/FirstStand.obj"));
+	staticModels.push_back(new ObjModel("models/warrior/warriorAttack/SecondStand.obj"));
+	staticModels.push_back(new ObjModel("models/warrior/warriorAttack/ThirdStand.obj"));
+	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/FirstStand.obj"));
+	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/SecondStand.obj"));
+	staticModels.push_back(new ObjModel("models/secondwarrior/SecondWarriorAttack/ThirdStand.obj"));
+	/*models.push_back(pair<int, ObjModel*>(10, player1));
+	models.push_back(pair<int, ObjModel*>(11, player2));*/
 	this->gate = new GateModel(staticModels.at(2));
 
     cam1->width = game->width;
@@ -159,17 +164,28 @@ void PlayingState::AddWarrior(){
 
 		//make animated warrior:
 		vector<CollisionModel*> models;
-		WarriorModel * warriorOne = new WarriorModel(-point.X, -point.Y, type, staticModels.at(filename1), this);
-
-
-		WarriorModel *warriorTwo = new WarriorModel(warriorOne->xpos, warriorOne->ypos, type, staticModels.at(filename1), this);
-
+		warriorOne = new WarriorModel(-point.X,-point.Y, type, staticModels.at(filename1), this);
 		models.push_back(warriorOne);
-		models.push_back(warriorTwo);
+		warriorOne = new WarriorModel(-2.3, -2.3, type, staticModels.at(4), this);
+		models.push_back(warriorOne);
+		warriorOne = new WarriorModel(-2.3, -2.3, type, staticModels.at(5), this);
+		models.push_back(warriorOne);
+		warriorOne = new WarriorModel( -2.3, -2.3,type, staticModels.at(6), this);
+		models.push_back(warriorOne);
+		animatedWarior = new AnimatedAttackWarriorOne(models);
+		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0, animatedWarior));
 		
-		AnimatedAttackWarriorOne * animatedWarior = new AnimatedAttackWarriorOne(models);
-
-		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0,animatedWarior));
+		vector<CollisionModel*> models2;
+		warriorTwo = new WarriorModel(-point.X, -point.Y,type, staticModels.at(filename1), this);
+		models2.push_back(warriorTwo);
+		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(7), this);
+		models2.push_back(warriorTwo);
+		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(8), this);
+		models2.push_back(warriorTwo);
+		warriorTwo = new WarriorModel(-2.3, -2.3, type, staticModels.at(9), this);
+		models2.push_back(warriorTwo);
+		animatedWarior2 = new AnimatedAttackWarriorTwo(models2);
+		animatedcollisionmodels_.push_back(pair<int, AnimatedCollisionModel*>(0,animatedWarior2));
 	}
 }
 
@@ -299,6 +315,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 	players.at(1)->getCamera()->rotX++;
 
 
+	// Wii-button B2
 	if (wiiHandler->is_B2)
 	{
 		counter2 += deltatime;
@@ -331,6 +348,7 @@ void PlayingState::Update(float deltatime, bool keys) {
 
 	}
 
+	//check collisions
 	bool collides = false;
 	for (auto &obj1 : collisionModels) {
 		for (auto &obj2 : collisionModels) {
@@ -364,27 +382,54 @@ void PlayingState::Update(float deltatime, bool keys) {
 	}
 
 
-
 	//Collision Gate with Warrior
-	for (auto &Warrior : animatedcollisionmodels_)
+	for (auto& Warrior : animatedcollisionmodels_)
 	{
 		if ((Warrior.second->getModel() != this->gate) && std::get<0>(Warrior.second->getModel()->CollidesWith(this->gate)))
 		{
 			collidesGate = true;
 			//remove health from gate
-			if (rand() % 20 == 1) {
+			if (rand() % 20 == 1)
+			{
 				gate->setHealth(gate->getHealth() - 1);
 			}
-
+			// Animating Warrior
+			if (collidesGate)
+			{
+				counterWarrior += 1;
+				if (counterWarrior > 20 && counterWarrior < 30)
+				{
+					Warrior.second->setIndex(0);
+				}
+				if (counterWarrior > 30 && counterWarrior < 40)
+				{
+					Warrior.second->setIndex(1);
+				}
+				if (counterWarrior > 40 && counterWarrior < 50)
+				{
+					Warrior.second->setIndex(2);
+				}
+				if (counterWarrior > 50 && counterWarrior < 60)
+				{
+					Warrior.second->setIndex(3);
+				}
+				else if (counterWarrior > 60)
+				{
+					counterWarrior = 0;
+				}
+			}
 		}
-		if (!collidesGate) {
+		if (!collidesGate)
+		{
 			Warrior.second->getModel()->update(deltatime);
+			Warrior.second->getModel()->draw();
 		}
 		collidesGate = false;
 	}
-	models.at(1).second->yrot = -players.at(1)->getCamera()->rotY + 180;
-	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
-	models.at(2).second->yrot = -players.at(0)->getCamera()->rotY + 180;
+
+
+	player1->yrot = -players.at(1)->getCamera()->rotY + 180;
+	player2->yrot = -players.at(0)->getCamera()->rotY + 180;
 	AddWarrior();
 }
 
@@ -491,20 +536,31 @@ void PlayingState::Draw() {
 
             if (loop == 0)    /* Are We Drawing The First Image?  (Original Texture... Ortho) */
             {
-                preTranslateDraw(players.at(0));
+				
+				glPushMatrix();
                 glRotatef(cam1->rotX, 1, 0, 0);
                 glRotatef(cam1->rotY, 0, 1, 0);
                 glTranslatef(cam1->posX, cam1->posY, cam1->posZ);
+				player1->draw();
                 DrawModels();
+				glPopMatrix();
+				glDisable(GL_DEPTH_TEST);
+				preTranslateDraw(players.at(0));
+				glEnable(GL_DEPTH_TEST);
             }
 
             if (loop == 1)    /* Are We Drawing The Second Image?  (3D Texture Mapped Sphere... Perspective) */
             {
-                preTranslateDraw(players.at(1));
+				glPushMatrix();
                 glRotatef(cam2->rotX, 1, 0, 0);
                 glRotatef(cam2->rotY, 0, 1, 0);
                 glTranslatef(cam2->posX, cam2->posY, cam2->posZ);
+				player2->draw();
                 DrawModels();
+				glPopMatrix();
+				glDisable(GL_DEPTH_TEST);
+				preTranslateDraw(players.at(1));
+				glEnable(GL_DEPTH_TEST);
             }
 
 			//draw port xpbar

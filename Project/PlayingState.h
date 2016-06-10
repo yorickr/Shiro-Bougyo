@@ -17,6 +17,7 @@
 #include "AnimatedAttackWarriorOne.h"
 #include "Overlay.h"
 #include "GateModel.h"
+#include "AnimatedAttackWarriorTwo.h"
 
 class PlayingState : public GameState {
     // Inherited via GameState
@@ -87,7 +88,10 @@ private:
 	ObjModel *player1;
 	ObjModel *player2;
 	bool collidesGate = false;
-
+	WarriorModel * warriorOne;
+	WarriorModel *warriorTwo;
+	AnimatedAttackWarriorOne * animatedWarior;
+	AnimatedAttackWarriorTwo * animatedWarior2;
 };
 
 
