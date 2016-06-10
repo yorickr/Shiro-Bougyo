@@ -13,7 +13,14 @@ public:
 	float posZ = 0;
     float rotX = 0;
     float rotY = 0;
-	float scale = 1;
+float scale = 1;
+	float headtrack_x = 0;
+	float headtrack_y = 0;
+	float headtrack_s = 0;
+	float headtrack_lastx = 0;
+	float headtrack_lasty = 0;
+	float headtrack_lasts = 0;
+
     int width, height = 0;
 
 };

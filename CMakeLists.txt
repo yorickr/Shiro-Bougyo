@@ -6,8 +6,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wdeprecated-declarations")
 
 FILE(GLOB SOURCE_FILES
         "Project/*.cpp"
+        "Project/*.hpp"
         "Project/*.h"
         "Project/*.c"
+        )
+
+FILE(GLOB TEST_KEK_FILES
+        "*.cpp"
+        "*.hpp"
+        "*.h"
+        "*.c"
         )
 
 #set(SOURCE_FILES
@@ -35,15 +43,17 @@ FILE(GLOB SOURCE_FILES
 
 
 add_executable(Shiro_Bougyo ${SOURCE_FILES})
+add_executable(glenv glenv.cpp)
 
 find_package(SDL REQUIRED)
 find_package(SDL_mixer REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${SDL_INCLUDE_DIRS} ${SDL_MIXER_INCLUDE_DIRS})
+find_package(OpenCV REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${SDL_INCLUDE_DIRS} ${SDL_MIXER_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
-target_link_libraries(Shiro_Bougyo ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARY} ${CMAKE_SOURCE_DIR}/Project/libs_osx/tim/libwiiuse.dylib )
-
+target_link_libraries(Shiro_Bougyo ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARY} ${OpenCV_LIBS} ${CMAKE_SOURCE_DIR}/Project/libs_osx/yorick/libwiiuse.dylib )
+target_link_libraries(glenv ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARY} ${CMAKE_SOURCE_DIR}/Project/libs_osx/yorick/libwiiuse.dylib )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 

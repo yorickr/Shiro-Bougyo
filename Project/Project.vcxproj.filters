@@ -114,6 +114,9 @@
     <ClInclude Include="AnimatedAttackWarriorTwo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeadTracking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project.rc" />
@@ -335,6 +338,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedAttackWarriorTwo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadTracking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
