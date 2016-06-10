@@ -56,13 +56,13 @@ std::vector<std::pair<int, Point>> detectFace(Mat frame, unsigned int playerSize
         }
         else{
             if (center.x > (frame.size().width) / 2) { //If left player
-                printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
-                printf("left player \n");
+                //printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
+                //printf("left player \n");
                 retFaces.push_back(pair<int, Point>(0, center));
             }
             else {
-                printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
-                printf("right player \n");
+                //printf("center x is %d\n frame size width /2 is %d\n", center.x, (frame.size().width) / 2);
+                //printf("right player \n");
                 retFaces.push_back(pair<int, Point>(1, center));
             }
         }
@@ -89,15 +89,15 @@ void HeadTracking::cameraThreadFunc() {
     while (cap.read(frame)) {
         if (!frame.empty()) {
             points = detectFace(frame, (unsigned int) players.size());
-            printf("points contains \n");
+            //printf("points contains \n");
             for (auto &face : points) {
-                printf("Face %d pos %d %d\n", face.first, face.second.x, face.second.y);
+                //printf("Face %d pos %d %d\n", face.first, face.second.x, face.second.y);
             }
             for (auto &face : points) {
-                printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
-                printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
+                //printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
+                //printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
                 if (face.first == 0) { //if player 0
-                    printf("PlayerID is %d \n", players[0]->getPlayerID());
+                    //printf("PlayerID is %d \n", players[0]->getPlayerID());
                     players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
                 }
                 else if(face.first == 1){

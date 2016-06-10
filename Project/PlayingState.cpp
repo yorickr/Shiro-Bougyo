@@ -89,9 +89,9 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-    players.push_back(new Player(cam2, hand, this, 2));
+//    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow();
-	players[1]->makeBow();
+//	players[1]->makeBow();
 
     //this must come after players
     h = new HeadTracking(this->players);
@@ -429,16 +429,16 @@ void PlayingState::Draw() {
         Camera *cam1 = players.at(0)->getCamera();
 //        printf("Camera : \n %f %f %f\n", cam1->posX, cam1->posY, cam1->posZ);
 //        printf("%d %d\n", cam1->width, cam1->height);
-//        glMatrixMode(GL_PROJECTION);
-//        glLoadIdentity();
-////        gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
-////        gluLookAt(headX, headY, headDist, headX, headY, 0, 0.0f, 1.0f, 0.0f);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
+//        gluLookAt(headX, headY, headDist, headX, headY, 0, 0.0f, 1.0f, 0.0f);
 //        gluLookAt(cam1->posX, cam1->posY, 1, cam1->posX, cam1->posY, 0, 0.0f, 1.0f, 0.0f);
-//
-//
-//        glMatrixMode(GL_MODELVIEW);
-//
-//        glLoadIdentity();
+
+
+        glMatrixMode(GL_MODELVIEW);
+
+        glLoadIdentity();
 
 //        load bow
         preTranslateDraw(players.at(0));
