@@ -324,31 +324,23 @@ void PlayingState::Update(float deltatime, bool keys) {
 				gate->setHealth(gate->getHealth() - 1);
 			}
 			// Animating Warrior
-			if (collidesGate)
-			{
 				counterWarrior += 1;
 				if (counterWarrior > 20 && counterWarrior < 30)
 				{
-					Warrior.second->setIndex(0);
+					Warrior.second->setIndex(1);
 				}
 				if (counterWarrior > 30 && counterWarrior < 40)
 				{
-					Warrior.second->setIndex(1);
+					Warrior.second->setIndex(2);
 				}
 				if (counterWarrior > 40 && counterWarrior < 50)
 				{
-					Warrior.second->setIndex(2);
-				}
-				if (counterWarrior > 50 && counterWarrior < 60)
-				{
 					Warrior.second->setIndex(3);
-				}
-				else if (counterWarrior > 60)
+				} else if (counterWarrior > 60)
 				{
 					counterWarrior = 0;
 				}
 			}
-		}
 		if (!collidesGate)
 		{
 			Warrior.second->getModel()->update(deltatime);
