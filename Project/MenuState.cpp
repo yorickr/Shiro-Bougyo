@@ -196,7 +196,6 @@ void MenuState::Draw()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0f, (float) cam1->width / cam1->height, 0.1, 100);
-
     glMatrixMode(GL_MODELVIEW);
 
     glLoadIdentity();

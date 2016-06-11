@@ -41,7 +41,6 @@ int oldTimeSinceStart = 0;
 void onDisplay() {
 	glClearColor(0.6f, 0.6f, 1, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
 	gameManager.Draw();
 
 
@@ -51,8 +50,8 @@ void onDisplay() {
 }
 
 void initializeThreads(){
-	std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
-	wiiThread.detach();
+	//std::thread wiiThread(&wiiFunc,nullptr); //WiiMote Thread
+	//wiiThread.detach();
 	std::thread musicThread(&SDL_Audio::playTheme, SDL_Audio()); //Play theme sound
 	musicThread.detach();
 	std::thread serialThread(&SerialHandler::receiveThread, &serial); //Serialthread
@@ -134,26 +133,6 @@ void mousePassiveMotion(int x, int y) {
 		}
 }
 
-
-void mouseFunction(int button,int state, int mouse_x, int mouse_y)
-{
-	buttonPressed = state == GLUT_LEFT_BUTTON;
-	if(buttonPressed)
-	{
-		//gameManager.nextState();
-		//printf("pressed x: %i/n", mouse_x);
-		//printf("pressed y: %i/n", mouse_y);
-	}
-}
-
-void mouseFunc(int button, int state, int x, int y) {
-    //printf("Received %d %d \n", button, state);
-    if (button == 0 && state == 1) {
-        //Tell gamestatemanager to shoot arrow
-
-    }
-}
-
 void windowReshape(int w, int h){
 	WindowWidth = w;
 	WindowHeight = h;
@@ -174,6 +153,22 @@ int main(int argc, char* argv[]) {
 	glutCreateWindow("Shiro Bougyo");
 
 	glEnable(GL_DEPTH_TEST);
+	//Light
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	GLfloat LightAmbient[] = {1.5f,1.5f,1.5f, 2.0f };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
+	//Fog
+	glEnable(GL_FOG);
+	float FogCol[3] = { 0.8f,0.8f,0.8f };
+	glFogfv(GL_FOG_COLOR, FogCol);
+	glFogi(GL_FOG_MODE, GL_LINEAR);
+	glFogf(GL_FOG_START, 1.f);
+	glFogf(GL_FOG_END, 40.f);
+	glFogf(GL_FOG_DENSITY, 2.f);
+	glHint(GL_FOG_HINT, GL_NICEST);
+	
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 #if __APPLE__
@@ -188,10 +183,6 @@ int main(int argc, char* argv[]) {
     glutKeyboardUpFunc(onKeyboardUp);
     glutPassiveMotionFunc(mousePassiveMotion);
 
-    glutMouseFunc(mouseFunction);
-    glutPassiveMotionFunc(mousePassiveMotion);
-    glutMouseFunc(mouseFunc);
-	
 	glutWarpPointer(WindowWidth / 2, WindowHeight / 2);
 	memset(keys, 0, sizeof(keys));
 	
