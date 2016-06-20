@@ -99,6 +99,7 @@ void handleSerialEvent(String word) {
   String command = word.substring(0,3);
   if(command.equals("EGM")) { //Enable game modus:
     state = "Game";
+    resetLedStrip(0,numPixelsPerPlate*2);
     pressurePlateObj1.Reset();
     pressurePlateObj2.Reset();
     plate1PixelsOn = 0;
