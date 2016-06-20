@@ -71,8 +71,9 @@ std::vector<std::pair<int, Point>> detectFace(Mat frame, unsigned int playerSize
     return retFaces;
 }
 
+//Returning between -2f and 2f using this function
 float calcHeadPos(int pos, int camwidth) {
-    return (pos / (float) camwidth) * 2.0f - 1.0f;
+    return (pos / (float) camwidth)*6.0f - 3.0f;
 }
 
 void HeadTracking::cameraThreadFunc() {
@@ -99,7 +100,7 @@ void HeadTracking::cameraThreadFunc() {
             }
             for (auto &face : points) {
                 //printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
-                //printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
+//                printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
                 if (face.first == 0) { //if player 0
                     //printf("PlayerID is %d \n", players[0]->getPlayerID());
                     players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
