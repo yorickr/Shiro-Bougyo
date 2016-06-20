@@ -58,7 +58,7 @@ std::string SerialHandler::receiveCommand()
 		char actualReceivedCommand[128];
 		buf[received] = 0; //Null terminator
 		for (int x = 0; x <= received; x++) {
-			if (buf[x] == '\n') {
+			if (buf[x] == '\n' || buf[x] == 13) {
 				actualReceivedCommand[x] = 0;
 				break;
 			}
