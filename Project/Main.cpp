@@ -59,10 +59,6 @@ void initializeThreads(){
 }
 
 void onIdle() {
-	glutPostRedisplay();
-}
-
-void onTimer(int id) {
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME); //This has to be the first line in this method.
 	if (keys[27]) exit(0);
 	if (keys['m']) { //Scale powerup.
@@ -79,14 +75,14 @@ void onTimer(int id) {
 	}
 
 	//for testing remove keys for final release:
-	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) /  DELTATIME_MODIFIER;
+	float deltatime = (float)(timeSinceStart - oldTimeSinceStart) / DELTATIME_MODIFIER;
 	//TODO: for testing remove keys for final release:
 	gameManager.Update(deltatime, keys);
 	oldTimeSinceStart = timeSinceStart;
 	//gameManager.Update(deltatime);
 
-    oldTimeSinceStart = timeSinceStart;
-    glutTimerFunc(1000 / 60, onTimer, 1);
+	oldTimeSinceStart = timeSinceStart;
+	glutPostRedisplay();
 }
 
 void onKeyboard(unsigned char key, int, int) {
@@ -178,7 +174,6 @@ int main(int argc, char* argv[]) {
     glutDisplayFunc(onDisplay);
 	glutReshapeFunc(windowReshape);
     glutKeyboardFunc(onKeyboard);
-    glutTimerFunc(1000 / 60, onTimer, 1);
 
     glutKeyboardUpFunc(onKeyboardUp);
     glutPassiveMotionFunc(mousePassiveMotion);
