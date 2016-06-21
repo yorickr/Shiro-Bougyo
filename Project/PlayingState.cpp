@@ -166,7 +166,7 @@ struct PointXY PlayingState::SpawnEnemies(){
 }
 
 void PlayingState::AddWarrior(){
-	int random = rand() % 60;
+	int random = rand() % 240;
 	
 			
 	if (enemyCount < maxWarriors && random < 5 && spawnedWarriors < 70) {
