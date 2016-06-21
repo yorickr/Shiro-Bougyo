@@ -95,20 +95,19 @@ void HeadTracking::cameraThreadFunc() {
         if (!frame.empty()) {
             points = detectFace(frame, (unsigned int) players.size());
             //printf("points contains \n");
-            for (auto &face : points) {
-                //printf("Face %d pos %d %d\n", face.first, face.second.x, face.second.y);
-            }
-            for (auto &face : points) {
-                //printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
-//                printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
-                if (face.first == 0) { //if player 0
-                    //printf("PlayerID is %d \n", players[0]->getPlayerID());
-                    players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
-                }
-                else if(face.first == 1){
-                    players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
-                }
-            }
+			if (running) {
+				for (auto &face : points) {
+					//printf("-------------------------\nFace %d %d\n", face.second.x, face.second.y);
+	//                printf("Setting headtrack to %d : %f\n", face.first, calcHeadPos(face.second.x, camWidth));
+					if (face.first == 0) { //if player 0
+						//printf("PlayerID is %d \n", players[0]->getPlayerID());
+						players[0]->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
+					}
+					else if (face.first == 1) {
+						players.at(1)->getCamera()->headtrack_x = calcHeadPos(face.second.x, camWidth);
+					}
+				}
+			}
 			Util::USleep(100);
 			//usleep(1000 * (1000 / 100));
         }

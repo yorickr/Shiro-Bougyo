@@ -1,7 +1,7 @@
 //
 // Created by Yorick Rommers on 11/05/16.
 //
-#define MOUSE true //set false to enable nunchuk or true to enable mouse
+#define MOUSE false //set false to enable nunchuk or true to enable mouse
 #include <thread>
 #include "PlayingState.h"
 #include "BowModel.h"
@@ -122,9 +122,9 @@ void PlayingState::Init(GameStateManager *game, WiiHandler * hand) {
     cam2->width = game->width;
     cam2->height = game->height;
     players.push_back(new Player(cam1, hand, this, 1));
-//    players.push_back(new Player(cam2, hand, this, 2));
+    players.push_back(new Player(cam2, hand, this, 2));
 	players[0]->makeBow(staticModels.at(3));
-//	players[1]->makeBow(staticModels.at(3));
+	players[1]->makeBow(staticModels.at(3));
 
     //this must come after players
     h = new HeadTracking(this->players);
@@ -444,6 +444,9 @@ void PlayingState::Update(float deltatime, bool * keys) {
 		obj1.second->getModel()->update(deltatime);
 			
 	}
+	if (keys['c']) h->running = true;
+	if (keys['v']) h->running = false;
+
 
 	AddWarrior();
 }

@@ -16,7 +16,7 @@
 class HeadTracking {
 public:
     HeadTracking(std::vector<Player*> players);
-
+	bool running = false;
     ~HeadTracking();
     std::vector<Player*> players;
     void cameraThreadFunc();

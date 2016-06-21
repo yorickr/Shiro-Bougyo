@@ -28,23 +28,24 @@ void WarriorModel::update(float deltatime) {
     //yrot += 0.5 * deltatime;
 	//ypos = -3.25;
 	int random = rand();
+	int speed = 1000;
 	//first walk z position
 	if(zpos > 0)
 	{
-		zpos -= (float(random % 100)) / 2000;
-		if(random%2)xpos -= (random % 100) / 2000;
-		else xpos += (random % 100) / 2000;
+		zpos -= (float(random % 100)) / speed;
+		if(random%2)xpos -= (random % 100) / speed;
+		else xpos += (random % 100) / speed;
 	}
 
 	else if(rand() % 2){
 		if (zpos > -2.25)
-			zpos -= (float(random % 100)) / 2000;
+			zpos -= (float(random % 100)) / speed;
 		else if (zpos < -2.25)
-			zpos += (float(random % 100)) / 2000;
+			zpos += (float(random % 100)) / speed;
 		if (xpos > -2.25)
-			xpos -= (float(random % 100)) / 2000;
+			xpos -= (float(random % 100)) / speed;
 		else if (xpos < -2.25)
-			xpos += (float(random % 100)) / 2000;
+			xpos += (float(random % 100)) / speed;
 	}else
 	{
 		zpos += (float)sin(random) / 20.0f;
